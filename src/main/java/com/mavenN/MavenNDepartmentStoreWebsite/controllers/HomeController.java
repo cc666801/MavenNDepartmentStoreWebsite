@@ -8,4 +8,9 @@ public class HomeController {
 	public String getHomePage(){
 		return "index";
 	}
+	
+//	@GetMapping(value = {"/"})
+//	public String getHomePage(){
+//		return "index";
+//	}
 }
