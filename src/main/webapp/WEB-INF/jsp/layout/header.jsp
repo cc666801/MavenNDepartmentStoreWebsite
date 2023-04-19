@@ -1,11 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
     <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+  <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
 <!DOCTYPE html>
 <html>
 <head>
   <meta charset="utf-8">
-  <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
   <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
   <title>ZenBlog Bootstrap Template - Index</title>
