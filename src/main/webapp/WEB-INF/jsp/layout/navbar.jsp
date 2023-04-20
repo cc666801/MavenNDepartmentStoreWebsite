@@ -11,7 +11,7 @@
 <link href="${contextRoot}/css/bootstrap.min.css" rel="stylesheet">
 
 
-<title>Insert title here</title>
+<title></title>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg bg-light">
@@ -32,7 +32,7 @@
           <a class="nav-link" href="#">Pricing</a>
         </li>
         <li class="nav-item">
-          <a class="nav-link disabled">Disabled</a>
+          <a class="nav-link" href="">顧客服務</a>
         </li>
       </ul>
     </div>
