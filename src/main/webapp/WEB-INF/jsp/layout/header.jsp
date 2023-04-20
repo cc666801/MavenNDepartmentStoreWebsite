@@ -53,8 +53,9 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="${contextRoot}/">Blog</a></li>
-          <li><a href="single-post.html">Single Post</a></li>
+          <li><a href="${contextRoot}/">首頁</a></li>
+          <li><a href="${contextRoot}/company">廠商專區</a></li>
+          <li><a href="${contextRoot}/example">前台範例頁面</a></li>
           <li class="dropdown"><a href="category.html"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="search-result.html">Search Result</a></li>

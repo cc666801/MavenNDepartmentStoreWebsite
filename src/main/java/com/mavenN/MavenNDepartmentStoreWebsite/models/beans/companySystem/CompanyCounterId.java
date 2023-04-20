@@ -8,6 +8,9 @@ import javax.persistence.Embeddable;
 @Embeddable
 public class CompanyCounterId implements Serializable{
 
+	
+	private static final long serialVersionUID = 1L;
+
 	@Column(name = "fk_company_id")
     private Integer companyId;
 
