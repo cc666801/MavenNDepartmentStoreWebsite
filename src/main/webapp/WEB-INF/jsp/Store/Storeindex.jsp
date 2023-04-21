@@ -9,6 +9,15 @@
 <title>商城首頁</title>
 </head>
 <body>
+<!-- ======= Header ======= -->
+ <jsp:include page="../layout/header.jsp"></jsp:include>
+<!-- End Header --> 
+
+<main id=main>
+
+<h3>測試中</h3>
+</main>
+
 
 </body>
 </html>

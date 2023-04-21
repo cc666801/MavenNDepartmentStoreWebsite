@@ -53,19 +53,19 @@
 
       <nav id="navbar" class="navbar">
         <ul>
-          <li><a href="${contextRoot}/">Blog</a></li>
-          <li><a href="single-post.html">Single Post</a></li>
-          <li class="dropdown"><a href="category.html"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+          <li><a href="${contextRoot}/">首頁</a></li>
+          <li><a href="${contextRoot}/Store/Storeindex">線上商城</a></li>
+          <li class="dropdown"><a href="category.html"><span>樓層導覽</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
-              <li><a href="search-result.html">Search Result</a></li>
-              <li><a href="#">Drop Down 1</a></li>
-              <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <li><a href="search-result.html">停車場</a></li>
+              <li><a href="#">餐廳資訊</a></li>
+              <li class="dropdown"><a href="#"><span>櫃位介紹</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
-                  <li><a href="#">Deep Drop Down 1</a></li>
-                  <li><a href="#">Deep Drop Down 2</a></li>
-                  <li><a href="#">Deep Drop Down 3</a></li>
-                  <li><a href="#">Deep Drop Down 4</a></li>
-                  <li><a href="#">Deep Drop Down 5</a></li>
+                  <li><a href="#">一樓</a></li>
+                  <li><a href="#">二樓</a></li>
+                  <li><a href="#">三樓</a></li>
+                  <li><a href="#">四樓</a></li>
+                  <li><a href="#">五樓</a></li>
                 </ul>
               </li>
               <li><a href="#">Drop Down 2</a></li>
@@ -74,8 +74,8 @@
             </ul>
           </li>
 
-          <li><a href="about.html">About</a></li>
-          <li><a href="contact.html">Contact</a></li>
+          <li><a href="about.html">關於我們</a></li>
+          <li><a href="contact.html">交通資訊</a></li>
         </ul>
       </nav><!-- .navbar -->
 
