@@ -11,8 +11,8 @@ public class HomeController {
 		return "index";
 	}
 	
-//	@GetMapping(value = {"/"})
-//	public String getHomePage(){
-//		return "index";
-//	}
+	@GetMapping(value = {"/message/example"})
+	public String getExampleMessagePage(){
+		return "message/exampleMessagePage";
+	}
 }
