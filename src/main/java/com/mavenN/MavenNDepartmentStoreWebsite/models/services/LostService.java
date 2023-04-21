@@ -42,7 +42,7 @@ public class LostService {
 	
 	
 	@Transactional
-	public LostAndFound updateLostById(Integer id, LostAndFound newLost) {
+	public LostAndFound updateLostById(Integer id,LostAndFound newLost) {
 		Optional<LostAndFound> option = lostRepository.findById(id);
 		
 		if(option.isPresent()) {
@@ -56,7 +56,7 @@ public class LostService {
 		return null;
 	}
 	
-	public void deleteMessagesById(Integer id) {
+	public void deleteLostById(Integer id) {
 		lostRepository.deleteById(id);
 	}
 	
@@ -64,5 +64,7 @@ public class LostService {
 		List<LostAndFound> findAllLost=lostRepository.findAll();
 		return findAllLost;
 	}
+	
+	
 	
 }

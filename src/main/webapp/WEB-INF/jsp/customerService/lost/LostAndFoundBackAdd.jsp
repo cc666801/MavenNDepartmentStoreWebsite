@@ -23,10 +23,9 @@
 	<form:option value="館內招領中">館內招領中</form:option>
 	<form:option value="已領取">已領取</form:option>
 	<form:option value="已送往警局">已送往警局</form:option>
-	</form:select>
-	
+	</form:select>	
 	<br>
-	<button type="submit" class="btn btn-primary">送出</button>
+	<button type="submit" >送出</button>
 </form:form>
 </body>
 </html>
