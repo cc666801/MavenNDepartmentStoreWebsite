@@ -1,6 +1,7 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
 import java.util.Date;
+import java.util.Objects;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -40,7 +41,6 @@ public class CompanyCounter {
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(name = "off_counter_time", columnDefinition = "datetime")
     private Date offCounterTime;
-
     
     public CompanyCounter() {
 	}

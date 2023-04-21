@@ -47,5 +47,51 @@ public class Counter {
 	}
 
 	// Getter and Setter
-	
+	public Integer getCounterId() {
+		return counterId;
+	}
+
+	public void setCounterId(Integer counterId) {
+		this.counterId = counterId;
+	}
+
+	public String getCounterName() {
+		return counterName;
+	}
+
+	public void setCounterName(String counterName) {
+		this.counterName = counterName;
+	}
+
+	public Integer getCounterRent() {
+		return counterRent;
+	}
+
+	public void setCounterRent(Integer counterRent) {
+		this.counterRent = counterRent;
+	}
+
+	public Double getCounterSquareMeters() {
+		return counterSquareMeters;
+	}
+
+	public void setCounterSquareMeters(Double counterSquareMeters) {
+		this.counterSquareMeters = counterSquareMeters;
+	}
+
+	public Double getCounterFloor() {
+		return counterFloor;
+	}
+
+	public void setCounterFloor(Double counterFloor) {
+		this.counterFloor = counterFloor;
+	}
+
+	public List<CompanyCounter> getCompanies() {
+		return companies;
+	}
+
+	public void setCompanies(List<CompanyCounter> companies) {
+		this.companies = companies;
+	}	
 }

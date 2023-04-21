@@ -21,6 +21,7 @@
 
 	<main id="main">
 	<div>廠商頁面</div>
+	<a href="${contextRoot}/company/addCompany">新增廠商資料</a>
 	</main><!-- End #main -->
 	
 <!-- ======= Footer ======= -->

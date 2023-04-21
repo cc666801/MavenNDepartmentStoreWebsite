@@ -9,11 +9,12 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
+
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name="company")
@@ -30,14 +31,18 @@ public class Company {
 	@Column(name="company_phone", columnDefinition = "nvarchar(200)")
 	private String companyPhone;
 	
-	@Column(name="company_logo", columnDefinition = "nvarchar(MAX)")
-	private String companyLogo;
+	@Column(name="company_logo", columnDefinition = "varbinary(MAX)")
+	private byte[] companyLogo;
+	
+	@Transient
+	private MultipartFile transferToByteArray;
 	
 
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_address_id")
 	private Address address;
 	
+
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_industry_category_id")
 	private IndustryCategory industryCategory;
@@ -89,12 +94,36 @@ public class Company {
 		this.companyPhone = companyPhone;
 	}
 
-	public String getCompanyLogo() {
+	public byte[] getCompanyLogo() {
 		return companyLogo;
 	}
 
-	public void setCompanyLogo(String companyLogo) {
+	public void setCompanyLogo(byte[] companyLogo) {
 		this.companyLogo = companyLogo;
+	}
+
+	public OpeningHours getOpeningHours() {
+		return openingHours;
+	}
+
+	public void setOpeningHours(OpeningHours openingHours) {
+		this.openingHours = openingHours;
+	}
+
+	public CooperationStatus getCooperationStatus() {
+		return cooperationStatus;
+	}
+
+	public void setCooperationStatus(CooperationStatus cooperationStatus) {
+		this.cooperationStatus = cooperationStatus;
+	}
+
+	public List<CompanyCounter> getCounters() {
+		return counters;
+	}
+
+	public void setCounters(List<CompanyCounter> counters) {
+		this.counters = counters;
 	}
 
 	public Address getAddress() {
@@ -113,4 +142,11 @@ public class Company {
 		this.industryCategory = industryCategory;
 	}
 	
+	public MultipartFile getTransferToByteArray() {
+		return transferToByteArray;
+	}
+	
+	public void setTransferToByteArray(MultipartFile transferToByteArray) {
+		this.transferToByteArray = transferToByteArray;
+	}
 }
