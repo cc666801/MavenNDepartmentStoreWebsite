@@ -34,8 +34,12 @@ public class Company {
 	@Column(name="company_logo", columnDefinition = "varbinary(MAX)")
 	private byte[] companyLogo;
 	
+
 	@Transient
 	private MultipartFile transferToByteArray;
+	
+	@Transient
+	private String base64StringCompanyLogo;
 	
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_address_id")
@@ -147,5 +151,13 @@ public class Company {
 	
 	public void setTransferToByteArray(MultipartFile transferToByteArray) {
 		this.transferToByteArray = transferToByteArray;
+	}
+	
+	public String getBase64StringCompanyLogo() {
+		return base64StringCompanyLogo;
+	}
+	
+	public void setBase64StringCompanyLogo(String base64StringCompanyLogo) {
+		this.base64StringCompanyLogo = base64StringCompanyLogo;
 	}
 }

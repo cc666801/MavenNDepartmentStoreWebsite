@@ -21,9 +21,9 @@
 
 	<main id="main">
 	<div>廠商頁面</div>
-	<a href="${contextRoot}/company/addCompany">新增廠商資料</a>
+	<a href="${contextRoot}/company/addCompanyPage">新增廠商資料</a>
 	<a href="${contextRoot}/company/showAllCompanys">所有廠商資料(分頁)</a>
-	<a href="${contextRoot}/company/showEditedCompany">找到被更新的資料頁面</a>
+	<a href="${contextRoot}/company/showEditedCompany?id=1">找到被更新的資料頁面</a>
 	
 	</main><!-- End #main -->
 	

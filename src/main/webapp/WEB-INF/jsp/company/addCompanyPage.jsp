@@ -26,7 +26,7 @@
 		<h1>新增資料的頁面</h1>
 		<div>
 			<form:form action="${contextRoot}/company/addCompany" method="POST"
-				modelAttribute="company" enctype="multipart/form-data">
+				modelAttribute="company" enctype="multipart/form-data" id="companyForm">
 				<div class="form-group">
 					<label for="companyName">Company Name:</label>
 					<form:input path="companyName" id="companyName"
@@ -99,6 +99,32 @@
 	<!-- ======= Footer ======= -->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
-
+<!-- 	<script> -->
+// 	document.querySelector('companyForm').addEventListener('submit', function(e) {
+// 	    e.preventDefault();
+// 	    var formData = new FormData(this);
+// 	    var jsonFormData = {};
+// 	    for (var pair of formData.entries()) {
+// 	        jsonFormData[pair[0]] = pair[1];
+// 	    }
+// 	    fetch(this.action, {
+// 	        method: "POST",
+// 	        headers: {
+// 	            'Content-Type': 'application/json'
+// 	        },
+// 	        body: JSON.stringify(jsonFormData)
+// 	    })
+// 	    .then(function(response) {
+// 	        return response.json();
+// 	    })
+// 	    .then(function(data) {
+// 	        console.log(data);
+// 	    })
+// 	    .catch(function(error) {
+// 	        console.log(error);
+// 	    });
+// 	});
+	
+<!-- 	</script> -->
 </body>
 </html>

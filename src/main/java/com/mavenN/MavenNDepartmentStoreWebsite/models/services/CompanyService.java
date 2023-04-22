@@ -3,6 +3,8 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -76,5 +78,38 @@ public class CompanyService {
 		}
 		
 		return optionalCompany.get();
+	}
+	
+	@Transactional
+	public Company updateCompanyById(
+			Integer companyId, 
+			String companyName,
+			String companyPhone,
+			byte[] companyLogo,
+			Address address,
+			IndustryCategory industryCategory,
+			OpeningHours openingHours,
+			CooperationStatus cooperationStatus) {
+		Optional<Company> option = companyRepository.findById(companyId);
+		
+		if(option.isPresent()) {
+			Company company = option.get();
+			company.setCompanyName(companyName);
+			company.setCompanyPhone(companyPhone);
+			if(companyLogo != null) {
+				company.setCompanyLogo(companyLogo);
+			}
+			
+			company.setAddress(address);
+			company.setIndustryCategory(industryCategory);
+			company.setOpeningHours(openingHours);
+			company.setCooperationStatus(cooperationStatus);
+			return company;
+		}
+		return null;
+	}
+	
+	public void deleteCompanyById(Integer id) {
+		companyRepository.deleteById(id);
 	}
 }
