@@ -44,8 +44,7 @@
 		</dependency>
 		<dependency>
 			<groupId>org.apache.tomcat.embed</groupId>
-			<artifactId>tomcat-embed-jasper</artifactId>
-			<!--從哪裡下載-->
+			<artifactId>tomcat-embed-jasper</artifactId>			
 			<scope>provided</scope>
 		</dependency>
 		<dependency>

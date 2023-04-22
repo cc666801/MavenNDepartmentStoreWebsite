@@ -74,8 +74,10 @@
             </ul>
           </li>
 
-          <li><a href="about.html">關於我們</a></li>
-          <li><a href="contact.html">交通資訊</a></li>
+
+          <li><a href="about.html">About</a></li>
+          <li><a href="${contextRoot}/LostAndFound">顧客服務</a></li>
+
         </ul>
       </nav><!-- .navbar -->
 
