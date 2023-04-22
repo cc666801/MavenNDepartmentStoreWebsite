@@ -37,7 +37,6 @@ public class Company {
 	@Transient
 	private MultipartFile transferToByteArray;
 	
-
 	@ManyToOne(cascade = CascadeType.ALL)
 	@JoinColumn(name = "fk_address_id")
 	private Address address;

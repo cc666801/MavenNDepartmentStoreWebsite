@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
 <!DOCTYPE html>
 <html>
@@ -20,11 +21,26 @@
 <!-- End Header --> 
 
 	<main id="main">
-	<div>廠商頁面</div>
-	<a href="${contextRoot}/company/addCompany">新增廠商資料</a>
-	<a href="${contextRoot}/company/showAllCompanys">所有廠商資料(分頁)</a>
-	<a href="${contextRoot}/company/showEditedCompany">找到被更新的資料頁面</a>
+	<div>所有廠商資料(分頁)
+	<jstl:forEach items="${page.content}" var="company">
+		<div>${company.companyId}</div>
+	</jstl:forEach>
 	
+	<jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+				<jstl:choose>
+					<jstl:when test="${page.number+1 != pageNumber}">
+						<a href="${contextRoot}/company/showAllCompanys?page=${pageNumber}">${pageNumber}</a>				
+					</jstl:when>
+					<jstl:otherwise>						
+						<span>${pageNumber}</span>				
+					</jstl:otherwise>
+				</jstl:choose>
+				
+				<jstl:if test="${pageNumber != page.totalPages}">
+					<span>-</span>	
+				</jstl:if>
+			</jstl:forEach>
+	</div>
 	</main><!-- End #main -->
 	
 <!-- ======= Footer ======= -->

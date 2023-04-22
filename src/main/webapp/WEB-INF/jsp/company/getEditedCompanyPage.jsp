@@ -20,11 +20,9 @@
 <!-- End Header --> 
 
 	<main id="main">
-	<div>廠商頁面</div>
-	<a href="${contextRoot}/company/addCompany">新增廠商資料</a>
-	<a href="${contextRoot}/company/showAllCompanys">所有廠商資料(分頁)</a>
-	<a href="${contextRoot}/company/showEditedCompany">找到被更新的資料頁面</a>
-	
+	<div>找到被更新的資料頁面</div>
+	<div>${company.companyId}</div>
+	<div>${company.companyName}</div>
 	</main><!-- End #main -->
 	
 <!-- ======= Footer ======= -->
