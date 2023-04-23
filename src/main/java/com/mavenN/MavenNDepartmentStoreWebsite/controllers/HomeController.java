@@ -8,11 +8,16 @@ public class HomeController {
 
 	@GetMapping(value = {"/"})
 	public String getHomePage(){
-		return "index";
+		return "frontend/index";
 	}
 	
-	@GetMapping(value = {"/message/example"})
-	public String getExampleMessagePage(){
-		return "message/exampleMessagePage";
+	@GetMapping(value = {"/exampleFrontendPage"})
+	public String getExamplePage(){
+		return "example/exampleFrontendPage";
+	}
+	
+	@GetMapping(value = {"/backend"})
+	public String getBackendPage(){
+		return "backend/index";
 	}
 }
