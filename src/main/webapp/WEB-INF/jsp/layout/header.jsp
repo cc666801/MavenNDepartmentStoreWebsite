@@ -68,7 +68,7 @@
 					<li class="Store"><a href="${contextRoot}/Store/Storeindex"><span>線上商城</span>
 							<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 						<ul>
-							<li><a href="${contextRoot}/CommCate/add">商品分類新增</a></li>
+							<li><a href="${contextRoot}/Store/CommCate/add">商品分類新增</a></li>
 
 						</ul>
 					<li class="dropdown"><a href="category.html"><span>樓層導覽</span>

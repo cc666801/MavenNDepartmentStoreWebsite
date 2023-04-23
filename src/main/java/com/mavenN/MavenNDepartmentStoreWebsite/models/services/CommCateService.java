@@ -33,7 +33,7 @@ public class CommCateService {
 		return option.get();
 	}
 	
-	
+//	更新透過 id
 	public CommCate updateCommById(Integer id ,CommCate newcate) {
 		Optional<CommCate> option = CommCateRepository.findById(id);
 		
@@ -48,12 +48,12 @@ public class CommCateService {
 		return null;
 	}
 	
-	
+//	刪除透過 id
 	public void deleteById(Integer id ) {
 		CommCateRepository.deleteById(id);
 	}
 	
-	
+//	找尋所有類別
 	public List<CommCate> findAllCate(){
 		List<CommCate> findAllCate = CommCateRepository.findAll();
 		return findAllCate;
