@@ -8,6 +8,8 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 @Entity
 @Table(name = "memberSystem")
 public class MemberSystem {
@@ -20,7 +22,9 @@ public class MemberSystem {
     @Column(name = "member_Name")
     private String memberName;
 
-    @Column(name = "member_Birthday")
+    
+    @DateTimeFormat(pattern = "yyyy/MM/dd")
+    @Column(name = "member_Birthday", columnDefinition = "date")
     private String memberBirthday;
 
     @Column(name = "member_Email")
@@ -53,6 +57,9 @@ public class MemberSystem {
     @Column(name = "member_Punishment")
     private String memberPunishment;
 
+    @Column(name = "member_Picture")
+    private String memberPicture;
+    
 	public Integer getMemberId() {
 		return memberId;
 	}
