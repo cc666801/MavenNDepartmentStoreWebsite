@@ -41,20 +41,20 @@ public class Company {
 	@Transient
 	private String base64StringCompanyLogo;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_address_id")
 	private Address address;
 	
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_industry_category_id")
 	private IndustryCategory industryCategory;
 
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_opening_hours_id")
 	private OpeningHours openingHours;
 	
-	@ManyToOne(cascade = CascadeType.ALL)
+	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_cooperation_status_id")
 	private CooperationStatus cooperationStatus;
 	

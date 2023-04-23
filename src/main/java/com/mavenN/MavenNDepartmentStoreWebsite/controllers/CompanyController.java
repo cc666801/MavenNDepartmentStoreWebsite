@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -78,8 +79,8 @@ public class CompanyController {
 		return "company/getAllCompanyPage";
 	}
 	
-	@GetMapping("/company/showEditedCompany")
-	public String showEditedCompany(@RequestParam("id") Integer id, Model model) {
+	@GetMapping("/company/showEditedCompany/{id}")
+	public String showEditedCompany(@PathVariable("id") Integer id, Model model) {
 		Company company = companyService.findCompanyById(id);
 
 		String base64CompanyLogo = Base64.getEncoder().encodeToString(company.getCompanyLogo());
@@ -127,12 +128,11 @@ public class CompanyController {
 				company.getIndustryCategory(),
 				company.getOpeningHours(),
 				company.getCooperationStatus());
-		System.out.println(company.getOpeningHours());
 		return "redirect:/company/showAllCompanys";
 	}
 	
-	@DeleteMapping("/message/delete")
-	public String deleteMessage(@RequestParam Integer id) {
+	@DeleteMapping("/company/deleteCompany/{id}")
+	public String deleteCompany(@PathVariable Integer id) {
 		companyService.deleteCompanyById(id);
 		return "redirect:/company/showAllCompanys";
 	}

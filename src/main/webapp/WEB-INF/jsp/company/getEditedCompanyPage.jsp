@@ -18,13 +18,20 @@
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
 </head>
-<body>
+<body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
-	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
 
-	<main id="main">
-		<div>找到被更新的資料頁面</div>
+	<div id="layoutSidenav">
+
+		<!-- ======= SiderNav ======= -->
+		<jsp:include page="../layout/sideNavForBackend.jsp"></jsp:include>
+		<!-- End SiderNav -->
+
+		<div id="layoutSidenav_content">
+			<main>
+		<h1>找到被更新的資料頁面</h1>
 		<div>
 			<form:form action="${contextRoot}/company/updateCompany" method="PUT"
 				modelAttribute="company" enctype="multipart/form-data"
@@ -102,11 +109,29 @@
 	</main>
 	<!-- End #main -->
 
-	<!-- ======= Footer ======= -->
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
-	<!-- End Footer -->
-	<script>
-	
-	</script>
+	<!-- End #main -->
+
+			<!-- ======= Footer ======= -->
+			<jsp:include page="../layout/footerForBackend.jsp"></jsp:include>
+			<!-- End Footer -->
+		</div>
+	</div>
+		<!-- 	<script> -->
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
+<!-- 	<script -->
+<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
+<!-- 		crossorigin="anonymous"></script> -->
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
+	<script
+		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+
+	<!-- 	</script> -->
 </body>
 </html>

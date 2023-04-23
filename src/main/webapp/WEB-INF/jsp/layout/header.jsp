@@ -13,8 +13,8 @@
   <meta content="" name="keywords">
 
   <!-- Favicons -->
-  <link href="${contextRoot}/assets/img/favicon.png" rel="icon">
-  <link href="${contextRoot}/assets/img/apple-touch-icon.png" rel="apple-touch-icon">
+  <link href="${contextRoot}/assetsForFrontend/img/favicon.png" rel="icon">
+  <link href="${contextRoot}/assetsForFrontend/img/apple-touch-icon.png" rel="apple-touch-icon">
 
   <!-- Google Fonts -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -22,15 +22,15 @@
   <link href="https://fonts.googleapis.com/css2?family=EB+Garamond:wght@400;500&family=Inter:wght@400;500&family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,700&display=swap" rel="stylesheet">
 
   <!-- Vendor CSS Files -->
-  <link href="${contextRoot}/assets/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-  <link href="${contextRoot}/assets/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
-  <link href="${contextRoot}/assets/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
-  <link href="${contextRoot}/assets/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
-  <link href="${contextRoot}/assets/vendor/aos/aos.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/vendor/swiper/swiper-bundle.min.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/vendor/glightbox/css/glightbox.min.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/vendor/aos/aos.css" rel="stylesheet">
 
   <!-- Template Main CSS Files -->
-  <link href="${contextRoot}/assets/css/variables.css" rel="stylesheet">
-  <link href="${contextRoot}/assets/css/main.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/css/variables.css" rel="stylesheet">
+  <link href="${contextRoot}/assetsForFrontend/css/main.css" rel="stylesheet">
 
   <!-- =======================================================
   * Template Name: ZenBlog
@@ -47,7 +47,7 @@
 
       <a href="${contextRoot}/" class="logo d-flex align-items-center">
         <!-- Uncomment the line below if you also wish to use an image logo -->
-        <!-- <img src="assets/img/logo.png" alt=""> -->
+        <!-- <img src="assetsForFrontend/img/logo.png" alt=""> -->
         <h1>ZenBlog</h1>
       </a>
 
@@ -55,7 +55,7 @@
         <ul>
           <li><a href="${contextRoot}/">首頁</a></li>
           <li><a href="${contextRoot}/company">廠商專區</a></li>
-          <li><a href="${contextRoot}/example">前台範例頁面</a></li>
+          <li><a href="${contextRoot}/exampleFrontendPage">前台範例頁面</a></li>
           <li class="dropdown"><a href="category.html"><span>Categories</span> <i class="bi bi-chevron-down dropdown-indicator"></i></a>
             <ul>
               <li><a href="search-result.html">Search Result</a></li>
@@ -75,7 +75,7 @@
             </ul>
           </li>
 
-          <li><a href="about.html">About</a></li>
+          <li><a href="${contextRoot}/backend">後台系統</a></li>
           <li><a href="contact.html">Contact</a></li>
         </ul>
       </nav><!-- .navbar -->
