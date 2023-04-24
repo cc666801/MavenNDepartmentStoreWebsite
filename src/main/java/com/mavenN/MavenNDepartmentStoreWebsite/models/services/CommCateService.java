@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.CommCateRepository;
@@ -34,8 +35,9 @@ public class CommCateService {
 	}
 	
 //	更新透過 id
-	public CommCate updateCommById(Integer id ,CommCate newcate) {
-		Optional<CommCate> option = CommCateRepository.findById(id);
+	@Transactional
+	public CommCate updateCommById(Integer cate_Id ,CommCate newcate) {
+		Optional<CommCate> option = CommCateRepository.findById(cate_Id);
 		
 		if(option.isPresent()) {
 			CommCate cate=option.get();
@@ -49,8 +51,8 @@ public class CommCateService {
 	}
 	
 //	刪除透過 id
-	public void deleteById(Integer id ) {
-		CommCateRepository.deleteById(id);
+	public void deleteById(Integer cate_Id ) {
+		CommCateRepository.deleteById(cate_Id);
 	}
 	
 //	找尋所有類別

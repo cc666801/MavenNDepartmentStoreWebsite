@@ -51,9 +51,9 @@ public class CommCateController {
 	
 //	刪除
 	@DeleteMapping("/Store/Commcate/delete")
-	public String deleteCate(@RequestParam Integer cate_id) {
-		CommCateService.deleteById(cate_id);
-		return "Store/CommCate/CommCateBack";
+	public String deleteCate(@RequestParam Integer cate_Id) {
+		CommCateService.deleteById(cate_Id);
+		return "redirect:/ShowAll";
 	}
 	
 	
@@ -67,6 +67,7 @@ public class CommCateController {
 //		return "/Store/CommCate/CommCate";
 //	}
 	
+	//可讀取清單
 	@GetMapping("/CommCateBack")
 	public  String findAllCommCateBack(Model model) {
 		List<CommCate> findAllCate = CommCateService.findAllCate();
@@ -76,6 +77,13 @@ public class CommCateController {
 	
 
 	
+//	讀取所有資料
+	@GetMapping("/ShowAll")
+	public String ShowAllCommCate(Model model) {
+		List<CommCate> findAllCate = CommCateService.findAllCate();
+		model.addAttribute("cateList",findAllCate);
+		return "/Store/CommCate/CommCateBack";
+	}
 	
 	
 	

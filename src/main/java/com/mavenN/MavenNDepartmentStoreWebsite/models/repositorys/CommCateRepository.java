@@ -9,8 +9,6 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCa
 
 public interface CommCateRepository extends JpaRepository<CommCate, Integer> {
 
-//	@Query("select * from CommCate")
-//	public List<CommCate> findAllCate();
 	
 	
 }
