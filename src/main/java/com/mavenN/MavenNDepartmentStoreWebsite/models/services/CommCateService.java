@@ -24,8 +24,8 @@ public class CommCateService {
 	}
 	
 //	透過id查詢類別
-	public CommCate findcateById(Integer id) {
-		Optional<CommCate> option = CommCateRepository.findById(id);
+	public CommCate findcateById(Integer cate_Id) {
+		Optional<CommCate> option = CommCateRepository.findById(cate_Id);
 		
 		if(option.isEmpty()) {
 			return null;

@@ -54,7 +54,7 @@ public class CommCate {
 	    if(cate_CDay == null) {
 	        cate_CDay = new Date();
 	    }
-	    if(cate_MDay == null) {
+	    if(cate_MDay != null) {
 	        cate_MDay = new Date();
 	    }
 	}

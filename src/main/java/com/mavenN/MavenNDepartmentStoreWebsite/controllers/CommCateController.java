@@ -85,17 +85,17 @@ public class CommCateController {
 	
 //	更新資料
 	@GetMapping("/Store/Commcate/editCommCate")
-	public String editCommCate(@RequestParam("Cate_Id")Integer Cate_Id, Model model) {
-		CommCate cate=CommCateService.findcateById(Cate_Id);
+	public String editCommCate(@RequestParam("cate_Id")Integer cate_Id, Model model) {
+		CommCate cate=CommCateService.findcateById(cate_Id);
 		model.addAttribute("cate",cate);
-		return"/Store/CommCate/CommCateBackEdit";
+		return"/Store/CommCate/CommCateEdit";
 		
 	}
 
 	@PutMapping("/Store/Commcate/editCommCate")
 	public String puteditCate(@ModelAttribute("cate")CommCate cate) {
 		CommCateService.updateCommById(cate.getCate_Id(), cate);
-		return "redirect:/Store/CommCate/CommCateBack";
+		return "redirect:/Store/Commcate/ShowAll";
 	}
 
 }
