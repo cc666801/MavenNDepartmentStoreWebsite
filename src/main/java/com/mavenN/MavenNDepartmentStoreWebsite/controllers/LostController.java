@@ -12,7 +12,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.LostAndFound;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.customerService.LostAndFound;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.LostService;
 
 
@@ -21,29 +21,29 @@ public class LostController {
 	
 	@Autowired
 	private LostService lostService;
-	
-//	@GetMapping("/LostAndFound")
-//	public String lostAndFound() {
-//		return "/lost/LostAndFound";
-//	}
-	
-	@GetMapping("/LostAndFoundBack/add")
-	public String addLost(@ModelAttribute("lost")LostAndFound lost,Model model) {
-		model.addAttribute("lost",new LostAndFound());	
-		return "/customerService/lost/LostAndFoundBackAdd";
-	}
-	@PostMapping("/LostAndFoundBack/post")
-	public String postLost(@ModelAttribute("lost")LostAndFound lost,Model model) {
-		lostService.addLost(lost);
-		model.addAttribute("lost",new LostAndFound());	
-		return "redirect:/LostAndFoundBack";
-	}
+
+//Front-end
 	@GetMapping("/LostAndFound")
 	public String findAllLost(Model model){
 		List<LostAndFound> findAllLost=lostService.findAllLost();
 		model.addAttribute("lostList", findAllLost);
 		return "/customerService/lost/LostAndFound";
 	}
+	
+	
+	
+//Backend	
+	
+	@GetMapping("/LostAndFoundBack/add")
+	public String addLost(Model model) {
+		model.addAttribute("lost",new LostAndFound());	
+		return "/customerService/lost/LostAndFoundBackAdd";
+	}
+	@PostMapping("/LostAndFoundBack/post")
+	public String postLost(@ModelAttribute("lost")LostAndFound lost,Model model) {
+		lostService.addLost(lost);	
+		return "redirect:/LostAndFoundBack";
+	}	
 	
 	@GetMapping("/LostAndFoundBack")
 	public String findAllLostBack(Model model){
@@ -65,7 +65,7 @@ public class LostController {
 	}
 	
 	@PutMapping("/LostAndFoundBack/edit")
-	public String puteditLost(@ModelAttribute("lost") LostAndFound lost) {
+	public String putEditLost(@ModelAttribute("lost") LostAndFound lost) {
 		 lostService.updateLostById(lost.getId(),lost);
 		 return "redirect:/LostAndFoundBack";
 	}

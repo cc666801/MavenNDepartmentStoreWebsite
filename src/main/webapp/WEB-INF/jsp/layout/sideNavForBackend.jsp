@@ -39,6 +39,39 @@
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseLayouts-forum" aria-expanded="false"
+							aria-controls="collapseLayouts-forum">
+						<div class="sb-nav-link-icon">
+								<i class="fas fa-columns"></i>
+							</div> 討論區後台系統
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapseLayouts-forum"
+							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="${contextRoot}/articleBack">文章管理</a> 
+								<a class="nav-link" href="#">留言管理</a> 
+							</nav>
+						</div>
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
+							data-bs-target="#collapseLayouts-cs" aria-expanded="false"
+							aria-controls="collapseLayouts-cs">
+						<div class="sb-nav-link-icon">
+								<i class="fas fa-columns"></i>
+							</div> 客服後台系統
+							<div class="sb-sidenav-collapse-arrow">
+								<i class="fas fa-angle-down"></i>
+							</div>
+						</a>
+						<div class="collapse" id="collapseLayouts-cs"
+							aria-labelledby="headingOne" data-bs-parent="#sidenavAccordion">
+							<nav class="sb-sidenav-menu-nested nav">
+								<a class="nav-link" href="${contextRoot}/LostAndFoundBack">失物招領管理</a> 
+							</nav>
+						</div>
+						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"
 							data-bs-target="#collapsePages" aria-expanded="false"
 							aria-controls="collapsePages">
 							<div class="sb-nav-link-icon">

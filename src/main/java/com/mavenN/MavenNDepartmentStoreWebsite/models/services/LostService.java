@@ -11,7 +11,7 @@ import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.LostAndFound;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.customerService.LostAndFound;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.LostRepository;
 
 @Service
