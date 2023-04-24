@@ -22,7 +22,7 @@ public class MemberFavorite {
     private Integer commId;
 
     @ManyToOne
-    @JoinColumn(name = "member_Account")
+    @JoinColumn(name = "fk_member_Account")
     private MemberSystem memberSystem;
 
 	public Integer getMemberFavoriteId() {

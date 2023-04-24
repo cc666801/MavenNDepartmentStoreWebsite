@@ -21,7 +21,7 @@ public class MemberShopViolation {
     private Integer memberShopViolationId;
 
     @ManyToOne
-    @JoinColumn(name = "member_Account")
+    @JoinColumn(name = "fk_member_Account")
     private MemberSystem memberSystem;
 
     @Column(name = "member_Name")
