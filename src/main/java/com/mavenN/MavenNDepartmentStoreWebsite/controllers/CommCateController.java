@@ -30,15 +30,24 @@ public class CommCateController {
 //	新增已成功 已可成功寫入資料庫
 	@GetMapping("/Store/CommCate/add")
 	public String addCommCate(CommCate cate, Model model) {
-		model.addAttribute("Cate",new CommCate());
+		model.addAttribute("cate",new CommCate());
 		return "Store/CommCate/CommCateBackadd";
 	}
 	
 	@PostMapping("/Store/CommCate/post")
-	public String postCate(@ModelAttribute("Cate")CommCate cate, Model model) {
+	public String postCate(@ModelAttribute("cate")CommCate cate, Model model) {
 		CommCateService.addComm(cate);
-		return "Store/CommCate/CommCateBack";
+		model.addAttribute("cate",cate);
+
+		return "redirect:/CommCateBack";
 	}
+	
+//	@
+//	public List<CommCate> findAllCate(){
+//		
+//	}
+//	
+	
 	
 //	刪除
 	@DeleteMapping("/Store/Commcate/delete")
@@ -54,16 +63,17 @@ public class CommCateController {
 //	@GetMapping("/CommCate")
 //	public String findAllCate(Model model) {
 //		List<CommCate> findAllCate= CommCateService.findAllCate();
-//		model.addAttribute("CateList",findAllCate);
+//		model.addAttribute("cateList",findAllCate);
 //		return "/Store/CommCate/CommCate";
 //	}
 	
 	@GetMapping("/CommCateBack")
-	public String findAllCommCateBack(Model model) {
+	public  String findAllCommCateBack(Model model) {
 		List<CommCate> findAllCate = CommCateService.findAllCate();
-		model.addAttribute("CateList",findAllCate);
+		model.addAttribute("cateList",findAllCate);
 		return "/Store/CommCate/CommCateBack";
 	}
+	
 
 	
 	

@@ -19,19 +19,19 @@
 	<main id="main">
 
 		<h1>新增產品類別後台(新增)</h1>
-		<form:form method="post" modelAttribute="Cate"
- 			action="${contextRoot}/Store/CommCate/post"> 
+		<form:form method="post" modelAttribute="cate"
+			action="${contextRoot}/Store/CommCate/post">
 
 
- 			<form:label path="cate_Name">類別名稱</form:label> 
- 			<form:input path="cate_Name" type="text" /> 
+			<form:label path="cate_Name">類別名稱</form:label>
+			<form:input path="cate_Name" type="text" />
 			<br>
-			<form:label path="cate_Desc">類別敘述</form:label> 
-		<form:input path="cate_Desc" /> 
-			<br> 
+			<form:label path="cate_Desc">類別敘述</form:label>
+			<form:input path="cate_Desc" />
+			<br>
 
-			<button type="submit" value="確定">送出</button> 
-		</form:form> 
+			<button type="submit" value="確定">送出</button>
+		</form:form>
 	</main>
 
 
