@@ -36,6 +36,9 @@ public class CompanyCounter {
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
     @Column(name = "on_counter_time", columnDefinition = "datetime")
     private Date onCounterTime;
+    
+    @Column(name = "contract_time", columnDefinition = "datetime")
+    private Integer contractTime;
 
     @Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
@@ -60,6 +63,30 @@ public class CompanyCounter {
 
 	public void setOnCounterTime(Date onCounterTime) {
 		this.onCounterTime = onCounterTime;
+	}
+
+	public Company getCompany() {
+		return company;
+	}
+
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+
+	public Counter getCounter() {
+		return counter;
+	}
+
+	public void setCounter(Counter counter) {
+		this.counter = counter;
+	}
+
+	public Integer getContractTime() {
+		return contractTime;
+	}
+
+	public void setContractTime(Integer contractTime) {
+		this.contractTime = contractTime;
 	}
 
 	public Date getOffCounterTime() {

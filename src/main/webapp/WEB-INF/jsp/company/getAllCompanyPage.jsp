@@ -61,7 +61,21 @@
 										<th>Salary</th>
 									</tr>
 								</tfoot>
-								
+								<tbody id="tableBody">
+									<tr>
+										<th>ID</th>
+										<th>Name</th>
+										<th>Phone</th>
+										<th>Address</th>
+										<th>industryCategory</th>
+										<th>OpeningHours</th>
+										<th>CooperationStatus</th>
+										<th>Company Logo</th>
+										<th>更新按鈕</th>
+										<th>刪除按鈕</th>
+										
+									</tr>
+								</tbody>
 							</table>
 						</div>
 					</div>
@@ -91,7 +105,7 @@
 		
 	<script>
 	document.addEventListener("DOMContentLoaded", function() {
-	var myTable = document.getElementById('datatablesSimple');
+	var myTableBody = document.getElementById('tableBody');
 	var myHeaders = new Headers();
 	myHeaders.append("Cookie", "JSESSIONID=A88D4C1EF2D373665EDA0CE10F5710E2");
 
@@ -107,7 +121,7 @@
 	  .then(response => response.content)
 	  .then(result => {
 	  			
-	  		let tableData='<tbody>';
+	  		let tableData='';
 	  		result.forEach(function (value, index) {
 	  			tableData += '<tr>';
 	  			tableData += '<td>' + value.companyId + '</td>';
@@ -122,14 +136,14 @@
 	  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
 	  			tableData += '</tr>';  			
             });
-	  		tableData += '</tbody>';
-	  			myTable.getElementsByTagName('tbody')[0].innerHTML = "";
-	  			myTable.getElementsByTagName('tbody')[0].innerHTML += tableData;
+	  		myTableBody.innerHTML = "";
+	  		myTableBody.innerHTML = tableData;
+	  		
 	  })
 	  .catch(error => console.log('error', error));
 	});
 	
-	var myTable = document.getElementById('datatablesSimple');
+	var myTableBody = document.getElementById('tableBody');
 	function deleteCompany(companyId) {
 		  fetch('${contextRoot}/api/company/deleteCompany/' + companyId, {
 		    method: 'DELETE'
@@ -139,7 +153,7 @@
 		  .then(result => {
 			  console.log(result);
 	  			
-		  		let tableData='<tbody>';
+			  let tableData='';
 		  		result.forEach(function (value, index) {
 		  			tableData += '<tr>';
 		  			tableData += '<td>' + value.companyId + '</td>';
@@ -154,11 +168,8 @@
 		  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
 		  			tableData += '</tr>';  			
 	            });
-		  		tableData += '</tbody>';
-		  		console.log(tableData);
-		  		console.log(myTable);
-		  			myTable.getElementsByTagName('tbody')[0].innerHTML = "";
-		  			myTable.getElementsByTagName('tbody')[0].innerHTML = tableData;
+		  		myTableBody.innerHTML = "";
+		  		myTableBody.innerHTML = tableData;
 		  })
 		  .catch(error => console.log('error', error));
 		}
