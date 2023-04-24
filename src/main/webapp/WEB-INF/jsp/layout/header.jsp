@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
     <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
@@ -35,12 +36,7 @@
       <link href="${contextRoot}/assetsForFrontend/css/main.css" rel="stylesheet">
 
       <!-- =======================================================
-  * Template Name: ZenBlog
-  * Updated: Mar 10 2023 with Bootstrap v5.2.3
-  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-  * Author: BootstrapMade.com
-  * License: https:///bootstrapmade.com/license/
-  ======================================================== -->
+
     </head>
 
     <body>
@@ -59,6 +55,13 @@
               <li><a href="${contextRoot}/">首頁</a></li>
               <li><a href="${contextRoot}/company">廠商專區</a></li>
               <li><a href="${contextRoot}/exampleFrontendPage">前台範例頁面</a></li>
+              <li class="Store"><a href="${contextRoot}/Store/Storeindex"><span>線上商城</span>
+                <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+              <ul>
+                <li><a href="${contextRoot}/Store/CommCate/add">商品分類新增</a></li>
+  
+              </ul>
+            </li>
               <li class="dropdown"><a href="category.html"><span>Categories</span> <i
                     class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
@@ -113,3 +116,5 @@
     </body>
 
     </html>
+
+
