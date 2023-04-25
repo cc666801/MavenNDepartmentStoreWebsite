@@ -1,9 +1,11 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.MemberFavorite;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.MemberLevel;
@@ -44,8 +46,20 @@ public class MemberService {
 	}
 
 	// 更新會員資料
-	public void updateMemberSystem(MemberSystem memberSystem) {
-		memberSystemRepository.save(memberSystem);
+	@Transactional
+	public MemberSystem updateMemberSystem(Integer id,MemberSystem newMember) {
+		Optional<MemberSystem> option = memberSystemRepository.findById(id);
+		
+		if(option.isPresent()) {
+			MemberSystem mem = option.get();
+			mem.setMemberEmail(newMember.getMemberEmail());
+			mem.setMemberAddress(newMember.getMemberAddress());
+			mem.setMemberPhone(newMember.getMemberPhone());
+			mem.setMemberPicture(newMember.getMemberPicture());
+			mem.setMemberPoints(newMember.getMemberPoints());
+			return mem;
+		}
+		return null;
 	}
 
 	// 刪除會員資料

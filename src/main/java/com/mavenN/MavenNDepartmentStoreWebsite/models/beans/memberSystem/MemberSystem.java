@@ -22,6 +22,11 @@ public class MemberSystem {
     @Column(name = "member_Name")
     private String memberName;
 
+    @Column(name = "member_Account")
+    private String memberAccount;
+
+    @Column(name = "member_Password")
+    private String memberPassword;
     
     @DateTimeFormat(pattern = "yyyy/MM/dd")
     @Column(name = "member_Birthday", columnDefinition = "date")
@@ -33,32 +38,28 @@ public class MemberSystem {
     @Column(name = "member_Phone")
     private String memberPhone;
 
-    @Column(name = "member_Account")
-    private String memberAccount;
-
-    @Column(name = "member_Password")
-    private String memberPassword;
-
     @Column(name = "member_Address")
     private String memberAddress;
 
-    @Column(name = "member_Verify")
-    private String memberVerify;
+    @Column(name = "member_Picture")
+    private String memberPicture;
 
     @Column(name = "member_Points")
     private String memberPoints;
+    
+//    @Column(name = "member_Verify")
+//    private String memberVerify;
+    
+//    @Column(name = "member_Level")
+//    private String memberLevel;
 
-    @Column(name = "member_Level")
-    private String memberLevel;
+//    @Column(name = "member_ShopViolationTimes")
+//    private String memberShopViolationTimes;
 
-    @Column(name = "member_ShopViolationTimes")
-    private String memberShopViolationTimes;
+//    @Column(name = "member_Punishment")
+//    private String memberPunishment;
 
-    @Column(name = "member_Punishment")
-    private String memberPunishment;
-
-    @Column(name = "member_Picture")
-    private String memberPicture;
+   
     
 	public Integer getMemberId() {
 		return memberId;
@@ -124,44 +125,12 @@ public class MemberSystem {
 		this.memberAddress = memberAddress;
 	}
 
-	public String getMemberVerify() {
-		return memberVerify;
-	}
-
-	public void setMemberVerify(String memberVerify) {
-		this.memberVerify = memberVerify;
-	}
-
 	public String getMemberPoints() {
 		return memberPoints;
 	}
 
 	public void setMemberPoints(String memberPoints) {
 		this.memberPoints = memberPoints;
-	}
-
-	public String getMemberLevel() {
-		return memberLevel;
-	}
-
-	public void setMemberLevel(String memberLevel) {
-		this.memberLevel = memberLevel;
-	}
-
-	public String getMemberShopViolationTimes() {
-		return memberShopViolationTimes;
-	}
-
-	public void setMemberShopViolationTimes(String memberShopViolationTimes) {
-		this.memberShopViolationTimes = memberShopViolationTimes;
-	}
-
-	public String getMemberPunishment() {
-		return memberPunishment;
-	}
-
-	public void setMemberPunishment(String memberPunishment) {
-		this.memberPunishment = memberPunishment;
 	}
 
 	public String getMemberPicture() {
