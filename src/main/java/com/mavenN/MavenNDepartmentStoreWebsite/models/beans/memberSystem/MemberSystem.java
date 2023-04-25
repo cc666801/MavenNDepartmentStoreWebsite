@@ -162,7 +162,16 @@ public class MemberSystem {
 
 	public void setMemberPunishment(String memberPunishment) {
 		this.memberPunishment = memberPunishment;
+	}
+
+	public String getMemberPicture() {
+		return memberPicture;
+	}
+
+	public void setMemberPicture(String memberPicture) {
+		this.memberPicture = memberPicture;
 	}    
+	
 }
 	
     
