@@ -1,6 +1,9 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+import java.util.Date;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -15,13 +18,18 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
-	@GetMapping()
+	@GetMapping("/restaurant/add")
+	public String addReservation(Model model) {
+		model.addAttribute("reservation", new Reservation());
+		return "restaurant/addreservation";
+	}
 	
 	
 	@PostMapping("/reservation/post")
-	public String addReservation(@ModelAttribute("messages") Reservation res, Model model) {
+	public String postReservation(@ModelAttribute("reservation") Reservation res,@DateTimeFormat(pattern="yyyy-MM-dd") Date date, Model model) {
+		res.setDate(date);
 		reService.addreservation(res);
-		model.addAttribute("res",new Reservation());
+		model.addAttribute("reservation",new Reservation());
 		return "restaurant/addreservation";
 	}
 }
