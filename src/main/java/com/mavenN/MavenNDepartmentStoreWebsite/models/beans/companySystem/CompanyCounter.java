@@ -31,11 +31,6 @@ public class CompanyCounter {
     @MapsId("counterId")
     @JoinColumn(name = "fk_counter_id")
     private Counter counter;
-
-    @Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    @Column(name = "on_counter_time", columnDefinition = "datetime")
-    private Date onCounterTime;
     
     @Column(name = "contract_time", columnDefinition = "datetime")
     private Integer contractTime;
@@ -55,14 +50,6 @@ public class CompanyCounter {
 
 	public void setId(CompanyCounterId id) {
 		this.id = id;
-	}
-
-	public Date getOnCounterTime() {
-		return onCounterTime;
-	}
-
-	public void setOnCounterTime(Date onCounterTime) {
-		this.onCounterTime = onCounterTime;
 	}
 
 	public Company getCompany() {

@@ -82,7 +82,6 @@ public class CompanyService {
 
 		return optionalCompany.get();
 	}
-
 	@Transactional
 	public Company updateCompanyById(Integer companyId, String companyName, String companyPhone, byte[] companyLogo,
 			Address address, IndustryCategory industryCategory, OpeningHours openingHours,
@@ -111,6 +110,7 @@ public class CompanyService {
 		companyRepository.deleteById(id);
 	}
 
+	
 	// Api
 	// For showAllCompaniesApi()
 	public Page<CompanyDto> findByPageApi(Integer pageNumber) {
