@@ -12,7 +12,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.customerService.LostAndFound;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
 
@@ -60,11 +59,11 @@ public class ArticleController {
 	}
 	
 	@PutMapping("/articleBack/edit")
-	public String putEditArticle(@ModelAttribute("art") Article art) {
-		 articleService.updateArticleById(art.getArticleID(),art);
+	public String putEditArticle(@ModelAttribute("art") Article art,@RequestParam("content") String content) {
+		art.setArticleContent(content); 
+		articleService.updateArticleById(art.getArticleID(),art);
 		 return "redirect:/articleBack";
-	}
-	
+	}	
 	
 	
 }

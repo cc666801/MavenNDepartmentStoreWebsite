@@ -74,7 +74,7 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js""></script>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 	
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
@@ -83,21 +83,24 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	<script>
-		$(document).ready(function() {
-			$("#your_summernote").summernote();
-			$('.dropdown-toggle').dropdown();
-		});
 	</script>
 
 	<script>
 		$(document).ready(function() {
-			$('#summernote').summernote({
+			
+			$('#summernote').summernote({					
 				callbacks : {
 					onChange : function(contents, $editable) {
 						$('#summernote-input').val(contents);
 					}
 				}
 			});
+			
+			$('#summernote').summernote({
+				  codeviewFilter: true,
+				  codeviewIframeFilter: true
+				});
+			
 		});
 	</script>
 </body>
