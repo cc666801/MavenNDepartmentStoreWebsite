@@ -10,7 +10,7 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservati
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestReservationRepository;
 
 @Service
-public class RestrReservationService {
+public class RestReservationService {
 	@Autowired
 	private RestReservationRepository reservation;
 	
