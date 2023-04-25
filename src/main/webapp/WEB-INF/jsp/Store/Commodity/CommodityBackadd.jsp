@@ -18,9 +18,10 @@
 	<!-- End Header -->
 	<main id="main">
 
-		<h1>新增商品類別後台(新增)</h1>
-		<form:form method="post" modelAttribute="cate"
-			action="${contextRoot}/Store/CommCate/post">
+		<h1>新增商品頁面後台(新增)</h1>
+		<form:form method="post" modelAttribute="commodity"
+			action="${contextRoot}/Store/Commodity/post"
+			enctype="multipart/form-data">
 
 
 			<form:label path="comm_Name">商品名稱</form:label>
@@ -30,7 +31,7 @@
 			<form:input path="comm_Desc" />
 			<br>
 			<form:label path="comm_Picture">商品照片</form:label>
-			<form:input path="comm_Picture" />
+			<form:input path="comm_Picture" type="file" id="formfile" />
 			<br>
 			<form:label path="cate_Id">類別分類</form:label>
 			<form:input path="cate_Id" />
@@ -41,10 +42,14 @@
 			<form:label path="comm_Discount">商品折扣</form:label>
 			<form:input path="comm_Discount" />
 			<br>
-			<form:label path="comm_Shelve">商品上下架</form:label>
-			<form:input path="comm_Shelve" />
+			<label for="comm_Shelve">商品上下架</label>
+			<input type="radio" id="comm_Shelve_true" name="comm_Shelve"
+				value="true">
+			<label for="comm_Shelve_true">上架</label>
+			<input type="radio" id="comm_Shelve_false" name="comm_Shelve"
+				value="false">
+			<label for="comm_Shelve_false">下架</label>
 			<br>
-
 
 			<button type="submit" value="確定">送出</button>
 		</form:form>

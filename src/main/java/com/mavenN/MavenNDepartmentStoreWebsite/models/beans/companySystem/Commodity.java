@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
+import java.io.IOException;
 import java.util.Date;
 
 import javax.persistence.CascadeType;
@@ -41,6 +42,9 @@ public class Commodity {
 
 	@Transient
 	private String base64Stringcomm_Picture;
+	
+
+
 	
 	@Column(name="comm_Desc", columnDefinition = "nvarchar(300)",nullable = true)
 	private String comm_Desc;

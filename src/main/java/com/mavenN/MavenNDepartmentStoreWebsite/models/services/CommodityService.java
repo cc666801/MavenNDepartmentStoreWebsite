@@ -3,6 +3,8 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -46,7 +48,7 @@ public class CommodityService {
 	
 	
 //	透過 id 更新
-	
+	@Transactional
 	public Commodity updateCommodityById(Integer comm_Id, Commodity newcommodity) {
 		Optional<Commodity> option = CommodityRepository.findById(comm_Id);
 
