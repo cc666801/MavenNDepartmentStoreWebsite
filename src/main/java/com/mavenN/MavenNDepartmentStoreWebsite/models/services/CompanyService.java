@@ -41,10 +41,6 @@ public class CompanyService {
 	private OpeningHoursRepository openingHoursRepository;
 
 	// For getAddCompanyPage()
-	public void addCompany(Company company) {
-		companyRepository.save(company);
-	}
-
 	public List<Address> findAllAddresses() {
 		List<Address> addresses = addressRepository.findAll();
 		return addresses;
@@ -65,6 +61,10 @@ public class CompanyService {
 		return openingHourses;
 	}
 
+	public void addCompany(Company company) {
+		companyRepository.save(company);
+	}
+	
 	// For showAllCompanys()
 	public Page<Company> findByPage(Integer pageNumber) {
 		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.DESC, "companyId");

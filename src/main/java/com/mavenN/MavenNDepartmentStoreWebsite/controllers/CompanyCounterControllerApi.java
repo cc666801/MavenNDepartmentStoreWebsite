@@ -16,16 +16,16 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Compan
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyCounterRepository;
 
 @RestController
-@RequestMapping("/companyCounter")
+@RequestMapping("/api/companyCounter")
 public class CompanyCounterControllerApi {
     
     @Autowired
-    private CompanyCounterRepository repository;
+    private CompanyCounterRepository companyCounterRepository;
     
     // 取得所有資料
     @GetMapping("/")
     public List<CompanyCounter> getAll() {
-        return repository.findAll();
+        return companyCounterRepository.findAll();
     }
     
 //    // 取得特定複合主鍵的資料
@@ -65,8 +65,8 @@ public class CompanyCounterControllerApi {
         id.setCompanyId(companyId);
         id.setCounterId(counterId);
         id.setOnCounterTime(onCounterTime);
-        if (repository.existsById(id)) {
-            repository.deleteById(id);
+        if (companyCounterRepository.existsById(id)) {
+        	companyCounterRepository.deleteById(id);
             return true;
         } else {
             return false;

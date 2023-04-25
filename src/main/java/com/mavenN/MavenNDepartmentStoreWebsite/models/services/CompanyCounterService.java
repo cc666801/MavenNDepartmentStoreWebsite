@@ -3,9 +3,16 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Counter;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyCounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CounterRepository;
 
@@ -16,11 +23,29 @@ public class CompanyCounterService {
 	private CompanyRepository companyRepository;
 	@Autowired
 	private CounterRepository counterRepository;
-	
+	@Autowired
+	private CompanyCounterRepository companyCounterRepository;
+
 	// For addCompanyCounter()
 	public List<Company> findAllCompanies() {
 		List<Company> companies = companyRepository.findAll();
 		return companies;
+	}
+
+	public List<Counter> findAllCounters() {
+		List<Counter> counters = counterRepository.findAll();
+		return counters;
+	}
+
+	public void saveCompanyCounter(CompanyCounter companyCounter) {
+		companyCounterRepository.save(companyCounter);
+	}
+
+	// For getAllCompanyCounters()
+	public Page<CompanyCounter> findCompanyCountersByPage(Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.DESC, "companyCounterId");
+		Page<CompanyCounter> page = companyCounterRepository.findAll(pgb);
+		return page;
 	}
 
 }
