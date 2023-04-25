@@ -52,11 +52,11 @@
 									<td>文章內容連結</td>
 									<td>${art.createTime}</td>
 									<td>${art.editTime}</td>
-									<td><form action="#">
+									<td><form action="${contextRoot}/articleBack/edit">
 											<input type="hidden" name="id" value="${art.articleID}" /> <input
 												type="submit" value="編輯" />
 										</form></td>
-									<td><form action="#" method="post">
+									<td><form action="${contextRoot}/articleBack/delete" method="post">
 											<input type="hidden" name="_method" value="delete" /> <input
 												type="hidden" name="id" value="${art.articleID}" /> <input
 												type="submit" value="刪除" />

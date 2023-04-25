@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>文章管理後台-新增</title>
+<title>編輯文章</title>
 
 <!-- include libraries(jQuery, bootstrap) -->
 <link rel="stylesheet"
@@ -23,6 +23,7 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
+	
 </head>
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
@@ -38,12 +39,16 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-					<h1>文章管理-新增</h1>
-					<form:form modelAttribute="article" method="post"
-						action="${contextRoot}/articleBack/post">
+					<h1>編輯文章</h1>
+					<form:form modelAttribute="art" method="put"
+						action="${contextRoot}/articleBack/edit">
+						<form:input type="hidden" path="articleID" />
+						<form:label path="articleID">文章編號:</form:label>
+						<br>
 						<form:label path="title">標題:</form:label>
 						<form:input path="title" />
 						<br>
+					
 						<form:label path="categoryID">類別:</form:label>
 						<form:select path="categoryID">
 							<form:option value="1">公告</form:option>
@@ -83,7 +88,7 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function() {	
 			$("#your_summernote").summernote();
 			$('.dropdown-toggle').dropdown();
 		});
@@ -93,12 +98,20 @@
 		$(document).ready(function() {
 			$('#summernote').summernote({
 				callbacks : {
-					onChange : function(contents, $editable) {
+					onInit : function() {
+			            $('#summernote').summernote('code', '${art.articleContent}');
+			        }					
+					
+				onChange : function(contents, $editable) {
 						$('#summernote-input').val(contents);
 					}
 				}
 			});
 		});
 	</script>
+	
+	
+	
 </body>
+
 </html>

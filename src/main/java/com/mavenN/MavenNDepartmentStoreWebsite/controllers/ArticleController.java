@@ -59,7 +59,7 @@ public class ArticleController {
 		return "/forum/article/articleBackEdit";
 	}
 	
-	@PutMapping("/LostAndFoundBack/edit")
+	@PutMapping("/articleBack/edit")
 	public String putEditArticle(@ModelAttribute("art") Article art) {
 		 articleService.updateArticleById(art.getArticleID(),art);
 		 return "redirect:/articleBack";
