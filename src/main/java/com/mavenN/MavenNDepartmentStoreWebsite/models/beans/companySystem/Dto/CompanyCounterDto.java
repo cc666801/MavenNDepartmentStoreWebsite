@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto;
 
+import java.time.LocalDateTime;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;

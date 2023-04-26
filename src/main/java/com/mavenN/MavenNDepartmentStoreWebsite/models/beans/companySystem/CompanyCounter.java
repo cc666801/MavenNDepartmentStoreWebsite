@@ -1,7 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
-import java.util.Calendar;
+import java.sql.Timestamp;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -44,15 +45,7 @@ public class CompanyCounter {
     @PrePersist
     public void setOffCounterTimeIfNull() {
         if (offCounterTime == null) {
-            Calendar cal = Calendar.getInstance();
-            cal.setTime(companyCounterId.getOnCounterTime());
-            cal.add(Calendar.YEAR, contractTime);
-            offCounterTime = cal.getTime();
-            cal.set(Calendar.MONTH, cal.get(Calendar.MONTH));
-            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
-            cal.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));
-            cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
-            cal.set(Calendar.SECOND, cal.get(Calendar.SECOND));
+            offCounterTime = new Timestamp(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(365 * contractTime));
         }
     }
     
@@ -99,12 +92,6 @@ public class CompanyCounter {
 
 	public void setOffCounterTime(Date offCounterTime) {
 		this.offCounterTime = offCounterTime;
-	}
-
-	@Override
-	public String toString() {
-		return "CompanyCounter [companyCounterId=" + companyCounterId + ", company=" + company + ", counter=" + counter
-				+ ", contractTime=" + contractTime + ", offCounterTime=" + offCounterTime + "]";
 	}
 
 }

@@ -1,8 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
 import java.io.Serializable;
-import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -34,42 +32,39 @@ public class CompanyCounterId implements Serializable{
     @PrePersist
     public void setOnCounterTimeIfNull() {
         if (onCounterTime == null) {
-            onCounterTime = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
+            onCounterTime = new Date();
         }
     }
     
 	public CompanyCounterId() {
 	}
-	
-	
 
+	
+	
+	@Override
+	public int hashCode() {
+		return Objects.hash(companyId, counterId, onCounterTime);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		CompanyCounterId other = (CompanyCounterId) obj;
+		return Objects.equals(companyId, other.companyId) && Objects.equals(counterId, other.counterId)
+				&& Objects.equals(onCounterTime, other.onCounterTime);
+	}
+
+	// Constructor
 	public CompanyCounterId(Integer companyId, Integer counterId, Date onCounterTime) {
 		super();
 		this.companyId = companyId;
 		this.counterId = counterId;
 		this.onCounterTime = onCounterTime;
-	}
-
-	@Override
-	public int hashCode() {
-	final int prime = 31;
-	int result = 1;
-	result = prime * result + ((companyId == null) ? 0 : companyId.hashCode());
-	result = prime * result + ((counterId == null) ? 0 : counterId.hashCode());
-	result = prime * result + ((onCounterTime == null) ? 0 : onCounterTime.hashCode());
-	return result;
-	}
-	
-	@Override
-	public boolean equals(Object obj) {
-	    if (this == obj) {
-	        return true;
-	    }
-	    if (!(obj instanceof CompanyCounterId)) {
-	        return false;
-	    }
-	    CompanyCounterId other = (CompanyCounterId) obj;
-	    return Objects.equals(companyId, other.companyId) && Objects.equals(counterId, other.counterId) && Objects.equals(onCounterTime, other.onCounterTime);
 	}
 	
 	// Getter And Setter
@@ -99,12 +94,6 @@ public class CompanyCounterId implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
-	}
-
-	@Override
-	public String toString() {
-		return "CompanyCounterId [companyId=" + companyId + ", counterId=" + counterId + ", onCounterTime="
-				+ onCounterTime + "]";
 	}
 	
 	
