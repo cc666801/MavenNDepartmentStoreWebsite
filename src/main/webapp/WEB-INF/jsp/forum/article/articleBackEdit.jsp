@@ -3,7 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -57,8 +58,8 @@
 							<form:option value="3">心情抒發</form:option>
 						</form:select>
 						<br>
-						<input type="hidden" name="content" id="summernote-input"
-							value="${art.articleContent}">
+						
+						<form:hidden name="articleContent"  path="articleContent" id="summernote-input"/>
 						<div id="summernote">${art.articleContent}</div>
 						<button type="submit">送出</button>
 					</form:form>
@@ -93,10 +94,11 @@
 	<script>
 		$(document).ready(function() {
 			$('#summernote').summernote({
-				codeviewFilter: true,
-				codeviewIframeFilter: true,
-				callbacks: {
-					onChange: function(contents, $editable) {
+
+				codeviewFilter : true,
+				codeviewIframeFilter : true,
+				callbacks : {
+					onChange : function(contents, $editable) {
 						$('#summernote-input').val(contents);
 					}
 				},

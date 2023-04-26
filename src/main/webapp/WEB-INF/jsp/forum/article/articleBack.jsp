@@ -49,7 +49,7 @@
 									<td>${art.title}</td>
 									<td>帳號</td>
 									<td>${art.categoryID}</td>
-									<td>文章內容連結</td>
+									<td><a href="${contextRoot}/articleContent/${art.articleID}">文章內容</a></td>
 									<td>${art.createTime}</td>
 									<td>${art.editTime}</td>
 									<td><form action="${contextRoot}/articleBack/edit">

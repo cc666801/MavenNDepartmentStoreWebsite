@@ -8,13 +8,13 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
-
 @Controller
 public class ArticleController {
 
@@ -59,11 +59,18 @@ public class ArticleController {
 	}
 	
 	@PutMapping("/articleBack/edit")
-	public String putEditArticle(@ModelAttribute("art") Article art,@RequestParam("content") String content) {
+	public String putEditArticle(@ModelAttribute("art") Article art,@RequestParam("articleContent") String content) {
 		art.setArticleContent(content); 
 		articleService.updateArticleById(art.getArticleID(),art);
 		 return "redirect:/articleBack";
 	}	
+	
+	@GetMapping("/articleContent/{id}")
+	public String getArticleById(@PathVariable Integer id, Model model) {
+	    Article article = articleService.findArticleById(id);
+	    model.addAttribute("article", article);
+	    return "/forum/article/showArticleContent";
+	}
 	
 	
 }

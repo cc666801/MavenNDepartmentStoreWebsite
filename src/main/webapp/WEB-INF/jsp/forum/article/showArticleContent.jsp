@@ -11,6 +11,6 @@
 <title>文章內容</title>
 </head>
 <body>
-<c:out value="${art.articleContent}" escapeXml="false" />
+<div id="articleContent">${article.articleContent}</div>
 </body>
 </html>
