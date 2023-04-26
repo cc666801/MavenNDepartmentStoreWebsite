@@ -33,112 +33,26 @@
 			<main>
 				<h1>找到被更新的資料頁面</h1>
 				<div>
-					<form:form action="${contextRoot}/company/updateCompany"
-						method="PUT" modelAttribute="company"
-						enctype="multipart/form-data" id="companyForm">
-						<div class="form-group">
-							<form:input path="companyId" id="companyId" class="form-control"
-								type="hidden"></form:input>
-						</div>
-						<div class="form-group">
-							<label for="companyName">Company Name:</label>
-							<form:input path="companyName" id="companyName"
-								class="form-control"></form:input>
-						</div>
-						<div class="form-group">
-							<label for="companyPhone">Company Phone:</label>
-							<form:input path="companyPhone" id="companyPhone"
-								class="form-control"></form:input>
-						</div>
-						<div class="form-group">
-							<label for="companyLogo">Company Logo:</label> <img
-								src="data:image/jpeg;base64, ${company.base64StringCompanyLogo}" />
-							<form:input type="file" path="transferToByteArray"
-								id="companyLogo" class="form-control"></form:input>
-						</div>
-						<div class="form-group">
-							<label for="address">Address:</label>
-							<form:select path="address" id="address" class="form-control">
-						<jstl:forEach items="${addresses}" var="address">
-									<jstl:choose>
-						<jstl:when test="${address.addressId == company.address.addressId}">
-							<form:option value="${address.addressId}" selected="selected">
-					${address.addressName}
-					</form:option>	
-						</jstl:when>
-						<jstl:otherwise>
-							<form:option value="${address.addressId}">
-					${address.addressName}
-					</form:option>							
-						</jstl:otherwise>
-						</jstl:choose>
-								</jstl:forEach>
-							</form:select>
-						</div>
-						<div class="form-group">
-							<label for="industryCategory">Industry Category:</label>
-							<form:select path="industryCategory" id="industryCategory"
-								class="form-control">
-						<jstl:forEach items="${industryCategories}" var="industryCategory">
-					<jstl:choose>
-						<jstl:when test="${industryCategory.industryCategoryId == company.industryCategory.industryCategoryId}">
-							<form:option value="${industryCategory.industryCategoryId}" selected="selected">
-					${industryCategory.industryCategoryName}
-					</form:option>	
-						</jstl:when>
-						<jstl:otherwise>
-							<form:option value="${industryCategory.industryCategoryId}">
-					${industryCategory.industryCategoryName}
-					</form:option>							
-						</jstl:otherwise>
-						</jstl:choose>
-								</jstl:forEach>
-							</form:select>
-						</div>
-						<div class="form-group">
-							<label for="cooperationStatus">Cooperation Status:</label>
-							<form:select path="cooperationStatus" id="cooperationStatus"
-								class="form-control">
-						<jstl:forEach items="${cooperationStatuses}"
-									var="cooperationStatus">
-									<jstl:choose>
-						<jstl:when test="${cooperationStatus.cooperationStatusId == company.cooperationStatus.cooperationStatusId}">
-							<form:option value="${cooperationStatus.cooperationStatusId}" selected="selected">
-					${cooperationStatus.cooperationStatusName}
-					</form:option>	
-						</jstl:when>
-						<jstl:otherwise>
-							<form:option value="${cooperationStatus.cooperationStatusId}">
-					${cooperationStatus.cooperationStatusName}
-					</form:option>							
-						</jstl:otherwise>
-						</jstl:choose>
-								</jstl:forEach>
-							</form:select>
-						</div>
-						<div class="form-group">
-							<label for="industryCategory">Opening Hours:</label>
-							<form:select path="openingHours" id="openingHours"
-								class="form-control">
-								<jstl:forEach items="${openingHourses}" var="openingHours">
-									<jstl:choose>
-										<jstl:when
-											test="${openingHours.openingHoursId == company.openingHours.openingHoursId}">
-											<form:option value="${openingHours.openingHoursId}"
-												selected="selected">
-					${openingHours.openingHoursName}
-					</form:option>
-										</jstl:when>
-										<jstl:otherwise>
-											<form:option value="${openingHours.openingHoursId}">
-					${openingHours.openingHoursName}
-					</form:option>
-										</jstl:otherwise>
-									</jstl:choose>
-								</jstl:forEach>
-							</form:select>
-						</div>
-						<button type="submit" class="btn btn-primary">送出</button>
+					<form:form method="PUT"
+						action="${contextRoot}/companycounters/updateCompanyCounter">
+						<input type="hidden" name="companyId" path="id.companyId"
+							value="${companyCounter.company.companyId}" />
+						<input type="hidden" name="counterId" path="id.counterId"
+							value="${companyCounter.counter.counterId}" />
+						<input type="hidden" name="onCounterTime" path="id.onCounterTime"
+							value="${companyCounter.id.onCounterTime}" />
+
+						
+
+						
+
+						<label>Contract Time:</label>
+						<form:input type="number" name="contractTime" path="contractTime"
+							value="${companyCounter.contractTime}" />
+						<br>
+
+
+						<input type="submit" value="更新合約時間" />
 					</form:form>
 				</div>
 			</main>

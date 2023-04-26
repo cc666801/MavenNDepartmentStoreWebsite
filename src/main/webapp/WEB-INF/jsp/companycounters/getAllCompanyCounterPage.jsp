@@ -65,7 +65,7 @@
 										<th>companyName</th>
 										<th>counterName</th>
 										<th>contractTime</th>
-										<th>contractTime</th>
+										<th>onCounterTime</th>
 										<th>offCounterTime</th>
 										<th>更新按鈕</th>
 <!-- 										<th>刪除按鈕</th> -->
@@ -126,8 +126,7 @@
 		  			tableData += '<td>' + value.contractTime + '</td>';
 		  			tableData += '<td>' + value.onCounterTime + '</td>';
 		  			tableData += '<td>' + value.offCounterTime + '</td>';
-		  			console.log(encodeURIComponent(new Date(value.onCounterTime).toISOString().slice(0, 19).replace('T', ' ')))
-		  			tableData += '<td><a href="${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(new Date(value.onCounterTime).toISOString().slice(0, 19).replace('T', ' ')) + '">更新</a></td>';
+		  			tableData += '<td><a href="${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '">更新</a></td>';
 // 		  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
 		  			tableData += '</tr>';  			
 	            });

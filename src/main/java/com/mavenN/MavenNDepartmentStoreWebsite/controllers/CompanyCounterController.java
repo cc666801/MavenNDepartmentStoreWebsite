@@ -5,8 +5,10 @@ import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
+import java.util.TimeZone;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -78,22 +80,14 @@ public class CompanyCounterController {
     @GetMapping("/findCompanyCounterById")
     public String findCompanyCounterById(@RequestParam("companyId") Integer companyId,
                                          @RequestParam("counterId") Integer counterId,
-                                         @RequestParam(name = "onCounterTime") @DateTimeFormat(pattern = "yyyy-MM-dd HH:mm:ss") Date onCounterTime,
+                                         @RequestParam(name = "onCounterTime") @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss") Date onCounterTime,
                                          Model model
-                                     ) {
-        Date date;
-		try {
-			date = sdf.parse("2023-04-26 15:51:11.000");
-			CompanyCounterId id2 = new CompanyCounterId(1, 2, date);
-			System.out.println("id2=" + id2 + "date1:" + onCounterTime);
-			CompanyCounterId id1 = new CompanyCounterId(companyId, counterId, date);
-			System.out.println("id1=" + id1 + "date2:" + date);
-		} catch (ParseException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-//        CompanyCounter companyCounter = companyCounterService.findById(id);
-//        model.addAttribute("companyCounter", companyCounter);
-        return "getEditedCompanyCounterPage";
+                                     ) throws ParseException {
+    	
+    	CompanyCounterId id = new CompanyCounterId(companyId, counterId, onCounterTime);
+    	CompanyCounter companyCounter = companyCounterService.findById(id);
+    	
+    	model.addAttribute("companyCounter", companyCounter);
+        return "companycounters/getEditedCompanyCounterPage";
     }
 }

@@ -82,6 +82,7 @@ public class CompanyService {
 
 		return optionalCompany.get();
 	}
+	// For updateCompany()
 	@Transactional
 	public Company updateCompanyById(Integer companyId, String companyName, String companyPhone, byte[] companyLogo,
 			Address address, IndustryCategory industryCategory, OpeningHours openingHours,
