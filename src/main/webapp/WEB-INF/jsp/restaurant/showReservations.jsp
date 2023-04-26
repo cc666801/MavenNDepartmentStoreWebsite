@@ -54,7 +54,10 @@
 						<td>${far.children}</td>
 						<td><button>刪除</button></td>
 <%-- 						<td><a href="DeleteBookById.do?Id=${m.id}"><button>刪除</button></a></td> --%>
-						<td><a href="#"><button>修改</button></a></td>
+						<td><form action="${contextRoot}/restaurant/edit">
+						   <input type="hidden" name="r_id" value="${far.r_id}" />
+						   <input type="submit" class="btn btn-warning btn-sm" value="編輯" />
+						</form></td>
 					</tr>
 				</jstl:forEach>
 			</tbody>

@@ -10,6 +10,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
@@ -39,4 +41,26 @@ public class RestReservationController {
 		model.addAttribute("findAllReservation",findAllReservation);
 		return "restaurant/showReservations";
 	}
+	
+	@GetMapping("/restaurant/edit")
+	public String editPage(@RequestParam("r_id") Integer r_id, Model model) {
+		Reservation findbyid = reService.findreservationbyid(r_id);
+		model.addAttribute("reservation",findbyid);
+		return "restaurant/editReservation";
+	}
+	
+	@PutMapping("/restaurant/edit")
+	public String putEditReservation(@ModelAttribute("reservation") Reservation res) {
+		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(), 
+										res.getEmail(), res.getRemark(), res.getDate(), 
+										res.getTime_interval(), res.getTime(), 
+										res.getAdult(), res.getChildren());
+		return "redirect:/restaurant";
+			
+		
+	}
+	
+		
+	
+	
 }
