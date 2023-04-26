@@ -3,12 +3,10 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
-import java.time.ZoneId;
 import java.time.format.DateTimeFormatter;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
-import java.util.TimeZone;
+import java.util.Locale;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -17,6 +15,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -34,12 +33,7 @@ public class CompanyCounterController {
     private CompanyCounterService companyCounterService;
 	
 	 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
-//	@InitBinder
-//    public void initBinder(WebDataBinder binder) {
-//        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-//        dateFormat.setLenient(false);
-//        binder.registerCustomEditor(Date.class, new CustomDateEditor(dateFormat, true));
-//    }
+
 
 	
 	// 查詢所有資料
@@ -66,12 +60,7 @@ public class CompanyCounterController {
 
     @PostMapping("/save")
     public String saveCompanyCounter(@ModelAttribute("companyCounter") CompanyCounter companyCounter) {
-        if (companyCounter.getId().getOnCounterTime() == null) {
-            DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
-            String onCounterTime = LocalDateTime.now().format(formatter);
-            Date date = Date.from(LocalDateTime.parse(onCounterTime, formatter).atZone(ZoneId.systemDefault()).toInstant());
-            companyCounter.getId().setOnCounterTime(date);
-        }
+        
         companyCounterService.saveCompanyCounter(companyCounter);
         return "redirect:/companycounters/";
     }
@@ -89,5 +78,26 @@ public class CompanyCounterController {
     	
     	model.addAttribute("companyCounter", companyCounter);
         return "companycounters/getEditedCompanyCounterPage";
+    }
+    
+    
+    @PutMapping("/updateCompanyCounter")
+    public String updateCompanyCounter(@ModelAttribute("companyCounter") CompanyCounter companyCounter) {
+    	DateTimeFormatter inputFormatter = DateTimeFormatter.ofPattern("EEE MMM dd HH:mm:ss zzz yyyy", Locale.ENGLISH);
+    	DateTimeFormatter outputFormatter = DateTimeFormatter.ofPattern("yyyy/MM/dd HH:mm:ss");
+    	try {
+    	    String inputString = companyCounter.getDateStringFromFrontend();
+    	    LocalDateTime dateTime = LocalDateTime.parse(inputString, inputFormatter);
+    	    String outputString = dateTime.format(outputFormatter);
+    	    Date date = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").parse(outputString);
+    	    CompanyCounterId id = new CompanyCounterId(companyCounter.getCompanyCounterId().getCompanyId(), companyCounter.getCompanyCounterId().getCounterId(), date);
+    	    companyCounter.setCompanyCounterId(id);
+    	    companyCounterService.updateCompanyCounter(companyCounter);
+    	    
+    	} catch (ParseException e) {
+    	    e.printStackTrace();
+    	}
+    	
+        return "redirect:/companycounters/";
     }
 }

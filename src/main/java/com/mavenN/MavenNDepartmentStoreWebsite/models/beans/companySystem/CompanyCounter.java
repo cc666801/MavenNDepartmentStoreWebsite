@@ -1,8 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
 import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.Date;
-import java.util.concurrent.TimeUnit;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -14,6 +14,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -42,10 +43,16 @@ public class CompanyCounter {
     @Column(name = "off_counter_time", columnDefinition = "datetime")
     private Date offCounterTime;
     
+    @Transient
+    private String dateStringFromFrontend;
+    
     @PrePersist
     public void setOffCounterTimeIfNull() {
         if (offCounterTime == null) {
-            offCounterTime = new Timestamp(System.currentTimeMillis() + TimeUnit.DAYS.toMillis(365 * contractTime));
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(companyCounterId.getOnCounterTime());
+            cal.add(Calendar.YEAR, contractTime);
+            offCounterTime = new Timestamp(cal.getTimeInMillis());
         }
     }
     
@@ -54,13 +61,6 @@ public class CompanyCounter {
 	}
 
     // Getters and Setters
-	public CompanyCounterId getId() {
-		return companyCounterId;
-	}
-
-	public void setId(CompanyCounterId id) {
-		this.companyCounterId = id;
-	}
 
 	public Company getCompany() {
 		return company;
@@ -93,5 +93,30 @@ public class CompanyCounter {
 	public void setOffCounterTime(Date offCounterTime) {
 		this.offCounterTime = offCounterTime;
 	}
+	
+	
 
+	public CompanyCounterId getCompanyCounterId() {
+		return companyCounterId;
+	}
+
+	public void setCompanyCounterId(CompanyCounterId companyCounterId) {
+		this.companyCounterId = companyCounterId;
+	}
+
+	public String getDateStringFromFrontend() {
+		return dateStringFromFrontend;
+	}
+
+	public void setDateStringFromFrontend(String dateStringFromFrontend) {
+		this.dateStringFromFrontend = dateStringFromFrontend;
+	}
+
+	@Override
+	public String toString() {
+		return "CompanyCounter [companyCounterId=" + companyCounterId + ", company=" + company + ", counter=" + counter
+				+ ", contractTime=" + contractTime + ", offCounterTime=" + offCounterTime + "]";
+	}
+
+	
 }

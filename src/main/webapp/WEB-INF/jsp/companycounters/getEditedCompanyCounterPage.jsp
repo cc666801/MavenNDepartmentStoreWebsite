@@ -34,13 +34,13 @@
 				<h1>找到被更新的資料頁面</h1>
 				<div>
 					<form:form method="PUT"
-						action="${contextRoot}/companycounters/updateCompanyCounter">
-						<input type="hidden" name="companyId" path="id.companyId"
+						action="${contextRoot}/companycounters/updateCompanyCounter" modelAttribute="companyCounter">
+						<form:input type="hidden" name="companyId" path="companyCounterId.companyId"
 							value="${companyCounter.company.companyId}" />
-						<input type="hidden" name="counterId" path="id.counterId"
+						<form:input type="hidden" name="counterId" path="companyCounterId.counterId"
 							value="${companyCounter.counter.counterId}" />
-						<input type="hidden" name="onCounterTime" path="id.onCounterTime"
-							value="${companyCounter.id.onCounterTime}" />
+						<form:input type="hidden" name="onCounterTime" path="dateStringFromFrontend"
+							value="${companyCounter.companyCounterId.onCounterTime}" />
 
 						
 

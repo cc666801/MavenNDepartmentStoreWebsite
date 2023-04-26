@@ -1,8 +1,12 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import javax.transaction.Transactional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -65,4 +69,14 @@ public class CompanyCounterService {
         throw new NoSuchElementException("CompanyCounter with id " + id + " does not exist.");
     }
 
+	// For updateCompanyCounter()
+	@Transactional
+	public void updateCompanyCounter(CompanyCounter companyCounter) {
+		Calendar cal = Calendar.getInstance();
+        cal.setTime(companyCounter.getCompanyCounterId().getOnCounterTime());
+        cal.add(Calendar.YEAR, companyCounter.getContractTime());
+        Timestamp timestamp = new Timestamp(cal.getTimeInMillis());
+        companyCounter.setOffCounterTime(timestamp);
+        companyCounterRepository.save(companyCounter);
+    }
 }

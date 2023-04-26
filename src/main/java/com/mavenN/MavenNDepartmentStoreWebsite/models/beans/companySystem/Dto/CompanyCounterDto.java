@@ -37,7 +37,7 @@ public class CompanyCounterDto {
         this.counterId = companyCounter.getCounter().getCounterId();
         this.counterName = companyCounter.getCounter().getCounterName();
         this.contractTime = companyCounter.getContractTime();
-        this.onCounterTime = companyCounter.getId().getOnCounterTime();
+        this.onCounterTime = companyCounter.getCompanyCounterId().getOnCounterTime();
         this.offCounterTime = companyCounter.getOffCounterTime();
     }
 
