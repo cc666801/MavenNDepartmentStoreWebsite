@@ -101,4 +101,10 @@ public class CompanyCounter {
 		this.offCounterTime = offCounterTime;
 	}
 
+	@Override
+	public String toString() {
+		return "CompanyCounter [companyCounterId=" + companyCounterId + ", company=" + company + ", counter=" + counter
+				+ ", contractTime=" + contractTime + ", offCounterTime=" + offCounterTime + "]";
+	}
+
 }

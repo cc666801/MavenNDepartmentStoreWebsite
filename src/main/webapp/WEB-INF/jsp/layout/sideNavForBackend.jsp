@@ -36,7 +36,8 @@
 							<nav class="sb-sidenav-menu-nested nav">
 								<a class="nav-link" href="${contextRoot}/company/addCompanyPage">新增廠商資料</a> 
 								<a class="nav-link" href="${contextRoot}/company/showAllCompanys">查詢所有廠商</a>
-								<a class="nav-link" href="${contextRoot}/companycounters/add">新增租用櫃位</a>
+								<a class="nav-link" href="${contextRoot}/companycounters/add">廠商租用櫃位</a>
+								<a class="nav-link" href="${contextRoot}/companycounters/">查詢所有租用紀錄</a>
 							</nav>
 						</div>
 						<a class="nav-link collapsed" href="#" data-bs-toggle="collapse"

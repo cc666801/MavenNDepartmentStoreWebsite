@@ -1,7 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto;
 
 import java.util.Base64;
-import java.util.List;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 

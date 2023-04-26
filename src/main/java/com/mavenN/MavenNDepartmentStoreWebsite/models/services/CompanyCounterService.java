@@ -1,6 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.util.List;
+import java.util.NoSuchElementException;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -11,6 +13,7 @@ import org.springframework.stereotype.Controller;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounterId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Counter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyCounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
@@ -47,5 +50,19 @@ public class CompanyCounterService {
 		Page<CompanyCounter> page = companyCounterRepository.findAll(pgb);
 		return page;
 	}
+
+	// For getAllApi()
+	public List<CompanyCounter> getAllCompanyCounter() {
+		return companyCounterRepository.findAll();
+	}
+
+	// For showEditedCompany()
+	public CompanyCounter findById(CompanyCounterId id) {
+        Optional<CompanyCounter> companyCounter = companyCounterRepository.findById(id);
+        if (companyCounter.isPresent()) {
+            return companyCounter.get();
+        }
+        throw new NoSuchElementException("CompanyCounter with id " + id + " does not exist.");
+    }
 
 }

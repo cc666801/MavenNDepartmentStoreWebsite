@@ -38,16 +38,14 @@
 							<table id="datatablesSimple">
 								<thead>
 									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Phone</th>
-										<th>Address</th>
-										<th>industryCategory</th>
-										<th>OpeningHours</th>
-										<th>CooperationStatus</th>
-										<th>Company Logo</th>
+										<th>companyId</th>
+										<th>companyName</th>
+										<th>counterName</th>
+										<th>contractTime</th>
+										<th>contractTime</th>
+										<th>offCounterTime</th>
 										<th>更新按鈕</th>
-										<th>刪除按鈕</th>
+<!-- 										<th>刪除按鈕</th> -->
 										
 									</tr>
 								</thead>
@@ -63,16 +61,14 @@
 								</tfoot>
 								<tbody id="tableBody">
 									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Phone</th>
-										<th>Address</th>
-										<th>industryCategory</th>
-										<th>OpeningHours</th>
-										<th>CooperationStatus</th>
-										<th>Company Logo</th>
+										<th>companyId</th>
+										<th>companyName</th>
+										<th>counterName</th>
+										<th>contractTime</th>
+										<th>contractTime</th>
+										<th>offCounterTime</th>
 										<th>更新按鈕</th>
-										<th>刪除按鈕</th>
+<!-- 										<th>刪除按鈕</th> -->
 										
 									</tr>
 								</tbody>
@@ -104,7 +100,43 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 		
 	<script>
-	
+	document.addEventListener("DOMContentLoaded", function() {
+		var myTableBody = document.getElementById('tableBody');
+		var myHeaders = new Headers();
+		myHeaders.append("Cookie", "JSESSIONID=A88D4C1EF2D373665EDA0CE10F5710E2");
+
+		var raw = "";
+
+		var requestOptions = {
+		  method: 'GET',
+		  headers: myHeaders,
+		  redirect: 'follow'
+		};
+		fetch("http://localhost:8080/MavenNDepartmentStoreWebsite/api/companyCounter/", requestOptions)
+		  .then(response => response.json())
+		  .then(response => response)
+		  .then(result => {
+		  			
+		  		let tableData='';
+		  		result.forEach(function (value, index) {
+		  			tableData += '<tr>';
+		  			tableData += '<td>' + value.companyId + '</td>';
+		  			tableData += '<td>' + value.companyName + '</td>';
+		  			tableData += '<td>' + value.counterName + '</td>';
+		  			tableData += '<td>' + value.contractTime + '</td>';
+		  			tableData += '<td>' + value.onCounterTime + '</td>';
+		  			tableData += '<td>' + value.offCounterTime + '</td>';
+		  			console.log(encodeURIComponent(new Date(value.onCounterTime).toISOString().slice(0, 19).replace('T', ' ')))
+		  			tableData += '<td><a href="${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(new Date(value.onCounterTime).toISOString().slice(0, 19).replace('T', ' ')) + '">更新</a></td>';
+// 		  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
+		  			tableData += '</tr>';  			
+	            });
+		  		myTableBody.innerHTML = "";
+		  		myTableBody.innerHTML = tableData;
+		  		
+		  })
+		  .catch(error => console.log('error', error));
+		});
 </script>
 </body>
 </html>

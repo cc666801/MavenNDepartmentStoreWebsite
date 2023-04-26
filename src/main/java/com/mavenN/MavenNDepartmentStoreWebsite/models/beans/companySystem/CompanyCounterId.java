@@ -1,6 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
 import java.io.Serializable;
+import java.time.LocalDateTime;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Objects;
 
@@ -32,11 +34,20 @@ public class CompanyCounterId implements Serializable{
     @PrePersist
     public void setOnCounterTimeIfNull() {
         if (onCounterTime == null) {
-            onCounterTime = new Date();
+            onCounterTime = Date.from(LocalDateTime.now().atZone(ZoneId.systemDefault()).toInstant());
         }
     }
     
 	public CompanyCounterId() {
+	}
+	
+	
+
+	public CompanyCounterId(Integer companyId, Integer counterId, Date onCounterTime) {
+		super();
+		this.companyId = companyId;
+		this.counterId = counterId;
+		this.onCounterTime = onCounterTime;
 	}
 
 	@Override
@@ -88,6 +99,12 @@ public class CompanyCounterId implements Serializable{
 
 	public static long getSerialversionuid() {
 		return serialVersionUID;
+	}
+
+	@Override
+	public String toString() {
+		return "CompanyCounterId [companyId=" + companyId + ", counterId=" + counterId + ", onCounterTime="
+				+ onCounterTime + "]";
 	}
 	
 	
