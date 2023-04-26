@@ -29,7 +29,7 @@ public class Reservation {
 	@Column(columnDefinition = "nvarchar(50) NOT NULL")
 	private String name; 
 	
-	@Column(columnDefinition = "nvarchar(50)")
+	@Column(columnDefinition = "nvarchar(50) NOT NULL")
 	private String telephone;
 	
 	@Column(columnDefinition = "nvarchar(50)")
@@ -42,7 +42,7 @@ public class Reservation {
 //	@JoinColumn(name="fk_company_id")
 //	private Company company;
 
-	@DateTimeFormat(pattern = "yyyy/MM/dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
 	@Column(columnDefinition = "date", nullable = false)
 	private Date date;

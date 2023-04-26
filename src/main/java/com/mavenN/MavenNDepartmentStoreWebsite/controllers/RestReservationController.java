@@ -1,6 +1,7 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.Date;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -26,10 +27,16 @@ public class RestReservationController {
 	
 	
 	@PostMapping("/reservation/post")
-	public String postReservation(@ModelAttribute("reservation") Reservation res,@DateTimeFormat(pattern="yyyy-MM-dd") Date date, Model model) {
-		res.setDate(date);
+	public String postReservation(@ModelAttribute("reservation") Reservation res, Model model) {
 		reService.addreservation(res);
 		model.addAttribute("reservation",new Reservation());
 		return "restaurant/addreservation";
+	}
+	
+	@GetMapping("/restaurant")
+	public String ShowAllReservation(Model model) {
+		List<Reservation> findAllReservation = reService.findAllReservation();
+		model.addAttribute("findAllReservation",findAllReservation);
+		return "restaurant/showReservations";
 	}
 }
