@@ -5,8 +5,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -19,18 +17,15 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.MemberFavorite;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.MemberLevel;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.MemberShopViolation;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.MemberSystem;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberSystemRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
 public class MemberController {
 
 	@Autowired
-	private MemberSystemRepository memberSystemRepository;
+	private MemberRepository memberSystemRepository;
 	@Autowired
 	private MemberService memberService;
 	
@@ -38,19 +33,19 @@ public class MemberController {
 	// 新增會員
 	@ResponseBody
 	@PostMapping("/member/add")
-	public MemberSystem addOneMember(@RequestBody MemberSystem mem) {
-		MemberSystem resMember = memberSystemRepository.save(mem);
+	public Member addOneMember(@RequestBody Member mem) {
+		Member resMember = memberSystemRepository.save(mem);
 		return resMember;
 	}
 
 	// 搜索單筆會員
 	@ResponseBody
 	@GetMapping("/member/{id}")
-	public MemberSystem getOneMemberById(@PathVariable Integer id) {
-		Optional<MemberSystem> option = memberSystemRepository.findById(id);
+	public Member getOneMemberById(@PathVariable Integer id) {
+		Optional<Member> option = memberSystemRepository.findById(id);
 
 		if (option.isPresent()) {
-			MemberSystem result = option.get();
+			Member result = option.get();
 			return result;
 		}
 
@@ -60,8 +55,8 @@ public class MemberController {
 	// 搜索所有會員
 	@ResponseBody
 	@GetMapping("/allmember")
-	public List<MemberSystem> findAllMember() {
-		List<MemberSystem> findAll = memberSystemRepository.findAll();
+	public List<Member> findAllMember() {
+		List<Member> findAll = memberSystemRepository.findAll();
 
 		return findAll;
 	}
@@ -69,16 +64,19 @@ public class MemberController {
 	// 更新會員資料
 	@ResponseBody
 	@PutMapping("/member/edit")
-	public String editMember(@ModelAttribute("member")MemberSystem mem) {
-		memberService.updateMemberSystem(mem.getMemberId(),mem);
-		return "更新成功";
+	public String editMember(@RequestParam("id")Integer id, Model model) {
+		Member mem = memberService.getMemberById(id);
+		model.addAttribute("memlist", mem);
+		return "成功";
+		
 	}
+	
 	
 
 	// 刪除會員資料
 	@ResponseBody
 	@DeleteMapping("/member/delete")
-	public String deleteMember(@RequestParam(name = "memberId") Integer memberId) {
+	public String deleteMember(@RequestParam(name = "id") Integer memberId) {
 		try {
 			memberSystemRepository.deleteById(memberId);
 			return "刪除成功";
