@@ -31,7 +31,7 @@
 			<form:input path="comm_Desc" />
 			<br>
 			<form:label path="comm_Picture">商品照片</form:label>
-			<form:input path="comm_Picture" type="file" id="formfile" />
+			<form:input path="transferToByteArray" type="file" id="formfile" />
 			<br>
 			<form:label path="cate_Id">類別分類</form:label>
 			<form:input path="cate_Id" />

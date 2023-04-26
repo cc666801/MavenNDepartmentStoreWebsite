@@ -27,7 +27,21 @@
 	<!-- End Header -->
 	<main id="main" class="container my-5">
 
-		<h1 class="mb-3">新增產品詳細資訊後台(新增後顯示畫面)</h1>
+		<h1 class="mb-3">修改產品詳細資訊後台(修改後顯示畫面)</h1>
+
+		<form:form modelAttribute="commodity" method="put"
+			action="${contextRoot}/Store/Commodity/editCommodity">
+
+			<form:input type="hidden" path="comm_Id" />
+			<form:label path="comm_Name">分類名稱</form:label>
+			<form:input path="comm_Name" />
+
+
+
+
+
+		</form:form>
+
 
 		<table class="table table-striped">
 			<thead class="thead-dark">
@@ -45,39 +59,31 @@
 				</tr>
 			</thead>
 			<tbody>
-				<c:forEach var="commodity" items="${commodityList}">
-
-					<tr>
-						<td>${commodity.comm_Id}</td>
-						<td>${commodity.comm_Name}</td>
-						<td><img
-							src="data:image/png;base64,${commodity.base64Stringcomm_Picture}"
-							style="width: 100px; height: 100px;" /></td>
 
 
+				<tr>
+					<td>${commodity.comm_Id}</td>
+					<td>${commodity.comm_Name}</td>
+					<td><img
+						src="data:image/png;base64,${commodity.base64Stringcomm_Picture}"
+						style="width: 100px; height: 100px;" /></td>
+					<td>${cate.cate_Id}</td>
+					<td>${commodity.comm_Desc}</td>
+					<td>${commodity.comm_Price}</td>
+					<td>${commodity.comm_Discount}</td>
+					<td>${commodity.comm_Shelve}</td>
+					<td>${commodity.comm_CDay}</td>
+					<td>${commodity.comm_MDay}</td>
+					<td><form:form
+							action="${contextRoot}/Store/Commodity/editCommodity"
+							method="put">
+							<input type="hidden" name="comm_Id" value="${commodity.comm_Id}">
+							<button type="submit" class="btn btn-warning">編輯</button>
 
-						<td>${cate.cate_Id}</td>
-						<td>${commodity.comm_Desc}</td>
-						<td>${commodity.comm_Price}</td>
-						<td>${commodity.comm_Discount}</td>
-						<td>${commodity.comm_Shelve}</td>
-						<td>${commodity.comm_CDay}</td>
-						<td>${commodity.comm_MDay}</td>
-						<td><form:form
-								action="${contextRoot}/Store/Commodity/editCommodity"
-								method="get">
-								<input type="hidden" name="comm_Id" value="${commodity.comm_Id}">
-								<button type="submit" class="btn btn-warning">編輯</button>
 
+							<button type="submit">送出</button>
 
-							</form:form></td>
-						<td><form:form action="${contextRoot}/Store/Commodity/delete"
-								method="DELETE">
-								<input type="hidden" name="comm_Id" value="${commodity.comm_Id}">
-								<button type="submit" class="btn btn-danger">刪除</button>
-							</form:form></td>
-					</tr>
-				</c:forEach>
+						</form:form>
 			</tbody>
 		</table>
 
