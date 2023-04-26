@@ -64,8 +64,10 @@ public class CommodityController {
 		List<Commodity> findAllCommodity = CommodityService.findAllCommodity();
 		for (Commodity commodity : findAllCommodity) {
 			byte[] imageData = commodity.getComm_Picture();
-			String base64String = Base64.getEncoder().encodeToString(imageData);
-			commodity.setBase64Stringcomm_Picture(base64String);
+			if (imageData != null) {
+				String base64String = Base64.getEncoder().encodeToString(imageData);
+				commodity.setBase64Stringcomm_Picture(base64String);
+			}
 		}
 		model.addAttribute("commodityList", findAllCommodity);
 		return "/Store/Commodity/CommodityBack";
@@ -96,15 +98,11 @@ public class CommodityController {
 	}
 
 	@PutMapping("Store/Commodity/editCommodity")
-	public String puteditCommodity(@ModelAttribute("commodity")Commodity commodity) {
+	public String puteditCommodity(@ModelAttribute("commodity") Commodity commodity) {
 		CommodityService.updateCommodityById(commodity.getComm_Id(), commodity);
 		return "redirect:/Store/Commodity/ShowAll";
 	}
-	
-	
-	
-	
-	
+
 	public CommodityController() {
 		// TODO Auto-generated constructor stub
 	}
