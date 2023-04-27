@@ -1,7 +1,10 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
 import java.io.Serializable;
+import java.text.DateFormatSymbols;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Locale;
 import java.util.Objects;
 
 import javax.persistence.Column;
@@ -34,6 +37,22 @@ public class CompanyCounterId implements Serializable{
         if (onCounterTime == null) {
             onCounterTime = new Date();
         }
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS", Locale.US);
+        dateFormat.setLenient(false);  // 禁用毫秒數格式化
+        dateFormat.setDateFormatSymbols(new DateFormatSymbols(Locale.US) {
+
+       	/**
+       	 * 
+       	 */
+       	private static final long serialVersionUID = 1L;
+			@Override
+            public String[] getMonths() {
+                return new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
+            }
+        });  // 避免月份被縮寫
+        onCounterTime.setTime((onCounterTime.getTime() / 1000) * 1000);  // 將毫秒數設為0
+        String formattedDate = dateFormat.format(onCounterTime);
+        System.out.println("Formatted date: " + formattedDate);
     }
     
 	public CompanyCounterId() {

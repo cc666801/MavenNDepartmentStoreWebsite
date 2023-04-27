@@ -33,8 +33,8 @@
 						<div class="card-body">
 						<h1>廠商上櫃登記</h1>
 							<form:form method="POST" modelAttribute="companyCounter" action="${contextRoot}/companycounters/save">
-								<form:hidden path="id.companyId" />
-								<form:hidden path="id.counterId" />
+								<form:hidden path="companyCounterId.companyId" />
+								<form:hidden path="companyCounterId.counterId" />
 								<div class="form-group">
 									<label for="companyName">Company Name:</label>
 									<form:select path="company" class="form-control"

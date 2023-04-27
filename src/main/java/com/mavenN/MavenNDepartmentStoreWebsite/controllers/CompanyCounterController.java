@@ -60,7 +60,8 @@ public class CompanyCounterController {
 
     @PostMapping("/save")
     public String saveCompanyCounter(@ModelAttribute("companyCounter") CompanyCounter companyCounter) {
-        
+    	companyCounter.getCompanyCounterId().setOnCounterTimeIfNull();
+        System.out.println(companyCounter.getCompanyCounterId().getOnCounterTime());
         companyCounterService.saveCompanyCounter(companyCounter);
         return "redirect:/companycounters/";
     }

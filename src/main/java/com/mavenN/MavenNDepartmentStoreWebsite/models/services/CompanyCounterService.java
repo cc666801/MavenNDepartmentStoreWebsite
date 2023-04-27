@@ -79,4 +79,9 @@ public class CompanyCounterService {
         companyCounter.setOffCounterTime(timestamp);
         companyCounterRepository.save(companyCounter);
     }
+	
+	// For deleteApi()
+	public void deleteCompanyCounterById(CompanyCounterId id) {
+		companyCounterRepository.deleteById(id);
+	}
 }

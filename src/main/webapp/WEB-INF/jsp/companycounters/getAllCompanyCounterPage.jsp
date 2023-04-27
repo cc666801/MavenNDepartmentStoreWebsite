@@ -42,7 +42,7 @@
 										<th>companyName</th>
 										<th>counterName</th>
 										<th>contractTime</th>
-										<th>contractTime</th>
+										<th>onCounterTime</th>
 										<th>offCounterTime</th>
 										<th>更新按鈕</th>
 <!-- 										<th>刪除按鈕</th> -->
