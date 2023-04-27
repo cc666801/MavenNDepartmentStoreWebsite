@@ -41,14 +41,14 @@
 					<h1>文章管理-新增</h1>
 					<form:form modelAttribute="article" method="post"
 						action="${contextRoot}/articleBack/post">
-						<form:label path="title">標題:</form:label>
-						<form:input path="title" />
+						<form:label path="articleTitle">標題:</form:label>
+						<form:input path="articleTitle" />
 						<br>
-						<form:label path="categoryID">類別:</form:label>
-						<form:select path="categoryID">
-							<form:option value="1">公告</form:option>
-							<form:option value="2">好康分享</form:option>
-							<form:option value="3">心情抒發</form:option>
+						<form:label path="articleCategory">類別:</form:label>
+						<form:select path="articleCategory">
+							<c:forEach items="${categoryList}" var="category">
+								<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
+							</c:forEach>
 						</form:select>
 						<br>
 						<input type="hidden" name="content" id="summernote-input">
@@ -75,7 +75,7 @@
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	
+
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
 
@@ -83,24 +83,25 @@
 	<script
 		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 	<script>
+		
 	</script>
 
 	<script>
 		$(document).ready(function() {
-			
-			$('#summernote').summernote({					
+
+			$('#summernote').summernote({
 				callbacks : {
 					onChange : function(contents, $editable) {
 						$('#summernote-input').val(contents);
 					}
 				}
 			});
-			
+
 			$('#summernote').summernote({
-				  codeviewFilter: true,
-				  codeviewIframeFilter: true
-				});
-			
+				codeviewFilter : true,
+				codeviewIframeFilter : true
+			});
+
 		});
 	</script>
 </body>

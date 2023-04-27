@@ -49,9 +49,9 @@ public class ArticleService {
 		if(option.isPresent()) {
 			Article art = option.get();
 			art.setArticleContent(newArticle.getArticleContent());
-			art.setEditTime(newArticle.getEditTime());
-			art.setCategoryID(newArticle.getCategoryID());
-			art.setTitle(newArticle.getTitle());
+			art.setArticleEditTime(newArticle.getArticleEditTime());  
+			art.setArticleCategory(newArticle.getArticleCategory());
+			art.setArticleTitle(newArticle.getArticleTitle());
 			return art;
 		}
 		return null;
@@ -62,8 +62,8 @@ public class ArticleService {
 	}
 	
 	public List<Article> findAllArticle(){
-		List<Article> findAllLost=articleRepository.findAll();
-		return findAllLost;
+		List<Article> findAllArticle=articleRepository.findAll();
+		return findAllArticle;
 	}
 	
 }

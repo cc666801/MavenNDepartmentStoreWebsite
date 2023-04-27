@@ -4,9 +4,12 @@ import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -16,7 +19,7 @@ import javax.persistence.TemporalType;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
-@Table(name="Article")
+@Table(name="article")
 public class Article {
 
 	
@@ -26,38 +29,39 @@ public class Article {
 	@Column(name="article_id")
 	private Integer articleID;
 	
-	@Column(name="title")
-	private String title;
+	@Column(name="title" ,nullable = false)
+	private String articleTitle;
 	@Column(name="member_id")
 	private String memberID;
 	
-	@Column(name="category_id")
-	private String categoryID;
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "article_category_id")
+    private ArticleCategory articleCategory;
 	
-	@Column(name="article_content", columnDefinition = "nvarchar(MAX)")
+	@Column(name="article_content", columnDefinition = "nvarchar(MAX)" ,nullable = false)
 	private String articleContent;
 	
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@Column(name="article_createTime")
-	private Date createTime;
+	@Column(name="article_createTime" ,nullable = false)
+	private Date articleCreateTime;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@Column(name="article_editTime")
-	private Date editTime;
+	@Column(name="article_editTime" ,nullable = false)
+	private Date articleEditTime;
 	
 	 @PrePersist
 	 protected void onCreate() {
-	       createTime = new Date();
-	       editTime = new Date();
+		 articleCreateTime = new Date();
+		 articleEditTime = new Date();
 	 }
 
 	 
 	 @PreUpdate
 	 protected void onUpdate() {
-	        editTime = new Date();	      
+		 articleEditTime = new Date();	      
 	 }
 	
 	public Article() {
@@ -75,13 +79,13 @@ public class Article {
 	}
 
 
-	public String getTitle() {
-		return title;
+	public String getArticleTitle() {
+		return articleTitle;
 	}
 
 
-	public void setTitle(String title) {
-		this.title = title;
+	public void setArticleTitle(String articleTitle) {
+		this.articleTitle = articleTitle;
 	}
 
 
@@ -95,13 +99,13 @@ public class Article {
 	}
 
 
-	public String getCategoryID() {
-		return categoryID;
+	public ArticleCategory getArticleCategory() {
+		return articleCategory;
 	}
 
 
-	public void setCategoryID(String categoryID) {
-		this.categoryID = categoryID;
+	public void setArticleCategory(ArticleCategory articleCategory) {
+		this.articleCategory = articleCategory;
 	}
 
 
@@ -115,24 +119,27 @@ public class Article {
 	}
 
 
-	public Date getCreateTime() {
-		return createTime;
+	public Date getArticleCreateTime() {
+		return articleCreateTime;
 	}
 
 
-	public void setCreateTime(Date createTime) {
-		this.createTime = createTime;
+	public void setArticleCreateTime(Date articleCreateTime) {
+		this.articleCreateTime = articleCreateTime;
 	}
 
 
-	public Date getEditTime() {
-		return editTime;
+	public Date getArticleEditTime() {
+		return articleEditTime;
 	}
 
 
-	public void setEditTime(Date editTime) {
-		this.editTime = editTime;
+	public void setArticleEditTime(Date articleEditTime) {
+		this.articleEditTime = articleEditTime;
 	}
+
+
+	
 	
 	
 	

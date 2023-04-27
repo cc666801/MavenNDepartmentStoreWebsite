@@ -47,19 +47,20 @@
 						<form:label path="articleID">文章編號:</form:label>
 						<form:input type="hidden" path="articleID" />
 						<br>
-						<form:label path="title">標題:</form:label>
-						<form:input path="title" />
+						<form:label path="articleTitle">標題:</form:label>
+						<form:input path="articleTitle" />
 						<br>
 
-						<form:label path="categoryID">類別:</form:label>
-						<form:select path="categoryID">
-							<form:option value="1">公告</form:option>
-							<form:option value="2">好康分享</form:option>
-							<form:option value="3">心情抒發</form:option>
+						<form:label path="articleCategory">類別:</form:label>
+						<form:select path="articleCategory">
+							<c:forEach items="${categoryList}" var="category">
+								<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
+							</c:forEach>
 						</form:select>
 						<br>
-						
-						<form:hidden name="articleContent"  path="articleContent" id="summernote-input"/>
+
+						<form:hidden name="articleContent" path="articleContent"
+							id="summernote-input" />
 						<div id="summernote">${art.articleContent}</div>
 						<button type="submit">送出</button>
 					</form:form>

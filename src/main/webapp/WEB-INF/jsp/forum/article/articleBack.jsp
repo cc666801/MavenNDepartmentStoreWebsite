@@ -26,7 +26,12 @@
 				<div class="container-fluid px-4">
 					<h1>文章管理</h1>
 					<form action="${contextRoot}/articleBack/add">
-						<button type="submit">新增</button>
+						<button type="submit">新增文章</button>
+					</form>
+
+					<form
+						onsubmit="openWindow('${contextRoot}/articleConfiguration'); return false;">
+						<button type="submit">設定</button>
 					</form>
 					<table>
 						<thead>
@@ -46,17 +51,19 @@
 							<c:forEach var="art" items="${artList}">
 								<tr>
 									<td>${art.articleID}</td>
-									<td>${art.title}</td>
+									<td>${art.articleTitle}</td>
 									<td>帳號</td>
-									<td>${art.categoryID}</td>
-									<td><a href="${contextRoot}/articleContent/${art.articleID}">文章內容</a></td>
-									<td>${art.createTime}</td>
-									<td>${art.editTime}</td>
+									<td>${art.articleCategory}</td>
+									<td><a
+										href="${contextRoot}/articleContent/${art.articleID}">文章內容</a></td>
+									<td>${art.articleCreateTime}</td>
+									<td>${art.articleEditTime}</td>
 									<td><form action="${contextRoot}/articleBack/edit">
 											<input type="hidden" name="id" value="${art.articleID}" /> <input
 												type="submit" value="編輯" />
 										</form></td>
-									<td><form action="${contextRoot}/articleBack/delete" method="post">
+									<td><form action="${contextRoot}/articleBack/delete"
+											method="post">
 											<input type="hidden" name="_method" value="delete" /> <input
 												type="hidden" name="id" value="${art.articleID}" /> <input
 												type="submit" value="刪除" />
@@ -75,6 +82,7 @@
 		</div>
 	</div>
 
+	<!-- =============================== bootstrap ================================================= -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
@@ -84,5 +92,13 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+	<!-- =================================== bootstrap ============================================= -->
+	<script>
+	function openWindow(url) {
+	    window.open(url, 'myWindow', 'width=800,height=600');
+	  }
+	</script>
+
+
 </body>
 </html>
