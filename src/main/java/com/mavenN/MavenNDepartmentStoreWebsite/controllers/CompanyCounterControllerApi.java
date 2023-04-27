@@ -1,11 +1,11 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+import java.time.Instant;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -35,19 +35,21 @@ public class CompanyCounterControllerApi {
     }
     
     
-    // 刪除資料
-    @DeleteMapping("/{companyId}/{counterId}/{onCounterTime}")
-    public List<CompanyCounterDto> delete(@PathVariable int companyId, @PathVariable int counterId, @PathVariable @DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss") Date onCounterTime) {
-        CompanyCounterId id = new CompanyCounterId();
-        id.setCompanyId(companyId);
-        id.setCounterId(counterId);
-        id.setOnCounterTime(onCounterTime);
-        companyCounterService.deleteCompanyCounterById(id);
+ // 刪除資料
+    @DeleteMapping("/{companyId}/{counterId}/{onCounterTimestamp}")
+    public List<CompanyCounterDto> delete(
+            @PathVariable int companyId,
+            @PathVariable int counterId,
+            @PathVariable long onCounterTimestamp
+    ) {
+    	Instant instant = Instant.ofEpochSecond(onCounterTimestamp);
+        Date onCounterTime = Date.from(instant);
+        CompanyCounterId companyCounterId = new CompanyCounterId(companyId, counterId, onCounterTime);
+        companyCounterService.deleteCompanyCounterById(companyCounterId);
         List<CompanyCounter> companyCounters = companyCounterService.getAllCompanyCounter();
-    	List<CompanyCounterDto> companyCounterDtos = companyCounters.stream()
-    	        .map(CompanyCounterDto::new)
-    	        .collect(Collectors.toList());
+        List<CompanyCounterDto> companyCounterDtos = companyCounters.stream()
+            .map(CompanyCounterDto::new)
+            .collect(Collectors.toList());
         return companyCounterDtos;
-        
     }
 }

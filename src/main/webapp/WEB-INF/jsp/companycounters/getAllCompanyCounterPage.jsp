@@ -45,8 +45,8 @@
 										<th>onCounterTime</th>
 										<th>offCounterTime</th>
 										<th>更新按鈕</th>
-<!-- 										<th>刪除按鈕</th> -->
-										
+										<th>刪除按鈕</th>
+
 									</tr>
 								</thead>
 								<tfoot>
@@ -68,8 +68,8 @@
 										<th>onCounterTime</th>
 										<th>offCounterTime</th>
 										<th>更新按鈕</th>
-<!-- 										<th>刪除按鈕</th> -->
-										
+										<th>刪除按鈕</th>
+
 									</tr>
 								</tbody>
 							</table>
@@ -98,8 +98,47 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-		
+
 	<script>
+	var myTableBody = document.getElementById('tableBody');
+	function deleteCompanyCounter(companyId, counterId, onCounterTime) {
+		
+		const onCounterTimeDate = new Date(onCounterTime);
+		const unixTimestamp = onCounterTimeDate.getTime() / 1000;  // 毫秒轉換成秒
+		
+		var url = '${contextRoot}/api/companyCounter' +
+		  '/' + encodeURIComponent(companyId) +
+		  '/' + encodeURIComponent(counterId) +
+		  '/' + unixTimestamp;
+		
+	  fetch(url, {
+		  method: 'DELETE'
+		})
+	  .then(response => response.json())
+	  .then(response => response)
+	  .then(result => {
+	      let tableData = '';
+	      result.forEach(function (value, index) {
+	    	  console.log(value.companyId);
+	          tableData += '<tr>';
+	          tableData += '<td>' + value.companyId + '</td>';
+	          tableData += '<td>' + value.companyName + '</td>';
+	          tableData += '<td>' + value.counterName + '</td>';
+	          tableData += '<td>' + value.contractTime + '</td>';
+	          tableData += '<td>' + value.onCounterTime + '</td>';
+	          tableData += '<td>' + value.offCounterTime + '</td>';
+	          tableData += '<td><button onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
+	          
+	          tableData += '<td><button onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
+	          tableData += '</tr>'; 
+	          myTableBody.innerHTML = "";
+	          myTableBody.innerHTML = tableData;
+	          
+	      })
+	  })
+	  .catch(error => console.log('error', error));
+	};
+	
 	document.addEventListener("DOMContentLoaded", function() {
 		var myTableBody = document.getElementById('tableBody');
 		var myHeaders = new Headers();
@@ -126,8 +165,9 @@
 		  			tableData += '<td>' + value.contractTime + '</td>';
 		  			tableData += '<td>' + value.onCounterTime + '</td>';
 		  			tableData += '<td>' + value.offCounterTime + '</td>';
-		  			tableData += '<td><a href="${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '">更新</a></td>';
-// 		  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
+		  			tableData += '<td><button onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
+		  			
+		  			tableData += '<td><button onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
 		  			tableData += '</tr>';  			
 	            });
 		  		myTableBody.innerHTML = "";
@@ -136,6 +176,7 @@
 		  })
 		  .catch(error => console.log('error', error));
 		});
+	
 </script>
 </body>
 </html>
