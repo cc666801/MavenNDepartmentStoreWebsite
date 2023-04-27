@@ -79,7 +79,7 @@ public class CommodityService {
 	
 	
 	
-//	
+//嘗試加入 CommCate類別
 	
 	
 	

@@ -15,20 +15,30 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommCateService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommodityService;
 
 @Controller
 public class CommodityController {
 
 	@Autowired
-	private CommodityService CommodityService;
+	private CommodityService commodityService;
 
+	
+	@Autowired
+	private CommCateService commCateService;
+	
 //	新增商品 
 
 	@GetMapping("/Store/Commodity/add")
 	public String addCommodity(Commodity commodity, Model model) {
 		model.addAttribute("commodity", new Commodity());
+		
+		List<CommCate> commcateList = commCateService.findAllCate();
+		model.addAttribute("commcateList", commcateList);
+		
 		return "Store/Commodity/CommodityBackadd";
 	}
 
@@ -45,9 +55,8 @@ public class CommodityController {
 				e.printStackTrace();
 			}
 		}
-		CommodityService.addCommodity(commodity);
+		commodityService.addCommodity(commodity);
 		model.addAttribute("commodity", commodity);
-		model.addAttribute("successMessage", "新增成功！");
 
 		return "redirect:/Store/Commodity/CommodityBack";
 	}
@@ -63,7 +72,7 @@ public class CommodityController {
 
 	@GetMapping("/Store/Commodity/CommodityBack")
 	public String findAllCommodityBack(Model model) {
-		List<Commodity> findAllCommodity = CommodityService.findAllCommodity();
+		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
 		for (Commodity commodity : findAllCommodity) {
 			byte[] imageData = commodity.getComm_Picture();
 			if (imageData != null) {
@@ -78,7 +87,7 @@ public class CommodityController {
 //	讀取所有資料 (可將路徑設為 ShowAll)
 	@GetMapping("/Store/Commodity/ShowAll")
 	public String ShowAllCommodity(Model model) {
-		List<Commodity> findAllCommodity = CommodityService.findAllCommodity();
+		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
 		for (Commodity commodity : findAllCommodity) {
 			byte[] imageData = commodity.getComm_Picture();
 			if (imageData != null) {
@@ -94,14 +103,14 @@ public class CommodityController {
 //	刪除資料 透過 id
 	@DeleteMapping("/Store/Commodity/delete")
 	public String deleteCommodity(@RequestParam Integer comm_Id) {
-		CommodityService.deleteById(comm_Id);
+		commodityService.deleteById(comm_Id);
 		return "redirect:/Store/Commodity/CommodityBack";
 	}
 
 //	更新
 	@GetMapping("Store/Commodity/editCommodity")
 	public String editCommodity(@RequestParam("comm_Id") Integer comm_Id, Model model) {
-		Commodity commodity = CommodityService.findCommodityById(comm_Id);
+		Commodity commodity = commodityService.findCommodityById(comm_Id);
 
 		model.addAttribute("commodity", commodity);
 		return "Store/Commodity/CommodityEdit";
@@ -120,13 +129,20 @@ public class CommodityController {
 				e.printStackTrace();
 			}
 		} else {
-			Commodity oldCommodity = CommodityService.findCommodityById(commodity.getComm_Id());
+			Commodity oldCommodity = commodityService.findCommodityById(commodity.getComm_Id());
 			commodity.setComm_Picture(oldCommodity.getComm_Picture());
 		}
-		CommodityService.updateCommodityById(commodity.getComm_Id(), commodity);
+		commodityService.updateCommodityById(commodity.getComm_Id(), commodity);
 		return "redirect:/Store/Commodity/CommodityBack";
 	}
 
+	
+
+	
+	
+	
+	
+	
 	public CommodityController() {
 		// TODO Auto-generated constructor stub
 	}

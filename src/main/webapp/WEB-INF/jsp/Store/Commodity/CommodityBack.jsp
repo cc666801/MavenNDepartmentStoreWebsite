@@ -7,38 +7,39 @@
 
 <!DOCTYPE html>
 <html>
-
 <head>
-<meta charset="UTF-8">
-<title>商品類別管理</title>
-<!-- Bootstrap CSS -->
-<link href="${contextRoot}/resources/css/bootstrap.min.css"
-	rel="stylesheet">
-<!-- Font Awesome CSS -->
-<link href="${contextRoot}/resources/css/font-awesome.min.css"
-	rel="stylesheet">
-<!-- Custom CSS -->
-<link href="${contextRoot}/resources/css/style.css" rel="stylesheet">
-</head>
 
-<body>
+<!-- =======================================================
+  * Template Name: ZenBlog
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+  * Author: BootstrapMade.com
+  * License: https:///bootstrapmade.com/license/
+  ======================================================== -->
+</head>
+<body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
 	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
-	<main id="main" class="container my-5">
 
-		<h1 class="mb-3">新增產品詳細資訊後台(新增後顯示畫面)</h1>
+	<div id="layoutSidenav">
+
+		<!-- ======= SiderNav ======= -->
+		<jsp:include page="../../layout/sideNavForBackend.jsp"></jsp:include>
+		<!-- End SiderNav -->
+
+		<div id="layoutSidenav_content">
+
+			<main id="main" class="container my-5">
+
+		<h1 style="padding-top: 100px;">新增產品詳細資訊後台(新增後顯示畫面)</h1>
 
 
 
 		<form action="${contextRoot}/Store/Commodity/add">
 			<button type="submit" class="btn btn-primary mb-3">新增</button>
 		</form>
-		<%-- 如果有成功訊息，顯示綠色框框 --%>
-		<c:if test="${not empty successMessage}">
-			<div class="alert alert-success" role="alert">
-				${successMessage}</div>
-		</c:if>
+
 
 		<table class="table table-striped">
 			<thead class="thead-dark">
@@ -89,18 +90,37 @@
 							</form:form></td>
 					</tr>
 				</c:forEach>
+
 			</tbody>
 		</table>
 
 	</main>
+			
 
-	<!-- jQuery -->
-	<script src="${contextRoot}/resources/js/jquery-3.2.1.min.js"></script>
-	<!-- Bootstrap JS -->
-	<script src="${contextRoot}/resources/js/bootstrap.bundle.min.js"></script>
-	<!-- Custom JS -->
-	<script src="${contextRoot}/resources/js/main.js"></script>
+			<!-- End #main -->
 
+			<!-- ======= Footer ======= -->
+			<jsp:include page="../../layout/footerForBackend.jsp"></jsp:include>
+			<!-- End Footer -->
+		</div>
+	</div>
+	<!-- 	<script> -->
+<script
+		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		crossorigin="anonymous"></script>
+	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
+<!-- 	<script -->
+<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
+<!-- 		crossorigin="anonymous"></script> -->
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
+	<script
+		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+		crossorigin="anonymous"></script>
+	<script
+		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+
+	<!-- 	</script> -->
+	
 </body>
-
 </html>

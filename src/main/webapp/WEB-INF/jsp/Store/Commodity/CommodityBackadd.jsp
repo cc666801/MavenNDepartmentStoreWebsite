@@ -34,8 +34,14 @@
 			<form:input path="transferToByteArray" type="file" id="formfile" />
 			<br>
 			<form:label path="cate_Id">類別分類</form:label>
-			<form:input path="cate_Id" />
+			<form:label path="cate_Id">類別分類</form:label>
+			<form:select path="cate_Id">
+				<form:options items="${commcateList}"  value= />
+			</form:select>
 			<br>
+			
+			
+
 			<form:label path="comm_Price">商品價格</form:label>
 			<form:input path="comm_Price" />
 			<br>
