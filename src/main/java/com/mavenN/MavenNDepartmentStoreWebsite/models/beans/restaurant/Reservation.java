@@ -38,9 +38,8 @@ public class Reservation {
 	@Column(columnDefinition = "nvarchar(100)")
 	private String remark;
 	
-//	@ManyToOne(cascade = CascadeType.ALL)
-//	@JoinColumn(name="fk_company_id")
-//	private Company company;
+	@ManyToOne
+	private Company company;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)

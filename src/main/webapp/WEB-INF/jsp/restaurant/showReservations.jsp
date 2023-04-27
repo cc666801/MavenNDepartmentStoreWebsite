@@ -34,8 +34,8 @@
 					<td>時間</td>
 					<td>大人</td>
 					<td>小孩</td>
+					<td>編輯</td>
 					<td>刪除</td>
-					<td>修改</td>
 				</tr>
 			</thead>
 			<tbody>
@@ -52,12 +52,16 @@
 						<td>${far.time}</td>
 						<td>${far.adult}</td>
 						<td>${far.children}</td>
-						<td><button>刪除</button></td>
-<%-- 						<td><a href="DeleteBookById.do?Id=${m.id}"><button>刪除</button></a></td> --%>
 						<td><form action="${contextRoot}/restaurant/edit">
-						   <input type="hidden" name="r_id" value="${far.r_id}" />
-						   <input type="submit" class="btn btn-warning btn-sm" value="編輯" />
+						    <input type="hidden" name="r_id" value="${far.r_id}" />
+						    <input type="submit" class="btn btn-warning btn-sm" value="編輯" />
 						</form></td>
+						<td><form action="${contextRoot}/restaurant/delete" method="post">
+							<input type="hidden" name="_method" value="delete" />
+						    <input type="hidden" name="r_id" value="${far.r_id}" />
+						    <input type="submit" class="btn btn-danger btn-sm" value="刪除" />
+						</form></td>
+<%-- 						<td><a href="DeleteBookById.do?Id=${m.id}"><button>刪除</button></a></td> --%>
 					</tr>
 				</jstl:forEach>
 			</tbody>

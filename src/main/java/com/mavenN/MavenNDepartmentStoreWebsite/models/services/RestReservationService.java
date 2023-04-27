@@ -44,6 +44,7 @@ public class RestReservationService {
 		Optional<Reservation> option = resRepository.findById(r_id);
 		if(option.isPresent()) {
 			Reservation res = option.get();
+			System.out.println(res);
 			res.setName(name);
 			res.setTelephone(telephone);
 			res.setEmail(email);
@@ -55,8 +56,7 @@ public class RestReservationService {
 			res.setChildren(children);		
 			return res;
 			
-		}
-		
+		}		
 		return null;
 	}
 	
