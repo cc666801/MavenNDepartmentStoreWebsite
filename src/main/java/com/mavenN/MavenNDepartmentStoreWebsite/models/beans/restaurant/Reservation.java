@@ -2,7 +2,6 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant;
 
 import java.util.Date;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,6 +38,7 @@ public class Reservation {
 	private String remark;
 	
 	@ManyToOne
+	@JoinColumn(name="company_id")
 	private Company company;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
@@ -64,6 +64,15 @@ public class Reservation {
 	}
 	
 	// getter & setter
+	
+	public Company getCompany() {
+		return company;
+	}
+	
+	public void setCompany(Company company) {
+		this.company = company;
+	}
+	
 	public Integer getR_id() {
 		return r_id;
 	}
@@ -103,14 +112,6 @@ public class Reservation {
 	public void setRemark(String remark) {
 		this.remark = remark;
 	}
-
-//	public Company getCompany() {
-//		return company;
-//	}
-//
-//	public void setCompany(Company company) {
-//		this.company = company;
-//	}
 
 	public Date getDate() {
 		return date;

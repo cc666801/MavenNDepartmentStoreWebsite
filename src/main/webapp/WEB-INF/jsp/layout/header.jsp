@@ -59,7 +59,9 @@
               <li><a href="${contextRoot}/">首頁</a></li>
               <li><a href="${contextRoot}/company">廠商專區</a></li>
               <li><a href="${contextRoot}/exampleFrontendPage">前台範例頁面</a></li>
+              <!-- ======= 餐廳網頁 ======= -->
               <li><a href="${contextRoot}/restaurant">餐廳訂位</a></li>
+                <!-- ======= 餐廳網頁end ======= -->
               <li class="dropdown"><a href="category.html"><span>Categories</span> <i
                     class="bi bi-chevron-down dropdown-indicator"></i></a>
                 <ul>
