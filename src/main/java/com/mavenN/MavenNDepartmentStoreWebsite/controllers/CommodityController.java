@@ -47,6 +47,8 @@ public class CommodityController {
 		}
 		CommodityService.addCommodity(commodity);
 		model.addAttribute("commodity", commodity);
+		model.addAttribute("successMessage", "新增成功！");
+
 		return "redirect:/Store/Commodity/CommodityBack";
 	}
 
@@ -77,6 +79,14 @@ public class CommodityController {
 	@GetMapping("/Store/Commodity/ShowAll")
 	public String ShowAllCommodity(Model model) {
 		List<Commodity> findAllCommodity = CommodityService.findAllCommodity();
+		for (Commodity commodity : findAllCommodity) {
+			byte[] imageData = commodity.getComm_Picture();
+			if (imageData != null) {
+				String base64String = Base64.getEncoder().encodeToString(imageData);
+				commodity.setBase64Stringcomm_Picture(base64String);
+			}
+		}
+
 		model.addAttribute("commodityList", findAllCommodity);
 		return "/Store/Commodity/CommodityBack";
 	}
@@ -92,15 +102,29 @@ public class CommodityController {
 	@GetMapping("Store/Commodity/editCommodity")
 	public String editCommodity(@RequestParam("comm_Id") Integer comm_Id, Model model) {
 		Commodity commodity = CommodityService.findCommodityById(comm_Id);
+
 		model.addAttribute("commodity", commodity);
 		return "Store/Commodity/CommodityEdit";
 
 	}
 
 	@PutMapping("Store/Commodity/editCommodity")
-	public String puteditCommodity(@ModelAttribute("commodity") Commodity commodity) {
+	public String puteditCommodity(@ModelAttribute("commodity") Commodity commodity,
+			@RequestParam(value = "transferToByteArray", required = false) MultipartFile comm_pictureFile) {
+		if (comm_pictureFile != null && !comm_pictureFile.isEmpty()) {
+			try {
+				// Get bytes of the uploaded file
+				byte[] comm_Picture = comm_pictureFile.getBytes();
+				commodity.setComm_Picture(comm_Picture);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			Commodity oldCommodity = CommodityService.findCommodityById(commodity.getComm_Id());
+			commodity.setComm_Picture(oldCommodity.getComm_Picture());
+		}
 		CommodityService.updateCommodityById(commodity.getComm_Id(), commodity);
-		return "redirect:/Store/Commodity/ShowAll";
+		return "redirect:/Store/Commodity/CommodityBack";
 	}
 
 	public CommodityController() {

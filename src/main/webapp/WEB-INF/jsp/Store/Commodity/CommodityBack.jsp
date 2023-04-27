@@ -23,11 +23,22 @@
 
 <body>
 	<!-- ======= Header ======= -->
-	<jsp:include page="../../layout/header.jsp"></jsp:include>
+	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
 	<main id="main" class="container my-5">
 
 		<h1 class="mb-3">新增產品詳細資訊後台(新增後顯示畫面)</h1>
+
+
+
+		<form action="${contextRoot}/Store/Commodity/add">
+			<button type="submit" class="btn btn-primary mb-3">新增</button>
+		</form>
+		<%-- 如果有成功訊息，顯示綠色框框 --%>
+		<c:if test="${not empty successMessage}">
+			<div class="alert alert-success" role="alert">
+				${successMessage}</div>
+		</c:if>
 
 		<table class="table table-striped">
 			<thead class="thead-dark">

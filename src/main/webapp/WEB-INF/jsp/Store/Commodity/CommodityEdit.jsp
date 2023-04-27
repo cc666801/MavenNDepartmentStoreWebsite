@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
+	pageEncoding="UTF-8"%>localhost:8080/MavenNDepartmentStoreWebsite/Store/Commodity/Commodityadd
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
@@ -29,63 +29,50 @@
 
 		<h1 class="mb-3">修改產品詳細資訊後台(修改後顯示畫面)</h1>
 
-		<form:form modelAttribute="commodity" method="put"
-			action="${contextRoot}/Store/Commodity/editCommodity">
+	
 
-			<form:input type="hidden" path="comm_Id" />
-			<form:label path="comm_Name">分類名稱</form:label>
+
+		<form:form modelAttribute="commodity" method="put"
+			action="${contextRoot}/Store/Commodity/editCommodity"
+			enctype="multipart/form-data">
+
+			<form:label path="comm_Id">商品序號</form:label>
+			<form:input path="comm_Id" readonly="true" />
+			<br>
+			<form:label path="comm_Name">商品名稱</form:label>
 			<form:input path="comm_Name" />
 
 
+			<br>
+			<form:label path="comm_Desc">商品敘述</form:label>
+			<form:input path="comm_Desc" />
+			<br>
+			<form:label path="comm_Price">商品價格</form:label>
+			<form:input path="comm_Price" />
+			<br>
+			<form:label path="comm_Discount">商品折扣(請輸入1以內之小數)</form:label>
+			<form:input path="comm_Discount" />
+			<br>
+			<label for="comm_Shelve">商品上下架</label>
+			<input type="radio" id="comm_Shelve_true" name="comm_Shelve"
+				value="true">
+			<label for="comm_Shelve_true">上架</label>
+			<input type="radio" id="comm_Shelve_false" name="comm_Shelve"
+				value="false">
+			<label for="comm_Shelve_false">下架</label>
+			<br>
+			<form:label path="comm_Picture">商品照片</form:label>
+			<form:input path="transferToByteArray" type="file" id="formfile" />
+			<br>
 
 
-
+			<button type="submit">送出</button>
 		</form:form>
 
 
-		<table class="table table-striped">
-			<thead class="thead-dark">
-				<tr>
-					<th scope="col">商品序號</th>
-					<th scope="col">商品名稱</th>
-					<th scope="col">商品照片</th>
-					<th scope="col">類別序號</th>
-					<th scope="col">商品敘述</th>
-					<th scope="col">商品價格</th>
-					<th scope="col">商品折扣</th>
-					<th scope="col">商品上下架</th>
-					<th scope="col">商品建立日期</th>
-					<th scope="col">商品修改日期</th>
-				</tr>
-			</thead>
-			<tbody>
 
 
-				<tr>
-					<td>${commodity.comm_Id}</td>
-					<td>${commodity.comm_Name}</td>
-					<td><img
-						src="data:image/png;base64,${commodity.base64Stringcomm_Picture}"
-						style="width: 100px; height: 100px;" /></td>
-					<td>${cate.cate_Id}</td>
-					<td>${commodity.comm_Desc}</td>
-					<td>${commodity.comm_Price}</td>
-					<td>${commodity.comm_Discount}</td>
-					<td>${commodity.comm_Shelve}</td>
-					<td>${commodity.comm_CDay}</td>
-					<td>${commodity.comm_MDay}</td>
-					<td><form:form
-							action="${contextRoot}/Store/Commodity/editCommodity"
-							method="put">
-							<input type="hidden" name="comm_Id" value="${commodity.comm_Id}">
-							<button type="submit" class="btn btn-warning">編輯</button>
 
-
-							<button type="submit">送出</button>
-
-						</form:form>
-			</tbody>
-		</table>
 
 	</main>
 
