@@ -80,7 +80,7 @@
 						<form:select path="adult" id="AId" class="form-select"
 							style="width: 200px">
 							<jstl:forEach var="i" begin="0" end="10">
-								<option value="${i}"></option>
+								<option value="${i}">${i}</option>
 							</jstl:forEach>
 						</form:select>
 
@@ -88,7 +88,7 @@
 						<form:select path="children" id="CId" class="form-select"
 							style="width: 200px">
 							<jstl:forEach var="i" begin="0" end="10">
-								<option value="${i}"></option>
+								<option value="${i}">${i}</option>
 							</jstl:forEach>
 						</form:select><br>
 

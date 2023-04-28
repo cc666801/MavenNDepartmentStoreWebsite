@@ -80,9 +80,9 @@
 						<br>
 						<form:select path="time_interval" id="TimeId" class="form-select"
 							style="width: 200px">
-							<option value="中午"></option>
-							<option value="下午"></option>
-							<option value="晚上"></option>
+							<option value="中午">中午</option>
+							<option value="下午">下午</option>
+							<option value="晚上">晚上</option>
 						</form:select>
 
 						<label for="meeting-time">選擇時間：</label>
@@ -95,7 +95,7 @@
 						<form:select path="adult" id="AId" class="form-select"
 							style="width: 200px">
 							<jstl:forEach var="i" begin="0" end="10">
-								<form:option value="${i}"></form:option>
+								<form:option value="${i}">${i}</form:option>
 							</jstl:forEach>
 						</form:select>
 
@@ -104,7 +104,7 @@
 						<form:select path="children" id="CId" class="form-select"
 							style="width: 200px">
 							<jstl:forEach var="i" begin="0" end="10">
-								<form:option value="${i}"></form:option>
+								<form:option value="${i}">${i}</form:option>
 							</jstl:forEach>
 						</form:select>
 
