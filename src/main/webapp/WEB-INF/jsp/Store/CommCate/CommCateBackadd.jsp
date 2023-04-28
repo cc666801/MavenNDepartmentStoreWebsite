@@ -28,24 +28,26 @@
 		<!-- End SiderNav -->
 
 		<div id="layoutSidenav_content">
-		
+
 			<main id="main">
 
-		<h1>新增產品類別後台(新增)</h1>
-		<form:form method="post" modelAttribute="cate"
-			action="${contextRoot}/Store/CommCate/post">
+				<h1>新增產品類別後台(新增)</h1>
+				<form:form method="post" modelAttribute="cate"
+					action="${contextRoot}/Store/CommCate/post">
 
 
-			<form:label path="cate_Name">類別名稱</form:label>
-			<form:input path="cate_Name" type="text" />
-			<br>
-			<form:label path="cate_Desc">類別敘述</form:label>
-			<form:input path="cate_Desc" />
-			<br>
+					<form:label path="cate_Name">類別名稱<span
+							style="color: red">*</span>
+					</form:label>
+					<form:input path="cate_Name" type="text" required="true" />
+					<br>
+					<form:label path="cate_Desc">類別敘述</form:label>
+					<form:input path="cate_Desc" />
+					<br>
 
-			<button type="submit" value="確定">送出</button>
-		</form:form>
-	</main>
+					<button type="submit" value="確定">送出</button>
+				</form:form>
+			</main>
 
 			<!-- End #main -->
 
@@ -55,15 +57,15 @@
 		</div>
 	</div>
 	<!-- 	<script> -->
-<script
+	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
 	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
-<!-- 	<script -->
-<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
-<!-- 		crossorigin="anonymous"></script> -->
-<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
-<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
+	<!-- 	<script -->
+	<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
+	<!-- 		crossorigin="anonymous"></script> -->
+	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
+	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
 		crossorigin="anonymous"></script>
@@ -71,6 +73,6 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
-	
+
 </body>
 </html>
