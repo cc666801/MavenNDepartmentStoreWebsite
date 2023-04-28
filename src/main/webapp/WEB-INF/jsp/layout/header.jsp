@@ -57,10 +57,7 @@
               <li><a href="${contextRoot}/exampleFrontendPage">前台範例頁面</a></li>
               <li class="Store"><a href="${contextRoot}/Store/Storeindex"><span>線上商城</span>
                 <i class="bi bi-chevron-down dropdown-indicator"></i></a>
-              <ul>
-                <li><a href="${contextRoot}/Store/CommCate/add">商品分類新增</a></li>
-  
-              </ul>
+           
             </li>
               <li class="dropdown"><a href="category.html"><span>Categories</span> <i
                     class="bi bi-chevron-down dropdown-indicator"></i></a>
