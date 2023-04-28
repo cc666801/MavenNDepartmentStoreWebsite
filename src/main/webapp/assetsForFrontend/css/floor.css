@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 .floor-plans-container {
   margin-top: 4rem;
   margin-bottom: 4rem;
@@ -82,77 +82,4 @@
     color:blueviolet;
     margin: auto 1.5rem;
     font-size: 1.5em;
-=======
-/**
-* Template Name: ZenBlog
-* File: variables.css
-* Description: Easily customize colors, typography, and other repetitive properties used in the template main stylesheet file main.css
-* 
-* Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
-* Author: BootstrapMade.com
-* License: https://bootstrapmade.com/license/
-* 
-* Contents:
-* 1. ZenBlog template variables 
-* 2. Override default Bootstrap variables
-* 3. Set color and background class names
-*
-* Learn more about CSS variables at https://developer.mozilla.org/en-US/docs/Web/CSS/Using_CSS_custom_properties
-*/
-
-/*--------------------------------------------------------------
-# 1. ZenBlog template variables 
---------------------------------------------------------------*/
-.list-group {
-margin-bottom: 2rem;
-}
-
-.list-group-item {
-padding: .75rem 1.25rem;
-margin-bottom: -1px;
-background-color: #fff;
-border: 1px solid rgba(0,0,0,.125);
-}
-
-.list-group-item:hover {
-z-index: 1;
-background-color: #e9ecef;
-color: #0056b3;
-border-color: #dee2e6;
-}
-
-.section-floor-plans {
-margin-top: 4rem;
-margin-bottom: 4rem;
-}
-
-.section-title {
-font-size: 2rem;
-margin-bottom: 1.5rem;
-}
-
-.floor-plan-wrapper {
-text-align: center;
-}
-
-.img-fluid1 {
-max-width: 60%;
-height: auto;
-float: left;
-}
-
-#myList li {
-cursor: pointer;
-transition: all .3s;
-margin-bottom: 10px;
-}
-
-#myList li:hover {
-background-color: #f2f2f2;
-}
-
-#myList li.active {
-background-color: #007bff;
-color: #fff;
->>>>>>> 78801b5350ab16da7067cc55804354c900e46b54
 }

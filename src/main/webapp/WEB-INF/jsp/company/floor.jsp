@@ -1,4 +1,4 @@
-<<<<<<< HEAD
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
     <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
@@ -9,24 +9,13 @@
       <head>
 
         <!-- =======================================================
-=======
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
-<jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
-<!DOCTYPE html>
-<html>
-<head>
-
-  <!-- =======================================================
->>>>>>> 78801b5350ab16da7067cc55804354c900e46b54
   * Template Name: ZenBlog
   * Updated: Mar 10 2023 with Bootstrap v5.2.3
   * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
   * Author: BootstrapMade.com
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
-<<<<<<< HEAD
+
 
       </head>
 
@@ -122,68 +111,4 @@
       </script>
 
       </html>
-=======
-  
-</head>
-<body>
-<!-- ======= Header ======= -->
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-<!-- End Header --> 
 
-	<main id="main">
-		<section class="section-floor-plans">
-            <div class="container-fluid">
-                <div class="row">
-                    <div class="col-md-3">
-                        <ul class="list-group" id="myList">
-                        <h3 class="section-title">樓層簡介</h3>
-                        
-                            <li class="list-group-item" style="display:none;">B1</li>
-                            <li class="list-group-item" style="display:none;">B2</li>
-                            <li class="list-group-item" style="display:none;">1F</li>
-                            <li class="list-group-item" style="display:none;">2F</li>
-                            <li class="list-group-item" style="display:none;">3F</li>
-                            <li class="list-group-item" style="display:none;">4F</li>
-                        </ul>
-                        <ul class="list-group" id="myList">
-                        <h3 class="section-title">品牌搜尋</h3>
-                        </ul>
-                    </div>
-                    <div class="col-md-9">
-                        <h3 class="section-title">樓層平面圖</h3>
-                        <div class="floor-plan-wrapper">
-                            <img class="img-fluid1" src="${contextRoot}/assetsForFrontend/img/樓層平面圖0.jpg" alt="Floor Plan" style="weight:200px">
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </section>
-    </main><!-- End #main -->
-	
-<!-- ======= Footer ======= -->
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
-	<!-- End Footer --> 
-	 
-</body>
-<script>
-document.addEventListener("DOMContentLoaded", function() {
-	  var myList = document.getElementById('myList');
-	  myList.addEventListener('click', function() {
-	    var lis = myList.getElementsByTagName('li');
-	    for (var i = 0; i < lis.length; i++) {
-	      if (lis[i].style.display === 'none') {
-	        lis[i].style.display = 'block';
-	      } else {
-	        lis[i].style.display = 'none';
-	      }
-	    }
-	  });
-	  
-	  fetch('http://localhost:8080/MavenNDepartmentStoreWebsite/api/companyCounter/findByCounterFloor/2樓')
-	    .then(response => response.json())
-	    .then(data => console.log(data))
-	    .catch(error => console.error(error));
-	});
-</script>
-</html>
->>>>>>> 78801b5350ab16da7067cc55804354c900e46b54
