@@ -1,6 +1,5 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
-import java.io.IOException;
 import java.util.Date;
 
 import javax.persistence.CascadeType;

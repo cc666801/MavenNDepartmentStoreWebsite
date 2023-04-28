@@ -21,11 +21,47 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 	<main id="main">
-		
-				<h3>測試中</h3>
-		
-				
+
+		<div class="container">
+		<div class="col-md-4 mb-3">
+			<div class="row">
+				<c:forEach var="commodity" items="${commodityList}">
+					<div class="card">
+						<a href="連結寫在這裡，請用jstl寫法"><img
+							src="data:image/png;base64,${commodity.base64Stringcomm_Picture}"
+							class="card-img-top" alt="商品圖片"
+							style="width: 100px; height: 100px;">
+						</a>
+						<div class="card-body">
+							<p class="card-text">${commodity.comm_Desc}</p>
+						</div>
+					</div>
+				</c:forEach>
+				</div> 
+				<%-- 				<c:forEach var="commodity" items="${commodityList}"> --%>
+				<!-- 					<div class="col-md-4 mb-3"> -->
+				<!-- 						<div class="card"> -->
+				<!-- 							<a href="123/123/{id}"> <img -->
+				<%-- 								src="data:image/png;base64,${commodity.base64Stringcomm_Picture}" --%>
+				<!-- 								class="card-img-top" alt="商品圖片" -->
+				<!-- 								style="width: 100px; height: 100px;"> -->
+				<!-- 							</a> -->
+				<!-- 							<div class="card-body"> -->
+				<%-- 								<p class="card-text">${commodity.comm_Desc}</p> --%>
+				<!-- 							</div> -->
+				<!-- 						</div> -->
+				<!-- 					</div> -->
+				<%-- 				</c:forEach> --%>
+			</div>
+		</div>
+<c:url var="nextPageUrl" value="/Store/Storeindex">
+	<c:param name="pageNo" value="${PageNo + 1}"/>
+	<c:param name="pageSize" value="${pageSize}"/>
+</c:url>
+<a href="${nextPageUrl}">下一頁</a>
+
 	</main>
+
 
 	<!-- ======= Footer ======= -->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
