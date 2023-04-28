@@ -1,12 +1,14 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.PreUpdate;
 import javax.persistence.Table;
@@ -46,18 +48,23 @@ public class CommCate {
 	@Column(name = "cate_MDay", columnDefinition = "datetime",nullable = true)
 	private Date cate_MDay;
 
-	
+//	@OneToMany(mappedBy = "commCate")
+//	private List<Commodity> commDetailsList;
 	
 	@PrePersist
 	@PreUpdate
 	public void onCreateOrUpdate() {
-	    if(cate_CDay == null) {
+	    if (cate_CDay == null) {
 	        cate_CDay = new Date();
 	    }
-	    if(cate_MDay == null) {
+	    if (cate_MDay == null) {
+	        cate_MDay = new Date();
+	    } else {
 	        cate_MDay = new Date();
 	    }
 	}
+	
+
 	
 	public Integer getCate_Id() {
 		return cate_Id;
@@ -119,6 +126,18 @@ public class CommCate {
 	public void setCate_MDay(Date cate_MDay) {
 		this.cate_MDay = cate_MDay;
 	}
+
+
+
+//	public List<Commodity> getCommDetailsList() {
+//		return commDetailsList;
+//	}
+//
+//
+//
+//	public void setCommDetailsList(List<Commodity> commDetailsList) {
+//		this.commDetailsList = commDetailsList;
+//	}
 
 
 

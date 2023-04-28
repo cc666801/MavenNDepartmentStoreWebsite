@@ -28,26 +28,29 @@
 		<!-- End SiderNav -->
 
 		<div id="layoutSidenav_content">
+		
+			<main id="main" class="container my-5">
 
-			<main id="main">
+		<h1 class="mb-3">編輯商品類別</h1>
 
-				<h1>新增產品類別後台(新增)</h1>
-				<form:form method="post" modelAttribute="cate"
-					action="${contextRoot}/Store/CommCate/post">
+		<form:form modelAttribute="cate" method="put"
+			action="${contextRoot}/Store/Commcate/editCommCate">
+			<form:input type="hidden" path="cate_Id" />
+			<form:label path="cate_Name">分類名稱</form:label>
+			<form:input path="cate_Name" />
+			<br>
+			<form:label path="cate_Desc">分類敘述</form:label>
+			<form:input path="cate_Desc" />
+			<br>
+			<form:label path="cate_MDay">分類調整時間</form:label>
+			<form:input path="cate_MDay" readonly="true" />
+			<br>
 
 
-					<form:label path="cate_Name">類別名稱<span
-							style="color: red">*</span>
-					</form:label>
-					<form:input path="cate_Name" type="text" required="true" />
-					<br>
-					<form:label path="cate_Desc">類別敘述</form:label>
-					<form:input path="cate_Desc" />
-					<br>
+			<button type="submit">送出</button>
 
-					<button type="submit" value="確定">送出</button>
-				</form:form>
-			</main>
+		</form:form>
+	</main>
 
 			<!-- End #main -->
 
@@ -57,15 +60,15 @@
 		</div>
 	</div>
 	<!-- 	<script> -->
-	<script
+<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
 	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
-	<!-- 	<script -->
-	<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
-	<!-- 		crossorigin="anonymous"></script> -->
-	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
-	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
+<!-- 	<script -->
+<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
+<!-- 		crossorigin="anonymous"></script> -->
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
 		crossorigin="anonymous"></script>
@@ -73,6 +76,6 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
-
+	
 </body>
 </html>
