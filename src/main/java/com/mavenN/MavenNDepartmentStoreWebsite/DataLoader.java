@@ -68,14 +68,14 @@ public class DataLoader implements CommandLineRunner {
 		openingHoursRepository.saveAll(openingHoursList);
 
 		// Counter
-		Counter counter1 = new Counter(1, "A", 60000, 50.5, "1樓");
-		Counter counter2 = new Counter(2, "B", 50000, 40.0, "1樓");
-		Counter counter3 = new Counter(3, "C", 60000, 50.5, "1樓");
-		Counter counter4 = new Counter(4, "D", 70000, 60.5, "1樓");
-		Counter counter5 = new Counter(5, "E", 50000, 40.0, "2樓");
-		Counter counter6 = new Counter(6, "F", 50000, 40.0, "2樓");
-		Counter counter7 = new Counter(7, "G", 70000, 62.5, "2樓");
-		Counter counter8 = new Counter(8, "H", 40000, 30.0, "2樓");
+		Counter counter1 = new Counter(1, "A", 60000, 50.5, "1F");
+		Counter counter2 = new Counter(2, "B", 50000, 40.0, "1F");
+		Counter counter3 = new Counter(3, "C", 60000, 50.5, "1F");
+		Counter counter4 = new Counter(4, "D", 70000, 60.5, "1F");
+		Counter counter5 = new Counter(5, "E", 50000, 40.0, "2F");
+		Counter counter6 = new Counter(6, "F", 50000, 40.0, "2F");
+		Counter counter7 = new Counter(7, "G", 70000, 62.5, "2F");
+		Counter counter8 = new Counter(8, "H", 40000, 30.0, "2F");
 		// 裝成 List 存進 Database
 		List<Counter> counterList = Arrays.asList(counter1, counter2, counter3, counter4, counter5, counter6, counter7, counter8);
 		counterRepository.saveAll(counterList);

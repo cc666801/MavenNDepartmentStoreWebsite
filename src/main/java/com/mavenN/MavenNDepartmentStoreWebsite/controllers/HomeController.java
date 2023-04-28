@@ -20,4 +20,9 @@ public class HomeController {
 	public String getBackendPage(){
 		return "backend/index";
 	}
+	
+	@GetMapping(value = {"/company/floor"})
+	public String getCompanyPage(){
+		return "company/floor";
+	}
 }

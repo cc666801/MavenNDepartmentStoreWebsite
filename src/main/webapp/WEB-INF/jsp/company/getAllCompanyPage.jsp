@@ -116,7 +116,7 @@
 	  headers: myHeaders,
 	  redirect: 'follow'
 	};
-	fetch("http://localhost:8080/MavenNDepartmentStoreWebsite/api/company/findAllPages", requestOptions)
+	fetch("${contextRoot}/api/company/findAllPages", requestOptions)
 	  .then(response => response.json())
 	  .then(response => response.content)
 	  .then(result => {

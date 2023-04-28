@@ -1,5 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto.CompanyDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CompanyService;
 
@@ -24,6 +28,19 @@ public class CompanyControllerApi {
 		Page<CompanyDto> page = companyService.findByPageApi(pageNumber);
 		
 	    return page;
+	}
+	
+	@GetMapping("/findAllCompanyOnCounter")
+	public List<CompanyDto> findAllCompanyOnCounter() {
+		List<CompanyDto> companyDtos = new ArrayList<>();
+		List<Company> companies = companyService.findByCooperationStatus_CooperationStatusName("在櫃中");
+
+		for (Company company : companies) {
+		    CompanyDto companyDto = new CompanyDto(company);
+		    companyDtos.add(companyDto);
+		}
+		
+		return companyDtos;
 	}
 	
 	@DeleteMapping("/deleteCompany/{id}")

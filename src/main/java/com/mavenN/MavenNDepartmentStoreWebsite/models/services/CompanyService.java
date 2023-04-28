@@ -48,6 +48,7 @@ public class CompanyService {
 
 	public List<IndustryCategory> findAllIndustryCategorys() {
 		List<IndustryCategory> industryCategories = industryCategoryRepository.findAll();
+		companyRepository.findAll();
 		return industryCategories;
 	}
 
@@ -120,5 +121,10 @@ public class CompanyService {
 		Page<CompanyDto> page = new PageImpl<>(dtoList);
 		return page;
 	}
+	
+	// For findAllCompanyOnCounter()
+	public List<Company> findByCooperationStatus_CooperationStatusName(String cooperationStatusName) {
+		return companyRepository.findByCooperationStatus_CooperationStatusName(cooperationStatusName);
+	};
 
 }

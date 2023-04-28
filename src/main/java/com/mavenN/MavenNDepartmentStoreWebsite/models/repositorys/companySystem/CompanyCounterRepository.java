@@ -11,8 +11,8 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Compan
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounterId;
 
 public interface CompanyCounterRepository extends JpaRepository<CompanyCounter, CompanyCounterId>{
-	@Query("SELECT cc FROM CompanyCounter cc WHERE cc.counter.property = :propertyValue")
-	List<CompanyCounter> findByCounterProperty(@Param("propertyValue") String counterFloor);
+	@Query("SELECT cc FROM CompanyCounter cc WHERE cc.counter.counterFloor = :propertyValue")
+	List<CompanyCounter> findByCounterFloor(@Param("propertyValue") String counterFloor);
 	
-	List<CompanyCounter> findByOnCounterTimeGreaterThanEqualAndOffCounterTimeLessThanEqual(Date startTime, Date endTime);
+//	List<CompanyCounter> findByOnCounterTimeGreaterThanEqualAndOffCounterTimeLessThanEqual(Date startTime, Date endTime);
 }
