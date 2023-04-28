@@ -22,7 +22,7 @@
 	<jsp:include page="../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
 
-	<div id="layoutSidenav">
+	<div id="layoutSidenav" style="background-color: #fdf5e6">
 
 		<!-- ======= SiderNav ======= -->
 		<jsp:include page="../layout/sideNavForBackend.jsp"></jsp:include>
@@ -40,7 +40,7 @@
 					<thead>
 						<tr>
 							<!-- 					<td>訂位單號碼</td>  -->
-							<!-- 					<td>餐廳</td>      -->
+							<td>餐廳</td>     
 							<td>姓名</td>
 							<td>電話</td>
 							<td>email</td>
@@ -58,7 +58,7 @@
 						<jstl:forEach items="${findAllReservation}" var="far">
 							<tr>
 								<%-- 											<td>${far.id}</td>    --%>
-								<%-- 											<td>${far.resid}</td> --%>
+								<td>${far.company.companyName}</td>
 								<td>${far.name}</td>
 								<td>${far.telephone}</td>
 								<td>${far.email}</td>

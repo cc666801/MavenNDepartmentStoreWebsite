@@ -46,9 +46,9 @@ public class RestReservationService {
 	} 
 	
 	@Transactional
-	public Reservation upDateReservationbyid(Integer r_id, String name, String telephone,
-											 String email, String remark, Date date,
-											 String time_interval, String time,
+	public Reservation upDateReservationbyid(Integer r_id, String name, String telephone, 
+											 Company company,String email, String remark, 
+											 Date date,String time_interval, String time,
 											 Integer adult, Integer children) {
 		Optional<Reservation> option = resRepository.findById(r_id);
 		if(option.isPresent()) {
@@ -56,6 +56,7 @@ public class RestReservationService {
 			System.out.println(res);
 			res.setName(name);
 			res.setTelephone(telephone);
+			res.setCompany(company);
 			res.setEmail(email);
 			res.setRemark(remark);
 			res.setDate(date);

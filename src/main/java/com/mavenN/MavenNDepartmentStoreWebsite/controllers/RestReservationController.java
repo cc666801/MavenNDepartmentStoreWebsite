@@ -1,10 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
-import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -50,6 +48,9 @@ public class RestReservationController {
 	
 	@GetMapping("/restaurant/edit")
 	public String editPage(@RequestParam("r_id") Integer r_id, Model model) {
+		List<Company> findAllCompany = reService.findAllCompany();
+		model.addAttribute("findAllCompany",findAllCompany);
+		
 		Reservation findbyid = reService.findreservationbyid(r_id);
 		model.addAttribute("reservation",findbyid);
 		return "restaurant/editReservation";
@@ -57,9 +58,9 @@ public class RestReservationController {
 	
 	@PutMapping("/restaurant/edit")
 	public String putEditReservation(@ModelAttribute("reservation") Reservation res) {
-		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(), 
-										res.getEmail(), res.getRemark(), res.getDate(), 
-										res.getTime_interval(), res.getTime(), 
+		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(),
+				                        res.getCompany(), res.getEmail(), res.getRemark(), 
+				                        res.getDate(), res.getTime_interval(), res.getTime(), 
 										res.getAdult(), res.getChildren());
 		return "redirect:/restaurant";			
 	}

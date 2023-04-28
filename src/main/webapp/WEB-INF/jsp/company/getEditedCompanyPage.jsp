@@ -71,7 +71,6 @@
 					<label for="industryCategory">Industry Category:</label>
 					<form:select path="industryCategory" id="industryCategory"
 						class="form-control" value="${company.industryCategory.industryCategoryId}">
-							${company.industryCategory.industryCategoryName}
 						<jstl:forEach items="${industryCategories}" var="industryCategory">
 							<form:option value="${industryCategory.industryCategoryId}">
 					${industryCategory.industryCategoryName}
