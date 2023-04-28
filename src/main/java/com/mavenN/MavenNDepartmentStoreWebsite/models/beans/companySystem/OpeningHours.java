@@ -30,6 +30,14 @@ public class OpeningHours {
 	// Constructor
 	public OpeningHours() {
 	}
+	
+	public OpeningHours(Integer openingHoursId, String openingHoursName) {
+		super();
+		this.openingHoursId = openingHoursId;
+		this.openingHoursName = openingHoursName;
+	}
+
+
 
 	// Getter and Setter
 	public Integer getOpeningHoursId() {

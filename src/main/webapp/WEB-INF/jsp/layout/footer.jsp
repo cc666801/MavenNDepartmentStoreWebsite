@@ -47,10 +47,10 @@
           <div class="col-6 col-lg-2">
             <h3 class="footer-heading">Navigation</h3>
             <ul class="footer-links list-unstyled">
-              <li><a href="index.html"><i class="bi bi-chevron-right"></i> Home</a></li>
-              <li><a href="index.html"><i class="bi bi-chevron-right"></i> Blog</a></li>
-              <li><a href="category.html"><i class="bi bi-chevron-right"></i> Categories</a></li>
-              <li><a href="single-post.html"><i class="bi bi-chevron-right"></i> Single Post</a></li>
+              <li><a href="index.html"><i class="bi bi-chevron-right"></i> 最新消息</a></li>
+              <li><a href="index.html"><i class="bi bi-chevron-right"></i> 線上商城</a></li>
+              <li><a href="category.html"><i class="bi bi-chevron-right"></i> 樓層導覽</a></li>
+              <li><a href="single-post.html"><i class="bi bi-chevron-right"></i> 聯絡我們</a></li>
               <li><a href="about.html"><i class="bi bi-chevron-right"></i> About us</a></li>
               <li><a href="contact.html"><i class="bi bi-chevron-right"></i> Contact</a></li>
             </ul>

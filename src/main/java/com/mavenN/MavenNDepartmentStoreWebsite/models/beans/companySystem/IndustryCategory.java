@@ -30,6 +30,16 @@ public class IndustryCategory {
 	// Constructor
 	public IndustryCategory() {
 	}
+	
+	
+
+	public IndustryCategory(Integer industryCategoryId, String industryCategoryName) {
+		super();
+		this.industryCategoryId = industryCategoryId;
+		this.industryCategoryName = industryCategoryName;
+	}
+
+
 
 	// Getter and Setter
 	public Integer getIndustryCategoryId() {
