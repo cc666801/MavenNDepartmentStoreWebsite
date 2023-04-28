@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
 
@@ -24,6 +25,10 @@ public class RestReservationController {
 	
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
+		
+		List<Company> findAllCompany = reService.findAllCompany();
+		model.addAttribute("findAllCompany",findAllCompany);
+		
 		model.addAttribute("reservation", new Reservation());
 		return "restaurant/addreservation";
 	}

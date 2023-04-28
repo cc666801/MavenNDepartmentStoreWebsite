@@ -30,47 +30,59 @@
 
 		<div id="layoutSidenav_content">
 			<main>
+				<h1>訂位單查詢</h1>
 				<div>
-		<form:form class="form-control" method="post" modelAttribute="reservation" action="${contextRoot}/reservation/post">
-<!-- 			${contextRoot}/reservation/post
-				<label for="RId">餐廳：</label> -->
-<!-- 			<input type="text" id="RId" name="Resid"><br><br> -->
-			<label for="NId">姓名：</label><br>
-			<form:input type="text" path="name" id="NId"/><br>
-			<label for="TId">電話：</label><br>
-			<form:input type="text" path="telephone" id="TId"/><br>
-			<label for="EId">email:</label><br>
-			<form:input type="text" path="email" id="EId" /><br>
-			<label for="note">備註：</label><br>
-			<form:textarea id="note" path="remark" cols="30" rows="10"></form:textarea><br>
-			<label for="DId">日期：</label><br>
-			<form:input type="date" path="date" id="DId"/><br>
-			<label for="TimeId">時段：</label><br>
-			<form:select path="time_interval" id="TimeId" class="form-select" style="width: 200px">
-			    <form:option value="中午"></form:option>
-			    <form:option value="下午"></form:option>
-				<form:option value="晚上"></form:option>
-			</form:select>
-			
-			<label for="meeting-time">選擇時間：</label><br>
-		    <form:input type="time" path="time" id="meeting-time" value="09:00" step="1800"/><br>
-			<label for="AId">大人：</label><br>
-			<form:select path="adult" id="AId" class="form-select" style="width: 200px">
-				<jstl:forEach var="i" begin="0" end="10">
-					<form:option value="${i}"></form:option>
-				</jstl:forEach>
-			</form:select>
-			
-			<label for="CId">小孩：</label><br>
-			<form:select path="children" id="CId" class="form-select" style="width: 200px">
-				<jstl:forEach var="i" begin="0" end="10">
-					<form:option value="${i}"></form:option>
-				</jstl:forEach>
-			</form:select>
-			
-			<button type="submit" class="btn btn-primary">送出</button>
-		</form:form>
-	</div>
+					<a href="${contextRoot}/restaurant/add"><button
+							class="btn btn-dark">新增</button></a>
+				</div>
+
+				<table class="table table-success table-striped">
+					<thead>
+						<tr>
+							<!-- 					<td>訂位單號碼</td>  -->
+							<!-- 					<td>餐廳</td>      -->
+							<td>姓名</td>
+							<td>電話</td>
+							<td>email</td>
+							<td>備註</td>
+							<td>日期</td>
+							<td>時段</td>
+							<td>時間</td>
+							<td>大人</td>
+							<td>小孩</td>
+							<td>編輯</td>
+							<td>刪除</td>
+						</tr>
+					</thead>
+					<tbody>
+						<jstl:forEach items="${findAllReservation}" var="far">
+							<tr>
+								<%-- 											<td>${far.id}</td>    --%>
+								<%-- 											<td>${far.resid}</td> --%>
+								<td>${far.name}</td>
+								<td>${far.telephone}</td>
+								<td>${far.email}</td>
+								<td>${far.remark}</td>
+								<td>${far.date}</td>
+								<td>${far.time_interval}</td>
+								<td>${far.time}</td>
+								<td>${far.adult}</td>
+								<td>${far.children}</td>
+								<td><form action="${contextRoot}/restaurant/edit">
+										<input type="hidden" name="r_id" value="${far.r_id}" /> <input
+											type="submit" class="btn btn-warning btn-sm" value="編輯" />
+									</form></td>
+								<td><form action="${contextRoot}/restaurant/delete"
+										method="post">
+										<input type="hidden" name="_method" value="delete" /> <input
+											type="hidden" name="r_id" value="${far.r_id}" /> <input
+											type="submit" class="btn btn-danger btn-sm" value="刪除" />
+									</form></td>
+								<%-- 						<td><a href="DeleteBookById.do?Id=${m.id}"><button>刪除</button></a></td> --%>
+							</tr>
+						</jstl:forEach>
+					</tbody>
+				</table>
 			</main>
 
 			<!-- End #main -->
@@ -81,15 +93,15 @@
 		</div>
 	</div>
 	<!-- 	<script> -->
-<script
+	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
 	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
-<!-- 	<script -->
-<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
-<!-- 		crossorigin="anonymous"></script> -->
-<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
-<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
+	<!-- 	<script -->
+	<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
+	<!-- 		crossorigin="anonymous"></script> -->
+	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
+	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
 		crossorigin="anonymous"></script>
@@ -97,6 +109,6 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
-	
+
 </body>
 </html>

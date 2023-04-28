@@ -14,9 +14,13 @@
 	<main id="main">
 	<div>
 		<form:form class="form-control" method="post" modelAttribute="reservation" action="${contextRoot}/reservation/post">
-<!-- 			${contextRoot}/reservation/post
-				<label for="RId">餐廳：</label> -->
-<!-- 			<input type="text" id="RId" name="Resid"><br><br> -->
+			<label for="CId">餐廳：</label>
+        	<form:select path="company" id="CId" class="form-select" style="width: 200px">
+				<jstl:forEach items="${findAllCompany}" var="comp">
+					<form:option value="${comp.companyId}">${comp.companyName}</form:option>
+				</jstl:forEach>
+			</form:select>
+			
 			<label for="NId">姓名：</label><br>
 			<form:input type="text" path="name" id="NId"/><br>
 			<label for="TId">電話：</label><br>

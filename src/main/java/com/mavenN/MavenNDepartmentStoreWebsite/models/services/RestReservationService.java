@@ -8,13 +8,18 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestReservationRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 
 @Service
 public class RestReservationService {
 	@Autowired
 	private RestReservationRepository resRepository;
+	
+	@Autowired
+	private CompanyRepository companyRepository;
 	
 	public void addreservation (Reservation res) {
 		resRepository.save(res);
@@ -23,7 +28,11 @@ public class RestReservationService {
 	public List<Reservation> findAllReservation() {
 		List<Reservation> findAllReservation = resRepository.findAll();
 		return findAllReservation;
-		
+	}
+	
+	public List<Company> findAllCompany(){
+		List<Company> findAllcomp = companyRepository.findAll();
+		return findAllcomp;
 	}
 	
 	public Reservation findreservationbyid(Integer r_id){
