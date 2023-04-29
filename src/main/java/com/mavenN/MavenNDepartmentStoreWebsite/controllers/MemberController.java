@@ -1,89 +1,63 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+
 import java.util.List;
-import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
 public class MemberController {
 
 	@Autowired
-	private MemberRepository memberSystemRepository;
-	@Autowired
-	private MemberService memberService;
-	
+	private MemberService mService;
+
 	
 	// 新增會員
-	@ResponseBody
-	@PostMapping("/member/add")
-	public Member addOneMember(@RequestBody Member mem) {
-		Member resMember = memberSystemRepository.save(mem);
-		return resMember;
-	}
-
-	// 搜索單筆會員
-	@ResponseBody
-	@GetMapping("/member/{id}")
-	public Member getOneMemberById(@PathVariable Integer id) {
-		Optional<Member> option = memberSystemRepository.findById(id);
-
-		if (option.isPresent()) {
-			Member result = option.get();
-			return result;
-		}
-
-		return null;
-	}
-
-	// 搜索所有會員
-	@ResponseBody
-	@GetMapping("/allmember")
-	public List<Member> findAllMember() {
-		List<Member> findAll = memberSystemRepository.findAll();
-
-		return findAll;
-	}
-
-	// 更新會員資料
-	@ResponseBody
-	@PutMapping("/member/edit")
-	public String editMember(@RequestParam("id")Integer id, Model model) {
-		Member mem = memberService.getMemberById(id);
-		model.addAttribute("memlist", mem);
-		return "成功";
+	@GetMapping("/member/register")
+	public String addMember(Model model) {
+		model.addAttribute("member",new Member());
+		return "member/addMemberPage";//跳到JSP
 		
 	}
 	
+	@PostMapping("members/post")
+	public String postMember(@ModelAttribute("members")Member mem) {
+		mService.addMember(mem);
+		return "/";
+	}
+	
+	// 搜索所有會員
+		@GetMapping("/member")
+		public String findAllLostBack(Model model){
+			List<Member> findAllLost=mService.findAllMember();
+			model.addAttribute("lostList", findAllLost);
+			return "";
+		}
+	
+	// 搜索單筆會員
+
+	
+	// 更新會員資料	
+	
+	
+	
+	
+	// 刪除會員資料
+
+	
 	
 
-	// 刪除會員資料
-	@ResponseBody
-	@DeleteMapping("/member/delete")
-	public String deleteMember(@RequestParam(name = "id") Integer memberId) {
-		try {
-			memberSystemRepository.deleteById(memberId);
-			return "刪除成功";
-		} catch (EmptyResultDataAccessException e) {
-			return "沒有這筆資料";
-		}
-	}
+	
+	
 
 ////-------------------------------------------------------------------------
 //
