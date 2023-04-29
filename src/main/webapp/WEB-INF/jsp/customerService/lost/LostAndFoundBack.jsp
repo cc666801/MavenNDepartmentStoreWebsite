@@ -29,7 +29,13 @@
 					<form action="${contextRoot}/LostAndFoundBack/add">
 		<button type="submit">新增</button>
 	</form>
-	<table>
+	<br>
+	<div class="card mb-4">
+						<div class="card-header">
+							<i class="fas fa-table me-1"></i>文章管理列表
+						</div>
+						<div class="card-body">
+							<table id="datatablesSimple">
 		<thead>
 			<tr>
 				<th>拾獲物登錄單號</th>
@@ -63,7 +69,8 @@
 			</c:forEach>
 		</tbody>
 	</table>
-					
+	</div>
+	</div>			
 					
 	</div>				
 </main>

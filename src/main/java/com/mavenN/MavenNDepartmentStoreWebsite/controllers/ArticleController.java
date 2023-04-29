@@ -2,20 +2,19 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.List;
 
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.servlet.ModelAndView;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
@@ -35,7 +34,7 @@ public class ArticleController {
 //		return "/forum/article/articleBack";
 //	}
 
-	
+////////////////後台///////////////////////////////
 	@GetMapping("/articleBack/add")
 	public String addArticle(Model model) {
 		model.addAttribute("article", new Article());
@@ -56,6 +55,7 @@ public class ArticleController {
 	public String findAllArtBack(Model model){
 		List<Article> findAllArt=articleService.findAllArticle();
 		model.addAttribute("artList", findAllArt);
+		
 		return "/forum/article/articleBack";
 	}
 	
@@ -86,7 +86,42 @@ public class ArticleController {
 	    model.addAttribute("article", article);
 	    return "/forum/article/showArticleContent";
 	}
+///////////////前台//////////////////////////	
+	@GetMapping("/articleList")
+	public String showPageFront(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model){
+		Page<Article> page=articleService.findArticleByPage(pageNumber);
+		model.addAttribute("page",page);
+		for (Article art : page.getContent()) {
+	        Document doc = Jsoup.parse(art.getArticleContent());
+	        String articlePreview = doc.text().substring(0, Math.min(doc.text().length(), 20)); 
+	        art.setArticlePreview(articlePreview);
+	    }
+		return "/forum/article/articleList";
+	}
 	
+//	@GetMapping("/articleList")
+//	public String findAllArtFront(Model model){
+//		List<Article> findAllArt=articleService.findAllArticle();
+//		model.addAttribute("artList", findAllArt);
+//		
+//		return "/forum/article/articleList";
+//	}
+	
+	@GetMapping("/articleFront/add")
+	public String addArticleFront(Model model) {
+		model.addAttribute("article", new Article());
+		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
+	    model.addAttribute("categoryList", categoryList);
+		
+		return "/forum/article/articleFrontAdd";
+	}
+	
+	@PostMapping("/articleFront/post")
+	public String postArticleFront(@ModelAttribute("article")Article art, @RequestParam("content") String content) {
+	    art.setArticleContent(content);
+	    articleService.addArticle(art);
+		return "redirect:/articleList";
+	}
 	
 	
 	

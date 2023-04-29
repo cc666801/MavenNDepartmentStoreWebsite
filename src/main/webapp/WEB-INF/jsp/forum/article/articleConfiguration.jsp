@@ -25,45 +25,46 @@
 
 		<div id="layoutSidenav_content">
 			<main>
-				<h1>文章其他設定</h1>
-				<button id="insert-category">類別設定</button>
-				<div id="category-div" style="display: none;">
-					<form:form id="category-add" method="POST"
-						modelAttribute="category"
-						action="${contextRoot}/articleConfiguration/postCategory">
-						<label for="category">新增類別：</label>
-						<form:input path="articleCategoryName" id="category"
-							required="required" />
-						<button type="submit">提交</button>
-					</form:form>
+				<div class="card">
+					<h1>文章其他設定</h1>
+					<button id="insert-category">類別設定</button>
+					<div id="category-div" style="display: none;">
+						<form:form id="category-add" method="POST"
+							modelAttribute="category"
+							action="${contextRoot}/articleConfiguration/postCategory">
+							<label for="category">新增類別：</label>
+							<form:input path="articleCategoryName" id="category"
+								required="required" />
+							<button type="submit">提交</button>
+						</form:form>
 
-					<table>
-						<thead>
-							<tr>
-								<th>類別編號</th>
-								<th>類別名稱</th>
-							</tr>
-						</thead>
-						<tbody>
-							<c:forEach var="cate" items="${categoryList}">
+						<table>
+							<thead>
 								<tr>
-									<td>${cate.articleCategoryID}</td>
-									<td>${cate.articleCategoryName}</td>
-									<td><form id="delete-category-${cate.articleCategoryID}"
-											action="${contextRoot}/articleConfiguration/deleteCategory"
-											method="post">
-											<input type="hidden" name="_method" value="delete" /> <input
-												type="hidden" name="id" value="${cate.articleCategoryID}" />
-											<input type="submit" value="刪除" class="delete-category" />
-										</form></td>
+									<th>類別編號</th>
+									<th>類別名稱</th>
 								</tr>
-							</c:forEach>
-						</tbody>
-					</table>
+							</thead>
+							<tbody>
+								<c:forEach var="cate" items="${categoryList}">
+									<tr>
+										<td>${cate.articleCategoryID}</td>
+										<td>${cate.articleCategoryName}</td>
+										<td><form id="delete-category-${cate.articleCategoryID}"
+												action="${contextRoot}/articleConfiguration/deleteCategory"
+												method="post">
+												<input type="hidden" name="_method" value="delete" /> <input
+													type="hidden" name="id" value="${cate.articleCategoryID}" />
+												<input type="submit" value="刪除" class="delete-category" />
+											</form></td>
+									</tr>
+								</c:forEach>
+							</tbody>
+						</table>
 
 
+					</div>
 				</div>
-
 
 			</main>
 			<!-- End #main -->
@@ -86,55 +87,64 @@
 	<!-- =================================== bootstrap ============================================= -->
 
 	<script>
-		$(document).ready(function() {
-			//顯示Category
-			$('#insert-category').click(function() {
-			$('#category-div').slideToggle();
-			});
-			//新增Category-Ajax	
-			$('#category-add').submit(function(event) {
-				event.preventDefault()
-				var url = $(this).attr('action');
-				var data = $(this).serialize();
-				$.ajax({
-				    type : "POST",
-				    url : url,
-				    data : data,
-				    success : function(response) {
-				        alert("新增成功");
-				        window.location.href = "${contextRoot}/articleConfiguration";
-				    },
-				    error : function(xhr,status,error) {
-				    	alert( xhr.responseText);
-				    }
-				});
-			});
-			
-			
-			//刪除確認			
-			$("form[id^='delete-category-']").submit(function(event) {
-			    event.preventDefault();
-			    var form = $(this);
-			    var categoryId = form.find("input[name='id']").val();
-			    if (confirm("確定要刪除此類別嗎？")) {
-			        $.ajax({
-			            type: form.attr('method'),
-			            url: form.attr('action'),
-			            data: form.serialize(),
-			            success: function() {
-			                alert("刪除成功");
-			                location.reload();
-			            },
-			            error: function(xhr, status, error) {
-			                alert("刪除失敗");
-			            }
-			        });
-			    }
-			});
-		});
-			
-	
+		$(document)
+				.ready(
+						function() {
+							//顯示Category
+							$('#insert-category').click(function() {
+								$('#category-div').slideToggle();
+							});
+							//新增Category-Ajax	
+							$('#category-add')
+									.submit(
+											function(event) {
+												event.preventDefault()
+												var url = $(this)
+														.attr('action');
+												var data = $(this).serialize();
+												$
+														.ajax({
+															type : "POST",
+															url : url,
+															data : data,
+															success : function(
+																	response) {
+																alert("新增成功");
+																window.location.href = "${contextRoot}/articleConfiguration";
+															},
+															error : function(
+																	xhr,
+																	status,
+																	error) {
+																alert(xhr.responseText);
+															}
+														});
+											});
 
+							//刪除確認			
+							$("form[id^='delete-category-']").submit(
+									function(event) {
+										event.preventDefault();
+										var form = $(this);
+										var categoryId = form.find(
+												"input[name='id']").val();
+										if (confirm("確定要刪除此類別嗎？")) {
+											$.ajax({
+												type : form.attr('method'),
+												url : form.attr('action'),
+												data : form.serialize(),
+												success : function() {
+													alert("刪除成功");
+													location.reload();
+												},
+												error : function(xhr, status,
+														error) {
+													alert("刪除失敗");
+												}
+											});
+										}
+									});
+						});
 	</script>
 
 

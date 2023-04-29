@@ -12,7 +12,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleLikeRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.fakeMemberRepository;
 
 @Service
 public class ArticleService {
@@ -20,6 +22,11 @@ public class ArticleService {
 	@Autowired
 	private ArticleRepository articleRepository;
 	
+//	  @Autowired
+//	    private ArticleLikeRepository articleLikeRepository;
+//	  
+//	  @Autowired
+//	    private fakeMemberRepository fakeMemberRepository ;
 	
 	public void addArticle(Article article) {
 		articleRepository.save(article);
@@ -37,7 +44,7 @@ public class ArticleService {
 	}
 	
 	public Page<Article> findArticleByPage(Integer pageNumber){
-		Pageable pgb = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "createTime");
+		Pageable pgb = PageRequest.of(pageNumber-1, 5, Sort.Direction.DESC, "articleCreateTime");
 		Page<Article> page = articleRepository.findAll(pgb);
 		return page;
 	}
@@ -65,5 +72,7 @@ public class ArticleService {
 		List<Article> findAllArticle=articleRepository.findAll();
 		return findAllArticle;
 	}
+	
+	///////////////////點讚系統////////////////////
 	
 }

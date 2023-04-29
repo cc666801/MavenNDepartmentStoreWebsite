@@ -41,6 +41,7 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
+				<div class="card">
 					<h1>編輯文章</h1>
 					<form:form modelAttribute="art" method="put"
 						action="${contextRoot}/articleBack/edit">
@@ -64,6 +65,7 @@
 						<div id="summernote">${art.articleContent}</div>
 						<button type="submit">送出</button>
 					</form:form>
+				</div>
 				</div>
 			</main>
 			<!-- End #main -->

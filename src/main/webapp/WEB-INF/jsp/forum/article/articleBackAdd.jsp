@@ -10,12 +10,6 @@
 <meta charset="UTF-8">
 <title>文章管理後台-新增</title>
 
-<!-- include libraries(jQuery, bootstrap) -->
-<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
-<script type="text/javascript"
-	src="cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
-
 <!-- include summernote css/js-->
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote.min.css"
@@ -23,6 +17,12 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	<!-- Summernote JS - CDN Link -->
+	<script
+		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<!-- include summernote-ko-KR -->
+<script src="../summernote/lang/summernote-zh-TW.js"></script>
 </head>
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
@@ -38,6 +38,7 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
+				<div class="card">
 					<h1>文章管理-新增</h1>
 					<form:form modelAttribute="article" method="post"
 						action="${contextRoot}/articleBack/post">
@@ -55,6 +56,7 @@
 						<div id="summernote"></div>
 						<button type="submit">送出</button>
 					</form:form>
+				</div>
 				</div>
 			</main>
 			<!-- End #main -->
@@ -74,33 +76,30 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+	
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+	
 
-	<!-- Summernote JS - CDN Link -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
-	<script>
-		
-	</script>
+	
+	
 
 	<script>
 		$(document).ready(function() {
 
 			$('#summernote').summernote({
+				height: 400,
 				callbacks : {
 					onChange : function(contents, $editable) {
 						$('#summernote-input').val(contents);
 					}
-				}
+				},
+				codeviewFilter : true,
+				codeviewIframeFilter : true,
+				lang:'zh-TW'
+				
 			});
 
-			$('#summernote').summernote({
-				codeviewFilter : true,
-				codeviewIframeFilter : true
-			});
+			
 
 		});
 	</script>
