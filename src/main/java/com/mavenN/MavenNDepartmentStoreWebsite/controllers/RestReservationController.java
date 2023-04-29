@@ -21,6 +21,11 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	@GetMapping("/restaurantfront")
+	public String addReservation() {
+		return"/restaurantfront/addrest";
+	}
+	
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
 		
@@ -34,6 +39,10 @@ public class RestReservationController {
 	
 	@PostMapping("/reservation/post")
 	public String postReservation(@ModelAttribute("reservation") Reservation res, Model model) {
+		
+		List<Company> findAllCompany = reService.findAllCompany();
+		model.addAttribute("findAllCompany",findAllCompany);
+		
 		reService.addreservation(res);
 		model.addAttribute("reservation",new Reservation());
 		return "restaurant/addreservation";
