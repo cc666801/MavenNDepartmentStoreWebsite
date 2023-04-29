@@ -35,7 +35,7 @@ public class CompanyCounterController {
 	
 	 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-
+	 
 	
 	// 查詢所有資料
     @GetMapping("/")

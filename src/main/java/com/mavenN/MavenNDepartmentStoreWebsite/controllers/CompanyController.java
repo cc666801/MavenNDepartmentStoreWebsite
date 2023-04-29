@@ -31,6 +31,14 @@ public class CompanyController {
 	@Autowired
 	private CompanyService companyService;
 
+	// Go to companyFrontend
+	@GetMapping(value = { "/company/floor" })
+	public String getCompanyPage(Model model) {
+		List<IndustryCategory> industryCategories = companyService.findAllIndustryCategorys();
+		model.addAttribute("industryCategories", industryCategories);
+		return "company/floor";
+	}
+
 	@GetMapping(value = { "/company/addCompanyPage" })
 	public String getAddCompanyPage(Model model) {
 		model.addAttribute("company", new Company());

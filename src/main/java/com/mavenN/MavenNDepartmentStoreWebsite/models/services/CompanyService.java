@@ -126,5 +126,10 @@ public class CompanyService {
 	public List<Company> findByCooperationStatus_CooperationStatusName(String cooperationStatusName) {
 		return companyRepository.findByCooperationStatus_CooperationStatusName(cooperationStatusName);
 	};
+	
+	// For findCompaniesOnCounterAndFloor()
+	public List<Company> findCompaniesByStatusAndFloor(String cooperationStatusName, String counterName) {
+		return companyRepository.findCompaniesByStatusAndFloor(cooperationStatusName, counterName);
+	};
 
 }

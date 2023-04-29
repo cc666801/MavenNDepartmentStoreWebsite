@@ -11,4 +11,13 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Compan
 public interface CompanyRepository extends JpaRepository<Company, Integer>{
 	@Query("SELECT c FROM Company c JOIN c.cooperationStatus cs WHERE cs.cooperationStatusName = :cooperationStatusName")
 	List<Company> findByCooperationStatus_CooperationStatusName(@Param("cooperationStatusName") String cooperationStatusName);
+	
+	@Query("SELECT c FROM Company c " +
+			"JOIN c.cooperationStatus cs " +
+			"JOIN c.counters cc " +
+			"JOIN cc.counter c2 " +
+			"WHERE cs.cooperationStatusName = :cooperationStatusName " +
+			"AND c2.counterFloor = :counterFloor " +
+			"AND cc.offCounterTime >= CURRENT_TIMESTAMP")
+		List<Company> findCompaniesByStatusAndFloor(String cooperationStatusName, String counterFloor);
 }

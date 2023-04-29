@@ -43,6 +43,19 @@ public class CompanyControllerApi {
 		return companyDtos;
 	}
 	
+	@GetMapping("/findAllCompanyOnCounterAndFloor/{counterName}")
+	public List<CompanyDto> findCompaniesOnCounterAndFloor(@PathVariable String counterName) {
+		List<CompanyDto> companyDtos = new ArrayList<>();
+		List<Company> companies = companyService.findCompaniesByStatusAndFloor("在櫃中", counterName);
+
+		for (Company company : companies) {
+		    CompanyDto companyDto = new CompanyDto(company);
+		    companyDtos.add(companyDto);
+		}
+		
+		return companyDtos;
+	}
+	
 	@DeleteMapping("/deleteCompany/{id}")
 	public Page<CompanyDto> deleteCompany(@PathVariable Integer id, @RequestParam(name = "page", defaultValue = "1") Integer pageNumber) {
 		companyService.deleteCompanyById(id);
