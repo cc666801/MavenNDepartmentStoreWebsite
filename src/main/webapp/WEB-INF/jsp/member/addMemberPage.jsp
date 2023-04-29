@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
   <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
     <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
     <!DOCTYPE html>
     <html>
@@ -20,31 +21,44 @@
 
     <body>
       <main id="main">
-        <div>會員註冊</div>
-
-        <form method="post" action="../InsertMember">
-          <p>
-            輸入會員姓名 : <input type="text" name="MemberName" /><br>
-          <p>
-            輸入會員生日 : <input type="text" name="MemberBirthday" /><br>
-          <p>
-            輸入會員信箱 : <input type="text" name="MemberEmail" /><br>
-          <p>
-            輸入會員帳號 : <input type="text" name="MemberAccount" /><br>
-          <p>
-            輸入會員密碼 : <input type="text" name="MemberPassword" /><br>
-          <p>
-            輸入會員電話 : <input type="text" name="MemberPhone" /><br>
-          <p>
-            輸入會員地址 : <input type="text" name="MemberAddress" /><br>
-          <p>
-
-
-
-            <input type="submit" value="確定" />
-        </form>
-
-
+        <h1>註冊會員</h1>
+    <form:form method="post" modelAttribute="member">
+        <table>
+            <tr>
+                <td>姓名：</td>
+                <td><form:input path="name" /></td>
+            </tr>
+            <tr>
+                <td>帳號：</td>
+                <td><form:input path="account" /></td>
+            </tr>
+            <tr>
+                <td>密碼：</td>
+                <td><form:input path="password" /></td>
+            </tr>
+            <tr>
+                <td>生日：</td>
+                <td><form:input path="birthday" type="date" /></td>
+            </tr>
+            <tr>
+                <td>Email：</td>
+                <td><form:input path="email" /></td>
+            </tr>
+            <tr>
+                <td>電話：</td>
+                <td><form:input path="phone" /></td>
+            </tr>
+            <tr>
+                <td>地址：</td>
+                <td><form:input path="address" /></td>
+            </tr>
+            
+            
+            <tr>
+                <td colspan="2"><input type="submit" value="註冊" /></td>
+            </tr>
+        </table>
+    </form:form>
       </main>
 
 

@@ -1,17 +1,22 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
-
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
+
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
@@ -19,45 +24,59 @@ public class MemberController {
 
 	@Autowired
 	private MemberService mService;
-
+	@Autowired
+	private MemberRepository mRepository;
 	
 	// 新增會員
 	@GetMapping("/member/register")
 	public String addMember(Model model) {
-		model.addAttribute("member",new Member());
-		return "member/addMemberPage";//跳到JSP
-		
+		model.addAttribute("member", new Member());
+		return "member/addMemberPage";// 跳到JSP
+
 	}
-	
+
 	@PostMapping("members/post")
-	public String postMember(@ModelAttribute("members")Member mem) {
+	public String postMember(@ModelAttribute("members") Member mem) {
 		mService.addMember(mem);
 		return "/";
 	}
-	
+
 	// 搜索所有會員
-		@GetMapping("/member")
-		public String findAllLostBack(Model model){
-			List<Member> findAllLost=mService.findAllMember();
-			model.addAttribute("lostList", findAllLost);
-			return "";
-		}
-	
+	@GetMapping("/memberlist")
+	public String findAllLostBack(Model model) {
+		List<Member> findAllMember = mService.findAllMember();
+		model.addAttribute("lostList", findAllMember);
+		return "member/memberlists";
+	}
+
 	// 搜索單筆會員
+	@GetMapping("/member/{id}")
+	public String findMemberById(@PathVariable Integer id) {
+		Optional<Member> option = mRepository.findById(id);
+		
+		return "redirect:/memberlist";
+		
+	}
+	// 更新會員資料
+	@GetMapping("/editmember/edit")
+	public String editMember(@RequestParam("id") Integer id, Model model) {
+		Member mem = mService.findMemberById(id);
+		model.addAttribute("member", mem);
+		return "member/editmember";
+	}
 
-	
-	// 更新會員資料	
-	
-	
-	
-	
+	@PutMapping("/editmember/edit")
+	public String putEditMember(@ModelAttribute("member") Member mem) {
+		mService.updateMemberById(mem.getId(), mem);
+		return "redirect:/memberlist";
+	}
+
 	// 刪除會員資料
-
-	
-	
-
-	
-	
+	@DeleteMapping("/memberdelete/{id}")
+	public String deleteMember(@PathVariable Integer id) {
+		mService.deleteMemberById(id);
+		return "redirect:/memberlist";
+	}
 
 ////-------------------------------------------------------------------------
 //
