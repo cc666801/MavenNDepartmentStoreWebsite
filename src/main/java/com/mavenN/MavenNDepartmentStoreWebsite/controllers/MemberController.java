@@ -27,7 +27,7 @@ public class MemberController {
 	@Autowired
 	private MemberRepository mRepository;
 	
-	// 新增會員
+	// 註冊會員
 	@GetMapping("/member/register")
 	public String addMember(Model model) {
 		model.addAttribute("member", new Member());
@@ -35,10 +35,16 @@ public class MemberController {
 
 	}
 
-	@PostMapping("members/post")
-	public String postMember(@ModelAttribute("members") Member mem) {
-		mService.addMember(mem);
-		return "/";
+	@PostMapping("/member/post")
+	public String postMember(@ModelAttribute("member") Member mem, Model model) {
+	    Optional<Member> existingMember = mRepository.findByAccount(mem.getAccount());
+	    if (existingMember.isPresent()) {
+	        model.addAttribute("error", "該帳號已經存在");
+	        return "member/addMemberPage";
+	    } else {
+	        mService.addMember(mem);
+	        return "frontend/index";
+	    }
 	}
 
 	// 搜索所有會員
@@ -51,10 +57,10 @@ public class MemberController {
 
 	// 搜索單筆會員
 	@GetMapping("/member/{id}")
-	public String findMemberById(@PathVariable Integer id) {
-		Optional<Member> option = mRepository.findById(id);
-		
-		return "redirect:/memberlist";
+	public String findMemberById(@PathVariable Integer id,Model model) {
+		Member member = mService.findMemberById(id);
+	    model.addAttribute("member", member);
+	    return "member/memberdetail";
 		
 	}
 	// 更新會員資料

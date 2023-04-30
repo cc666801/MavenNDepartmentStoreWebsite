@@ -1,69 +1,104 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
-  <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
-    <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
-    <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
-    <!DOCTYPE html>
-    <html>
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+	pageEncoding="UTF-8"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
+<!DOCTYPE html>
+<html>
 
-    <head>
+<head>
 
-      <!-- =======================================================
+<!-- =======================================================
   * Template Name: ZenBlog
   * Updated: Mar 10 2023 with Bootstrap v5.2.3
   * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
   * Author: BootstrapMade.com
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
-      <!-- ======= Header ======= -->
-      <jsp:include page="../layout/header.jsp"></jsp:include>
-      <!-- End Header -->
-    </head>
+<!-- ======= Header ======= -->
+<jsp:include page="../layout/header.jsp"></jsp:include>
+<!-- End Header -->
+<style>
+.error {
+	color: red;
+}
+</style>
+<script>
+function validateForm() {
+  var name = document.forms["memberForm"]["name"].value;
+  var account = document.forms["memberForm"]["account"].value;
+  var password = document.forms["memberForm"]["password"].value;
+  var email = document.forms["memberForm"]["email"].value;
+  var phone = document.forms["memberForm"]["phone"].value;
+  var address = document.forms["memberForm"]["address"].value;
+  var birthday = document.forms["memberForm"]["birthday"].value;
 
-    <body>
-      <main id="main">
-        <h1>註冊會員</h1>
-    <form:form method="post" modelAttribute="member">
-        <table>
-            <tr>
-                <td>姓名：</td>
-                <td><form:input path="name" /></td>
-            </tr>
-            <tr>
-                <td>帳號：</td>
-                <td><form:input path="account" /></td>
-            </tr>
-            <tr>
-                <td>密碼：</td>
-                <td><form:input path="password" /></td>
-            </tr>
-            <tr>
-                <td>生日：</td>
-                <td><form:input path="birthday" type="date" /></td>
-            </tr>
-            <tr>
-                <td>Email：</td>
-                <td><form:input path="email" /></td>
-            </tr>
-            <tr>
-                <td>電話：</td>
-                <td><form:input path="phone" /></td>
-            </tr>
-            <tr>
-                <td>地址：</td>
-                <td><form:input path="address" /></td>
-            </tr>
-            
-            
-            <tr>
-                <td colspan="2"><input type="submit" value="註冊" /></td>
-            </tr>
-        </table>
-    </form:form>
-      </main>
+  if (name == "" || account == "" || password == "" || email == "" || phone == "" || address == "" || birthday == "") {
+    alert("必填欄位不可為空白");
+    return false;
+  }
+}
+</script>
+</head>
+
+<body>
+	<main id="main">
+		<h1>註冊會員</h1>
+		<form:form method="post" action="${contextRoot}/member/post"
+			modelAttribute="member">
+			<table>
+				<tr>
+					<td>姓名：</td>
+					<td><form:input path="name" maxlength="5"
+							pattern="^[\u4E00-\u9FA5]+$" title="只能輸入中文，最多5個字" /></td>
+				</tr>
+				<tr>
+					<td>帳號：</td>
+					<td><form:input path="account" maxlength="20"
+							pattern="^[a-zA-Z0-9]+$" title="只能輸入英文字母和數字，最多20個字" /></td>
+				</tr>
+				<tr>
+					<td>密碼：</td>
+					<td><form:input path="password" type="password" maxlength="20"
+							pattern="^[a-zA-Z0-9]+$" title="只能輸入英文字母和數字，最多20個字" /></td>
+				</tr>
+				<tr>
+					<td>Email：</td>
+					<td><form:input path="email"
+							pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
+							title="請輸入正確的Email格式，例如：example@mail.com" /></td>
+				</tr>
+				<tr>
+					<td>電話：</td>
+					<td><form:input path="phone" maxlength="10" pattern="^[0-9]+$"
+							title="只能輸入10個阿拉伯數字，不能輸入英文或中文" /></td>
+				</tr>
+				<tr>
+					<td>地址：</td>
+					<td><form:input path="address" maxlength="50"
+							pattern="^[\u4E00-\u9FA5]+$" title="只能輸入中文，最多50個字" /></td>
+				</tr>
+
+				<tr>
+					<td>生日：</td>
+					<td><form:input path="birthday" type="date" /></td>
+				</tr>
+
+				<tr>
+					<td colspan="2"><input type="submit"
+						class="btn btn-outline-primary" value="註冊" /></td>
+				</tr>
+			</table>
+		</form:form>
+		<div>
+			<a href="${contextRoot}/" class="btn btn-outline-primary">登入</a>
+		</div>
+
+	</main>
 
 
-      <!-- End #main -->
+	<!-- End #main -->
 
-    </body>
+</body>
 
-    </html>
+</html>

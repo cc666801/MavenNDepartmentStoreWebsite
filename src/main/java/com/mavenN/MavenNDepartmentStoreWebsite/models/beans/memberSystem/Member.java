@@ -12,6 +12,8 @@ import javax.persistence.Table;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+
 @Entity
 @Table(name = "member")
 public class Member {
@@ -30,8 +32,9 @@ public class Member {
     @Column(name = "password", nullable = false)
     private String password;
     
-    @DateTimeFormat(pattern = "yyyy/MM/dd")
-    @Column(name = "birthday", columnDefinition = "date", nullable = false)
+    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
+    @Column(name = "birthday", columnDefinition = "date")
     private Date birthday;
 
     @Column(name = "email", nullable = false)
