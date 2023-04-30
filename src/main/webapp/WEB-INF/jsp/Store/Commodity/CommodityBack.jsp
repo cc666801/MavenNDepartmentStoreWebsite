@@ -60,34 +60,34 @@
 						<c:forEach var="commodity" items="${commodityList}">
 
 							<tr>
-								<td>${commodity.comm_Id}</td>
-								<td>${commodity.comm_Name}</td>
+								<td>${commodity.commId}</td>
+								<td>${commodity.commName}</td>
 								<td><img
-									src="data:image/png;base64,${commodity.base64Stringcomm_Picture}"
+									src="data:image/png;base64,${commodity.base64StringcommPicture}"
 									style="width: 100px; height: 100px;" /></td>
 
 
 
-								<td>${cate.cate_Id}</td>
-								<td>${commodity.comm_Desc}</td>
-								<td>${commodity.comm_Price}</td>
-								<td>${commodity.comm_Discount}</td>
-								<td>${commodity.comm_Shelve}</td>
-								<td>${commodity.comm_CDay}</td>
-								<td>${commodity.comm_MDay}</td>
+								<td>${cate.cateId}</td>
+								<td>${commodity.commDesc}</td>
+								<td>${commodity.commPrice}</td>
+								<td>${commodity.commDiscount}</td>
+								<td>${commodity.commShelve}</td>
+								<td>${commodity.commCDay}</td>
+								<td>${commodity.commMDay}</td>
 								<td><form:form
 										action="${contextRoot}/Store/Commodity/editCommodity"
 										method="get">
-										<input type="hidden" name="comm_Id"
-											value="${commodity.comm_Id}">
+										<input type="hidden" name="commId"
+											value="${commodity.commId}">
 										<button type="submit" class="btn btn-warning">編輯</button>
 
 
 									</form:form></td>
 								<td><form:form
 										action="${contextRoot}/Store/Commodity/delete" method="DELETE">
-										<input type="hidden" name="comm_Id"
-											value="${commodity.comm_Id}">
+										<input type="hidden" name="commId"
+											value="${commodity.commId}">
 										<button type="submit" class="btn btn-danger">刪除</button>
 									</form:form></td>
 							</tr>

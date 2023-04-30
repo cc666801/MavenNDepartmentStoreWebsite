@@ -11,6 +11,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
@@ -38,8 +39,8 @@ public class CommodityService {
 	
 // 透過 id 去尋找此商品
 	
-	public Commodity findCommodityById (Integer comm_Id) {
-		Optional<Commodity> option = commodityRepository.findById(comm_Id);
+	public Commodity findCommodityById (Integer commId) {
+		Optional<Commodity> option = commodityRepository.findById(commId);
 		
 		if(option.isEmpty()) {
 			return null;
@@ -52,17 +53,17 @@ public class CommodityService {
 	
 //	透過 id 更新
 	@Transactional
-	public Commodity updateCommodityById(Integer comm_Id, Commodity newcommodity) {
-		Optional<Commodity> option = commodityRepository.findById(comm_Id);
+	public Commodity updateCommodityById(Integer commId, Commodity newcommodity) {
+		Optional<Commodity> option = commodityRepository.findById(commId);
 
 		if(option.isPresent()) {
 			Commodity comm=option.get();
-			comm.setComm_Name(newcommodity.getComm_Name());
-			comm.setComm_Desc(newcommodity.getComm_Desc());
-			comm.setComm_Shelve(newcommodity.getComm_Shelve());
-			comm.setComm_Picture(newcommodity.getComm_Picture());
-			comm.setComm_Discount(newcommodity.getComm_Discount());
-			comm.setComm_Price(newcommodity.getComm_Price());
+			comm.setCommName(newcommodity.getCommName());
+			comm.setCommDesc(newcommodity.getCommDesc());
+			comm.setCommShelve(newcommodity.getCommShelve());
+			comm.setCommPicture(newcommodity.getCommPicture());
+			comm.setCommDiscount(newcommodity.getCommDiscount());
+			comm.setCommPrice(newcommodity.getCommPrice());
 			
 			return comm;
 		}
@@ -72,8 +73,8 @@ public class CommodityService {
 	
 //	透過id刪除
 	
-	public void deleteById(Integer comm_Id) {
-		commodityRepository.deleteById(comm_Id);
+	public void deleteById(Integer commId) {
+		commodityRepository.deleteById(commId);
 	}
 	
 	
@@ -82,20 +83,34 @@ public class CommodityService {
 //	原本下面這行 還有
 //	    Pageable pageable = PageRequest.of(pageNo - 1, pageSize, Sort.by("id").ascending());
 
-	public List<Commodity> getCommodityList(int pageNo, int pageSize) {
-	    Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
-	    Page<Commodity> pageResult = commodityRepository.findAll(pageable);
-	    return pageResult.getContent();
-	}
+//	@GetMapping("/Store/Commodity/page")
+//	public List<Commodity> findByPage(@RequestParam("p")Integer pageNumber){
+//		Pageable pgb =PageRequest.of(pageNumber-1, 3,Sort.Direction.ASC, "comm_Id");
+//		Page<Commodity> page=commodityRepository.findAll(pgb);
+//		return page.getContent();
+//	}
+//	
+	
+	
+	
+//	public List<Commodity> getCommodityList(int pageNo, int pageSize) {
+//	    Pageable pageable = PageRequest.of(pageNo - 1, pageSize);
+//	    Page<Commodity> pageResult = commodityRepository.findAll(pageable);
+//	    return pageResult.getContent();
+//	}
 
-	public int getCommodityCount() {
-	    return (int) commodityRepository.count();
+//	public int getCommodityCount() {
+//	    return (int) commodityRepository.count();
+//	}
+//	
+	
+	
+	
+	public Page<Commodity> findByPage(@RequestParam("p")Integer pageNumber){
+		Pageable pgb =PageRequest.of(pageNumber-1, 3,Sort.Direction.ASC, "commId");
+		Page<Commodity> page=commodityRepository.findAll(pgb);
+		return page;
 	}
-	
-	
-	
-	
-//嘗試加入 CommCate類別
 	
 	
 	

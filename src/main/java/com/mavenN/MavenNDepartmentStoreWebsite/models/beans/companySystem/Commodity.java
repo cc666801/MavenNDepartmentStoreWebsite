@@ -28,221 +28,109 @@ public class Commodity {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="comm_Id")
-	private Integer comm_Id;
+	private Integer commId;
 	
 	@Column(name="comm_Name", columnDefinition = "nvarchar(50)",nullable = false)
-	private  String comm_Name;
+	private  String commName;
 
 	@Column(name="comm_Picture", columnDefinition = "varbinary(MAX)",nullable = true)
-	private byte[] comm_Picture;
+	private byte[] commPicture;
 	
 	@Transient
 	private MultipartFile transferToByteArray;
 
 	@Transient
-	private String base64Stringcomm_Picture;
+	private String base64StringcommPicture;
 	
 
 
 	
 	@Column(name="comm_Desc", columnDefinition = "nvarchar(300)",nullable = true)
-	private String comm_Desc;
+	private String commDesc;
 	
 	@Column(name="comm_Price", columnDefinition = "nvarchar(10)",nullable = true)
-	private Double comm_Price;
+	private Double commPrice;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "comm_CDay", columnDefinition = "datetime",nullable = true)
-	private Date comm_CDay;
+	private Date commCDay;
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "comm_MDay", columnDefinition = "datetime",nullable = true)
-	private Date comm_MDay;
+	private Date commMDay;
 	
 	@Column(name="comm_Shelve", columnDefinition = "BIT",nullable = true)
-	private Boolean comm_Shelve;
+	private Boolean commShelve;
 	
 	@Column(name="comm_Discount", columnDefinition = "nvarchar(15)",nullable = true)
-	private String comm_Discount;
+	private String commDiscount;
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
-	@JoinColumn(name = "fk_cate_Id")
-	private CommCate cate_Id;
+	@JoinColumn(name = "fk_cateId")
+	private CommCate cateId;
 	
 	
 	@PrePersist
 	@PreUpdate
 	public void onCreateOrUpdate() {
-	    if (comm_CDay == null) {
-	    	comm_CDay = new Date();
+	    if (commCDay == null) {
+	    	commCDay = new Date();
 	    }
-	    if (comm_MDay == null) {
-	    	comm_MDay = new Date();
+	    if (commMDay == null) {
+	    	commMDay = new Date();
 	    } else {
-	    	comm_MDay = new Date();
+	    	commMDay = new Date();
 	    }
 	}
 	
 
-	
-	
-	
-	public Integer getComm_Id() {
-		return comm_Id;
+
+
+
+	public Integer getCommId() {
+		return commId;
 	}
 
 
 
 
 
-	public void setComm_Id(Integer comm_Id) {
-		this.comm_Id = comm_Id;
+	public void setCommId(Integer commId) {
+		this.commId = commId;
 	}
 
 
 
 
 
-	public String getComm_Name() {
-		return comm_Name;
+	public String getCommName() {
+		return commName;
 	}
 
 
 
 
 
-	public void setComm_Name(String comm_Name) {
-		this.comm_Name = comm_Name;
+	public void setCommName(String commName) {
+		this.commName = commName;
 	}
 
 
 
 
 
-	public byte[] getComm_Picture() {
-		return comm_Picture;
+	public byte[] getCommPicture() {
+		return commPicture;
 	}
 
 
 
 
 
-	public void setComm_Picture(byte[] comm_Picture) {
-		this.comm_Picture = comm_Picture;
-	}
-
-
-
-
-
-	public String getComm_Desc() {
-		return comm_Desc;
-	}
-
-
-
-
-
-	public void setComm_Desc(String comm_Desc) {
-		this.comm_Desc = comm_Desc;
-	}
-
-
-
-
-
-	public Double getComm_Price() {
-		return comm_Price;
-	}
-
-
-
-
-
-	public void setComm_Price(Double comm_Price) {
-		this.comm_Price = comm_Price;
-	}
-
-
-
-
-
-	public Date getComm_CDay() {
-		return comm_CDay;
-	}
-
-
-
-
-
-	public void setComm_CDay(Date comm_CDay) {
-		this.comm_CDay = comm_CDay;
-	}
-
-
-
-
-
-	public Date getComm_MDay() {
-		return comm_MDay;
-	}
-
-
-
-
-
-	public void setComm_MDay(Date comm_MDay) {
-		this.comm_MDay = comm_MDay;
-	}
-
-
-
-
-
-	public Boolean getComm_Shelve() {
-		return comm_Shelve;
-	}
-
-
-
-
-
-	public void setComm_Shelve(Boolean comm_Shelve) {
-		this.comm_Shelve = comm_Shelve;
-	}
-
-
-
-
-
-	public CommCate getCate_Id() {
-		return cate_Id;
-	}
-
-
-
-
-
-	public void setCate_Id(CommCate cate_Id) {
-		this.cate_Id = cate_Id;
-	}
-
-
-
-
-
-	public String getComm_Discount() {
-		return comm_Discount;
-	}
-
-
-
-
-
-	public void setComm_Discount(String comm_Discount) {
-		this.comm_Discount = comm_Discount;
+	public void setCommPicture(byte[] commPicture) {
+		this.commPicture = commPicture;
 	}
 
 
@@ -265,16 +153,128 @@ public class Commodity {
 
 
 
-	public String getBase64Stringcomm_Picture() {
-		return base64Stringcomm_Picture;
+	public String getBase64StringcommPicture() {
+		return base64StringcommPicture;
 	}
 
 
 
 
 
-	public void setBase64Stringcomm_Picture(String base64Stringcomm_Picture) {
-		this.base64Stringcomm_Picture = base64Stringcomm_Picture;
+	public void setBase64StringcommPicture(String base64StringcommPicture) {
+		this.base64StringcommPicture = base64StringcommPicture;
+	}
+
+
+
+
+
+	public String getCommDesc() {
+		return commDesc;
+	}
+
+
+
+
+
+	public void setCommDesc(String commDesc) {
+		this.commDesc = commDesc;
+	}
+
+
+
+
+
+	public Double getCommPrice() {
+		return commPrice;
+	}
+
+
+
+
+
+	public void setCommPrice(Double commPrice) {
+		this.commPrice = commPrice;
+	}
+
+
+
+
+
+	public Date getCommCDay() {
+		return commCDay;
+	}
+
+
+
+
+
+	public void setCommCDay(Date commCDay) {
+		this.commCDay = commCDay;
+	}
+
+
+
+
+
+	public Date getCommMDay() {
+		return commMDay;
+	}
+
+
+
+
+
+	public void setCommMDay(Date commMDay) {
+		this.commMDay = commMDay;
+	}
+
+
+
+
+
+	public Boolean getCommShelve() {
+		return commShelve;
+	}
+
+
+
+
+
+	public void setCommShelve(Boolean commShelve) {
+		this.commShelve = commShelve;
+	}
+
+
+
+
+
+	public String getCommDiscount() {
+		return commDiscount;
+	}
+
+
+
+
+
+	public void setCommDiscount(String commDiscount) {
+		this.commDiscount = commDiscount;
+	}
+
+
+
+
+
+	public CommCate getCateId() {
+		return cateId;
+	}
+
+
+
+
+
+	public void setCateId(CommCate cateId) {
+		this.cateId = cateId;
 	}
 
 

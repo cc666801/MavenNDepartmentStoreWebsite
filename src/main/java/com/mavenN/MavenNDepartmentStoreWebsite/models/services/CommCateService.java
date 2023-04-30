@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.CommCateRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommCateRepository;
 
 @Service
 public class CommCateService {
@@ -24,8 +24,8 @@ public class CommCateService {
 	}
 	
 //	透過id查詢類別
-	public CommCate findcateById(Integer cate_Id) {
-		Optional<CommCate> option = CommCateRepository.findById(cate_Id);
+	public CommCate findcateById(Integer cateId) {
+		Optional<CommCate> option = CommCateRepository.findById(cateId);
 		
 		if(option.isEmpty()) {
 			return null;
@@ -36,13 +36,13 @@ public class CommCateService {
 	
 //	更新透過 id
 	@Transactional
-	public CommCate updateCommById(Integer cate_Id ,CommCate newcate) {
-		Optional<CommCate> option = CommCateRepository.findById(cate_Id);
+	public CommCate updateCommById(Integer cateId ,CommCate newcate) {
+		Optional<CommCate> option = CommCateRepository.findById(cateId);
 		
 		if(option.isPresent()) {
 			CommCate cate=option.get();
-			cate.setCate_Name(newcate.getCate_Name());
-			cate.setCate_Desc(newcate.getCate_Desc());
+			cate.setCateName(newcate.getCateName());
+			cate.setCateDesc(newcate.getCateDesc());
 			
 			return cate;
 		}
@@ -51,8 +51,8 @@ public class CommCateService {
 	}
 	
 //	刪除透過 id
-	public void deleteById(Integer cate_Id ) {
-		CommCateRepository.deleteById(cate_Id);
+	public void deleteById(Integer cateId ) {
+		CommCateRepository.deleteById(cateId);
 	}
 	
 //	找尋所有類別

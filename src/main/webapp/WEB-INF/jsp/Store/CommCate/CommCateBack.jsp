@@ -51,22 +51,22 @@
 					<tbody>
 						<c:forEach var="cate" items="${cateList}">
 							<tr>
-								<td>${cate.cate_Id}</td>
-								<td>${cate.cate_Name}</td>
-								<td>${cate.cate_Desc}</td>
-								<td>${cate.cate_CDay}</td>
-								<td>${cate.cate_MDay}</td>
+								<td>${cate.cateId}</td>
+								<td>${cate.cateName}</td>
+								<td>${cate.cateDesc}</td>
+								<td>${cate.cateCDay}</td>
+								<td>${cate.cateMDay}</td>
 								<td><form:form
 										action="${contextRoot}/Store/Commcate/editCommCate"
 										method="get">
-										<input type="hidden" name="cate_Id" value="${cate.cate_Id}">
+										<input type="hidden" name="cateId" value="${cate.cateId}">
 										<button type="submit" class="btn btn-warning">編輯</button>
 
 
 									</form:form></td>
 								<td><form:form
 										action="${contextRoot}/Store/Commcate/delete" method="DELETE">
-										<input type="hidden" name="cate_Id" value="${cate.cate_Id}">
+										<input type="hidden" name="cateId" value="${cate.cateId}">
 										<button type="submit" class="btn btn-danger">刪除</button>
 									</form:form></td>
 							</tr>
