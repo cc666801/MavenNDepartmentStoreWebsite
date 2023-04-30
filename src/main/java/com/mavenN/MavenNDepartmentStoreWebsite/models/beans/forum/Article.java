@@ -66,7 +66,10 @@ public class Article {
 	protected void onUpdate() {
 		articleEditTime = new Date();
 	}
-
+	
+	@Column(name = "article_image")
+	 private byte[] articleImage;
+	
 	
 	private String articlePreview;
 	
@@ -144,6 +147,14 @@ public class Article {
 
 	public void setArticlePreview(String articlePreview) {
 		this.articlePreview = articlePreview;
+	}
+
+	public byte[] getArticleImage() {
+		return articleImage;
+	}
+
+	public void setArticleImage(byte[] articleImage) {
+		this.articleImage = articleImage;
 	}
 
 }

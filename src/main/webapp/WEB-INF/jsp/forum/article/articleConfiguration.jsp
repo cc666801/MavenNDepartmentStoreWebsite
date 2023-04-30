@@ -35,6 +35,10 @@
 							<label for="category">新增類別：</label>
 							<form:input path="articleCategoryName" id="category"
 								required="required" />
+							<select name="articleCategoryPermissions">
+								<option value="1">公開</option>
+								<option value="0">管理員</option>
+							</select>
 							<button type="submit">提交</button>
 						</form:form>
 
@@ -43,6 +47,7 @@
 								<tr>
 									<th>類別編號</th>
 									<th>類別名稱</th>
+									<th>類別權限</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -50,6 +55,22 @@
 									<tr>
 										<td>${cate.articleCategoryID}</td>
 										<td>${cate.articleCategoryName}</td>
+										<td>
+											<form id="edit-category-${cate.articleCategoryID}"
+												action="${contextRoot}/articleConfiguration/editCategory"
+												method="post">
+												<input type="hidden" name="id"
+													value="${cate.articleCategoryID}" /> <select
+													name="permission" data-category-id="${cate.articleCategoryID}">
+													<option value="1"
+														${cate.articleCategoryPermissions == 1 ? 'selected' : ''}>
+														公開</option>
+													<option value="0"
+														${cate.articleCategoryPermissions == 0 ? 'selected' : ''}>
+														管理員</option>
+												</select> 
+											</form>
+										</td>
 										<td><form id="delete-category-${cate.articleCategoryID}"
 												action="${contextRoot}/articleConfiguration/deleteCategory"
 												method="post">
@@ -144,6 +165,30 @@
 											});
 										}
 									});
+							
+							//類別權限變更
+							 $('select[name="permission"]').change(function() {
+							        var categoryId = $(this).data('category-id');
+							        var permission = $(this).val();
+							        $.ajax({
+							            url: '${contextRoot}/articleConfiguration/editCategory',
+							            method: 'POST',
+							            data: {
+							                id: categoryId,
+							                permission: permission
+							            },
+							            success: function(data) {
+							            	alert("變更成功");
+											location.reload();
+							            },
+							            error: function(xhr, status, error) {
+							                // 錯誤處理
+							            }
+							        });
+							    });
+							
+							
+							
 						});
 	</script>
 

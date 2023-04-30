@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+import java.io.IOException;
 import java.util.List;
 
 import org.jsoup.Jsoup;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
@@ -45,8 +47,16 @@ public class ArticleController {
 	}
 	
 	@PostMapping("/articleBack/post")
-	public String postArticle(@ModelAttribute("article")Article art, @RequestParam("content") String content) {
+	public String postArticle(@ModelAttribute("article")Article art,
+			                  @RequestParam("content") String content,
+			                  @RequestParam("articleImage") MultipartFile file) throws IOException  {
 	    art.setArticleContent(content);
+	    
+	 // 處理圖片上傳
+	    if (!file.isEmpty()) {
+	        art.setArticleImage(file.getBytes());
+	    }
+	    
 	    articleService.addArticle(art);
 		return "redirect:/articleBack";
 	}
@@ -110,7 +120,7 @@ public class ArticleController {
 	@GetMapping("/articleFront/add")
 	public String addArticleFront(Model model) {
 		model.addAttribute("article", new Article());
-		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
+		List<ArticleCategory> categoryList = articleCategoryService.findCategoriesPermissions();
 	    model.addAttribute("categoryList", categoryList);
 		
 		return "/forum/article/articleFrontAdd";

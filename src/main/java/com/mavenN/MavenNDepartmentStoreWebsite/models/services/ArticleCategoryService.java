@@ -52,5 +52,8 @@ public class ArticleCategoryService {
 		return null;
 	}
 	
+	public List<ArticleCategory> findCategoriesPermissions() {
+        return articleCategoryRepository.findByArticleCategoryPermissions(1);
+    }
 	
 }

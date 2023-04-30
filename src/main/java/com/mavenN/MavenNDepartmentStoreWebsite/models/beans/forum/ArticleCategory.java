@@ -32,7 +32,11 @@ public class ArticleCategory {
 	@OneToMany(mappedBy = "articleCategory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     private List<Article> articles = new ArrayList<>();
 
-		
+	@Column(name="category_permissions")
+	private Integer articleCategoryPermissions;
+	
+	
+	
 	
 	public ArticleCategory() {		
 	}
@@ -60,6 +64,16 @@ public class ArticleCategory {
 	public void setArticles(List<Article> articles) {
 		this.articles = articles;
 	}
+
+	public Integer getArticleCategoryPermissions() {
+		return articleCategoryPermissions;
+	}
+
+	public void setArticleCategoryPermissions(Integer articleCategoryPermissions) {
+		this.articleCategoryPermissions = articleCategoryPermissions;
+	}
+
+	
 	
 	
 	

@@ -70,6 +70,21 @@ public class ArticleCategoryController {
 		return "redirect:/articleConfiguration";
 	}
 	
+	
+	@PostMapping("/articleConfiguration/editCategory")
+	@ResponseBody
+	public ResponseEntity<?> editArticleCategory(@RequestParam("id") Integer categoryId,
+	                                             @RequestParam("permission") Integer categoryPermission) {
+	    try {
+	        ArticleCategory category = articleCategoryService.findArticleCategoryById(categoryId);
+	        category.setArticleCategoryPermissions(categoryPermission);
+	        articleCategoryService.updateArticleCategoryById(categoryId, category);
+	        return ResponseEntity.ok().build();
+	    } catch (Exception e) {
+	        String errorMessage = "更新類別權限失敗！";
+	        return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(errorMessage);
+	    }
+	}
 		
 		
 	}

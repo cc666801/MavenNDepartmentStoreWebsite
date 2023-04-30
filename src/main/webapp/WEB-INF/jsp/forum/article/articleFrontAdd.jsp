@@ -36,10 +36,11 @@
 			<form:form modelAttribute="article" method="post"
 				action="${contextRoot}/articleFront/post">
 				<form:label path="articleTitle">標題:</form:label>
-				<form:input path="articleTitle" />
+				<form:input path="articleTitle" required="required"/>
 				<br>
 				<form:label path="articleCategory">類別:</form:label>
-				<form:select path="articleCategory">
+				<form:select path="articleCategory" required="required">
+				<option value="" disabled selected>請選擇類別</option>
 					<c:forEach items="${categoryList}" var="category">
 						<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
 					</c:forEach>
