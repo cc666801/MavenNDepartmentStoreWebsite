@@ -6,9 +6,6 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageRequest;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -16,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -145,16 +143,38 @@ public class CommodityController {
 
 	
 	//分頁器
-//	@GetMapping("/Store/Commodity/page")
-//	public List<Commodity> findByPage(@RequestParam("p")Integer pageNumber){
-//		Pageable pgb =PageRequest.of(pageNumber-1, 3,Sort.Direction.ASC, "comm_Id");
-//		Page<Commodity> page=commodityRepository.findAll(pgb);
-//		return page.getContent();
-//	}
-//	
+	@GetMapping("/Store/Commodity/findAllComm")
+	public String findByPage(@RequestParam(name="p",defaultValue = "1")Integer pageNumber,Model model){
+		Page<Commodity> page = commodityService.findByPage(pageNumber);
+		
+		model.addAttribute("page", page);
+		return "Store/Storeindex";
+		
+		
+	}
 	
 	
 	
+// 找商品透過id
+	@GetMapping("/Store/Commodity/findComm")
+	public String findByCommId(@RequestParam(name="commId")Integer commodity,Model model) {
+		Commodity commodityInfo = commodityService.getCommodityById(commodity);
+		  model.addAttribute("commodityInfo", commodityInfo);
+		  return "Store/Commodity/CommodityDetail";
+	}
+	
+//	嘗試顯示折扣價格
+	@RequestMapping("/commodityDetail")
+	public String commodityDetail(Model model, @RequestParam(name = "commId") Integer commId) {
+	    Commodity commodityInfo = commodityService.getCommodityById(commId);
+	    Double price = commodityInfo.getCommPrice();
+	    String discount = commodityInfo.getCommDiscount();
+	    Double discountedPrice = commodityService.calculateDiscountedPrice(price, discount);
+	    commodityInfo.setCommPrice(discountedPrice);
+	    model.addAttribute("commodityInfo", commodityInfo);
+	    return "commodityDetail";
+	}
+
 	
 	
 	

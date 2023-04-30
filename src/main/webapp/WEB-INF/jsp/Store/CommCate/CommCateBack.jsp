@@ -36,7 +36,7 @@
 				<form action="${contextRoot}/Store/CommCate/add">
 					<button type="submit" class="btn btn-primary mb-3">新增</button>
 				</form>
-				<table class="table table-striped">
+				<table class="table table-striped" id="datatablesSimple">
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">類別id</th>

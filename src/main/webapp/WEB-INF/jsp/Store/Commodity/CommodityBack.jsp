@@ -28,7 +28,7 @@
 		<jsp:include page="../../layout/sideNavForBackend.jsp"></jsp:include>
 		<!-- End SiderNav -->
 
-		<div id="layoutSidenav_content">
+		<div id="layoutSidenav_content" >
 
 			<main id="main" class="container my-5">
 
@@ -41,7 +41,7 @@
 				</form>
 
 
-				<table class="table table-striped">
+				<table class="table table-striped" id="datatablesSimple">
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">商品序號</th>
@@ -68,7 +68,7 @@
 
 
 
-								<td>${cate.cateId}</td>
+								<td>${commodity.cateId.cateName}</td>
 								<td>${commodity.commDesc}</td>
 								<td>${commodity.commPrice}</td>
 								<td>${commodity.commDiscount}</td>

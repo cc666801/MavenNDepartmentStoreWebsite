@@ -24,22 +24,33 @@
 
 		<div class="container">
 			<div class="row">
-				<c:forEach var="commodity" items="${commodityList}">
+				<c:forEach var="commodity" items="${page.content}">
 					<div class="col-md-4 mb-3">
 						<div class="card">
-							<a href="連結寫在這裡，請用jstl寫法"><img
+							<a
+								href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
+								<img
 								src="data:image/png;base64,${commodity.base64StringcommPicture}"
 								class="card-img-top" alt="商品圖片"
-								style="width: 100px; height: 100px;"> </a>
+								style="width: 100px; height: 100px;">
+							</a>
+
 							<div class="card-body">
 								<p class="card-text">${commodity.commDesc}</p>
+
 							</div>
 						</div>
 					</div>
 				</c:forEach>
+				<br />
+				<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+					<a
+						href="${contextRoot}/Store/Commodity/findAllComm?p=${pageNumber}"
+						style="display: inline">${pageNumber}</a>
+				</c:forEach>
 			</div>
 
-<!-- 分頁器沒有寫完  -->
+
 		</div>
 	</main>
 

@@ -45,39 +45,39 @@ public class StoreController {
 //    }
 
 //	
-	@GetMapping("/Store/Storeindex")
-	public String getstore(Model model) {
-
-		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
-		for (Commodity commodity : findAllCommodity) {
-			byte[] imageData = commodity.getCommPicture();
-			if (imageData != null) {
-				String base64String = Base64.getEncoder().encodeToString(imageData);
-				commodity.setBase64StringcommPicture(base64String);
-			}
-		}
-		model.addAttribute("commodityList", findAllCommodity);
-		return "Store/Storeindex";
-	}
-	
-	
+//	@GetMapping("/Store/Storeindex")
+//	public String getstore(Model model) {
+//
+//		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
+//		for (Commodity commodity : findAllCommodity) {
+//			byte[] imageData = commodity.getCommPicture();
+//			if (imageData != null) {
+//				String base64String = Base64.getEncoder().encodeToString(imageData);
+//				commodity.setBase64StringcommPicture(base64String);
+//			}
+//		}
+//		model.addAttribute("commodityList", findAllCommodity);
+//		return "Store/Storeindex";
+//	}
+//	
+//	
 	
 	
 	
 	
 	//分頁器
 	
-	@GetMapping("/Store/Commodity/page")
-	public String findByPage(@RequestParam("p")Integer pageNumber,Model model){
-		Page<Commodity> page=commodityService.findByPage(pageNumber);
-		model.addAttribute("page",page);
-		
-		return "Store/Storeindex";
-		
-		
-	}
-	
-	
+//	@GetMapping("/Store/Commodity/page")
+//	public String findByPage(@RequestParam("p")Integer pageNumber,Model model){
+//		Page<Commodity> page=commodityService.findByPage(pageNumber);
+//		model.addAttribute("page",page);
+//		
+//		return "Store/Storeindex";
+//		
+//		
+//	}
+//	
+//	
 	
 	
 	
