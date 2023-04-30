@@ -28,26 +28,57 @@
 		<!-- End SiderNav -->
 
 		<div id="layoutSidenav_content">
+		
+			<main id="main" class="container my-5">
 
-			<main id="main">
+		<h1 class="mb-3">修改產品詳細資訊後台(修改後顯示畫面)</h1>
 
-				<h1>新增產品類別後台(新增)</h1>
-				<form:form method="post" modelAttribute="cate"
-					action="${contextRoot}/Store/CommCate/post">
+	
 
 
-					<form:label path="cate_Name">類別名稱<span
-							style="color: red">*</span>
-					</form:label>
-					<form:input path="cate_Name" type="text" required="true" />
-					<br>
-					<form:label path="cate_Desc">類別敘述</form:label>
-					<form:input path="cate_Desc" />
-					<br>
+		<form:form modelAttribute="commodity" method="put"
+			action="${contextRoot}/Store/Commodity/editCommodity"
+			enctype="multipart/form-data">
 
-					<button type="submit" value="確定">送出</button>
-				</form:form>
-			</main>
+			<form:label path="comm_Id">商品序號</form:label>
+			<form:input path="comm_Id" readonly="true" />
+			<br>
+			<form:label path="comm_Name">商品名稱</form:label>
+			<form:input path="comm_Name" />
+
+
+			<br>
+			<form:label path="comm_Desc">商品敘述</form:label>
+			<form:input path="comm_Desc" />
+			<br>
+			<form:label path="comm_Price">商品價格</form:label>
+			<form:input path="comm_Price" />
+			<br>
+			<form:label path="comm_Discount">商品折扣(請輸入1以內之小數)</form:label>
+			<form:input path="comm_Discount" />
+			<br>
+			<label for="comm_Shelve">商品上下架</label>
+			<input type="radio" id="comm_Shelve_true" name="comm_Shelve"
+				value="true">
+			<label for="comm_Shelve_true">上架</label>
+			<input type="radio" id="comm_Shelve_false" name="comm_Shelve"
+				value="false">
+			<label for="comm_Shelve_false">下架</label>
+			<br>
+			<form:label path="comm_Picture">商品照片</form:label>
+			<form:input path="transferToByteArray" type="file" id="formfile" />
+			<br>
+
+
+			<button type="submit">送出</button>
+		</form:form>
+
+
+
+
+
+
+	</main>
 
 			<!-- End #main -->
 
@@ -57,15 +88,15 @@
 		</div>
 	</div>
 	<!-- 	<script> -->
-	<script
+<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
 		crossorigin="anonymous"></script>
 	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
-	<!-- 	<script -->
-	<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
-	<!-- 		crossorigin="anonymous"></script> -->
-	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
-	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
+<!-- 	<script -->
+<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
+<!-- 		crossorigin="anonymous"></script> -->
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
+<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
 	<script
 		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
 		crossorigin="anonymous"></script>
@@ -73,6 +104,6 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
-
+	
 </body>
 </html>

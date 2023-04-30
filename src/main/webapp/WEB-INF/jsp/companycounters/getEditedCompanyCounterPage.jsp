@@ -1,9 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -18,41 +20,48 @@
 </head>
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
-	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
+	<jsp:include page="../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
 
 	<div id="layoutSidenav">
 
 		<!-- ======= SiderNav ======= -->
-		<jsp:include page="../../layout/sideNavForBackend.jsp"></jsp:include>
+		<jsp:include page="../layout/sideNavForBackend.jsp"></jsp:include>
 		<!-- End SiderNav -->
 
 		<div id="layoutSidenav_content">
+			<main>
+				<h1>找到被更新的資料頁面</h1>
+				<div>
+					<form:form method="PUT"
+						action="${contextRoot}/companycounters/updateCompanyCounter" modelAttribute="companyCounter">
+						<form:input type="hidden" name="companyId" path="companyCounterId.companyId"
+							value="${companyCounter.company.companyId}" />
+						<form:input type="hidden" name="counterId" path="companyCounterId.counterId"
+							value="${companyCounter.counter.counterId}" />
+						<form:input type="hidden" name="onCounterTime" path="dateStringFromFrontend"
+							value="${companyCounter.companyCounterId.onCounterTime}" />
 
-			<main id="main">
+						
 
-				<h1>新增產品類別後台(新增)</h1>
-				<form:form method="post" modelAttribute="cate"
-					action="${contextRoot}/Store/CommCate/post">
+						
+
+						<label>Contract Time:</label>
+						<form:input type="number" name="contractTime" path="contractTime"
+							value="${companyCounter.contractTime}" />
+						<br>
 
 
-					<form:label path="cate_Name">類別名稱<span
-							style="color: red">*</span>
-					</form:label>
-					<form:input path="cate_Name" type="text" required="true" />
-					<br>
-					<form:label path="cate_Desc">類別敘述</form:label>
-					<form:input path="cate_Desc" />
-					<br>
-
-					<button type="submit" value="確定">送出</button>
-				</form:form>
+						<input type="submit" value="更新合約時間" />
+					</form:form>
+				</div>
 			</main>
+			<!-- End #main -->
 
 			<!-- End #main -->
 
 			<!-- ======= Footer ======= -->
-			<jsp:include page="../../layout/footerForBackend.jsp"></jsp:include>
+			<jsp:include page="../layout/footerForBackend.jsp"></jsp:include>
 			<!-- End Footer -->
 		</div>
 	</div>
@@ -73,6 +82,5 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
-
 </body>
 </html>
