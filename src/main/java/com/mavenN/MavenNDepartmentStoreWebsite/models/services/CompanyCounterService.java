@@ -1,6 +1,7 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.sql.Timestamp;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -47,6 +48,11 @@ public class CompanyCounterService {
 		List<Counter> counters = counterRepository.findAll();
 		return counters;
 	}
+	
+	public List<Counter> findAllEmptyCounters(){
+		List<Counter> emptyCounters = companyCounterRepository.findAllEmptyCounters();
+		return emptyCounters;
+	};
 
 	public void saveCompanyCounter(CompanyCounter companyCounter) {
 		companyCounterRepository.save(companyCounter);

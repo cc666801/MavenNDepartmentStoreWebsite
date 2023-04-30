@@ -52,7 +52,8 @@ public class CompanyCounterController {
         List<Company> companies = companyCounterService.findAllCompanies();
         model.addAttribute("companies", companies);
         
-        List<Counter> counters = companyCounterService.findAllCounters();
+        List<Counter> counters = companyCounterService.findAllEmptyCounters();
+        System.out.println(counters);
         model.addAttribute("counters", counters);
         
         return "companycounters/companycounter-form";
