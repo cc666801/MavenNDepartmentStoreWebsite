@@ -11,7 +11,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -170,22 +169,42 @@ public class CommodityController {
 //	    return "commodityDetail";
 //	}
 
-//	@GetMapping("/Store/Commodity/findCate")
-//	public String showAllCommByCateId(@RequestParam(name = "cateId") Integer cateId, Model model) {
-//		System.out.println(cateId);
-//		List<Commodity> findAllCommodity = commodityService.findAllByCateId(cateId);
-//
-//		model.addAttribute("commodityList", findAllCommodity);
-//		return "Store/Commodity/findCommByCate";
-//	}
+
 	
+//	這裡還可以執行 2023/05/01 11:27
 	@GetMapping("/Store/Commodity/findCate")
 	public String showAllCommByCommcate(CommCate commCate ,Model model) {
 		List<Commodity> showAllCommByCommcate =commodityService.findAllCommByCommCate(commCate);
+		for (Commodity commodity : showAllCommByCommcate) {
+			byte[] imageData = commodity.getCommPicture();
+			if (imageData != null) {
+				String base64String = Base64.getEncoder().encodeToString(imageData);
+				commodity.setBase64StringcommPicture(base64String);
+			}
+		}
+
+		
 		model.addAttribute("commodityList", showAllCommByCommcate);
 		return "Store/Commodity/findCommByCate";
 	}
 
+//	分類的分頁器  5/2 12:27 未完成
+//	@GetMapping("/Store/Commodity/findAllCommByCate")
+//	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+//	                             @RequestParam(name = "cateId") Integer cateId,
+//	                             Model model) {
+//	    CommCate commCate = new CommCate();
+//	    commCate.setCateId(cateId);
+//
+//	    Page<Commodity> page = commodityService.findByCommCateAndPage(commCate, pageNumber);
+//
+//	    model.addAttribute("page", page);
+//	    return "Store/Commodity/findCommByCate";
+//	}
+	
+	
+	
+	
 	public CommodityController() {
 		// TODO Auto-generated constructor stub
 	}

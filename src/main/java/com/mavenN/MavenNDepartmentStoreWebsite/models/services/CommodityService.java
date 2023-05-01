@@ -119,11 +119,17 @@ public class CommodityService {
 	
 	}
 	
-	
+//	嘗試做分類的分頁器   5/2 12:27 未完成
+//	public Page<Commodity> findByCommCateAndPage(CommCate commCate, Integer pageNumber, Integer pageSize) {
+//	    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
+//	    return commodityRepository.findAllCommByCommCate(commCate, pageable);
+//	}
+
 	
 
 	public CommodityService() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 }

@@ -46,6 +46,11 @@
 
 					<dt>商品編號：</dt>
 					<dd>${commodityInfo.commId}</dd>
+					<dt>商品分類：</dt>
+					<dd>
+						<a
+							href="${contextRoot}/Store/Commodity/findCate?cateId=${commodityInfo.commCate.cateId}">${commodityInfo.commCate.cateName}</a>
+					</dd>
 					<dt>商品描述：</dt>
 					<dd>${commodityInfo.commDesc}</dd>
 					<dt>商品原價：</dt>
@@ -84,17 +89,17 @@
 	<!-- End Footer -->
 
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
-<!-- 	<script -->
-<%-- 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
+	<!-- 	<script -->
+	<%-- 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
 
-<script>
-// 獲取商品原價元素
-var commPrice = document.getElementById("commPrice");
-// 將商品原價元素的文字加上刪除線樣式
-commPrice.style.textDecoration = "line-through";
-// 將商品原價元素的文字顏色設為紅色
-commPrice.style.color = "red";
-</script>
+	<script>
+		// 獲取商品原價元素
+		var commPrice = document.getElementById("commPrice");
+		// 將商品原價元素的文字加上刪除線樣式
+		commPrice.style.textDecoration = "line-through";
+		// 將商品原價元素的文字顏色設為紅色
+		commPrice.style.color = "red";
+	</script>
 
 
 </body>

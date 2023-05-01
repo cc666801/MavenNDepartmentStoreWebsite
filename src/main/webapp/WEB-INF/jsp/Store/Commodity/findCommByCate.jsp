@@ -22,25 +22,50 @@
 	<!-- End Header -->
 
 
-	<div id="layoutSidenav">
 
 
 
-		<div id="layoutSidenav_content">
+	<main id="main">
 
-			<main id="main" class="container my-5">
+		<h1>findCommByCate</h1>
+		<dl>
+			<dt>類別名稱：</dt>
+			<dd>${commodityList[0].commCate.cateName}</dd>
+		</dl>
 
-					<h1>findCommByCate</h1>
-					<dl>
-						<dt>類別名稱：</dt>
-						<dd>${commodityList[0].commCate.cateName}</dd>
-					</dl>
+		<div class="row  row-cols-md-3 ">
 
-				
-			</main>
-
+			<c:forEach var="commodity" items="${commodityList}">
+				<div class="card">
+					<a
+						href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
+						<img
+						src="data:image/png;base64,${commodity.base64StringcommPicture}"
+						class="card-img-top" alt="商品圖片"
+						style="width: 100px; height: 100px;">
+					</a>
+					<div class="card-body">
+						<p class="card-text">商品名稱:${commodity.commName}</p>
+						<a
+							href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}">商品分類:${commodity.commCate.cateName}</a>
+						<p class="card-text">商品價格:${commodity.commPrice}</p>
+					</div>
+				</div>
+			</c:forEach>
 		</div>
-	</div>
+
+
+
+
+		<!-- 				這裡是分頁器 -->
+		<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+			<a href="${contextRoot}/Store/Commodity/findAllCommByCate?p=${pageNumber}"
+				style="display: inline">${pageNumber}</a>
+		</c:forEach>
+
+
+	</main>
+
 	<!-- ======= Footer ======= -->
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
