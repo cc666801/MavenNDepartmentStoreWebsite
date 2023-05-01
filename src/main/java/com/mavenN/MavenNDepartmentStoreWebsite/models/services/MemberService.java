@@ -68,7 +68,7 @@ public class MemberService {
 			mem.setPassword(newMember.getPassword());
 			mem.setEmail(newMember.getEmail());
 			mem.setPhone(newMember.getPhone());
-			mem.setPicture(newMember.getPicture());
+//			mem.setPicture(newMember.getPicture());
 			return mem;
 		}
 		return null;

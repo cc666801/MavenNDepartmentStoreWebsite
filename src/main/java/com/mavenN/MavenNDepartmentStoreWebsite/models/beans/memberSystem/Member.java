@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
+import javax.validation.constraints.NotBlank;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -23,31 +24,38 @@ public class Member {
     @Column(name = "id")
     private Integer id;
 
+    @NotBlank
     @Column(name = "name", nullable = false)
     private String name;
 
+    @NotBlank
     @Column(name = "account", nullable = false, unique = true)
     private String account;
 
+    @NotBlank
     @Column(name = "password", nullable = false)
     private String password;
+    
     
     @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
     @DateTimeFormat(pattern = "yyyy-MM-dd")
     @Column(name = "birthday", columnDefinition = "date")
     private Date birthday;
 
+    @NotBlank
     @Column(name = "email", nullable = false)
     private String email;
 
+    @NotBlank
     @Column(name = "phone")
     private String phone;
 
+    @NotBlank
     @Column(name = "address")
     private String address;
 
-    @Column(name = "picture")
-    private String picture;
+//    @Column(name = "picture")
+//    private String picture;
 
     @Column(name = "points")
     private Integer points=0;
@@ -116,13 +124,13 @@ public class Member {
 		this.address = address;
 	}
 
-	public String getPicture() {
-		return picture;
-	}
-
-	public void setPicture(String picture) {
-		this.picture = picture;
-	}
+//	public String getPicture() {
+//		return picture;
+//	}
+//
+//	public void setPicture(String picture) {
+//		this.picture = picture;
+//	}
 
 	public Integer getPoints() {
 		return points;

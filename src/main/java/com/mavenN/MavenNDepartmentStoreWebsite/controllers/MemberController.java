@@ -27,7 +27,7 @@ public class MemberController {
 	@Autowired
 	private MemberRepository mRepository;
 	
-	// 註冊會員
+	// 註冊會員  帳號重複不會顯示在前台
 	@GetMapping("/member/register")
 	public String addMember(Model model) {
 		model.addAttribute("member", new Member());
@@ -43,16 +43,16 @@ public class MemberController {
 	        return "member/addMemberPage";
 	    } else {
 	        mService.addMember(mem);
-	        return "frontend/index";
+	        return "member/jump";
 	    }
 	}
 
 	// 搜索所有會員
-	@GetMapping("/memberlist")
+	@GetMapping("/memberList")
 	public String findAllLostBack(Model model) {
 		List<Member> findAllMember = mService.findAllMember();
-		model.addAttribute("lostList", findAllMember);
-		return "member/memberlists";
+		model.addAttribute("memberList", findAllMember);
+		return "member/memberList";
 	}
 
 	// 搜索單筆會員
