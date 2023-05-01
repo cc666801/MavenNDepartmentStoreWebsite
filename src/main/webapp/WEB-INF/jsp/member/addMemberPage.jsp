@@ -22,22 +22,35 @@
 .error {
 	color: red;
 }
+
+.center {
+	text-align: center;
+}
+
+table {
+	margin: 0 auto;
+}
+
+h1 {
+	text-align: center;
+}
 </style>
 <script>
-function validateForm() {
-  var name = document.forms["memberForm"]["name"].value;
-  var account = document.forms["memberForm"]["account"].value;
-  var password = document.forms["memberForm"]["password"].value;
-  var email = document.forms["memberForm"]["email"].value;
-  var phone = document.forms["memberForm"]["phone"].value;
-  var address = document.forms["memberForm"]["address"].value;
-  var birthday = document.forms["memberForm"]["birthday"].value;
+	function validateForm() {
+		var name = document.forms["memberForm"]["name"].value;
+		var account = document.forms["memberForm"]["account"].value;
+		var password = document.forms["memberForm"]["password"].value;
+		var email = document.forms["memberForm"]["email"].value;
+		var phone = document.forms["memberForm"]["phone"].value;
+		var address = document.forms["memberForm"]["address"].value;
+		var birthday = document.forms["memberForm"]["birthday"].value;
 
-  if (name == "" || account == "" || password == "" || email == "" || phone == "" || address == "" || birthday == "") {
-    alert("必填欄位不可為空白");
-    return false;
-  }
-}
+		if (name == "" || account == "" || password == "" || email == ""
+				|| phone == "" || address == "" || birthday == "") {
+			alert("必填欄位不可為空白");
+			return false;
+		}
+	}
 </script>
 </head>
 
@@ -85,15 +98,12 @@ function validateForm() {
 				</tr>
 
 				<tr>
-					<td colspan="2"><input type="submit"
-						class="btn btn-outline-primary" value="註冊" /></td>
+					<td colspan="2" class="center"><input type="submit"
+						class="btn btn-outline-primary" value="註冊" /> <a
+						href="${contextRoot}/" class="btn btn-outline-primary">登入</a></td>
 				</tr>
 			</table>
 		</form:form>
-		<div>
-			<a href="${contextRoot}/" class="btn btn-outline-primary">登入</a>
-		</div>
-
 	</main>
 
 
