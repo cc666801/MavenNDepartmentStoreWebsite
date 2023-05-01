@@ -81,7 +81,7 @@ public class MemberController {
 	@DeleteMapping("/memberdelete/{id}")
 	public String deleteMember(@PathVariable Integer id) {
 		mService.deleteMemberById(id);
-		return "redirect:/memberlist";
+		return "redirect:/memberList";
 	}
 
 ////-------------------------------------------------------------------------
