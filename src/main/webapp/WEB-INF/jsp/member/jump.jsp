@@ -5,12 +5,12 @@
 <head>
 	<meta charset="UTF-8">
 	<title>Jump</title>
-	<meta http-equiv="refresh" content="3;url=../frontend/index">
+	<meta http-equiv="refresh" content="/">
 </head>
 <body>
 	<div style="text-align:center;">
-		<h1>註冊成功！即將跳轉...</h1>
-		<p>若未跳轉，請點擊<a href="../frontend/index">這裡</a></p>
+		<h1>成功！即將跳轉...</h1>
+		<p>若未跳轉，請點擊<a href="/">這裡</a></p>
 	</div>
 </body>
 </html>

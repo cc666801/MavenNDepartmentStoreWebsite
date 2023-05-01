@@ -100,7 +100,7 @@ h1 {
 				<tr>
 					<td colspan="2" class="center"><input type="submit"
 						class="btn btn-outline-primary" value="註冊" /> <a
-						href="${contextRoot}/" class="btn btn-outline-primary">登入</a></td>
+						href="${contextRoot}/member/login" class="btn btn-outline-primary">登入</a></td>
 				</tr>
 			</table>
 		</form:form>

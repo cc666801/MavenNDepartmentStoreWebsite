@@ -3,6 +3,8 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 import java.util.List;
 import java.util.Optional;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -84,6 +86,29 @@ public class MemberController {
 		return "redirect:/memberList";
 	}
 
+//--------------------------------------------------------------------------
+	//會員登入
+	@GetMapping("/member/login")
+	public String loginMember(Model model) {
+	    model.addAttribute("member", new Member());
+	    return "member/login";
+	}
+
+	@PostMapping("/member/login")
+	public String postLoginMember(@ModelAttribute("member") Member mem, Model model, HttpSession session) {
+	    Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
+	    if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
+	        session.setAttribute("member", memberOpt.get());
+	        return "member/jump";
+	    } else {
+	        model.addAttribute("error", "帳號或密碼錯誤");
+	        return "member/login";
+	    }
+	}
+	
+	
+	
+	
 ////-------------------------------------------------------------------------
 //
 //	// 新增會員最愛資料
