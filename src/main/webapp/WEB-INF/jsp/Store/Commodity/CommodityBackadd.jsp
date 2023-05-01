@@ -48,8 +48,8 @@
 			
 			<div>
 			
-			<form:label path="cateId">類別分類</form:label>
-			<form:select path="cateId">
+			<form:label path="commCate">類別分類</form:label>
+			<form:select path="commCate">
 			
 				<c:forEach  items="${commcateList}"  var="commcate">
 				<form:option value="${commcate.cateId}">${commcate.cateName}</form:option>

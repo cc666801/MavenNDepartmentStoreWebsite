@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 
@@ -100,14 +101,25 @@ public class CommodityService {
 	}
 	
 //嘗試顯示價格變動...
-	public Double calculateDiscountedPrice(Double price, String discount) {
-	    if (discount == null) {
-	        return price;
-	    } else {
-	        double discountPercentage = Double.parseDouble(discount.replace("%", "")) / 100;
-	        return price * (1 - discountPercentage);
-	    }
+//	public Double calculateDiscountedPrice(Double price, String discount) {
+//	    if (discount == null) {
+//	        return price;
+//	    } else {
+//	        double discountPercentage = Double.parseDouble(discount.replace("%", "")) / 100;
+//	        return price * (1 - discountPercentage);
+//	    }
+//	}
+	
+	
+//	嘗試顯示單一類別產品
+	
+	public List<Commodity> findAllCommByCommCate(CommCate commCate) {
+		return commodityRepository.findAllCommByCommCate(commCate);
+	
+	
 	}
+	
+	
 	
 
 	public CommodityService() {

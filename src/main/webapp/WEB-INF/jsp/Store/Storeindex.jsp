@@ -36,8 +36,12 @@
 							</a>
 
 							<div class="card-body">
-								<p class="card-text">${commodity.commDesc}</p>
-
+								<p class="card-text">商品名稱:${commodity.commName}</p>
+								<!-- 								下面要改寫各別分類頁面 -->
+								<a
+									href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}">
+									商品分類:${commodity.commCate.cateName} </a>
+								<p class="card-text">商品價格:${commodity.commPrice}</p>
 							</div>
 						</div>
 					</div>
