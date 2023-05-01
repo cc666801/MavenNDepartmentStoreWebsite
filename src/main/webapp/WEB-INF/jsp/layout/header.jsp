@@ -102,7 +102,8 @@
 				<li class="dropdown"><a href="${contextRoot}/articleList"><span>討論區</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
-						<li><a href="${contextRoot}/articleList">文章列表</a></li>			
+						<li><a href="${contextRoot}/articleList">文章列表</a></li>
+						<li><a href="${contextRoot}/articleManage">會員個人文章管理</a></li>			
 					</ul>
 					</li>
 				<li class="dropdown"><a href="${contextRoot}/LostAndFound"><span>顧客服務</span>

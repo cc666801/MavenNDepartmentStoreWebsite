@@ -28,7 +28,7 @@
 							<div class="d-md-flex post-entry-2 small-img">
 								<a href="${contextRoot}/articleContent/${art.articleID}"
 									class="me-4 thumbnail"> <img
-									src="assetsForFrontend/img/post-landscape-1.jpg" alt=""
+									src="data:image/jpeg;base64,${art.articleBase64}" alt=""
 									class="img-fluid">
 								</a>
 								<div>
@@ -262,81 +262,24 @@
 								<!-- End Trending -->
 
 								<!-- Latest -->
-								<div class="tab-pane fade" id="pills-latest" role="tabpanel"
-									aria-labelledby="pills-latest-tab">
-									<div class="post-entry-1 border-bottom">
-										<div class="post-meta">
-											<span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-											<span>Jul 5th '22</span>
+								
+									<div class="tab-pane fade" id="pills-latest" role="tabpanel"
+										aria-labelledby="pills-latest-tab">
+										<c:forEach var="art" items="${page.content}">
+										<div class="post-entry-1 border-bottom">
+											<div class="post-meta">
+												<span class="date">${art.articleCategory.articleCategoryName}</span>
+												<span class="mx-1">&bullet;</span> <span>${art.articleCreateTime}</span>
+											</div>
+											<h2 class="mb-2">
+												<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
+											</h2>
+											<span class="author mb-3 d-block">發文者名稱</span>
 										</div>
-										<h2 class="mb-2">
-											<a href="#">Life Insurance And Pregnancy: A Working Mom’s
-												Guide</a>
-										</h2>
-										<span class="author mb-3 d-block">Jenny Wilson</span>
+										</c:forEach>
 									</div>
-
-									<div class="post-entry-1 border-bottom">
-										<div class="post-meta">
-											<span class="date">Business</span> <span class="mx-1">&bullet;</span>
-											<span>Jul 5th '22</span>
-										</div>
-										<h2 class="mb-2">
-											<a href="#">The Best Homemade Masks for Face (keep the
-												Pimples Away)</a>
-										</h2>
-										<span class="author mb-3 d-block">Jenny Wilson</span>
-									</div>
-
-									<div class="post-entry-1 border-bottom">
-										<div class="post-meta">
-											<span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-											<span>Jul 5th '22</span>
-										</div>
-										<h2 class="mb-2">
-											<a href="#">10 Life-Changing Hacks Every Working Mom
-												Should Know</a>
-										</h2>
-										<span class="author mb-3 d-block">Jenny Wilson</span>
-									</div>
-
-									<div class="post-entry-1 border-bottom">
-										<div class="post-meta">
-											<span class="date">Sport</span> <span class="mx-1">&bullet;</span>
-											<span>Jul 5th '22</span>
-										</div>
-										<h2 class="mb-2">
-											<a href="#">How to Avoid Distraction and Stay Focused
-												During Video Calls?</a>
-										</h2>
-										<span class="author mb-3 d-block">Jenny Wilson</span>
-									</div>
-
-									<div class="post-entry-1 border-bottom">
-										<div class="post-meta">
-											<span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
-											<span>Jul 5th '22</span>
-										</div>
-										<h2 class="mb-2">
-											<a href="#">17 Pictures of Medium Length Hair in Layers
-												That Will Inspire Your New Haircut</a>
-										</h2>
-										<span class="author mb-3 d-block">Jenny Wilson</span>
-									</div>
-
-									<div class="post-entry-1 border-bottom">
-										<div class="post-meta">
-											<span class="date">Culture</span> <span class="mx-1">&bullet;</span>
-											<span>Jul 5th '22</span>
-										</div>
-										<h2 class="mb-2">
-											<a href="#">9 Half-up/half-down Hairstyles for Long and
-												Medium Hair</a>
-										</h2>
-										<span class="author mb-3 d-block">Jenny Wilson</span>
-									</div>
-
-								</div>
+								
+								
 								<!-- End Latest -->
 
 

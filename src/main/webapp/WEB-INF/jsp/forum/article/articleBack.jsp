@@ -9,6 +9,12 @@
 <head>
 <meta charset="UTF-8">
 <title>文章管理-後台</title>
+<style>
+	img {
+		max-width: 100px;
+		max-height: 100px;
+	}
+</style>
 </head>
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
@@ -26,12 +32,14 @@
 				<div class="container-fluid px-4">
 					<h1>文章管理</h1>
 					<div>
-						<form action="${contextRoot}/articleBack/add" style="display: inline-block;">
+						<form action="${contextRoot}/articleBack/add"
+							style="display: inline-block;">
 							<button type="submit">新增文章</button>
 						</form>
 
 						<form
-							onsubmit="openWindow('${contextRoot}/articleConfiguration'); return false;" style="display: inline-block;">
+							onsubmit="openWindow('${contextRoot}/articleConfiguration'); return false;"
+							style="display: inline-block;">
 							<button type="submit">設定</button>
 						</form>
 					</div>
@@ -44,6 +52,7 @@
 							<table id="datatablesSimple">
 								<thead>
 									<tr>
+										<th>縮圖</th>
 										<th>文章編號</th>
 										<th>標題</th>
 										<th>發文者帳號</th>
@@ -58,6 +67,7 @@
 								<tbody>
 									<c:forEach var="art" items="${artList}">
 										<tr>
+											<td><img src="data:image/jpeg;base64,${art.articleBase64}"></td>
 											<td>${art.articleID}</td>
 											<td>${art.articleTitle}</td>
 											<td>帳號</td>

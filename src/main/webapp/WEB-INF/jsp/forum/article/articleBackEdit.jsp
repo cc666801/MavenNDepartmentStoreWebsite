@@ -62,7 +62,7 @@
 
 						<form:hidden name="articleContent" path="articleContent"
 							id="summernote-input" />
-						<div id="summernote">${art.articleContent}</div>
+						<div id="summernote">${articleContent}</div>
 						<button type="submit">送出</button>
 					</form:form>
 				</div>
@@ -104,9 +104,10 @@
 					onChange : function(contents, $editable) {
 						$('#summernote-input').val(contents);
 					}
-				},
+				}
 			});
 		});
+		
 	</script>
 
 

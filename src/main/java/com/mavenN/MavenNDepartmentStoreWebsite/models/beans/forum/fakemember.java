@@ -30,4 +30,34 @@ public class fakemember {
 		
 	}
 
+
+	public Integer getMemberId() {
+		return memberId;
+	}
+
+
+	public void setMemberId(Integer memberId) {
+		this.memberId = memberId;
+	}
+
+
+	public String getMemberName() {
+		return memberName;
+	}
+
+
+	public void setMemberName(String memberName) {
+		this.memberName = memberName;
+	}
+
+
+	public List<ArticleLike> getArticleLikes() {
+		return articleLikes;
+	}
+
+
+	public void setArticleLikes(List<ArticleLike> articleLikes) {
+		this.articleLikes = articleLikes;
+	}
+
 }

@@ -19,8 +19,10 @@ import javax.persistence.PreUpdate;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 
 import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.web.multipart.MultipartFile;
 
 @Entity
 @Table(name = "article")
@@ -67,11 +69,16 @@ public class Article {
 		articleEditTime = new Date();
 	}
 	
-	@Column(name = "article_image")
+	@Column(name = "article_image", columnDefinition = "varbinary(MAX)")
 	 private byte[] articleImage;
 	
-	
 	private String articlePreview;
+	
+	@Transient
+	private MultipartFile imgToByte;
+	
+	@Transient
+	private String articleBase64;
 	
 	public Article() {
 
@@ -141,12 +148,22 @@ public class Article {
 		this.articleLikes = articleLikes;
 	}
 
+	
+
 	public String getArticlePreview() {
 		return articlePreview;
 	}
 
 	public void setArticlePreview(String articlePreview) {
 		this.articlePreview = articlePreview;
+	}
+
+	public String getArticleBase64() {
+		return articleBase64;
+	}
+
+	public void setArticleBase64(String articleBase64) {
+		this.articleBase64 = articleBase64;
 	}
 
 	public byte[] getArticleImage() {
@@ -157,4 +174,13 @@ public class Article {
 		this.articleImage = articleImage;
 	}
 
+	public MultipartFile getImgToByte() {
+		return imgToByte;
+	}
+
+	public void setImgToByte(MultipartFile imgToByte) {
+		this.imgToByte = imgToByte;
+	}
+
+	
 }

@@ -61,13 +61,13 @@
 							<option value="" disabled selected>請選擇類別</option>
 							<c:forEach items="${categoryList}" var="category">
 								<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
-							</c:forEach>
-
-							<form:label path="articleCategory">文章縮圖:</form:label>
-							<input id="articleImage" name="articleImage" type="file"
-								accept="image/*">
-							<img id="imagePreview" src="" alt="圖片預覽">
+							</c:forEach>							
 						</form:select>
+						<br>
+						<form:label path="articleImage">文章縮圖:</form:label>
+							<form:input id="articleImage" path="imgToByte" type="file"
+								accept="image/*"></form:input>
+							<img id="imagePreview" src="" alt="圖片預覽">
 						<br>
 						<input type="hidden" name="content" id="summernote-input">
 						<div id="summernote"></div>
@@ -112,6 +112,7 @@
 		});
 	</script>
 <script>
+//圖片預覽
 var input = document.getElementById('articleImage');
 input.addEventListener('change', function() {
   var preview = document.getElementById('imagePreview');
