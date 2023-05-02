@@ -39,6 +39,7 @@
 						<form:select path="company" id="CId" class="form-select"
 							style="width: 200px">
 							<jstl:forEach items="${findAllCompany}" var="comp">
+							
 								<form:option value="${comp.companyId}">${comp.companyName}</form:option>
 							</jstl:forEach>
 						</form:select>
@@ -67,15 +68,23 @@
 						
 						<form:select path="time_interval" id="TimeId" class="form-select"
 							style="width: 200px">
-							<form:option value="中午"></form:option>
-							<form:option value="下午"></form:option>
-							<form:option value="晚上"></form:option>
+							<form:option value="中午">中午</form:option>
+							<form:option value="下午">下午</form:option>
+							<form:option value="晚上">晚上</form:option>
 						</form:select>
 
-						<label for="meeting-time">選擇時間：</label><br>
+						<label for="meeting-time">選擇時間：</label><br>					
+						<form:select path="time" id="meeting-time" class="form-select"
+							style="width: 200px">
+							
+							<jstl:forEach var="i" begin="10" end="20">
+								<jstl:forEach var="j" begin="00" end="30" step="30">
+								<option value="${i}:<fmt:formatNumber value="${j}" pattern="00"/>">${i}:<fmt:formatNumber value="${j}" pattern="00"/></option>
+								</jstl:forEach>
+							</jstl:forEach>
 						
-						<form:input type="time" path="time" id="meeting-time"
-							value="09:00" step="1800" /><br>
+						</form:select>
+						
 						<label for="AId">大人：</label><br>
 						<form:select path="adult" id="AId" class="form-select"
 							style="width: 200px">

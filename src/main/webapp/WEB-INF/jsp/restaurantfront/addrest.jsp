@@ -21,6 +21,7 @@
  <jsp:include page="../layout/header.jsp"></jsp:include>
 <!-- End Header -->
 	<main id="main">
+	<jstl:forEach var="company" items="${page.content}"></jstl:forEach>
 	<div class="container-fluid">
       <div class="row justify-content-center">
         <div class="col-12 col-md-2">

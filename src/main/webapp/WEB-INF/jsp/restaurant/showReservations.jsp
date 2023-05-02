@@ -35,11 +35,12 @@
 					<a href="${contextRoot}/restaurant/add"><button
 							class="btn btn-dark">新增</button></a>
 				</div>
-
-				<table class="table table-success table-striped">
+				
+				<div class="card-body">
+				<table id="datatablesSimple" class="table table-success table-striped" >
 					<thead>
 						<tr>
-							<!-- 					<td>訂位單號碼</td>  -->
+<!-- 												<td>訂位單號碼</td> -->
 							<td>餐廳</td>     
 							<td>姓名</td>
 							<td>電話</td>
@@ -83,6 +84,7 @@
 						</jstl:forEach>
 					</tbody>
 				</table>
+				</div>
 			</main>
 
 			<!-- End #main -->

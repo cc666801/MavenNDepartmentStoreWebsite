@@ -2,6 +2,7 @@
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
@@ -42,16 +43,15 @@
 							style="width: 200px">
 							<jstl:forEach items="${findAllCompany}" var="comp">
 								<jstl:choose>
-									<jstl:when
-										test="${reservation.company.companyId == comp.companyId}">
+									<jstl:when test="${comp.companyId == reservation.company.companyId}">
 										<form:option value="${comp.companyId}" selected="selected">
-							${comp.companyName}
-							</form:option>
+											${comp.companyName}
+										</form:option>
 									</jstl:when>
 									<jstl:otherwise>
 										<form:option value="${comp.companyId}">
-								${comp.companyName}
-						</form:option>
+												${comp.companyName}
+										</form:option>
 									</jstl:otherwise>
 								</jstl:choose>
 							</jstl:forEach>
@@ -85,11 +85,27 @@
 							<option value="晚上">晚上</option>
 						</form:select>
 
-						<label for="meeting-time">選擇時間：</label>
+						<label for="meeting-time">選擇時間：${fn:substring(reservation.time, 3, 5)}</label>
 						<br>
-						<form:input type="time" path="time" id="meeting-time"
-							value="09:00" step="1800" />
-						<br>
+						<jstl:set var="hour" value="${fn:substring(reservation.time, 0, 2)}" />
+						<jstl:set var="minutes" value="${fn:substring(reservation.time, 3, 5)}" />
+						<form:select path="time" id="meeting-time" class="form-select"
+							style="width: 200px">
+							<jstl:forEach var="i" begin="10" end="20">
+								<jstl:forEach var="j" begin="00" end="30" step="30">
+								<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+									<jstl:choose>
+										<jstl:when test="${i==hour && jj==minutes}">
+								          <option value="${i}:${jj}" selected="selected"> ${i}:${jj} </option>
+								        </jstl:when>
+								        <jstl:otherwise>
+								          <option value="${i}:${jj}">${i}:${jj}</option>
+								        </jstl:otherwise>                								
+									</jstl:choose>
+								</jstl:forEach>
+							</jstl:forEach>							
+						</form:select>
+						
 						<label for="AId">大人：</label>
 						<br>
 						<form:select path="adult" id="AId" class="form-select"
