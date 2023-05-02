@@ -34,6 +34,16 @@ public class CompanyCounterControllerApi {
         return companyCounterDtos;
     }
     
+    @GetMapping("/findByCounterFloor/{counterFloor}")
+    // 取得該樓層的所有櫃位
+    public List<CompanyCounterDto> findByCounterFloor(@PathVariable String counterFloor) {
+    	List<CompanyCounter> companyCounters = companyCounterService.findByCounterFloor(counterFloor);
+    	List<CompanyCounterDto> companyCounterDtos = companyCounters.stream()
+    		    .map(CompanyCounterDto::new)
+    		    .collect(Collectors.toList());
+    	return companyCounterDtos;
+    }
+    
     
  // 刪除資料
     @DeleteMapping("/{companyId}/{counterId}/{onCounterTimestamp}")
