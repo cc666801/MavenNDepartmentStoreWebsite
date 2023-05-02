@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -61,5 +62,17 @@ public class CompanyControllerApi {
 		companyService.deleteCompanyById(id);
 		Page<CompanyDto> page = companyService.findByPageApi(pageNumber);
 		return page;
+	}
+	
+	@GetMapping("/findCompaniesByKeywordAndFloorAndIndustryCategory")
+	public List<CompanyDto> search(
+			@RequestParam(name = "industryCategoryIds") String industryCategoryIds,
+	        @RequestParam(name = "keyword") String keyword,
+	        @RequestParam(name = "floor") String floor
+	                     ) {
+		List<Company> companies = companyService.findCompaniesByKeywordAndFloorAndIndustryCategory(keyword, floor, industryCategoryIds);
+		List<CompanyDto> companyDtos = companies.stream().map(CompanyDto::new).collect(Collectors.toList());
+
+	    return companyDtos;
 	}
 }

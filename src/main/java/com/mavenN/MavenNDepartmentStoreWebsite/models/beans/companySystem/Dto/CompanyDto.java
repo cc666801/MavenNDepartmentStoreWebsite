@@ -1,8 +1,12 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto;
 
+import java.util.ArrayList;
 import java.util.Base64;
+import java.util.Date;
+import java.util.List;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 
 public class CompanyDto {
 
@@ -14,6 +18,7 @@ public class CompanyDto {
 	private String industryCategoryName;
 	private String openingHoursName;
 	private String cooperationStatusName;
+	private List<String> counterFloors;
 //	private List<Integer> counterIds;
 
 	public CompanyDto() {
@@ -40,8 +45,19 @@ public class CompanyDto {
 		this.companyPhone = company.getCompanyPhone();
 		
 		String base64CompanyLogo = Base64.getEncoder().encodeToString(company.getCompanyLogo());
-
 		this.base64StringCompanyLogo = base64CompanyLogo;
+		
+		long now = System.currentTimeMillis();
+		List<String> companyCounterFloors = new ArrayList<>();
+		List<CompanyCounter> companyCounters = company.getCounters();
+		for (CompanyCounter companyCounter : companyCounters) {
+			if (companyCounter.getOffCounterTime().after(new Date(now))) {
+				
+				companyCounterFloors.add(companyCounter.getCounter().getCounterFloor());
+			}
+		}
+		this.counterFloors = companyCounterFloors;
+		
 		this.addressName = company.getAddress().getAddressName();
 		this.industryCategoryName = company.getIndustryCategory().getIndustryCategoryName();
 		this.openingHoursName = company.getOpeningHours().getOpeningHoursName();
@@ -112,12 +128,12 @@ public class CompanyDto {
 		this.cooperationStatusName = cooperationStatusName;
 	}
 
-//	public List<Integer> getCounterIds() {
-//		return counterIds;
-//	}
-//
-//	public void setCounterIds(List<Integer> counterIds) {
-//		this.counterIds = counterIds;
-//	}
+	public List<String> getCounterFloors() {
+		return counterFloors;
+	}
+
+	public void setCounterFloors(List<String> counterFloors) {
+		this.counterFloors = counterFloors;
+	}
 
 }

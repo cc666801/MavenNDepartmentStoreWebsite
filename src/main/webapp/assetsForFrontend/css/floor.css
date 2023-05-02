@@ -133,7 +133,7 @@
   border-radius: 5px;
   padding: 10px;
   background-color: #d3d3d3;
-  height: 150px;
+  height: 300px;
 }
 
 #search-span{
@@ -141,8 +141,10 @@
   margin-bottom: 10%;
 }
 
-#search-option1 #search-option2 {
-  margin-top: 3%;
+#search-option1, #search-option2 {
+  width: auto;
+  height: 20%;
+  display: block;
 }
 
 #search-input{

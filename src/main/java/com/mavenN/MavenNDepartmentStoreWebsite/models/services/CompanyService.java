@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -131,5 +132,17 @@ public class CompanyService {
 	public List<Company> findCompaniesByStatusAndFloor(String cooperationStatusName, String counterName) {
 		return companyRepository.findCompaniesByStatusAndFloor(cooperationStatusName, counterName);
 	};
+	
+	// For findCompaniesByKeywordAndFloorAndIndustryCategory()
+	public List<Company> findCompaniesByKeywordAndFloorAndIndustryCategory(String companyName, String counterFloor, String industryCategoryId) {
+		// 進行相應的處理
+	    // 将逗号分隔的字符串转换为列表
+	    List<String> counterFloors = Arrays.asList(counterFloor.split(","));
+	    List<Integer> industryCategoryIds = Arrays.stream(industryCategoryId.split(","))
+	                                              .map(Integer::parseInt)
+	                                              .collect(Collectors.toList());
+	    // 调用repository方法
+	    return companyRepository.findCompaniesByKeywordAndFloorAndIndustryCategory(companyName, counterFloors, industryCategoryIds);
+	}
 
 }
