@@ -58,9 +58,16 @@
 
 
 		<!-- 				這裡是分頁器 -->
-		<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
-			<a href="${contextRoot}/Store/Commodity/findAllCommByCate?p=${pageNumber}"
-				style="display: inline">${pageNumber}</a>
+		<c:forEach var="page" items="${page}">
+			<c:choose>
+				<c:when test="${page.current}">
+					<a href="#">${page.number}</a>
+				</c:when>
+				<c:otherwise>
+					<a
+						href="${contextRoot}/Store/Commodity/findAllCommByCate?p=${page.number}">${page.number}</a>
+				</c:otherwise>
+			</c:choose>
 		</c:forEach>
 
 

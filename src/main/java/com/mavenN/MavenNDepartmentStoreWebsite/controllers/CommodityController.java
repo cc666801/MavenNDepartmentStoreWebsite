@@ -142,7 +142,7 @@ public class CommodityController {
 	// 分頁器
 	@GetMapping("/Store/Commodity/findAllComm")
 	public String findByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
-		Page<Commodity> page = commodityService.findByPage(pageNumber);
+		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
 
 		model.addAttribute("page", page);
 		return "Store/Storeindex";
@@ -188,21 +188,18 @@ public class CommodityController {
 		return "Store/Commodity/findCommByCate";
 	}
 
-//	分類的分頁器  5/2 12:27 未完成
+//	分類的分頁器  5/3 12:27 未完成
 //	@GetMapping("/Store/Commodity/findAllCommByCate")
-//	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-//	                             @RequestParam(name = "cateId") Integer cateId,
-//	                             Model model) {
-//	    CommCate commCate = new CommCate();
-//	    commCate.setCateId(cateId);
+//	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
+//	   
 //
-//	    Page<Commodity> page = commodityService.findByCommCateAndPage(commCate, pageNumber);
+//	    Page<Commodity> page = commodityService.usePgbToFindCommodityByCommcate(, pageNumber);
 //
 //	    model.addAttribute("page", page);
 //	    return "Store/Commodity/findCommByCate";
 //	}
-	
-	
+//
+//	
 	
 	
 	public CommodityController() {

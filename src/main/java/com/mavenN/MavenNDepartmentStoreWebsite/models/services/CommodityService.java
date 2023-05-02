@@ -73,7 +73,7 @@ public class CommodityService {
 	}
 
 //分頁器
-	public Page<Commodity> findByPage(Integer pageNumber) {
+	public Page<Commodity> usePgbToFindAllCommodity(Integer pageNumber) {
 		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
 		Page<Commodity> page = commodityRepository.findAll(pgb);
 		for (Commodity commodity : page.getContent()) {
@@ -120,12 +120,17 @@ public class CommodityService {
 	}
 	
 //	嘗試做分類的分頁器   5/2 12:27 未完成
-//	public Page<Commodity> findByCommCateAndPage(CommCate commCate, Integer pageNumber, Integer pageSize) {
-//	    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize);
-//	    return commodityRepository.findAllCommByCommCate(commCate, pageable);
-//	}
+	public Page<Commodity> usePgbToFindCommodityByCommcate(CommCate commCate, Integer pageNumber) {
+	    Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "CommId");
+	    Page<Commodity> page = commodityRepository.findCommodityByCommCate(commCate, pgb);
+	    for (Commodity commodity : page.getContent()) {
+	        byte[] commPicture = commodity.getCommPicture();
+	        String base64string = Base64.getEncoder().encodeToString(commPicture);
+	        commodity.setBase64StringcommPicture(base64string);
+	    }
+	    return page;
+	}
 
-	
 
 	public CommodityService() {
 		// TODO Auto-generated constructor stub

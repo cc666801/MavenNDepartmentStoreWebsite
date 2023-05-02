@@ -22,13 +22,9 @@
 	<!-- End Header -->
 
 
-	<div id="layoutSidenav">
 
 
-
-		<div id="layoutSidenav_content">
-
-			<main id="main" class="container my-5">
+			<main id="main" >
 
 
 
@@ -82,8 +78,7 @@
 
 			</main>
 
-		</div>
-	</div>
+
 	<!-- ======= Footer ======= -->
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->

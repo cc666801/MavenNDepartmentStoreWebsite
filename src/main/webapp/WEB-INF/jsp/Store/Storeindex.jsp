@@ -20,8 +20,7 @@
 	<!-- ======= Header ======= -->
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<!-- End Header -->
-	<main id="main">
-
+	<main id="main" >
 		<div class="container">
 			<div class="row">
 				<c:forEach var="commodity" items="${page.content}">
