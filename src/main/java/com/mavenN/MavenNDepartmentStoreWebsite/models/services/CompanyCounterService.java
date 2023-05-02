@@ -1,6 +1,7 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.sql.Timestamp;
+import java.util.Base64;
 import java.util.Calendar;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -18,9 +19,11 @@ import org.springframework.stereotype.Controller;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounterId;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CooperationStatus;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Counter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyCounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CooperationStatusRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CounterRepository;
 
 @Controller
@@ -30,6 +33,8 @@ public class CompanyCounterService {
 	private CompanyRepository companyRepository;
 	@Autowired
 	private CounterRepository counterRepository;
+	@Autowired
+	private CooperationStatusRepository cooperationStatusRepository;
 	@Autowired
 	private CompanyCounterRepository companyCounterRepository;
 
@@ -43,9 +48,18 @@ public class CompanyCounterService {
 		List<Counter> counters = counterRepository.findAll();
 		return counters;
 	}
+	
+	public List<Counter> findAllEmptyCounters(){
+		List<Counter> emptyCounters = companyCounterRepository.findAllEmptyCounters();
+		return emptyCounters;
+	};
 
 	public void saveCompanyCounter(CompanyCounter companyCounter) {
 		companyCounterRepository.save(companyCounter);
+	}
+	
+	public CooperationStatus findCooperationStatusByCooperationStatusName(String cooperationStatusName) {
+	    return cooperationStatusRepository.findByCooperationStatusName(cooperationStatusName);
 	}
 
 	// For getAllCompanyCounters()
@@ -83,5 +97,10 @@ public class CompanyCounterService {
 	// For deleteApi()
 	public void deleteCompanyCounterById(CompanyCounterId id) {
 		companyCounterRepository.deleteById(id);
+	}
+	
+	// For findCompanyCounterByCounterFloorApi()
+	public List<CompanyCounter> findByCounterFloor(String counterFloor) {
+		return companyCounterRepository.findByCounterFloor(counterFloor);
 	}
 }

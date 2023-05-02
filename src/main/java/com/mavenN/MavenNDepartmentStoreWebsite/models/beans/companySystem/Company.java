@@ -160,4 +160,12 @@ public class Company {
 	public void setBase64StringCompanyLogo(String base64StringCompanyLogo) {
 		this.base64StringCompanyLogo = base64StringCompanyLogo;
 	}
+
+	@Override
+	public String toString() {
+		return "Company [companyId=" + companyId + ", companyName=" + companyName + ", companyPhone=" + companyPhone
+				+ "]";
+	}
+	
+	
 }

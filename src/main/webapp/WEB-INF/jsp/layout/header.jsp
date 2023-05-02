@@ -43,11 +43,12 @@
 <link href="${contextRoot}/assetsForFrontend/vendor/aos/aos.css"
 	rel="stylesheet">
 
-<!-- Template Main CSS Files -->
-<link href="${contextRoot}/assetsForFrontend/css/variables.css"
-	rel="stylesheet">
-<link href="${contextRoot}/assetsForFrontend/css/main.css"
-	rel="stylesheet">
+
+      <!-- Template Main CSS Files -->
+      <link href="${contextRoot}/assetsForFrontend/css/variables.css" rel="stylesheet">
+      <link href="${contextRoot}/assetsForFrontend/css/main.css" rel="stylesheet">
+      <link href="${contextRoot}/assetsForFrontend/css/floor.css" rel="stylesheet">
+
 
 <!-- =======================================================
 
@@ -75,6 +76,7 @@
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
 						<li><a href="${contextRoot}/Store/CommCate/add">商品分類新增</a></li>
+
 
            
             </li>

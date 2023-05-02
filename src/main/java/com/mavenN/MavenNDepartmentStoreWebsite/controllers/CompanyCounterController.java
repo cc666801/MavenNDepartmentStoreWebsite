@@ -22,6 +22,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounterId;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CooperationStatus;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Counter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CompanyCounterService;
 
@@ -34,7 +35,7 @@ public class CompanyCounterController {
 	
 	 SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS");
 
-
+	 
 	
 	// 查詢所有資料
     @GetMapping("/")
@@ -51,7 +52,8 @@ public class CompanyCounterController {
         List<Company> companies = companyCounterService.findAllCompanies();
         model.addAttribute("companies", companies);
         
-        List<Counter> counters = companyCounterService.findAllCounters();
+        List<Counter> counters = companyCounterService.findAllEmptyCounters();
+        System.out.println(counters);
         model.addAttribute("counters", counters);
         
         return "companycounters/companycounter-form";
@@ -61,7 +63,8 @@ public class CompanyCounterController {
     @PostMapping("/save")
     public String saveCompanyCounter(@ModelAttribute("companyCounter") CompanyCounter companyCounter) {
     	companyCounter.getCompanyCounterId().setOnCounterTimeIfNull();
-        System.out.println(companyCounter.getCompanyCounterId().getOnCounterTime());
+    	CooperationStatus cooperationStatus = companyCounterService.findCooperationStatusByCooperationStatusName("在櫃中");
+    	companyCounter.getCompany().setCooperationStatus(cooperationStatus);
         companyCounterService.saveCompanyCounter(companyCounter);
         return "redirect:/companycounters/";
     }
