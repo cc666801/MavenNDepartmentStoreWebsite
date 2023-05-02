@@ -30,6 +30,16 @@ public class CooperationStatus {
 	// Constructor
 	public CooperationStatus() {
 	}
+	
+	
+
+	public CooperationStatus(Integer cooperationStatusId, String cooperationStatusName) {
+		super();
+		this.cooperationStatusId = cooperationStatusId;
+		this.cooperationStatusName = cooperationStatusName;
+	}
+
+
 
 	// Getter and Setter
 	public Integer getCooperationStatusId() {

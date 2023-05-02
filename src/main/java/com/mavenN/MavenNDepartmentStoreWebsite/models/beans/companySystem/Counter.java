@@ -22,7 +22,7 @@ public class Counter {
 	@Column(name="counter_id")
 	private Integer counterId;
 	
-	@Column(name="counter_name", columnDefinition = "nvarchar(200)")
+	@Column(name="counter_name", columnDefinition = "nvarchar(10)")
 	private String counterName;
 	
 	@Column(name="counter_rent", columnDefinition = "int")
@@ -31,8 +31,8 @@ public class Counter {
 	@Column(name="counter_square_meters", columnDefinition = "DECIMAL(7,2)")
 	private Double counterSquareMeters;
 	
-	@Column(name="counter_floor", columnDefinition = "int")
-	private Double counterFloor;
+	@Column(name="counter_floor", columnDefinition = "nvarchar(10)")
+	private String counterFloor;
 	
 //	@ManyToMany
 //    @JoinTable(name = "company_counter",
@@ -45,6 +45,20 @@ public class Counter {
 	// Constructor
 	public Counter() {
 	}
+	
+	
+
+	public Counter(Integer counterId, String counterName, Integer counterRent, Double counterSquareMeters,
+			String counterFloor) {
+		super();
+		this.counterId = counterId;
+		this.counterName = counterName;
+		this.counterRent = counterRent;
+		this.counterSquareMeters = counterSquareMeters;
+		this.counterFloor = counterFloor;
+	}
+
+
 
 	// Getter and Setter
 	public Integer getCounterId() {
@@ -79,11 +93,11 @@ public class Counter {
 		this.counterSquareMeters = counterSquareMeters;
 	}
 
-	public Double getCounterFloor() {
+	public String getCounterFloor() {
 		return counterFloor;
 	}
 
-	public void setCounterFloor(Double counterFloor) {
+	public void setCounterFloor(String counterFloor) {
 		this.counterFloor = counterFloor;
 	}
 

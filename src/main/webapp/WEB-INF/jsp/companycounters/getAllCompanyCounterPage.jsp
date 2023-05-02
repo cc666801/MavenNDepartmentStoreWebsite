@@ -38,17 +38,15 @@
 							<table id="datatablesSimple">
 								<thead>
 									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Phone</th>
-										<th>Address</th>
-										<th>industryCategory</th>
-										<th>OpeningHours</th>
-										<th>CooperationStatus</th>
-										<th>Company Logo</th>
+										<th>companyId</th>
+										<th>companyName</th>
+										<th>counterName</th>
+										<th>contractTime</th>
+										<th>onCounterTime</th>
+										<th>offCounterTime</th>
 										<th>更新按鈕</th>
 										<th>刪除按鈕</th>
-										
+
 									</tr>
 								</thead>
 								<tfoot>
@@ -63,17 +61,15 @@
 								</tfoot>
 								<tbody id="tableBody">
 									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Phone</th>
-										<th>Address</th>
-										<th>industryCategory</th>
-										<th>OpeningHours</th>
-										<th>CooperationStatus</th>
-										<th>Company Logo</th>
+										<th>companyId</th>
+										<th>companyName</th>
+										<th>counterName</th>
+										<th>contractTime</th>
+										<th>onCounterTime</th>
+										<th>offCounterTime</th>
 										<th>更新按鈕</th>
 										<th>刪除按鈕</th>
-										
+
 									</tr>
 								</tbody>
 							</table>
@@ -102,77 +98,85 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-		
+
 	<script>
-	document.addEventListener("DOMContentLoaded", function() {
 	var myTableBody = document.getElementById('tableBody');
-	var myHeaders = new Headers();
-	myHeaders.append("Cookie", "JSESSIONID=A88D4C1EF2D373665EDA0CE10F5710E2");
-
-	var raw = "";
-
-	var requestOptions = {
-	  method: 'GET',
-	  headers: myHeaders,
-	  redirect: 'follow'
-	};
-	fetch("http://localhost:8080/MavenNDepartmentStoreWebsite/api/company/findAllPages", requestOptions)
+	function deleteCompanyCounter(companyId, counterId, onCounterTime) {
+		
+		const onCounterTimeDate = new Date(onCounterTime);
+		const unixTimestamp = onCounterTimeDate.getTime() / 1000;  // 毫秒轉換成秒
+		
+		var url = '${contextRoot}/api/companyCounter' +
+		  '/' + encodeURIComponent(companyId) +
+		  '/' + encodeURIComponent(counterId) +
+		  '/' + unixTimestamp;
+		
+	  fetch(url, {
+		  method: 'DELETE'
+		})
 	  .then(response => response.json())
-	  .then(response => response.content)
+	  .then(response => response)
 	  .then(result => {
-	  			
-	  		let tableData='';
-	  		result.forEach(function (value, index) {
-	  			tableData += '<tr>';
-	  			tableData += '<td>' + value.companyId + '</td>';
-	  			tableData += '<td>' + value.companyName + '</td>';
-	  			tableData += '<td>' + value.companyPhone + '</td>';
-	  			tableData += '<td>' + value.addressName + '</td>';
-	  			tableData += '<td>' + value.industryCategoryName + '</td>';
-	  			tableData += '<td>' + value.openingHoursName + '</td>';
-	  			tableData += '<td>' + value.cooperationStatusName + '</td>';
-	  			tableData += '<td><img src="data:image/jpeg;base64,' + value.base64StringCompanyLogo + '" style="width: 60px;height: 60px;"></img>'+'</td>';
-	  			tableData += '<td><button id="updateButton" onclick="location.href=\'${contextRoot}/company/showEditedCompany/' + value.companyId + '\'">更新</button></td>';
-	  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
-	  			tableData += '</tr>';  			
-            });
-	  		myTableBody.innerHTML = "";
-	  		myTableBody.innerHTML = tableData;
-	  		
+	      let tableData = '';
+	      result.forEach(function (value, index) {
+	    	  console.log(value.companyId);
+	          tableData += '<tr>';
+	          tableData += '<td>' + value.companyId + '</td>';
+	          tableData += '<td>' + value.companyName + '</td>';
+	          tableData += '<td>' + value.counterName + '</td>';
+	          tableData += '<td>' + value.contractTime + '</td>';
+	          tableData += '<td>' + value.onCounterTime + '</td>';
+	          tableData += '<td>' + value.offCounterTime + '</td>';
+	          tableData += '<td><button onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
+	          
+	          tableData += '<td><button onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
+	          tableData += '</tr>'; 
+	          myTableBody.innerHTML = "";
+	          myTableBody.innerHTML = tableData;
+	          
+	      })
 	  })
 	  .catch(error => console.log('error', error));
-	});
+	};
 	
-	var myTableBody = document.getElementById('tableBody');
-	function deleteCompany(companyId) {
-		  fetch('${contextRoot}/api/company/deleteCompany/' + companyId, {
-		    method: 'DELETE'
-		  })
+	document.addEventListener("DOMContentLoaded", function() {
+		var myTableBody = document.getElementById('tableBody');
+		var myHeaders = new Headers();
+		myHeaders.append("Cookie", "JSESSIONID=A88D4C1EF2D373665EDA0CE10F5710E2");
+
+		var raw = "";
+
+		var requestOptions = {
+		  method: 'GET',
+		  headers: myHeaders,
+		  redirect: 'follow'
+		};
+		fetch("http://localhost:8080/MavenNDepartmentStoreWebsite/api/companyCounter/", requestOptions)
 		  .then(response => response.json())
-		  .then(response => response.content)
+		  .then(response => response)
 		  .then(result => {
-			  console.log(result);
-	  			
-			  let tableData='';
+		  			
+		  		let tableData='';
 		  		result.forEach(function (value, index) {
 		  			tableData += '<tr>';
 		  			tableData += '<td>' + value.companyId + '</td>';
 		  			tableData += '<td>' + value.companyName + '</td>';
-		  			tableData += '<td>' + value.companyPhone + '</td>';
-		  			tableData += '<td>' + value.addressName + '</td>';
-		  			tableData += '<td>' + value.industryCategoryName + '</td>';
-		  			tableData += '<td>' + value.openingHoursName + '</td>';
-		  			tableData += '<td>' + value.cooperationStatusName + '</td>';
-		  			tableData += '<td><img src="data:image/jpeg;base64,' + value.base64StringCompanyLogo + '" style="width: 60px;height: 60px;"></img>'+'</td>';
-		  			tableData += '<td><button id="updateButton" onclick="location.href=\'${contextRoot}/company/showEditedCompany/' + value.companyId + '\'">更新</button></td>';
-		  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
+		  			tableData += '<td>' + value.counterName + '</td>';
+		  			tableData += '<td>' + value.contractTime + '</td>';
+		  			tableData += '<td>' + value.onCounterTime + '</td>';
+		  			tableData += '<td>' + value.offCounterTime + '</td>';
+		  			tableData += '<td><button onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
+		  			
+		  			tableData += '<td><button onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
 		  			tableData += '</tr>';  			
 	            });
 		  		myTableBody.innerHTML = "";
 		  		myTableBody.innerHTML = tableData;
+		  		
 		  })
 		  .catch(error => console.log('error', error));
-		}
+		});
+	
 </script>
 </body>
 </html>

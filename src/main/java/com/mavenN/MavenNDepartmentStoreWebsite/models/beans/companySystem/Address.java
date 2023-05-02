@@ -30,6 +30,16 @@ public class Address {
 	// Constructor
 	public Address() {
 	}
+	
+	
+
+	public Address(Integer addressId, String addressName) {
+		super();
+		this.addressId = addressId;
+		this.addressName = addressName;
+	}
+
+
 
 	// Getter and Setter
 	public Integer getAddressId() {

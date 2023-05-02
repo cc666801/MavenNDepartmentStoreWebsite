@@ -1,17 +1,32 @@
+<<<<<<< HEAD
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
 <!DOCTYPE html>
 <html>
+=======
+<<<<<<< HEAD
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+  <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
+    <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
+    <!DOCTYPE html>
+    <html>
+>>>>>>> origin/cfront
 
 <head>
 <meta charset="utf-8">
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
+<<<<<<< HEAD
 <title>ZenBlog Bootstrap Template - Index</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
+=======
+      <title>MavenN百貨</title>
+      <meta content="" name="description">
+      <meta content="" name="keywords">
+>>>>>>> origin/cfront
 
 <!-- Favicons -->
 <link href="${contextRoot}/assetsForFrontend/img/favicon.png" rel="icon">
@@ -47,6 +62,7 @@
 <link href="${contextRoot}/assetsForFrontend/css/main.css"
 	rel="stylesheet">
 
+<<<<<<< HEAD
 <!-- =======================================================
   * Template Name: ZenBlog
   * Updated: Mar 10 2023 with Bootstrap v5.2.3
@@ -55,6 +71,11 @@
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
 </head>
+=======
+      <!-- =======================================================
+
+    </head>
+>>>>>>> origin/cfront
 
 <body>
 	<!-- ======= Header ======= -->
@@ -68,6 +89,7 @@
 				<h1>ZenBlog</h1>
 			</a>
 
+<<<<<<< HEAD
 			<nav id="navbar" class="navbar">
 				<ul>
 					<li><a href="${contextRoot}/">首頁</a></li>
@@ -91,6 +113,37 @@
 							<li><a href="#">Drop Down 3</a></li>
 							<li><a href="#">Drop Down 4</a></li>
 						</ul></li>
+=======
+          <nav id="navbar" class="navbar">
+            <ul>
+              <li><a href="${contextRoot}/">首頁</a></li>
+              <li><a href="${contextRoot}/company">廠商專區</a></li>
+              <li><a href="${contextRoot}/exampleFrontendPage">前台範例頁面</a></li>
+              <li class="Store"><a href="${contextRoot}/Store/Commodity/findAllComm"><span>線上商城</span>
+                <i class="bi bi-chevron-down dropdown-indicator"></i></a>
+           
+            </li>
+              <li class="dropdown"><a href="category.html"><span>Categories</span> <i
+                    class="bi bi-chevron-down dropdown-indicator"></i></a>
+                <ul>
+                  <li><a href="search-result.html">Search Result</a></li>
+                  <li><a href="#">Drop Down 1</a></li>
+                  <li class="dropdown"><a href="#"><span>Deep Drop Down</span> <i
+                        class="bi bi-chevron-down dropdown-indicator"></i></a>
+                    <ul>
+                      <li><a href="#">Deep Drop Down 1</a></li>
+                      <li><a href="#">Deep Drop Down 2</a></li>
+                      <li><a href="#">Deep Drop Down 3</a></li>
+                      <li><a href="#">Deep Drop Down 4</a></li>
+                      <li><a href="#">Deep Drop Down 5</a></li>
+                    </ul>
+                  </li>
+                  <li><a href="#">Drop Down 2</a></li>
+                  <li><a href="#">Drop Down 3</a></li>
+                  <li><a href="#">Drop Down 4</a></li>
+                </ul>
+              </li>
+>>>>>>> origin/cfront
 
 					<li><a href="${contextRoot}/backend">後台系統</a></li>
 					<li><a href="${contextRoot}/LostAndFound">顧客服務</a></li>
@@ -124,8 +177,14 @@
 
 		</div>
 
+<<<<<<< HEAD
 	</header>
 	<!-- End Header -->
 </body>
 
 </html>
+=======
+    </html>
+
+
+>>>>>>> origin/cfront
