@@ -92,6 +92,10 @@
             <a href="#" class="mx-2"><span class="bi-facebook"></span></a>
             <a href="#" class="mx-2"><span class="bi-twitter"></span></a>
             <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
+            
+            
+			<a href="${contextRoot}/member/register" class="mx-2"><span class="bi-person-circle">登入/註冊</span></a>
+
 
             <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>
             <i class="bi bi-list mobile-nav-toggle"></i>
