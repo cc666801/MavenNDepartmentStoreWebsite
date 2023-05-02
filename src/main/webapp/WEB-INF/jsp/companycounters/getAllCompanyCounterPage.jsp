@@ -151,7 +151,7 @@
 		  headers: myHeaders,
 		  redirect: 'follow'
 		};
-		fetch("http://localhost:8080/MavenNDepartmentStoreWebsite/api/companyCounter/", requestOptions)
+		fetch("${contextRoot}/api/companyCounter/", requestOptions)
 		  .then(response => response.json())
 		  .then(response => response)
 		  .then(result => {

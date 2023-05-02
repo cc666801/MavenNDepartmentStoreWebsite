@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -48,6 +49,7 @@ public class CompanyService {
 
 	public List<IndustryCategory> findAllIndustryCategorys() {
 		List<IndustryCategory> industryCategories = industryCategoryRepository.findAll();
+		companyRepository.findAll();
 		return industryCategories;
 	}
 
@@ -119,6 +121,28 @@ public class CompanyService {
 		List<CompanyDto> dtoList = companies.stream().map(CompanyDto::new).collect(Collectors.toList());
 		Page<CompanyDto> page = new PageImpl<>(dtoList);
 		return page;
+	}
+	
+	// For findAllCompanyOnCounter()
+	public List<Company> findByCooperationStatus_CooperationStatusName(String cooperationStatusName) {
+		return companyRepository.findByCooperationStatus_CooperationStatusName(cooperationStatusName);
+	};
+	
+	// For findCompaniesOnCounterAndFloor()
+	public List<Company> findCompaniesByStatusAndFloor(String cooperationStatusName, String counterName) {
+		return companyRepository.findCompaniesByStatusAndFloor(cooperationStatusName, counterName);
+	};
+	
+	// For findCompaniesByKeywordAndFloorAndIndustryCategory()
+	public List<Company> findCompaniesByKeywordAndFloorAndIndustryCategory(String companyName, String counterFloor, String industryCategoryId) {
+		// 進行相應的處理
+	    // 将逗号分隔的字符串转换为列表
+	    List<String> counterFloors = Arrays.asList(counterFloor.split(","));
+	    List<Integer> industryCategoryIds = Arrays.stream(industryCategoryId.split(","))
+	                                              .map(Integer::parseInt)
+	                                              .collect(Collectors.toList());
+	    // 调用repository方法
+	    return companyRepository.findCompaniesByKeywordAndFloorAndIndustryCategory(companyName, counterFloors, industryCategoryIds);
 	}
 
 }

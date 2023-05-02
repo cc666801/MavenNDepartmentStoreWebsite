@@ -107,5 +107,14 @@ public class Counter {
 
 	public void setCompanies(List<CompanyCounter> companies) {
 		this.companies = companies;
-	}	
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Counter [counterId=" + counterId + ", counterName=" + counterName + ", counterRent=" + counterRent
+				+ ", counterSquareMeters=" + counterSquareMeters + ", counterFloor=" + counterFloor + "]";
+	}
+
 }

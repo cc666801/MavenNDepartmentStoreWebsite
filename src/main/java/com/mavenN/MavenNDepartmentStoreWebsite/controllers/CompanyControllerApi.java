@@ -1,5 +1,9 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -9,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto.CompanyDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CompanyService;
 
@@ -26,10 +31,48 @@ public class CompanyControllerApi {
 	    return page;
 	}
 	
+	@GetMapping("/findAllCompanyOnCounter")
+	public List<CompanyDto> findAllCompanyOnCounter() {
+		List<CompanyDto> companyDtos = new ArrayList<>();
+		List<Company> companies = companyService.findByCooperationStatus_CooperationStatusName("在櫃中");
+
+		for (Company company : companies) {
+		    CompanyDto companyDto = new CompanyDto(company);
+		    companyDtos.add(companyDto);
+		}
+		
+		return companyDtos;
+	}
+	
+	@GetMapping("/findAllCompanyOnCounterAndFloor/{counterName}")
+	public List<CompanyDto> findCompaniesOnCounterAndFloor(@PathVariable String counterName) {
+		List<CompanyDto> companyDtos = new ArrayList<>();
+		List<Company> companies = companyService.findCompaniesByStatusAndFloor("在櫃中", counterName);
+
+		for (Company company : companies) {
+		    CompanyDto companyDto = new CompanyDto(company);
+		    companyDtos.add(companyDto);
+		}
+		
+		return companyDtos;
+	}
+	
 	@DeleteMapping("/deleteCompany/{id}")
 	public Page<CompanyDto> deleteCompany(@PathVariable Integer id, @RequestParam(name = "page", defaultValue = "1") Integer pageNumber) {
 		companyService.deleteCompanyById(id);
 		Page<CompanyDto> page = companyService.findByPageApi(pageNumber);
 		return page;
+	}
+	
+	@GetMapping("/findCompaniesByKeywordAndFloorAndIndustryCategory")
+	public List<CompanyDto> search(
+			@RequestParam(name = "industryCategoryIds") String industryCategoryIds,
+	        @RequestParam(name = "keyword") String keyword,
+	        @RequestParam(name = "floor") String floor
+	                     ) {
+		List<Company> companies = companyService.findCompaniesByKeywordAndFloorAndIndustryCategory(keyword, floor, industryCategoryIds);
+		List<CompanyDto> companyDtos = companies.stream().map(CompanyDto::new).collect(Collectors.toList());
+
+	    return companyDtos;
 	}
 }
