@@ -91,18 +91,5 @@ h1 {
 	</main>
 
 	<!-- End #main -->
-
-	<script>
-		function checkForm() {
-			var fields = document.getElementsByTagName('input');
-			for (var i = 0; i < fields.length; i++) {
-				if (fields[i].value.trim() === '') {
-					document.getElementById('errorMsg').style.display = 'block';
-					return false;
-				}
-			}
-			return true;
-		}
-	</script>
 </body>
 </html>
