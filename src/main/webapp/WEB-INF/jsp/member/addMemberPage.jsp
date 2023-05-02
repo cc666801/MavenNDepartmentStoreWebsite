@@ -3,11 +3,10 @@
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
+
 <!DOCTYPE html>
 <html>
-
 <head>
-
 <!-- =======================================================
   * Template Name: ZenBlog
   * Updated: Mar 10 2023 with Bootstrap v5.2.3
@@ -17,6 +16,7 @@
   ======================================================== -->
 <!-- ======= Header ======= -->
 <jsp:include page="../layout/header.jsp"></jsp:include>
+
 <!-- End Header -->
 <style>
 .error {
@@ -35,30 +35,13 @@ h1 {
 	text-align: center;
 }
 </style>
-<script>
-	function validateForm() {
-		var name = document.forms["memberForm"]["name"].value;
-		var account = document.forms["memberForm"]["account"].value;
-		var password = document.forms["memberForm"]["password"].value;
-		var email = document.forms["memberForm"]["email"].value;
-		var phone = document.forms["memberForm"]["phone"].value;
-		var address = document.forms["memberForm"]["address"].value;
-		var birthday = document.forms["memberForm"]["birthday"].value;
-
-		if (name == "" || account == "" || password == "" || email == ""
-				|| phone == "" || address == "" || birthday == "") {
-			alert("必填欄位不可為空白");
-			return false;
-		}
-	}
-</script>
 </head>
-
 <body>
 	<main id="main">
 		<h1>註冊會員</h1>
+		
 		<form:form method="post" action="${contextRoot}/member/post"
-			modelAttribute="member">
+			modelAttribute="member" onsubmit="return checkForm();">
 			<table>
 				<tr>
 					<td>姓名：</td>
@@ -91,7 +74,6 @@ h1 {
 					<td><form:input path="address" maxlength="50"
 							pattern="^[\u4E00-\u9FA5]+$" title="只能輸入中文，最多50個字" /></td>
 				</tr>
-
 				<tr>
 					<td>生日：</td>
 					<td><form:input path="birthday" type="date" /></td>
@@ -104,11 +86,23 @@ h1 {
 				</tr>
 			</table>
 		</form:form>
+		<div id="errorMsg"
+			style="display: none; color: red; text-align: center;">欄位不可為空</div>
 	</main>
-
 
 	<!-- End #main -->
 
+	<script>
+		function checkForm() {
+			var fields = document.getElementsByTagName('input');
+			for (var i = 0; i < fields.length; i++) {
+				if (fields[i].value.trim() === '') {
+					document.getElementById('errorMsg').style.display = 'block';
+					return false;
+				}
+			}
+			return true;
+		}
+	</script>
 </body>
-
 </html>
