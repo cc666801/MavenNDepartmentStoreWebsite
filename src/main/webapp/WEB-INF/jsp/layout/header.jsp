@@ -95,7 +95,8 @@
             <a href="#" class="mx-2"><span class="bi-instagram"></span></a>
             
             
-			<a href="${contextRoot}/member/register" class="mx-2"><span class="bi-person-circle">登入/註冊</span></a>
+			<a href="${contextRoot}/member/register" class="mx-2"><span class="bi-person-circle"></span></a>
+			<a href="${contextRoot}/member/logout" class="mx-2"><span class="bi bi-box-arrow-right"></span></a>
 
 
             <a href="#" class="mx-2 js-search-open"><span class="bi-search"></span></a>

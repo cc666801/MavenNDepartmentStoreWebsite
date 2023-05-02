@@ -106,7 +106,13 @@ public class MemberController {
 	    }
 	}
 	
-	
+	@GetMapping("/member/logout")
+    public String logout(HttpSession session) {
+        // 刪除session中的會員資訊
+        session.removeAttribute("member");
+        // 重定向到首頁
+        return "member/jump";
+    }
 	
 	
 ////-------------------------------------------------------------------------
