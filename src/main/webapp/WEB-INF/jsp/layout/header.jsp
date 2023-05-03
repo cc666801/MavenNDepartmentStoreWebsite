@@ -71,7 +71,6 @@
 		<nav id="navbar" class="navbar">
 			<ul>
 				<li><a href="${contextRoot}/">首頁</a></li>
-				<li><a href="${contextRoot}/company">廠商專區</a></li>
 				<li><a href="${contextRoot}/company/floor">樓層簡介</a></li>
 				<li><a href="${contextRoot}/exampleFrontendPage">前台範例頁面</a></li>
 				<li class="Store"><a href="${contextRoot}/Store/Storeindex"><span>線上商城</span>

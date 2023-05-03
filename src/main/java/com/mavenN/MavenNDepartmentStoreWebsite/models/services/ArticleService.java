@@ -1,7 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -14,9 +13,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleLike;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleLikeId;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.fakemember;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleLikeRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleRepository;
 
