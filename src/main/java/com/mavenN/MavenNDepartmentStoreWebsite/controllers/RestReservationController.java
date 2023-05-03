@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
+import java.util.Base64;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.fasterxml.jackson.databind.deser.Deserializers.Base;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
@@ -23,9 +25,21 @@ public class RestReservationController {
 	private RestReservationService reService;
 	
 	@GetMapping("/restaurantfront")
-	public String addReservation() {
-		return"/restaurantfront/addrest";
-	}
+	public String ShowAllReservationByPage(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
+		Page<Company> page = reService.findAllReservationByPage(pageNumber);
+		for(Company company: page.getContent() ) {
+			byte[] companyLogo = company.getCompanyLogo();
+			if(companyLogo != null) {
+				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
+				company.setBase64StringCompanyLogo(encodeToString); 
+//				System.out.println(companyLogo);
+//				System.out.println("***************");
+			}
+		}
+		
+		model.addAttribute("page",page);
+		return "restaurantfront/showrest";
+	}	
 	
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
@@ -81,16 +95,6 @@ public class RestReservationController {
 		reService.deletebyid(r_id);
 		return "redirect:/restaurant";
 	}
-	
-	@GetMapping("/restaurantAll")
-	public String ShowAllReservationByPage(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Company> page = reService.findAllReservationByPage(pageNumber);
-		for(Company company:page) {
-		page.getContent().getClass();
-		}
-		model.addAttribute("page",page);
-		return "restaurant/showReservations";
-	}	
 	
 	
 }

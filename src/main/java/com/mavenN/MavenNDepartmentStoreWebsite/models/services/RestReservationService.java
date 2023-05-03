@@ -29,7 +29,7 @@ public class RestReservationService {
 	}
 	
 	public Page<Company> findAllReservationByPage(Integer pageNumber) {
-		PageRequest pg = PageRequest.of(pageNumber-1, 3, Sort.Direction.DESC, "companyId");
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "companyId");
 		Page<Company> page = companyRepository.findAll(pg);
 		return page;
 	}

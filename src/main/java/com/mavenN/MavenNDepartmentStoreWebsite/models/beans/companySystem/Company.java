@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
+import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -66,7 +67,7 @@ public class Company {
 	
 	@OneToMany(mappedBy = "company")
     private List<CompanyCounter> counters;
-
+	
 	// Constructor
 	public Company() {
 		super();
