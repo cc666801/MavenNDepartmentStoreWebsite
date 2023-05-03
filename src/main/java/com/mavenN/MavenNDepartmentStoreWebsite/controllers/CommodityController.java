@@ -114,7 +114,10 @@ public class CommodityController {
 	@GetMapping("/Store/Commodity/editCommodity")
 	public String editCommodity(@RequestParam("commId") Integer commId, Model model) {
 		Commodity commodity = commodityService.findCommodityById(commId);
-
+//		下面這兩行是新加的  可能會有問題... (可讀取成功 讚啦)
+		List<CommCate> commcateList = commCateService.findAllCate();
+		model.addAttribute("commcateList", commcateList);
+		
 		model.addAttribute("commodity", commodity);
 		return "Store/Commodity/CommodityEdit";
 
@@ -189,15 +192,16 @@ public class CommodityController {
 	}
 
 //	分類的分頁器  5/3 12:27 未完成
-//	@GetMapping("/Store/Commodity/findAllCommByCate")
-//	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
-//	   
-//
-//	    Page<Commodity> page = commodityService.usePgbToFindCommodityByCommcate(, pageNumber);
-//
-//	    model.addAttribute("page", page);
-//	    return "Store/Commodity/findCommByCate";
-//	}
+	@GetMapping("/Store/Commodity/findAllCommByCate")
+	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model,
+	        @RequestParam(name = "c", defaultValue = "1") Integer cateId) {
+	   
+	    CommCate commCate = commCateService.findcateById(cateId);
+	    Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
+
+	    model.addAttribute("commodityPage", commodityPage); //將變數名稱改為"commodityPage"
+	    return "Store/Commodity/findCommByCate";
+	}
 //
 //	
 	

@@ -60,7 +60,8 @@ public class CommodityService {
 			comm.setCommPicture(newcommodity.getCommPicture());
 			comm.setCommDiscount(newcommodity.getCommDiscount());
 			comm.setCommPrice(newcommodity.getCommPrice());
-
+//		下面這行新加的
+			comm.setCommCate(newcommodity.getCommCate());
 			return comm;
 		}
 		return null;
@@ -74,7 +75,7 @@ public class CommodityService {
 
 //分頁器
 	public Page<Commodity> usePgbToFindAllCommodity(Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
+		Pageable pgb = PageRequest.of(pageNumber - 1, 6, Sort.Direction.ASC, "commId");
 		Page<Commodity> page = commodityRepository.findAll(pgb);
 		for (Commodity commodity : page.getContent()) {
 			byte[] commPicture = commodity.getCommPicture();

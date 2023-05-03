@@ -58,23 +58,25 @@
 
 
 		<!-- 				這裡是分頁器 -->
-		<c:forEach var="page" items="${page}">
-			<c:choose>
-				<c:when test="${page.current}">
-					<a href="#">${page.number}</a>
-				</c:when>
-				<c:otherwise>
-					<a
-						href="${contextRoot}/Store/Commodity/findAllCommByCate?p=${page.number}">${page.number}</a>
-				</c:otherwise>
-			</c:choose>
-		</c:forEach>
+		<ul class="pagination">
+			<c:forEach var="page" items="${pageList}">
+				<c:choose>
+					<c:when test="${page.current}">
+						<li class="page-item active"><a class="page-link" href="#">${page.number}</a></li>
+					</c:when>
+					<c:otherwise>
+						<li class="page-item"><a class="page-link"
+							href="${contextRoot}/Store/Commodity/findAllCommByCate?p=${page.number}">${page.number}</a></li>
+					</c:otherwise>
+				</c:choose>
+			</c:forEach>
+		</ul>
 
 
 	</main>
 
 	<!-- ======= Footer ======= -->
-	<jsp:include page="../../layout/footer.jsp"></jsp:include>
+	<%-- 	<jsp:include page="../../layout/footer.jsp"></jsp:include> --%>
 	<!-- End Footer -->
 
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
