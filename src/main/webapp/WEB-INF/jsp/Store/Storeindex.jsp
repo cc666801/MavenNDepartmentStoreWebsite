@@ -21,11 +21,39 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 	<main id="main">
-		
-				<h3>測試中</h3>
-		
-				
+
+		<div class="container">
+			<div class="row">
+				<c:forEach var="commodity" items="${page.content}">
+					<div class="col-md-4 mb-3">
+						<div class="card">
+							<a
+								href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
+								<img
+								src="data:image/png;base64,${commodity.base64StringcommPicture}"
+								class="card-img-top" alt="商品圖片"
+								style="width: 100px; height: 100px;">
+							</a>
+
+							<div class="card-body">
+								<p class="card-text">${commodity.commDesc}</p>
+
+							</div>
+						</div>
+					</div>
+				</c:forEach>
+				<br />
+				<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
+					<a
+						href="${contextRoot}/Store/Commodity/findAllComm?p=${pageNumber}"
+						style="display: inline">${pageNumber}</a>
+				</c:forEach>
+			</div>
+
+
+		</div>
 	</main>
+
 
 	<!-- ======= Footer ======= -->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>
@@ -34,3 +62,5 @@
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+</body>
+</html>

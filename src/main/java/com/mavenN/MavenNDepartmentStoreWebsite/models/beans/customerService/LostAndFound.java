@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.beans;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.customerService;
 
 import java.util.Date;
 

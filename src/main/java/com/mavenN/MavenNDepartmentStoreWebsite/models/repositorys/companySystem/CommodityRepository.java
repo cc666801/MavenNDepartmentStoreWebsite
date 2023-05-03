@@ -6,4 +6,6 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commod
 
 public interface CommodityRepository extends JpaRepository<Commodity,Integer> {
 
+	
+
 }
