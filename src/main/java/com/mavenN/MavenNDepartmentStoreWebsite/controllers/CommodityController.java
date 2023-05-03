@@ -11,6 +11,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -205,6 +206,32 @@ public class CommodityController {
 //
 //	
 	
+	
+	
+	
+//	5/3 嘗試來做 判斷上下一筆資料
+	
+	@GetMapping("/Store/Commodity/prevComm/{commId}")
+	public String getPrevComm(@PathVariable Long commId, Model model) {
+	    Commodity prevComm = commodityService.findPrevComm(commId);
+	    if (prevComm != null) {
+	        model.addAttribute("commodity", prevComm);
+	        Integer prevCommId = prevComm.getCommId();
+	        model.addAttribute("prevCommId", prevCommId);
+	    }
+	    return "Store/Commodity/CommodityDetail";
+	}
+
+	@GetMapping("/Store/Commodity/nextComm/{commId}")
+	public String getNextComm(@PathVariable Long commId, Model model) {
+	    Commodity nextComm = commodityService.findNextComm(commId);
+	    if (nextComm != null) {
+	        model.addAttribute("commodity", nextComm);
+	        Integer nextCommId = nextComm.getCommId();
+	        model.addAttribute("nextCommId", nextCommId);
+	    }
+	    return "Store/Commodity/CommodityDetail";
+	}
 	
 	public CommodityController() {
 		// TODO Auto-generated constructor stub
