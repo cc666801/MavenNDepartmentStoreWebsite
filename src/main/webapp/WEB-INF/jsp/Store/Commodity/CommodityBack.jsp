@@ -68,7 +68,7 @@
 
 
 
-								<td>${commodity.cateId.cateName}</td>
+								<td>${commodity.commCate.cateName}</td>
 								<td>${commodity.commDesc}</td>
 								<td>${commodity.commPrice}</td>
 								<td>${commodity.commDiscount}</td>

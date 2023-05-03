@@ -13,13 +13,11 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommCateService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommodityService;
 
@@ -29,21 +27,21 @@ public class CommodityController {
 	@Autowired
 	private CommodityService commodityService;
 
-	@Autowired
-	private CommodityRepository commodityRepository;
-	
+//	@Autowired
+//	private CommodityRepository commodityRepository;
+
 	@Autowired
 	private CommCateService commCateService;
-	
+
 //	新增商品 
 
 	@GetMapping("/Store/Commodity/add")
 	public String addCommodity(Commodity commodity, Model model) {
 		model.addAttribute("commodity", new Commodity());
-		
+
 		List<CommCate> commcateList = commCateService.findAllCate();
 		model.addAttribute("commcateList", commcateList);
-		
+
 		return "Store/Commodity/CommodityBackadd";
 	}
 
@@ -116,7 +114,10 @@ public class CommodityController {
 	@GetMapping("/Store/Commodity/editCommodity")
 	public String editCommodity(@RequestParam("commId") Integer commId, Model model) {
 		Commodity commodity = commodityService.findCommodityById(commId);
-
+//		下面這兩行是新加的  可能會有問題... (可讀取成功 讚啦)
+		List<CommCate> commcateList = commCateService.findAllCate();
+		model.addAttribute("commcateList", commcateList);
+		
 		model.addAttribute("commodity", commodity);
 		return "Store/Commodity/CommodityEdit";
 
@@ -141,42 +142,68 @@ public class CommodityController {
 		return "redirect:/Store/Commodity/CommodityBack";
 	}
 
-	
-	//分頁器
+	// 分頁器
 	@GetMapping("/Store/Commodity/findAllComm")
-	public String findByPage(@RequestParam(name="p",defaultValue = "1")Integer pageNumber,Model model){
-		Page<Commodity> page = commodityService.findByPage(pageNumber);
-		
+	public String findByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
+		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
+
 		model.addAttribute("page", page);
 		return "Store/Storeindex";
-		
-		
-	}
-	
-	
-	
-// 找商品透過id
-	@GetMapping("/Store/Commodity/findComm")
-	public String findByCommId(@RequestParam(name="commId")Integer commodity,Model model) {
-		Commodity commodityInfo = commodityService.getCommodityById(commodity);
-		  model.addAttribute("commodityInfo", commodityInfo);
-		  return "Store/Commodity/CommodityDetail";
-	}
-	
-//	嘗試顯示折扣價格
-	@RequestMapping("/commodityDetail")
-	public String commodityDetail(Model model, @RequestParam(name = "commId") Integer commId) {
-	    Commodity commodityInfo = commodityService.getCommodityById(commId);
-	    Double price = commodityInfo.getCommPrice();
-	    String discount = commodityInfo.getCommDiscount();
-	    Double discountedPrice = commodityService.calculateDiscountedPrice(price, discount);
-	    commodityInfo.setCommPrice(discountedPrice);
-	    model.addAttribute("commodityInfo", commodityInfo);
-	    return "commodityDetail";
+
 	}
 
+// 找商品透過id
+	@GetMapping("/Store/Commodity/findComm")
+	public String findByCommId(@RequestParam(name = "commId") Integer commodity, Model model) {
+		Commodity commodityInfo = commodityService.getCommodityById(commodity);
+		model.addAttribute("commodityInfo", commodityInfo);
+		return "Store/Commodity/CommodityDetail";
+	}
+
+//	嘗試顯示折扣價格   無做動  ...
+//	@RequestMapping("/commodityDetail")
+//	public String commodityDetail(Model model, @RequestParam(name = "commId") Integer commId) {
+//	    Commodity commodityInfo = commodityService.getCommodityById(commId);
+//	    Double price = commodityInfo.getCommPrice();
+//	    String discount = commodityInfo.getCommDiscount();
+//	    Double discountedPrice = commodityService.calculateDiscountedPrice(price, discount);
+//	    commodityInfo.setCommPrice(discountedPrice);
+//	    model.addAttribute("commodityInfo", commodityInfo);
+//	    return "commodityDetail";
+//	}
+
+
 	
-	
+//	這裡還可以執行 2023/05/01 11:27
+	@GetMapping("/Store/Commodity/findCate")
+	public String showAllCommByCommcate(CommCate commCate ,Model model) {
+		List<Commodity> showAllCommByCommcate =commodityService.findAllCommByCommCate(commCate);
+		for (Commodity commodity : showAllCommByCommcate) {
+			byte[] imageData = commodity.getCommPicture();
+			if (imageData != null) {
+				String base64String = Base64.getEncoder().encodeToString(imageData);
+				commodity.setBase64StringcommPicture(base64String);
+			}
+		}
+
+		
+		model.addAttribute("commodityList", showAllCommByCommcate);
+		return "Store/Commodity/findCommByCate";
+	}
+
+//	分類的分頁器  5/3 12:27 未完成
+	@GetMapping("/Store/Commodity/findAllCommByCate")
+	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model,
+	        @RequestParam(name = "c", defaultValue = "1") Integer cateId) {
+	   
+	    CommCate commCate = commCateService.findcateById(cateId);
+	    Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
+
+	    model.addAttribute("commodityPage", commodityPage); //將變數名稱改為"commodityPage"
+	    return "Store/Commodity/findCommByCate";
+	}
+//
+//	
 	
 	
 	public CommodityController() {

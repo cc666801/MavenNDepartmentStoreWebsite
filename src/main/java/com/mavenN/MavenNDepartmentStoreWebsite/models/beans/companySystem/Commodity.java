@@ -69,7 +69,7 @@ public class Commodity {
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_cateId")
-	private CommCate cateId;
+	private CommCate commCate;
 	
 	
 	@PrePersist
@@ -265,16 +265,21 @@ public class Commodity {
 
 
 
-	public CommCate getCateId() {
-		return cateId;
+	
+
+
+
+
+	public CommCate getCommCate() {
+		return commCate;
 	}
 
 
 
 
 
-	public void setCateId(CommCate cateId) {
-		this.cateId = cateId;
+	public void setCommCate(CommCate commCate) {
+		this.commCate = commCate;
 	}
 
 
