@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum;
 
 import java.util.Date;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import javax.persistence.CascadeType;
@@ -45,6 +46,9 @@ public class Article {
 	@OneToMany(mappedBy = "id.article", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
 	private Set<ArticleLike> articleLikes = new HashSet<>();
 
+	 @OneToMany(mappedBy = "article")
+	    private List<Comment> comments;
+	
 	@Column(name = "article_content", columnDefinition = "nvarchar(MAX)", nullable = false)
 	private String articleContent;
 
@@ -114,6 +118,14 @@ public class Article {
 
 	public void setArticleCategory(ArticleCategory articleCategory) {
 		this.articleCategory = articleCategory;
+	}
+
+	public List<Comment> getComments() {
+		return comments;
+	}
+
+	public void setComments(List<Comment> comments) {
+		this.comments = comments;
 	}
 
 	public String getArticleContent() {
