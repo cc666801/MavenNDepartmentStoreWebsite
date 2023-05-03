@@ -11,7 +11,9 @@
 <meta charset="UTF-8">
 <style>
 .card img {
-	object-fit: contain;
+		w-100;
+		height:250px;
+	
 }
 </style>
 <title>餐廳頁面測試</title>
@@ -23,54 +25,39 @@
 	<main id="main">
 		<div class="container-fluid">
 			<div class="container">
-				<div class="row">
+				<div class="row ">
 					<jstl:forEach var="company" items="${page.content}">
-						<div class="col-md-3 mb-3">
-							<div class="card" style="width: 18rem;">
-								<img src="data:image/png;base64,${company.base64StringCompanyLogo}" class="card-img-top" alt="...">
+						<div class="col-md-4 mb-3">
+							<div class="card" style="width: 23rem;">
+								<img
+									src="data:image/png;base64,${company.base64StringCompanyLogo}"
+									class="card-img-top" alt="${company.companyName}餐廳圖片">
 								<div class="card-body">
-									<h5 class="card-title">帶有延伸連結的卡片</h5>
+									<h5 class="card-title">${company.companyName}</h5>
 									<p class="card-text">Some quick example text to build on
 										the card title and make up the bulk of the card's content.</p>
-									<a href="#" class="btn btn-primary stretched-link">Go
-										somewhere</a>
+									<a href="${contextRoot}/restaurant/add" class="btn btn-primary stretched-link">訂位去</a>
 								</div>
 							</div>
 						</div>
 					</jstl:forEach>
-					<!-- 					<div class="container-fluid"> -->
-					<!-- 			<div class="row justify-content-center "> -->
-					<!-- 				      justify-content-center -->
-					<%-- 				<jstl:forEach var="company" items="${page.content}"> --%>
-					<!-- 					<div class="col-12 col-md-4 mb-3"> -->
-					<!-- 						<div class="text"> -->
-					<!-- 							<img -->
-					<%-- 								src="data:image/png;base64,${company.base64StringCompanyLogo}" --%>
-					<!-- 								class="rounded mx-auto d-block"> 1Lorem ipsum dolor, sit -->
-					<!-- 							amet consectetur adipisicing elit. Itaque earum veniam saepe -->
-					<!-- 							dolor suscipit velit est voluptatum, expedita dolorem asperiores -->
-					<!-- 							non ullam doloribus dolores unde atque dolorum, praesentium -->
-					<!-- 							laudantium autem. -->
-					<!-- 						</div> -->
-					<!-- 					</div> -->
-					<%-- 				</jstl:forEach> --%>
-					<!-- 			</div> -->
 					<br />
+					<div class="text-center">
 					<jstl:forEach var="pageNumber" begin="1" end="${page.totalPages}">
 						<jstl:choose>
 							<jstl:when test="${page.number != pageNumber-1 }">
-								<a href="${contextRoot}/restaurantfront?p=${pageNumber}">${pageNumber}</a>
+								<a href="${contextRoot}/restaurantfront?p=${pageNumber}"><span style="coler: blue; font-size:25px;">${pageNumber}</span></a>
 							</jstl:when>
 							<jstl:otherwise>
-				            ${pageNumber}
-				     </jstl:otherwise>
-
+				            <span style="font-size:25px" >${pageNumber}</span>
+				     		</jstl:otherwise>
 						</jstl:choose>
 
-						<jstl:if test="${pageNumber != page.totalPages }">
-				    -
-				  </jstl:if>
+						<jstl:if test="${pageNumber != page.totalPages}">
+						    -
+						 </jstl:if>
 					</jstl:forEach>
+					</div>
 				</div>
 			</div>
 		</div>
