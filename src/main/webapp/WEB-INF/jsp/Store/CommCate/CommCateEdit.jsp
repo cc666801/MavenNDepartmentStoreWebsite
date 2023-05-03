@@ -35,15 +35,15 @@
 
 		<form:form modelAttribute="cate" method="put"
 			action="${contextRoot}/Store/Commcate/editCommCate">
-			<form:input type="hidden" path="cate_Id" />
-			<form:label path="cate_Name">分類名稱</form:label>
-			<form:input path="cate_Name" />
+			<form:input type="hidden" path="cateId" />
+			<form:label path="cateName">分類名稱</form:label>
+			<form:input path="cateName" />
 			<br>
-			<form:label path="cate_Desc">分類敘述</form:label>
-			<form:input path="cate_Desc" />
+			<form:label path="cateDesc">分類敘述</form:label>
+			<form:input path="cateDesc" />
 			<br>
-			<form:label path="cate_MDay">分類調整時間</form:label>
-			<form:input path="cate_MDay" readonly="true" />
+			<form:label path="cateMDay">分類調整時間</form:label>
+			<form:input path="cateMDay" readonly="true" />
 			<br>
 
 

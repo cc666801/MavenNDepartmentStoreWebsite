@@ -48,8 +48,8 @@ public class CommCateController {
 	
 //	刪除
 	@DeleteMapping("/Store/Commcate/delete")
-	public String deleteCate(@RequestParam Integer cate_Id) {
-		CommCateService.deleteById(cate_Id);
+	public String deleteCate(@RequestParam Integer cateId) {
+		CommCateService.deleteById(cateId);
 		return "redirect:/Store/Commcate/ShowAll";
 	}
 	
@@ -85,8 +85,8 @@ public class CommCateController {
 	
 //	更新資料
 	@GetMapping("/Store/Commcate/editCommCate")
-	public String editCommCate(@RequestParam("cate_Id")Integer cate_Id, Model model) {
-		CommCate cate=CommCateService.findcateById(cate_Id);
+	public String editCommCate(@RequestParam("cateId")Integer cateId, Model model) {
+		CommCate cate=CommCateService.findcateById(cateId);
 		model.addAttribute("cate",cate);
 		return"/Store/CommCate/CommCateEdit";
 		
@@ -94,7 +94,7 @@ public class CommCateController {
 
 	@PutMapping("/Store/Commcate/editCommCate")
 	public String puteditCate(@ModelAttribute("cate")CommCate cate) {
-		CommCateService.updateCommById(cate.getCate_Id(), cate);
+		CommCateService.updateCommById(cate.getCateId(), cate);
 		return "redirect:/Store/Commcate/ShowAll";
 	}
 

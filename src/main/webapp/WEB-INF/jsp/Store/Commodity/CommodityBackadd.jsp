@@ -36,42 +36,42 @@
 			enctype="multipart/form-data">
 
 
-			<form:label path="comm_Name">商品名稱</form:label>
-			<form:input path="comm_Name" type="text" />
+			<form:label path="commName">商品名稱</form:label>
+			<form:input path="commName" type="text" />
 			<br>
-			<form:label path="comm_Desc">商品敘述</form:label>
-			<form:input path="comm_Desc" />
+			<form:label path="commDesc">商品敘述</form:label>
+			<form:input path="commDesc" />
 			<br>
-			<form:label path="comm_Picture">商品照片</form:label>
+			<form:label path="commPicture">商品照片</form:label>
 			<form:input path="transferToByteArray" type="file" id="formfile" />
 			<br>
 			
 			<div>
 			
-			<form:label path="cate_Id">類別分類</form:label>
-			<form:select path="cate_Id">
+			<form:label path="cateId">類別分類</form:label>
+			<form:select path="cateId">
 			
 				<c:forEach  items="${commcateList}"  var="commcate">
-				<form:option value="${commcate.cate_Id}">${commcate.cate_Name}</form:option>
+				<form:option value="${commcate.cateId}">${commcate.cateName}</form:option>
 				</c:forEach>
 			</form:select>
 			<br>
 			</div>
 			
 
-			<form:label path="comm_Price">商品價格</form:label>
-			<form:input path="comm_Price" />
+			<form:label path="commPrice">商品價格</form:label>
+			<form:input path="commPrice" />
 			<br>
-			<form:label path="comm_Discount">商品折扣</form:label>
-			<form:input path="comm_Discount" />
+			<form:label path="commDiscount">商品折扣</form:label>
+			<form:input path="commDiscount" />
 			<br>
 			<label for="comm_Shelve">商品上下架</label>
-			<input type="radio" id="comm_Shelve_true" name="comm_Shelve"
+			<input type="radio" id="commShelvetrue" name="commShelve"
 				value="true">
-			<label for="comm_Shelve_true">上架</label>
-			<input type="radio" id="comm_Shelve_false" name="comm_Shelve"
+			<label for="commShelvetrue">上架</label>
+			<input type="radio" id="commShelvefalse" name="commShelve"
 				value="false">
-			<label for="comm_Shelve_false">下架</label>
+			<label for="commShelvefalse">下架</label>
 			<br>
 
 			<button type="submit" value="確定">送出</button>

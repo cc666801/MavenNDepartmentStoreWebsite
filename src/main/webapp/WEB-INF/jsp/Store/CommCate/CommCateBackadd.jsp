@@ -36,13 +36,13 @@
 					action="${contextRoot}/Store/CommCate/post">
 
 
-					<form:label path="cate_Name">類別名稱<span
+					<form:label path="cateName">類別名稱<span
 							style="color: red">*</span>
 					</form:label>
-					<form:input path="cate_Name" type="text" required="true" />
+					<form:input path="cateName" type="text" required="true" />
 					<br>
-					<form:label path="cate_Desc">類別敘述</form:label>
-					<form:input path="cate_Desc" />
+					<form:label path="cateDesc">類別敘述</form:label>
+					<form:input path="cateDesc" />
 					<br>
 
 					<button type="submit" value="確定">送出</button>
