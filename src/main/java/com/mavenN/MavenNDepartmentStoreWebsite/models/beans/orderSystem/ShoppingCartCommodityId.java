@@ -17,12 +17,8 @@ public class ShoppingCartCommodityId implements Serializable {
     @Column(name = "fk_shopping_cart_id")
     private Integer shoppingCartId;
 
-
-
-    // 构造函数、getter 和 setter 方法
 	
-	
-	
+    // Getters and Setters
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}

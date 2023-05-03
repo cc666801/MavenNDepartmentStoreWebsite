@@ -63,7 +63,7 @@
 					name="quantity" id="quantity" min="1" max="10" value="1">
 				<form action="${contextRoot}/add-to-cart/${commodityInfo.commId}"
 					method="POST">
-					<button type="submit" class="btn btn-primary">加入購物車</button>
+					<button type="submit" class="btn btn-primary" id="shopping-cart-button">加入購物車</button>
 				</form>
 
 				<form
@@ -94,6 +94,21 @@
 		commPrice.style.textDecoration = "line-through";
 		// 將商品原價元素的文字顏色設為紅色
 		commPrice.style.color = "red";
+	</script>
+	
+	
+	
+<!-- 	購物車 -->
+	<script>
+	// load on 事件
+    document.addEventListener("DOMContentLoaded", function () {
+    	
+    	
+    	
+    	
+    	
+    }
+    
 	</script>
 
 
