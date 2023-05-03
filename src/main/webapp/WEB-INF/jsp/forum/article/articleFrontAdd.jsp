@@ -95,6 +95,12 @@
 			preview.src = URL.createObjectURL(input.files[0]);
 		});
 	</script>
-
+<script>
+    // 在View頁面中加入這個判斷
+    if ("${errorMsg}") {
+        alert("${errorMsg}");
+        window.location.href = "${contextRoot}/member/login";
+    }
+</script>
 </body>
 </html>

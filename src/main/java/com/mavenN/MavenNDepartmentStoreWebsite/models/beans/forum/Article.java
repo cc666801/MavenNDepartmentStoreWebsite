@@ -25,6 +25,8 @@ import javax.persistence.Transient;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
+
 @Entity
 @Table(name = "article")
 public class Article {
@@ -36,8 +38,11 @@ public class Article {
 
 	@Column(name = "title", nullable = false)
 	private String articleTitle;
-	@Column(name = "member_id")
-	private String memberID;
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "article_category_id")
@@ -104,12 +109,14 @@ public class Article {
 		this.articleTitle = articleTitle;
 	}
 
-	public String getMemberID() {
-		return memberID;
+	
+
+	public Member getMember() {
+		return member;
 	}
 
-	public void setMemberID(String memberID) {
-		this.memberID = memberID;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 	public ArticleCategory getArticleCategory() {

@@ -1,8 +1,15 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -22,8 +29,10 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleCategoryService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
 public class ArticleController {
@@ -33,7 +42,10 @@ public class ArticleController {
 
 	@Autowired
 	private ArticleCategoryService articleCategoryService;
-
+	
+	@Autowired
+	private MemberService memberService;
+	
 //	@GetMapping("/articleBack")
 //	public String article() {
 //		return "/forum/article/articleBack";
@@ -96,6 +108,13 @@ public class ArticleController {
 		model.addAttribute("categoryList", categoryList);
 		model.addAttribute("art", art);
 		
+		// 取得圖片資訊
+	    byte[] imageData = art.getArticleImage();
+	    if (imageData != null) {
+	        String base64Image = Base64.getEncoder().encodeToString(imageData);
+	        model.addAttribute("imageData", base64Image);
+	    }
+		
 		//XSS
 		String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
 		model.addAttribute("articleContent", unescapedHtml);
@@ -103,10 +122,16 @@ public class ArticleController {
 	}
 
 	@PutMapping("/articleBack/edit")
-	public String putEditArticle(@ModelAttribute("art") Article art, @RequestParam("articleContent") String content) {
+	public String putEditArticle(@ModelAttribute("art") Article art, @RequestParam("articleContent") String content,
+			@RequestParam("imgToByte") MultipartFile file)throws IOException {
 		// XSS
 		String escapedHtml = HtmlUtils.htmlEscape(content);
 		art.setArticleContent(escapedHtml);
+		// 處理圖片上傳
+		if (!file.isEmpty()) {
+			art.setArticleImage(file.getBytes());
+		}
+		
 		articleService.updateArticleById(art.getArticleID(), art);
 		return "redirect:/articleBack";
 	}
@@ -155,18 +180,39 @@ public class ArticleController {
 //	}
 	// 前台發文
 	@GetMapping("/articleFront/add")
-	public String addArticleFront(Model model) {
-		model.addAttribute("article", new Article());
-		List<ArticleCategory> categoryList = articleCategoryService.findCategoriesPermissions();
-		model.addAttribute("categoryList", categoryList);
+	public String addArticleFront(Model model,HttpSession session, HttpServletRequest request) {
+		// 取得當前會員
+	    Member currentMember = (Member) session.getAttribute("member");
+	    // 如果會員未登入，則將頁面導向登入畫面
+	    if (currentMember == null) {
+	        // 使用JavaScript顯示提示訊息
+	    	 model.addAttribute("contextRoot", request.getContextPath());
+	        model.addAttribute("errorMsg", "請先登入會員");
+//	        return "redirect:/member/login";  // 先顯示訊息再跳轉至登入頁面
+	    }
 
-		return "/forum/article/articleFrontAdd";
+	    model.addAttribute("article", new Article());
+	    List<ArticleCategory> categoryList = articleCategoryService.findCategoriesPermissions();
+	    model.addAttribute("categoryList", categoryList);
+
+	    return "/forum/article/articleFrontAdd";
 	}
 
 	@PostMapping("/articleFront/post")
 	public String postArticleFront(@ModelAttribute("article") Article art, @RequestParam("content") String content,
-			@RequestParam("imgToByte") MultipartFile file) throws IOException {
+			@RequestParam("imgToByte") MultipartFile file,HttpSession session) throws IOException {
 
+		// 取得當前會員
+	    Member currentMember = (Member) session.getAttribute("member");
+	    // 如果會員未登入，則將頁面導向登入畫面
+	    if (currentMember == null) {
+	      
+        return "redirect:/member/login";  // 先顯示訊息再跳轉至登入頁面
+	    }
+	    // 設定發文者為當前會員
+	    art.setMember(currentMember);
+  
+	    
 		// XSS
 		String escapedHtml = HtmlUtils.htmlEscape(content);
 		art.setArticleContent(escapedHtml);
@@ -174,6 +220,11 @@ public class ArticleController {
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
+		}else {
+		    // 如果上傳的圖片為空，則設定預設圖片
+			Path imagePath = Paths.get("src/main/webapp/assetsForFrontend/img/noImage.png");
+			byte[] defaultImage = Files.readAllBytes(imagePath);
+			art.setArticleImage(defaultImage);
 		}
 
 		articleService.addArticle(art);
@@ -182,18 +233,24 @@ public class ArticleController {
 
 	// 前台會員文章管理
 	@GetMapping("/articleManage")
-	public String findAllArtManage(Model model) {
-		List<Article> findAllArt = articleService.findAllArticle();
-		for (Article art : findAllArt) {
-			if (art.getArticleImage() != null) {
-				String base64 = Base64.getEncoder().encodeToString(art.getArticleImage());
-				art.setArticleBase64(base64);
-			}
-		}
-		model.addAttribute("artList", findAllArt);
-		return "/forum/article/articleManage";
+	public String findAllArtManage(Model model, HttpSession session, HttpServletRequest request) {
+		try {
+	        Member currentMember = (Member) session.getAttribute("member");
+	        List<Article> findAllArt = articleService.findAllByMember(currentMember.getId());
+	        for (Article art : findAllArt) {
+	            if (art.getArticleImage() != null) {
+	                String base64 = Base64.getEncoder().encodeToString(art.getArticleImage());
+	                art.setArticleBase64(base64);
+	            }
+	        }
+	        model.addAttribute("artList", findAllArt);
+	        return "/forum/article/articleManage";
+	    } catch (NullPointerException e) {
+	        // 添加錯誤訊息到model中
+	        model.addAttribute("errorMsg", "請先登入會員");
+	        return "/forum/article/articleManage";
+	    }
 	}
-
 	@DeleteMapping("/articleManage/delete")
 	public String deleteArticleManage(@RequestParam Integer id) {
 		articleService.deleteArticleById(id);

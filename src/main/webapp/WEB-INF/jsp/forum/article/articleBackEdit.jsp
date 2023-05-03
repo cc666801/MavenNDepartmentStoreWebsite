@@ -25,7 +25,14 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
-
+<style>
+#imagePreview {
+	width: 200px;
+	height: 200px;
+	object-fit: cover;
+	margin-left: 10px;
+}
+</style>
 </head>
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
@@ -41,31 +48,41 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-				<div class="card">
-					<h1>編輯文章</h1>
-					<form:form modelAttribute="art" method="put"
-						action="${contextRoot}/articleBack/edit">
-						<form:label path="articleID">文章編號:</form:label>
-						<form:input type="hidden" path="articleID" />
-						<br>
-						<form:label path="articleTitle">標題:</form:label>
-						<form:input path="articleTitle" />
-						<br>
+					<div class="card">
+						<h1>編輯文章</h1>
+						<form:form modelAttribute="art" method="put"
+							enctype="multipart/form-data"
+							action="${contextRoot}/articleBack/edit">
+							<form:label path="articleID">文章編號:</form:label>
+							<form:input type="hidden" path="articleID" />
+							<br>
+							<form:label path="articleTitle">標題:</form:label>
+							<form:input path="articleTitle" required="required" />
+							<br>
 
-						<form:label path="articleCategory">類別:</form:label>
-						<form:select path="articleCategory">
-							<c:forEach items="${categoryList}" var="category">
-								<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
-							</c:forEach>
-						</form:select>
-						<br>
+							<form:label path="articleCategory">類別:</form:label>
+							<form:select path="articleCategory" required="required">
+								<c:forEach items="${categoryList}" var="category">
+									<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
+								</c:forEach>
+							</form:select>
+							<br>
+							<form:label path="articleImage">文章縮圖:</form:label>
+							<form:input id="articleImage" path="imgToByte" type="file"
+								accept="image/*"></form:input>
+							<form:hidden path="articleImage" id="articleImageBase64"
+								value="${imageData}" />
+							<img id="imagePreview" src="data:image/jpeg;base64,${imageData}"
+								alt="圖片預覽">
+							<!-- <img id="imagePreview" src="" alt="圖片預覽"> -->
+							<br>
 
-						<form:hidden name="articleContent" path="articleContent"
-							id="summernote-input" />
-						<div id="summernote">${articleContent}</div>
-						<button type="submit">送出</button>
-					</form:form>
-				</div>
+							<form:hidden name="articleContent" path="articleContent"
+								id="summernote-input" />
+							<div id="summernote">${articleContent}</div>
+							<button type="submit">送出</button>
+						</form:form>
+					</div>
 				</div>
 			</main>
 			<!-- End #main -->
@@ -107,9 +124,15 @@
 				}
 			});
 		});
-		
 	</script>
-
+	<script>
+		//圖片預覽
+		var input = document.getElementById('articleImage');
+		input.addEventListener('change', function() {
+			var preview = document.getElementById('imagePreview');
+			preview.src = URL.createObjectURL(input.files[0]);
+		});
+	</script>
 
 
 </body>
