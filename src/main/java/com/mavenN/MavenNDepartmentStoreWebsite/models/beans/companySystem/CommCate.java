@@ -26,19 +26,19 @@ public class CommCate {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="cate_Id")
-	private Integer cate_Id;
+	private Integer cateId;
 	
 	@Column(name="cate_Name", columnDefinition = "nvarchar(50)",nullable = false)
-	private String cate_Name;
+	private String cateName;
 	
 	@Column(name="cate_Desc", columnDefinition = "nvarchar(200)",nullable = true)
-	private String cate_Desc;
+	private String cateDesc;
 
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "cate_CDay", columnDefinition = "datetime",nullable = true)
-	private Date cate_CDay;
+	private Date cateCDay;
 	
 	
 
@@ -46,7 +46,7 @@ public class CommCate {
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
 	@Column(name = "cate_MDay", columnDefinition = "datetime",nullable = true)
-	private Date cate_MDay;
+	private Date cateMDay;
 
 //	@OneToMany(mappedBy = "commCate")
 //	private List<Commodity> commDetailsList;
@@ -54,80 +54,19 @@ public class CommCate {
 	@PrePersist
 	@PreUpdate
 	public void onCreateOrUpdate() {
-	    if (cate_CDay == null) {
-	        cate_CDay = new Date();
+	    if (cateCDay == null) {
+	        cateCDay = new Date();
 	    }
-	    if (cate_MDay == null) {
-	        cate_MDay = new Date();
+	    if (cateMDay == null) {
+	        cateMDay = new Date();
 	    } else {
-	        cate_MDay = new Date();
+	        cateMDay = new Date();
 	    }
 	}
 	
 
 	
-	public Integer getCate_Id() {
-		return cate_Id;
-	}
-
-
-
-	public void setCate_Id(Integer cate_Id) {
-		this.cate_Id = cate_Id;
-	}
-
-
-
-	public String getCate_Name() {
-		return cate_Name;
-	}
-
-
-
-	public void setCate_Name(String cate_Name) {
-		this.cate_Name = cate_Name;
-	}
-
-
-
-	public String getCate_Desc() {
-		return cate_Desc;
-	}
-
-
-
-	public void setCate_Desc(String cate_Desc) {
-		this.cate_Desc = cate_Desc;
-	}
-
-
 	
-	
-
-	
-	public Date getCate_CDay() {
-		return cate_CDay;
-	}
-
-
-
-	public void setCate_CDay(Date cate_CDay) {
-		this.cate_CDay = cate_CDay;
-	}
-
-
-
-	public Date getCate_MDay() {
-		return cate_MDay;
-	}
-
-
-
-	public void setCate_MDay(Date cate_MDay) {
-		this.cate_MDay = cate_MDay;
-	}
-
-
 
 //	public List<Commodity> getCommDetailsList() {
 //		return commDetailsList;
@@ -138,6 +77,86 @@ public class CommCate {
 //	public void setCommDetailsList(List<Commodity> commDetailsList) {
 //		this.commDetailsList = commDetailsList;
 //	}
+
+
+
+	public Integer getCateId() {
+		return cateId;
+	}
+
+
+
+
+
+	public void setCateId(Integer cateId) {
+		this.cateId = cateId;
+	}
+
+
+
+
+
+	public String getCateName() {
+		return cateName;
+	}
+
+
+
+
+
+	public void setCateName(String cateName) {
+		this.cateName = cateName;
+	}
+
+
+
+
+
+	public String getCateDesc() {
+		return cateDesc;
+	}
+
+
+
+
+
+	public void setCateDesc(String cateDesc) {
+		this.cateDesc = cateDesc;
+	}
+
+
+
+
+
+	public Date getCateCDay() {
+		return cateCDay;
+	}
+
+
+
+
+
+	public void setCateCDay(Date cateCDay) {
+		this.cateCDay = cateCDay;
+	}
+
+
+
+
+
+	public Date getCateMDay() {
+		return cateMDay;
+	}
+
+
+
+
+
+	public void setCateMDay(Date cateMDay) {
+		this.cateMDay = cateMDay;
+	}
+
+
 
 
 

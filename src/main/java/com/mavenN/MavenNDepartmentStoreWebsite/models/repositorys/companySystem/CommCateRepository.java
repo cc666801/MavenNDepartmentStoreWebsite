@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem;
 
 import java.util.List;
 

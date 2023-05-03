@@ -40,32 +40,32 @@
 			action="${contextRoot}/Store/Commodity/editCommodity"
 			enctype="multipart/form-data">
 
-			<form:label path="comm_Id">商品序號</form:label>
-			<form:input path="comm_Id" readonly="true" />
+			<form:label path="commId">商品序號</form:label>
+			<form:input path="commId" readonly="true" />
 			<br>
-			<form:label path="comm_Name">商品名稱</form:label>
-			<form:input path="comm_Name" />
+			<form:label path="commName">商品名稱</form:label>
+			<form:input path="commName" />
 
 
 			<br>
-			<form:label path="comm_Desc">商品敘述</form:label>
-			<form:input path="comm_Desc" />
+			<form:label path="commDesc">商品敘述</form:label>
+			<form:input path="commDesc" />
 			<br>
-			<form:label path="comm_Price">商品價格</form:label>
-			<form:input path="comm_Price" />
+			<form:label path="commPrice">商品價格</form:label>
+			<form:input path="commPrice" />
 			<br>
-			<form:label path="comm_Discount">商品折扣(請輸入1以內之小數)</form:label>
-			<form:input path="comm_Discount" />
+			<form:label path="commDiscount">商品折扣(請輸入1以內之小數)</form:label>
+			<form:input path="commDiscount" />
 			<br>
-			<label for="comm_Shelve">商品上下架</label>
-			<input type="radio" id="comm_Shelve_true" name="comm_Shelve"
+			<label for="commShelve">商品上下架</label>
+			<input type="radio" id="commShelvetrue" name="commShelve"
 				value="true">
-			<label for="comm_Shelve_true">上架</label>
-			<input type="radio" id="comm_Shelve_false" name="comm_Shelve"
+			<label for="commShelvetrue">上架</label>
+			<input type="radio" id="commShelvefalse" name="commShelve"
 				value="false">
-			<label for="comm_Shelve_false">下架</label>
+			<label for="commShelvefalse">下架</label>
 			<br>
-			<form:label path="comm_Picture">商品照片</form:label>
+			<form:label path="commPicture">商品照片</form:label>
 			<form:input path="transferToByteArray" type="file" id="formfile" />
 			<br>
 
