@@ -22,13 +22,9 @@
 	<!-- End Header -->
 
 
-	<div id="layoutSidenav">
 
 
-
-		<div id="layoutSidenav_content">
-
-			<main id="main" class="container my-5">
+			<main id="main" >
 
 
 
@@ -46,9 +42,16 @@
 
 					<dt>商品編號：</dt>
 					<dd>${commodityInfo.commId}</dd>
+					<dt>商品分類：</dt>
+					<dd>
+						<a
+							href="${contextRoot}/Store/Commodity/findCate?cateId=${commodityInfo.commCate.cateId}">${commodityInfo.commCate.cateName}</a>
+					</dd>
 					<dt>商品描述：</dt>
 					<dd>${commodityInfo.commDesc}</dd>
-					<dt>商品價格：</dt>
+					<dt>商品原價：</dt>
+					<dd>${commodityInfo.commPrice}</dd>
+					<dt>商品特價價格：</dt>
 					<dd>${commodityInfo.commPrice*commodityInfo.commDiscount}</dd>
 					<!-- 顯示其他需要的資訊 -->
 
@@ -56,7 +59,7 @@
 
 				<!-- 新增兩個按鈕 -->
 
-				<label for="quantity">數量:</label> <input type="number"
+				<label for="quantity">數量:(單筆最高為10件)</label> <input type="number"
 					name="quantity" id="quantity" min="1" max="10" value="1">
 				<form action="${contextRoot}/add-to-cart/${commodityInfo.commId}"
 					method="POST">
@@ -75,14 +78,24 @@
 
 			</main>
 
-		</div>
-	</div>
+
 	<!-- ======= Footer ======= -->
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
 
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
-	<script
-		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+	<!-- 	<script -->
+	<%-- 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
+
+	<script>
+		// 獲取商品原價元素
+		var commPrice = document.getElementById("commPrice");
+		// 將商品原價元素的文字加上刪除線樣式
+		commPrice.style.textDecoration = "line-through";
+		// 將商品原價元素的文字顏色設為紅色
+		commPrice.style.color = "red";
+	</script>
+
+
 </body>
 </html>

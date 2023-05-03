@@ -13,6 +13,7 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 
@@ -59,7 +60,8 @@ public class CommodityService {
 			comm.setCommPicture(newcommodity.getCommPicture());
 			comm.setCommDiscount(newcommodity.getCommDiscount());
 			comm.setCommPrice(newcommodity.getCommPrice());
-
+//		下面這行新加的
+			comm.setCommCate(newcommodity.getCommCate());
 			return comm;
 		}
 		return null;
@@ -72,8 +74,8 @@ public class CommodityService {
 	}
 
 //分頁器
-	public Page<Commodity> findByPage(Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
+	public Page<Commodity> usePgbToFindAllCommodity(Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 6, Sort.Direction.ASC, "commId");
 		Page<Commodity> page = commodityRepository.findAll(pgb);
 		for (Commodity commodity : page.getContent()) {
 			byte[] commPicture = commodity.getCommPicture();
@@ -100,18 +102,40 @@ public class CommodityService {
 	}
 	
 //嘗試顯示價格變動...
-	public Double calculateDiscountedPrice(Double price, String discount) {
-	    if (discount == null) {
-	        return price;
-	    } else {
-	        double discountPercentage = Double.parseDouble(discount.replace("%", "")) / 100;
-	        return price * (1 - discountPercentage);
-	    }
+//	public Double calculateDiscountedPrice(Double price, String discount) {
+//	    if (discount == null) {
+//	        return price;
+//	    } else {
+//	        double discountPercentage = Double.parseDouble(discount.replace("%", "")) / 100;
+//	        return price * (1 - discountPercentage);
+//	    }
+//	}
+	
+	
+//	嘗試顯示單一類別產品
+	
+	public List<Commodity> findAllCommByCommCate(CommCate commCate) {
+		return commodityRepository.findAllCommByCommCate(commCate);
+	
+	
 	}
 	
+//	嘗試做分類的分頁器   5/2 12:27 未完成
+	public Page<Commodity> usePgbToFindCommodityByCommcate(CommCate commCate, Integer pageNumber) {
+	    Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "CommId");
+	    Page<Commodity> page = commodityRepository.findCommodityByCommCate(commCate, pgb);
+	    for (Commodity commodity : page.getContent()) {
+	        byte[] commPicture = commodity.getCommPicture();
+	        String base64string = Base64.getEncoder().encodeToString(commPicture);
+	        commodity.setBase64StringcommPicture(base64string);
+	    }
+	    return page;
+	}
+
 
 	public CommodityService() {
 		// TODO Auto-generated constructor stub
 	}
+
 
 }
