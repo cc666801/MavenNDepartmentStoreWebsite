@@ -109,21 +109,19 @@
 						<li><a href="#">關於我們</a></li>
 					</ul></li>
 				<li><a href="${contextRoot}/backend">後台系統</a></li>
-		</ul>
+				
+				
+				
+			</ul>
 		</nav>
 
 		<!-- .navbar -->
 
 		<div class="position-relative">
-			<a href="#" class="mx-2"><span class="bi-facebook"></span></a> <a
-				href="#" class="mx-2"><span class="bi-twitter"></span></a> <a
-				href="#" class="mx-2"><span class="bi-instagram"></span></a> <a
-				href="${contextRoot}/member/register" class="mx-2"><span
-				class="bi-person-circle">${member.name}</span></a> <a
-				href="${contextRoot}/member/logout" class="mx-2"><span
-				class="bi bi-box-arrow-right"></span></a> <a href="#"
-				class="mx-2 js-search-open"><span class="bi-search"></span></a> <i
-				class="bi bi-list mobile-nav-toggle"></i>
+			<a href="${contextRoot}/member/register" class="mx-2"> <span class="bi-person-circle">${member.name}</span></a> 
+			<a href="${contextRoot}/member/logout" class="mx-2"> <span class="bi bi-box-arrow-right"></span></a>
+			<a href="#" class="mx-2 js-search-open"> <span class="bi-search"></span></a> 
+			<i class="bi bi-list mobile-nav-toggle"></i>
 
 			<!-- ======= Search Form ======= -->
 			<div class="search-form-wrap js-search-form-wrap">
