@@ -7,6 +7,8 @@ import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
+
 @Embeddable
 public class ArticleLikeId implements Serializable {
 	
@@ -18,12 +20,12 @@ public class ArticleLikeId implements Serializable {
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "member_id")
-	private fakemember member;
+	private Member member;
   
 	public ArticleLikeId() {
 	}
 
-	public ArticleLikeId(Article article, fakemember member) {
+	public ArticleLikeId(Article article, Member member) {
 		this.article = article;
 		this.member = member;
 	}
@@ -36,13 +38,15 @@ public class ArticleLikeId implements Serializable {
 		this.article = article;
 	}
 
-	public fakemember getMember() {
+	public Member getMember() {
 		return member;
 	}
 
-	public void setMember(fakemember member) {
+	public void setMember(Member member) {
 		this.member = member;
 	}
+
+	
 	
  }
 
