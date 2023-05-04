@@ -62,6 +62,7 @@ public class ArticleService {
 			art.setArticleEditTime(newArticle.getArticleEditTime());  
 			art.setArticleCategory(newArticle.getArticleCategory());
 			art.setArticleTitle(newArticle.getArticleTitle());
+			art.setArticleImage(newArticle.getArticleImage());
 			return art;
 		}
 		return null;

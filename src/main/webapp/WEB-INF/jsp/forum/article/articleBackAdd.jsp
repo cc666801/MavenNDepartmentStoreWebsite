@@ -23,15 +23,6 @@
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <!-- include summernote-ko-KR -->
 <script src="../summernote/lang/summernote-zh-TW.js"></script>
-<style>
-#imagePreview {
-    width: 200px;
-    height: 200px;
-    object-fit: cover;
-    margin-left: 10px;
-}
-
-</style>
 
 </head>
 <body class="sb-nav-fixed">
@@ -67,7 +58,7 @@
 						<form:label path="articleImage">文章縮圖:</form:label>
 							<form:input id="articleImage" path="imgToByte" type="file"
 								accept="image/*"></form:input>
-							<img id="imagePreview" src="" alt="圖片預覽">
+							<img id="imagePreview" src="" style="display:none; max-width: 200px; max-height: 200px; object-fit: cover; margin-left: 10px;">
 						<br>
 						<input type="hidden" name="content" id="summernote-input">
 						<div id="summernote"></div>
@@ -115,6 +106,13 @@
 //圖片預覽
 var input = document.getElementById('articleImage');
 input.addEventListener('change', function() {
+	var preview = document.getElementById('imagePreview');
+	if (input.files.length === 0) {
+	  preview.style.display = 'none';
+	} else {
+	  preview.src = URL.createObjectURL(input.files[0]);
+	  preview.style.display = 'inline-block';
+	}	
   var preview = document.getElementById('imagePreview');
   preview.src = URL.createObjectURL(input.files[0]);
 });

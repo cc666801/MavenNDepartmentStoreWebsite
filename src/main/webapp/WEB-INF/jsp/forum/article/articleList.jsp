@@ -45,7 +45,7 @@
 											<img src="assets/img/person-2.jpg" alt="" class="img-fluid">
 										</div>
 										<div class="name">
-											<h3 class="m-0 p-0">發文者名稱</h3>
+											<h3 class="m-0 p-0">${art.member.name}</h3>
 										</div>
 									</div>
 								</div>

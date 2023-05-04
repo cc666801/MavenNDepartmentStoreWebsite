@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.Arrays;
 import java.util.Base64;
 import java.util.List;
 
@@ -29,9 +28,11 @@ import org.springframework.web.util.HtmlUtils;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Comment;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleCategoryService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommentService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
@@ -45,6 +46,9 @@ public class ArticleController {
 	
 	@Autowired
 	private MemberService memberService;
+	
+	@Autowired
+	private CommentService commentService;
 	
 //	@GetMapping("/articleBack")
 //	public String article() {
@@ -130,20 +134,32 @@ public class ArticleController {
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
+		}else {
+			// 若使用者沒有選擇要上傳圖片，就使用舊的圖片資料更新回資料庫中
+	        Article oldArticle = articleService.findArticleById(art.getArticleID());
+	        art.setArticleImage(oldArticle.getArticleImage());
 		}
 		
 		articleService.updateArticleById(art.getArticleID(), art);
 		return "redirect:/articleBack";
 	}
 
+	
+	//個別文章內容
 	@GetMapping("/articleContent/{id}")
-	public String getArticleById(@PathVariable Integer id, Model model) {
+	public String getArticleById(@PathVariable Integer id, Model model, HttpSession session) {
+		//取得當前登入會員
+		Member currentMember = (Member) session.getAttribute("member");
+	    model.addAttribute("currentMember", currentMember);
 		Article article = articleService.findArticleById(id);
 		// XSS
 		String unescapedHtml = HtmlUtils.htmlUnescape(article.getArticleContent());
 		article.setArticleContent(unescapedHtml);
-
+		int commentCount = commentService.countCommentsByArticleId(id);
+		model.addAttribute("commentCount", commentCount);
+		 List<Comment> comment = commentService.findByArticleId(id);
 		model.addAttribute("article", article);
+		 model.addAttribute("comment", comment);
 		return "/forum/article/showArticleContent";
 	}
 
@@ -258,24 +274,42 @@ public class ArticleController {
 	}
 
 	@GetMapping("/articleManage/edit")
-	public String editArticleMange(@RequestParam("id") Integer id, Model model) {
+	public String editArticleMange(@RequestParam("id") Integer id, Model model){
 		Article art = articleService.findArticleById(id);
-		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
-		model.addAttribute("categoryList", categoryList);
-		model.addAttribute("art", art);
+		 List<ArticleCategory> categoryList = articleCategoryService.findCategoriesPermissions();
+		    model.addAttribute("categoryList", categoryList);
+		model.addAttribute("art", art);		
+		
+		// 取得圖片資訊
+	    byte[] imageData = art.getArticleImage();
+	    if (imageData != null) {
+	        String base64Image = Base64.getEncoder().encodeToString(imageData);
+	        model.addAttribute("imageData", base64Image);
+	    }
+		
 		//XSS
 				String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
 				model.addAttribute("articleContent", unescapedHtml);
-		return "/forum/article/articleManage";
+		return "/forum/article/articleFrontEdit";
 	}
 
 	@PutMapping("/articleManage/edit")
 	public String putEditArticleMange(@ModelAttribute("art") Article art,
-			@RequestParam("articleContent") String content) {
+			@RequestParam("articleContent") String content,
+			@RequestParam("imgToByte") MultipartFile file)throws IOException {
 		// XSS
-		String escapedHtml = HtmlUtils.htmlEscape(content);
-		art.setArticleContent(escapedHtml);
-		articleService.updateArticleById(art.getArticleID(), art);
+				String escapedHtml = HtmlUtils.htmlEscape(content);
+				art.setArticleContent(escapedHtml);
+				// 處理圖片上傳
+				if (!file.isEmpty()) {
+					art.setArticleImage(file.getBytes());
+				}else {
+					// 若使用者沒有選擇要上傳圖片，就使用舊的圖片資料更新回資料庫中
+			        Article oldArticle = articleService.findArticleById(art.getArticleID());
+			        art.setArticleImage(oldArticle.getArticleImage());
+				}
+				
+				articleService.updateArticleById(art.getArticleID(), art);
 		return "redirect:/articleManage";
 	}
 ///////////////////點讚系統////////////////

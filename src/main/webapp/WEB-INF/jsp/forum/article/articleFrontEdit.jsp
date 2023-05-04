@@ -3,20 +3,12 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
-
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
 <title>編輯文章</title>
-
-<!-- include libraries(jQuery, bootstrap) -->
-<link rel="stylesheet"
-	href="//cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" />
-<script type="text/javascript"
-	src="cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"></script>
 
 <!-- include summernote css/js-->
 <link
@@ -25,27 +17,23 @@
 <link
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<!-- Summernote JS - CDN Link -->
+<script
+	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
+<!-- include summernote-ko-KR -->
+<script src="../summernote/lang/summernote-zh-TW.js"></script>
+
 
 </head>
-<body class="sb-nav-fixed">
-	<!-- ======= Header ======= -->
-	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
-	<!-- End Header -->
-
-	<div id="layoutSidenav">
-
-		<!-- ======= SiderNav ======= -->
-		<jsp:include page="../../layout/sideNavForBackend.jsp"></jsp:include>
-		<!-- End SiderNav -->
-
-		<div id="layoutSidenav_content">
-			<main>
-				<div class="container-fluid px-4">
-					<div class="card">
-						<h1>編輯文章</h1>
+<body>
+<jsp:include page="../../layout/header.jsp"></jsp:include>
+	<main id="main">
+		<div class="card">
+			<h2>編輯文章</h2>
 						<form:form modelAttribute="art" method="put"
 							enctype="multipart/form-data"
-							action="${contextRoot}/articleBack/edit">
+							action="${contextRoot}/articleManage/edit">
 							<form:label path="articleID">文章編號:</form:label>
 							<form:input type="hidden" path="articleID" />
 							<br>
@@ -75,30 +63,13 @@
 							<button type="submit">送出</button>
 						</form:form>
 					</div>
-				</div>
+				
 			</main>
 			<!-- End #main -->
 
-			<!-- ======= Footer ======= -->
-			<jsp:include page="../../layout/footerForBackend.jsp"></jsp:include>
-			<!-- End Footer -->
-		</div>
-	</div>
+<jsp:include page="../../layout/footer.jsp"></jsp:include>
 
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
-	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-		crossorigin="anonymous"></script>
-	<script
-		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-	<!-- Summernote JS - CDN Link -->
+<!-- Summernote JS - CDN Link -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 
@@ -117,7 +88,7 @@
 			});
 		});
 	</script>
-	<script>
+<script>
 		//圖片預覽
 		var input = document.getElementById('articleImage');
 		input.addEventListener('change', function() {
@@ -126,7 +97,5 @@
 		});
 	</script>
 
-
 </body>
-
 </html>
