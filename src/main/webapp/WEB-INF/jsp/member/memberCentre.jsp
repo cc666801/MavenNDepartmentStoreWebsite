@@ -1,9 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
-
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}"></jstl:set>
 <!DOCTYPE html>
 <html>
 <head>
@@ -60,8 +60,8 @@
 
 			<tr>
 				<td><form
-						action="${contextRoot}/member/edit/${sessionScope.member.id}"
-						method="GET">
+						action="${contextRoot}/member/edit?id="+${sessionScope.member.id}
+						method="GET" >
 						<button type="submit">更新</button>
 					</form></td>
 

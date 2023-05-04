@@ -70,8 +70,8 @@ public class MemberController {
 		
 	}
 	// 更新會員資料
-	@GetMapping("/member/edit/{id}")
-	public String editMember(@PathVariable("id") Integer id, Model model) {
+	@GetMapping("/member/edit")
+	public String editMember(@RequestParam("id") Integer id, Model model) {
 	    Member mem = mService.findMemberById(id);
 	    model.addAttribute("member", mem);
 	    return "member/editMember";
