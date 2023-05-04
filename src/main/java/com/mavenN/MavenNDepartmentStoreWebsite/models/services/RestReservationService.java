@@ -28,6 +28,12 @@ public class RestReservationService {
 		resRepository.save(res);
 	}
 	
+	public Page<Company> findByUserQueryCompany(String companyname, Integer pageNumber){
+		PageRequest pg = PageRequest.of(pageNumber, 9);
+		Page<Company> findByCompanyNameContaining = companyRepository.findByCompanyNameContaining(companyname, pg);
+		return findByCompanyNameContaining;
+	}
+	
 	public Page<Company> findAllReservationByPage(Integer pageNumber) {
 		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "companyId");
 		Page<Company> page = companyRepository.findAll(pg);
@@ -82,6 +88,8 @@ public class RestReservationService {
 	public void deletebyid(Integer id) {
 		resRepository.deleteById(id);
 	}
+	
+	
 	
 	
 }

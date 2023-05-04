@@ -10,8 +10,9 @@
 <head>
 <meta charset="UTF-8">
 <style>
-.card img {w-100;
-	height: 200px;
+.card img {
+	w-100;
+	height: 250px;
 }
 </style>
 <title>餐廳頁面測試</title>
@@ -21,11 +22,11 @@
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 	<main id="main">
-		<form action="#">
+		<form action="${contextRoot}/restaurantfront/UserQueryCompany">
 			<div class="input-group mb-3 w-25">
 				<input type="text" class="form-control" placeholder="請輸入餐廳"
-					aria-label="請輸入餐廳" aria-describedby="basic-addon2">
-				<button class="btn btn-outline-secondary" type="button"
+					aria-label="請輸入餐廳" aria-describedby="basic-addon2" name="companyname"/>
+				<button class="btn btn-outline-secondary" type="submit"
 					id="basic-addon2">
 					<i class="bi bi-search"></i>
 				</button>

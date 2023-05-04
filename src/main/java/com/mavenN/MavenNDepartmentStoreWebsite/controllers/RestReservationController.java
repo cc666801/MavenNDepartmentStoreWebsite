@@ -24,6 +24,23 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	@GetMapping("/restaurantfront/UserQueryCompany")
+	public String showUserQueryCompany( @RequestParam("companyname") String companyname,
+			@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
+		Page<Company> userQueryCompany = reService.findByUserQueryCompany(companyname, pageNumber);
+		for(Company company: userQueryCompany.getContent() ) {
+			byte[] companyLogo = company.getCompanyLogo();
+			if(companyLogo != null) {
+				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
+				company.setBase64StringCompanyLogo(encodeToString); 
+			}
+		}
+		
+		model.addAttribute("page",userQueryCompany);
+		return "restaurantfront/showrest";
+	}
+	
+	
 	@GetMapping("/restaurantfront")
 	public String ShowAllReservationByPage(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
 		Page<Company> page = reService.findAllReservationByPage(pageNumber);
@@ -32,8 +49,6 @@ public class RestReservationController {
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
 				company.setBase64StringCompanyLogo(encodeToString); 
-//				System.out.println(companyLogo);
-//				System.out.println("***************");
 			}
 		}
 		
