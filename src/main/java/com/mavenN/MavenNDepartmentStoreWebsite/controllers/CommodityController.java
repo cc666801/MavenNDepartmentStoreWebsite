@@ -1,12 +1,16 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.http.ResponseEntity;
+import org.springframework.data.domain.PageImpl;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -89,7 +93,7 @@ public class CommodityController {
 		return "/Store/Commodity/CommodityBack";
 	}
 
-//	讀取所有資料 (可將路徑設為 ShowAll)
+//	後台讀取所有資料 (可將路徑設為 ShowAll)
 	@GetMapping("/Store/Commodity/ShowAll")
 	public String ShowAllCommodity(Model model) {
 		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
@@ -144,26 +148,25 @@ public class CommodityController {
 		return "redirect:/Store/Commodity/CommodityBack";
 	}
 
-	// 分頁器
-	@GetMapping("/Store/Commodity/findAllComm")
-	public String findByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
-		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
-
-		model.addAttribute("page", page);
-		return "Store/Storeindex";
-
-	}
+	// 分頁器 可做動
+//	@GetMapping("/Store/Commodity/findAllComm")
+//	public String findByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
+//		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
+//
+//		model.addAttribute("page", page);
+//		return "Store/Storeindex";
+//
+//	}
 
 //	分類的分頁器  5/3 12:27 未完成
 	@GetMapping("/Store/Commodity/findAllCommByCate")
 	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-			@RequestParam(name = "cateId",required=false) Integer cateId, Model model) {
+			@RequestParam(name = "cateId", required = false) Integer cateId, Model model) {
 		CommCate commCate = commCateService.findcateById(cateId);
 		Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
 //		System.out.println(commodityPage.getContent().get(0).getCommId());
 		model.addAttribute("commodityPage", commodityPage);
-		
-		
+
 		return "Store/Commodity/findCommByCate";
 	}
 
@@ -229,8 +232,107 @@ public class CommodityController {
 		return "Store/Commodity/CommodityDetail";
 	}
 
+//	5/4 顯示上架產品   可做動
+
+//	@GetMapping("/Store/Commodity/commodities")
+//	public String showCommodities(Model model) {
+//		List<Commodity> commodities = commodityService.findByCommShelveIsTrue();
+//		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
+//		for (Commodity commodity : findAllCommodity) {
+//			byte[] imageData = commodity.getCommPicture();
+//			if (imageData != null) {
+//				String base64String = Base64.getEncoder().encodeToString(imageData);
+//				commodity.setBase64StringcommPicture(base64String);
+//			}
+//		}
+//		
+//		model.addAttribute("commodities", commodities);
+//		return "Store/Commodity/showCommodityByShelves";
+//	}
+
+	// 開始亂寫不知道是否可動
+
+//	@GetMapping("/Store/Commodity/commodities")
+////	public String showCommodities(Model model) {
+//		public String showCommodities(@RequestParam(name = "p", defaultValue = "0")Model model, Pageable pageable) {
+//
+//		List<Commodity> commodities = commodityService.findByCommShelveIsTrue(pageable);
+//		List<Commodity> findAllCommodity = commodityService.findAllCommodity();
+//		for (Commodity commodity : findAllCommodity) {
+//			byte[] imageData = commodity.getCommPicture();
+//			if (imageData != null) {
+//				String base64String = Base64.getEncoder().encodeToString(imageData);
+//				commodity.setBase64StringcommPicture(base64String);
+//			}
+//		}
+////		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
+//		
+////		model.addAttribute("page", page);
+//		
+//		model.addAttribute("commodities", commodities);
+//		return "Store/Commodity/showCommodityByShelves";
+//	}
+
+//	可以動 不要問
+	@GetMapping("/Store/Commodity/commodities")
+	public String showCommodities(@RequestParam(name = "p", defaultValue = "0") Integer pageNumber, Model model) {
+
+	    Pageable pageable = PageRequest.of(pageNumber, 2); // 每頁 10 筆資料
+	    Page<Commodity> page =  commodityService.findByCommShelveIsTrue(pageable);
+	    List<Commodity> commodities = page.getContent();
+
+	    for (Commodity commodity : commodities) {
+	        byte[] imageData = commodity.getCommPicture();
+	        if (imageData != null) {
+	            String base64String = Base64.getEncoder().encodeToString(imageData);
+	            commodity.setBase64StringcommPicture(base64String);
+	        }
+	    }
+
+	    model.addAttribute("page", page);
+	    model.addAttribute("commodities", commodities);
+	    return "Store/Commodity/showCommodityByShelves";
+	}
+
+//	5/5gpt寫的 可動 但不理解
+
+//	@GetMapping("/Store/Commodity/commodities")
+//	public String showCommodities(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
+//		Pageable pageable = PageRequest.of(pageNumber, 3); // 每頁 3 筆資料
+//		Page<Commodity> page = commodityService.findByCommShelveIsTrue(pageable);
+//		List<Commodity> commodities = new ArrayList<>(page.getContent()); // 複製分頁結果，避免修改原始結果
+//
+//		// 篩選下架商品，並移除
+//		List<Commodity> soldOutCommodities = commodities.stream().filter(c -> !c.getCommShelve())
+//				.collect(Collectors.toList());
+//		commodities.removeAll(soldOutCommodities);
+//
+//		for (Commodity commodity : commodities) {
+//			byte[] imageData = commodity.getCommPicture();
+//			if (imageData != null) {
+//				String base64String = Base64.getEncoder().encodeToString(imageData);
+//				commodity.setBase64StringcommPicture(base64String);
+//			}
+//		}
+//
+//		model.addAttribute("page", new PageImpl<>(commodities, pageable, commodities.size())); // 使用修改後的商品列表建立新的分頁結果
+//		model.addAttribute("commodities", commodities);
+//		return "Store/Commodity/showCommodityByShelves";
+//	}
+
+//	偷下上面的分頁器 失敗
+	@GetMapping("/Store/Commodity/findAllComm")
+	public String findByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
+		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
+
+		model.addAttribute("page", page);
+		return "Store/Storeindex";
+
+	}
+//	
+
 //	5/4 開始模糊搜尋
-	
+
 //	@GetMapping
 //    public ResponseEntity<List<Commodity>> findCommoditiesByCommNameContaining(@RequestParam("name") String name) {
 //        List<Commodity> commodities = commodityService.findCommodityBycommNameContaining(name);
@@ -240,11 +342,7 @@ public class CommodityController {
 //            return ResponseEntity.ok(commodities); // 回傳商品清單
 //        }
 //    }
-	
-	
-	
-	
-	
+
 	public CommodityController() {
 		// TODO Auto-generated constructor stub
 	}
