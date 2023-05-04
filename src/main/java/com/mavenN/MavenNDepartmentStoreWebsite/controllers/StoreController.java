@@ -1,18 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
-import java.util.Base64;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommodityService;
 
 @Controller
