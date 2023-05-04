@@ -68,8 +68,19 @@ public class ShoppingCart {
         System.out.println("Formatted date: " + formattedDate);
     }
     
+    
+    
 
-    // getter and setter methods
+    public ShoppingCart(Integer shoppingCartId, Member member) {
+		super();
+		this.shoppingCartId = shoppingCartId;
+		this.member = member;
+	}
+
+
+
+
+	// getter and setter methods
 	public Integer getShoppingCartId() {
 		return shoppingCartId;
 	}
