@@ -7,41 +7,83 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title>商品查詢</title>
-	<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
-	<script type="text/javascript">
-		$(document).ready(function() {
-			$("#search-form").submit(function(event) {
-				event.preventDefault(); // 阻止表單提交
-				var name = $("#name").val();
-				$.ajax({
-					url: "/api/commodities?name=" + name, // 呼叫商品查詢 API
-					type: "GET",
-					success: function(data) {
-						$("#results").empty();
-						if (data.length == 0) {
-							$("#results").append("<p>查無商品</p>");
-						} else {
-							$.each(data, function(index, commodity) {
-								$("#results").append("<p>" + commodity.commName + "</p>");
-							});
-						}
-					},
-					error: function() {
-						alert("查詢失敗");
-					}
-				});
-			});
-		});
-	</script>
+
+<!-- =======================================================
+  * Template Name: ZenBlog
+  * Updated: Mar 10 2023 with Bootstrap v5.2.3
+  * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
+  * Author: BootstrapMade.com
+  * License: https:///bootstrapmade.com/license/
+  ======================================================== -->
 </head>
-<body>
-	<h1>商品查詢</h1>
-	<form id="search-form">
-		<label for="name">商品名稱：</label>
-		<input type="text" id="name" name="name">
-		<input type="submit" value="查詢">
-	</form>
-	<div id="results"></div>
+<body class="sb-nav-fixed">
+	<!-- ======= Header ======= -->
+	<jsp:include page="../../layout/header.jsp"></jsp:include>
+	<!-- End Header -->
+
+
+
+
+
+	<main id="main">
+
+		<h1>findCommByCate</h1>
+		
+		
+		
+		<dl>
+			<dt>類別名稱：</dt>
+			<dd>${commodityList[0].commCate.cateName}</dd>
+			<dd>給我一個頁面連結 ${page.totalPages}</dd>
+		</dl>
+
+		<div class="row  row-cols-md-3 ">
+
+
+
+
+			<c:forEach var="commodity" items="${commodityList}">
+				<div class="card">
+					<a
+						href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
+						<img
+						src="data:image/png;base64,${commodity.base64StringcommPicture}"
+						class="card-img-top" alt="商品圖片"
+						style="width: 100px; height: 100px;">
+					</a>
+					<div class="card-body">
+						<p class="card-text">商品名稱:${commodity.commName}</p>
+						<a
+							href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}">商品分類:${commodity.commCate.cateName}</a>
+						<p class="card-text">商品價格:${commodity.commPrice}</p>
+					</div>
+				</div>
+			</c:forEach>
+		</div>
+
+
+
+
+		<!-- 				這裡是分頁器 -->
+		<c:forEach var="pageNumber" begin="1" end="${commodityPage.totalPages}">
+			<a href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}?p=${pageNumber}">${pageNumber}</a>
+		</c:forEach>
+
+
+
+
+	</main>
+
+	<!-- ======= Footer ======= -->
+	<%-- 	<jsp:include page="../../layout/footer.jsp"></jsp:include> --%>
+	<!-- End Footer -->
+
+	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
+	<!-- 	<script -->
+	<%-- 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
+
+
+
+
 </body>
 </html>

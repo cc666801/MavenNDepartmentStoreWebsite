@@ -157,11 +157,13 @@ public class CommodityController {
 //	分類的分頁器  5/3 12:27 未完成
 	@GetMapping("/Store/Commodity/findAllCommByCate")
 	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-			@RequestParam(name = "commCate" ,defaultValue="37" ,required=false) CommCate commCate, Model model) {
+			@RequestParam(name = "cateId",required=false) Integer cateId, Model model) {
+		CommCate commCate = commCateService.findcateById(cateId);
 		Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
-		
-		
+//		System.out.println(commodityPage.getContent().get(0).getCommId());
 		model.addAttribute("commodityPage", commodityPage);
+		
+		
 		return "Store/Commodity/findCommByCate";
 	}
 
@@ -221,6 +223,8 @@ public class CommodityController {
 			model.addAttribute("commodity", nextComm);
 			Integer nextCommId = nextComm.getCommId();
 			model.addAttribute("nextCommId", nextCommId);
+//			ids[]
+//			[1, 3, 5, 7, 9]
 		}
 		return "Store/Commodity/CommodityDetail";
 	}

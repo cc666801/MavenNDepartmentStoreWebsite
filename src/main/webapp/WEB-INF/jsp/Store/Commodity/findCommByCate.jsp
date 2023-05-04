@@ -42,7 +42,7 @@
 
 
 
-			<c:forEach var="commodity" items="${commodityList}">
+			<c:forEach var="commodity" items="${commodityPage.content}">
 				<div class="card">
 					<a
 						href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
@@ -66,7 +66,7 @@
 
 		<!-- 				這裡是分頁器 -->
 		<c:forEach var="pageNumber" begin="1" end="${commodityPage.totalPages}">
-			<a href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}?p=${pageNumber}">${pageNumber}</a>
+			<a href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}">${pageNumber}</a>
 		</c:forEach>
 
 

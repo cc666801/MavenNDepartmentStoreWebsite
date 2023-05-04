@@ -122,7 +122,7 @@
 									<div class="overlay-box">
 										<div class="overlay-inner">
 											<a class="overlay-content"
-												href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
+												href="${contextRoot}/Store/Commodity/findAllCommByCate?commId=${commodity.commId}">
 												<h5 class="mb-0">${commodity.commName}</h5>
 												<p>商品詳細頁面</p>
 												<p class="card-text">商品原價:${commodity.commPrice}</p>
@@ -185,7 +185,7 @@
 						<div class="card-body">
 							<p class="card-text">商品名稱:${commodity.commName}</p>
 							<a
-								href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}">商品分類:${commodity.commCate.cateName}</a>
+								href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodity.commCate.cateId}">商品分類:${commodity.commCate.cateName}</a>
 							<p class="card-text">商品特價:${commodity.commPrice*commodity.commDiscount}</p>
 						</div>
 					</div>
