@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form"%>
-<jsp:useBean id="member" class="com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member" scope="page"/>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt"%>
 
 <!DOCTYPE html>
 <html>
@@ -25,35 +25,35 @@
         <table>
             <tr>
                 <th>帳號</th>
-                <td>${member.account}</td>
+                <td>${sessionScope.member.account}</td>
             </tr>
             <tr>
                 <th>密碼</th>
-                <td>${member.password}</td>
+                <td>${sessionScope.member.password}</td>
             </tr>
             <tr>
                 <th>姓名</th>
-                <td>${member.name}</td>
+                <td>${sessionScope.member.name}</td>
             </tr>
             <tr>
                 <th>生日</th>
-                <td><c:out value="${member.birthday}" /></td>
+                <td><fmt:formatDate value="${sessionScope.member.birthday}" pattern="yyyy-MM-dd"/></td>
             </tr>
             <tr>
                 <th>電話</th>
-                <td>${member.phone}</td>
+                <td>${sessionScope.member.phone}</td>
             </tr>
             <tr>
                 <th>地址</th>
-                <td>${member.address}</td>
+                <td>${sessionScope.member.address}</td>
             </tr>
             <tr>
                 <th>email</th>
-                <td>${member.email}</td>
+                <td>${sessionScope.member.email}</td>
             </tr>
             <tr>
                 <th>點數</th>
-                <td>${member.points}</td>
+                <td>${sessionScope.member.points}</td>
             </tr>
         </table>
     </main>

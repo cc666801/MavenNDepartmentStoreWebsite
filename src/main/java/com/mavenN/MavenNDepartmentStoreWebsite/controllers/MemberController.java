@@ -80,7 +80,7 @@ public class MemberController {
 	@PutMapping("/editmember/edit")
 	public String putEditMember(@ModelAttribute("member") Member mem) {
 		mService.updateMemberById(mem.getId(), mem);
-		return "redirect:/member/login";
+		return "redirect:/memberCentre";
 	}
 
 	// 刪除會員資料
