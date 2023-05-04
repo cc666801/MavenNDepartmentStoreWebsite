@@ -33,8 +33,8 @@
 		
 		<dl>
 			<dt>類別名稱：</dt>
-			<dd>${commodityList[0].commCate.cateName}</dd>
-			<dd>給我一個頁面連結 ${page.totalPages}</dd>
+			<dd>${commodityPage.content.get(0).commCate.cateName}</dd>
+			
 		</dl>
 
 		<div class="row  row-cols-md-3 ">
