@@ -28,12 +28,19 @@
 	<main id="main">
 
 		<h1>findCommByCate</h1>
+		
+		
+		
 		<dl>
 			<dt>類別名稱：</dt>
 			<dd>${commodityList[0].commCate.cateName}</dd>
+			<dd>給我一個頁面連結 ${page.totalPages}</dd>
 		</dl>
 
 		<div class="row  row-cols-md-3 ">
+
+
+
 
 			<c:forEach var="commodity" items="${commodityList}">
 				<div class="card">
@@ -58,19 +65,11 @@
 
 
 		<!-- 				這裡是分頁器 -->
-		<ul class="pagination">
-			<c:forEach var="page" items="${pageList}">
-				<c:choose>
-					<c:when test="${page.current}">
-						<li class="page-item active"><a class="page-link" href="#">${page.number}</a></li>
-					</c:when>
-					<c:otherwise>
-						<li class="page-item"><a class="page-link"
-							href="${contextRoot}/Store/Commodity/findAllCommByCate?p=${page.number}">${page.number}</a></li>
-					</c:otherwise>
-				</c:choose>
-			</c:forEach>
-		</ul>
+		<c:forEach var="pageNumber" begin="1" end="${commodityPage.totalPages}">
+			<a href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}?p=${pageNumber}">${pageNumber}</a>
+		</c:forEach>
+
+
 
 
 	</main>

@@ -6,6 +6,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CommCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
@@ -36,4 +37,13 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 
 	Commodity findFirstByCommIdLessThanOrderByCommIdDesc(Long commId);
 
+//	找尋關鍵字  5/4 開始
+//		邪教
+//    List<Commodity> findCommodityByCommNameContaining(String commName);
+
+    
+//    @Query("SELECT commodity FROM Commodity c WHERE c.commName LIKE %:commName%")
+//    List<Commodity> findCommodityBycommNameContaining(@Param("commName") String commName);
+//
+//    
 }

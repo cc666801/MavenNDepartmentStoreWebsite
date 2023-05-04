@@ -86,6 +86,24 @@ public class CommodityService {
 		return page;
 	}
 
+	
+	
+	
+//	嘗試做分類的分頁器   5/2 12:27 未完成
+	public Page<Commodity> usePgbToFindCommodityByCommcate(CommCate commCate, Integer pageNumber) {
+		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
+		Page<Commodity> page = commodityRepository.findCommodityByCommCate(commCate, pgb);
+		System.out.println(page);
+		for (Commodity commodity : page.getContent()) {
+		byte[] commPicture = commodity.getCommPicture();
+		String base64string = Base64.getEncoder().encodeToString(commPicture);
+		commodity.setBase64StringcommPicture(base64string);
+		}
+		return page;
+		}
+	
+	
+	
 //嘗試顯示商品詳細頁面
 	public Commodity getCommodityById(Integer commId) {
 		Optional<Commodity> optionalCommodity = commodityRepository.findById(commId);
@@ -118,17 +136,6 @@ public class CommodityService {
 
 	}
 
-//	嘗試做分類的分頁器   5/2 12:27 未完成
-	public Page<Commodity> usePgbToFindCommodityByCommcate(CommCate commCate, Integer pageNumber) {
-		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "CommId");
-		Page<Commodity> page = commodityRepository.findCommodityByCommCate(commCate, pgb);
-		for (Commodity commodity : page.getContent()) {
-			byte[] commPicture = commodity.getCommPicture();
-			String base64string = Base64.getEncoder().encodeToString(commPicture);
-			commodity.setBase64StringcommPicture(base64string);
-		}
-		return page;
-	}
 
 //	5/3 嘗試來做 判斷上下一筆資料  失敗 詢問!
 	public Commodity findNextComm(Long commId) {
@@ -136,9 +143,17 @@ public class CommodityService {
 	}
 
 	public Commodity findPrevComm(Long commId) {
+	
 	    return commodityRepository.findFirstByCommIdLessThanOrderByCommIdDesc(commId);
 	}
 
+	
+//	5/4 開始測試模糊搜尋
+//	public List<Commodity> findCommodityBycommNameContaining(String commName) {
+//	    return commodityRepository.findCommodityBycommNameContaining(commName);
+//	}
+	
+	
 
 	public CommodityService() {
 		// TODO Auto-generated constructor stub

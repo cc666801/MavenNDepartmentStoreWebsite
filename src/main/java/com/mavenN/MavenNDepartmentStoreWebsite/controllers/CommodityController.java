@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -118,7 +119,7 @@ public class CommodityController {
 //		下面這兩行是新加的  可能會有問題... (可讀取成功 讚啦)
 		List<CommCate> commcateList = commCateService.findAllCate();
 		model.addAttribute("commcateList", commcateList);
-		
+
 		model.addAttribute("commodity", commodity);
 		return "Store/Commodity/CommodityEdit";
 
@@ -153,6 +154,33 @@ public class CommodityController {
 
 	}
 
+//	分類的分頁器  5/3 12:27 未完成
+	@GetMapping("/Store/Commodity/findAllCommByCate")
+	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+			@RequestParam(name = "commCate" ,defaultValue="37" ,required=false) CommCate commCate, Model model) {
+		Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
+		
+		
+		model.addAttribute("commodityPage", commodityPage);
+		return "Store/Commodity/findCommByCate";
+	}
+
+//	這裡還可以執行 2023/05/01 11:27
+	@GetMapping("/Store/Commodity/findCate")
+	public String showAllCommByCommcate(CommCate commCate, Model model) {
+		List<Commodity> showAllCommByCommcate = commodityService.findAllCommByCommCate(commCate);
+		for (Commodity commodity : showAllCommByCommcate) {
+			byte[] imageData = commodity.getCommPicture();
+			if (imageData != null) {
+				String base64String = Base64.getEncoder().encodeToString(imageData);
+				commodity.setBase64StringcommPicture(base64String);
+			}
+		}
+
+		model.addAttribute("commodityList", showAllCommByCommcate);
+		return "Store/Commodity/findCommByCate";
+	}
+
 // 找商品透過id
 	@GetMapping("/Store/Commodity/findComm")
 	public String findByCommId(@RequestParam(name = "commId") Integer commodity, Model model) {
@@ -173,65 +201,45 @@ public class CommodityController {
 //	    return "commodityDetail";
 //	}
 
-
-	
-//	這裡還可以執行 2023/05/01 11:27
-	@GetMapping("/Store/Commodity/findCate")
-	public String showAllCommByCommcate(CommCate commCate ,Model model) {
-		List<Commodity> showAllCommByCommcate =commodityService.findAllCommByCommCate(commCate);
-		for (Commodity commodity : showAllCommByCommcate) {
-			byte[] imageData = commodity.getCommPicture();
-			if (imageData != null) {
-				String base64String = Base64.getEncoder().encodeToString(imageData);
-				commodity.setBase64StringcommPicture(base64String);
-			}
-		}
-
-		
-		model.addAttribute("commodityList", showAllCommByCommcate);
-		return "Store/Commodity/findCommByCate";
-	}
-
-//	分類的分頁器  5/3 12:27 未完成
-	@GetMapping("/Store/Commodity/findAllCommByCate")
-	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model,
-	        @RequestParam(name = "c", defaultValue = "1") Integer cateId) {
-	   
-	    CommCate commCate = commCateService.findcateById(cateId);
-	    Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
-
-	    model.addAttribute("commodityPage", commodityPage); //將變數名稱改為"commodityPage"
-	    return "Store/Commodity/findCommByCate";
-	}
-//
-//	
-	
-	
-	
-	
 //	5/3 嘗試來做 判斷上下一筆資料
-	
+
 	@GetMapping("/Store/Commodity/prevComm/{commId}")
 	public String getPrevComm(@PathVariable Long commId, Model model) {
-	    Commodity prevComm = commodityService.findPrevComm(commId);
-	    if (prevComm != null) {
-	        model.addAttribute("commodity", prevComm);
-	        Integer prevCommId = prevComm.getCommId();
-	        model.addAttribute("prevCommId", prevCommId);
-	    }
-	    return "Store/Commodity/CommodityDetail";
+		Commodity prevComm = commodityService.findPrevComm(commId);
+		if (prevComm != null) {
+			model.addAttribute("commodity", prevComm);
+			Integer prevCommId = prevComm.getCommId();
+			model.addAttribute("prevCommId", prevCommId);
+		}
+		return "Store/Commodity/CommodityDetail";
 	}
 
 	@GetMapping("/Store/Commodity/nextComm/{commId}")
 	public String getNextComm(@PathVariable Long commId, Model model) {
-	    Commodity nextComm = commodityService.findNextComm(commId);
-	    if (nextComm != null) {
-	        model.addAttribute("commodity", nextComm);
-	        Integer nextCommId = nextComm.getCommId();
-	        model.addAttribute("nextCommId", nextCommId);
-	    }
-	    return "Store/Commodity/CommodityDetail";
+		Commodity nextComm = commodityService.findNextComm(commId);
+		if (nextComm != null) {
+			model.addAttribute("commodity", nextComm);
+			Integer nextCommId = nextComm.getCommId();
+			model.addAttribute("nextCommId", nextCommId);
+		}
+		return "Store/Commodity/CommodityDetail";
 	}
+
+//	5/4 開始模糊搜尋
+	
+//	@GetMapping
+//    public ResponseEntity<List<Commodity>> findCommoditiesByCommNameContaining(@RequestParam("name") String name) {
+//        List<Commodity> commodities = commodityService.findCommodityBycommNameContaining(name);
+//        if (commodities.isEmpty()) {
+//            return ResponseEntity.noContent().build(); // 回傳 204 狀態碼，表示查詢無結果
+//        } else {
+//            return ResponseEntity.ok(commodities); // 回傳商品清單
+//        }
+//    }
+	
+	
+	
+	
 	
 	public CommodityController() {
 		// TODO Auto-generated constructor stub
