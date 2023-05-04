@@ -66,21 +66,23 @@ public class MemberController {
 	public String findMemberById(@PathVariable Integer id,Model model) {
 		Member member = mService.findMemberById(id);
 	    model.addAttribute("member", member);
-	    return "member/memberdetail";
+	    return "redirect:/member/logout";
 		
 	}
 	// 更新會員資料
-	@GetMapping("/member/edit")
-	public String editMember(@RequestParam("id") Integer id, Model model) {
+	@GetMapping("/member/edit/{id}")
+	public String editMember(@PathVariable("id") Integer id, Model model) {
 	    Member mem = mService.findMemberById(id);
 	    model.addAttribute("member", mem);
 	    return "member/editMember";
 	}
 
-	@PutMapping("/editmember/edit")
-	public String putEditMember(@ModelAttribute("member") Member mem) {
-		mService.updateMemberById(mem.getId(), mem);
-		return "redirect:/memberCentre";
+
+	@PutMapping("/member/edit/{id}")
+	public String updateMember(@PathVariable Integer id, @ModelAttribute("member") Member member, Model model) {
+	    member.setId(id);
+	    mService.updateMemberById(id, member);
+	    return "redirect:/member/{id}";
 	}
 
 	// 刪除會員資料

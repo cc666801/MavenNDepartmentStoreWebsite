@@ -25,7 +25,7 @@
 
 <main id="main">
     <h1>更新會員</h1>
-    <form action="${contextRoot}/editmember/edit" method="POST">
+    <form action="${contextRoot}/member/edit/${sessionScope.member.id}" method="POST">
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="id" value="${member.id}" />
     <label for="name">姓名:</label>

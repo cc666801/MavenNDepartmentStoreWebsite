@@ -25,16 +25,18 @@
 		<h1>會員詳細資料</h1>
 		<table>
 			<tr>
+
+				<th>姓名</th>
+				<td>${sessionScope.member.name}</td>
+			</tr>
+			<tr>
 				<th>帳號</th>
 				<td>${sessionScope.member.account}</td>
+
 			</tr>
 			<tr>
 				<th>密碼</th>
 				<td>${sessionScope.member.password}</td>
-			</tr>
-			<tr>
-				<th>姓名</th>
-				<td>${sessionScope.member.name}</td>
 			</tr>
 			<tr>
 				<th>生日</th>
@@ -50,7 +52,7 @@
 				<td>${sessionScope.member.address}</td>
 			</tr>
 			<tr>
-				<th>email</th>
+				<th>Email</th>
 				<td>${sessionScope.member.email}</td>
 			</tr>
 			<tr>
@@ -60,8 +62,9 @@
 
 			<tr>
 				<td><form
-						action="${contextRoot}/member/edit?id="+${sessionScope.member.id}
-						method="GET" >
+						action="${contextRoot}/member/edit/${sessionScope.member.id}"
+						method="GET">
+						
 						<button type="submit">更新</button>
 					</form></td>
 
