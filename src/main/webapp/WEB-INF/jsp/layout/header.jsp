@@ -120,6 +120,7 @@
 		<div class="position-relative">
 			<a href="${contextRoot}/member/register" class="mx-2"> <span class="bi-person-circle">${member.name}</span></a> 
 			<a href="${contextRoot}/member/logout" class="mx-2"> <span class="bi bi-box-arrow-right"></span></a>
+			<a href="${contextRoot}/member/{id}" class="mx-2"> <span class="bi bi-tencent-qq"></span></a>
 			<a href="#" class="mx-2 js-search-open"> <span class="bi-search"></span></a> 
 			<i class="bi bi-list mobile-nav-toggle"></i>
 

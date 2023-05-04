@@ -28,6 +28,11 @@ public class MemberController {
 	@Autowired
 	private MemberRepository mRepository;
 	
+	@GetMapping("/memberCentre")
+	public String jumpPage(){
+		return "member/memberCentre";
+	}
+	
 	// 註冊會員  帳號重複不會顯示在前台
 	@GetMapping("/member/register")
 	public String addMember(Model model) {
@@ -75,14 +80,14 @@ public class MemberController {
 	@PutMapping("/editmember/edit")
 	public String putEditMember(@ModelAttribute("member") Member mem) {
 		mService.updateMemberById(mem.getId(), mem);
-		return "redirect:/memberlist";
+		return "redirect:/member/login";
 	}
 
 	// 刪除會員資料
 	@DeleteMapping("/memberdelete/{id}")
 	public String deleteMember(@PathVariable Integer id) {
 		mService.deleteMemberById(id);
-		return "redirect:/memberList";
+		return "redirect:/jump";
 	}
 
 //--------------------------------------------------------------------------

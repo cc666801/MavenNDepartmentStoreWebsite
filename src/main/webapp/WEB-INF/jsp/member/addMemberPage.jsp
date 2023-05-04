@@ -39,14 +39,15 @@ h1 {
 <body>
 	<main id="main">
 		<h1>註冊會員</h1>
-		
+
 		<form:form method="post" action="${contextRoot}/member/post"
 			modelAttribute="member" onsubmit="return checkForm();">
 			<table>
 				<tr>
 					<td>姓名：</td>
-					<td><form:input path="name" maxlength="5"
-							pattern="^[\u4E00-\u9FA5]+$" title="只能輸入中文，最多5個字" /></td>
+					<td><form:input path="name" maxlength="10"
+							pattern="^[\u4E00-\u9FA5A-Za-z]{1,10}$" title="最多輸入10個字，只能使用中英文" />
+					</td>
 				</tr>
 				<tr>
 					<td>帳號：</td>
