@@ -30,15 +30,28 @@ public class ShoppingCartCommodity {
     @JoinColumn(name = "fk_shoppingCart_id")
     private ShoppingCart shoppingCart;
 
-    
-    // getter and setter methods
-   
+	public ShoppingCartCommodity() {
+		super();
+	}
+
+
+	public ShoppingCartCommodity(ShoppingCartCommodityId id, Integer quantity, Commodity commodity,
+			ShoppingCart shoppingCart) {
+		super();
+		this.id = id;
+		this.quantity = quantity;
+		this.commodity = commodity;
+		this.shoppingCart = shoppingCart;
+	}
+
+
 	@Override
 	public String toString() {
 		return "ShoppingCartCommodity [id=" + id + ", quantity=" + quantity + "]";
 	}
 
 
+	// getter and setter methods
 	public ShoppingCartCommodityId getId() {
 		return id;
 	}

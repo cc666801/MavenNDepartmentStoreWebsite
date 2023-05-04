@@ -18,7 +18,25 @@ public class ShoppingCartCommodityId implements Serializable {
     private Integer shoppingCartId;
 
 	
-    // Getters and Setters
+    
+    
+    
+    
+    
+    
+    public ShoppingCartCommodityId() {
+		super();
+	}
+
+
+	public ShoppingCartCommodityId(Integer commodityId, Integer shoppingCartId) {
+		super();
+		this.commodityId = commodityId;
+		this.shoppingCartId = shoppingCartId;
+	}
+
+
+	// Getters and Setters
 	public static long getSerialversionuid() {
 		return serialVersionUID;
 	}
@@ -62,4 +80,12 @@ public class ShoppingCartCommodityId implements Serializable {
 		return Objects.equals(commodityId, other.commodityId) && Objects.equals(shoppingCartId, other.shoppingCartId);
 	}
 
+
+	@Override
+	public String toString() {
+		return "ShoppingCartCommodityId [commodityId=" + commodityId + ", shoppingCartId=" + shoppingCartId + "]";
+	}
+
+	
+	
 }

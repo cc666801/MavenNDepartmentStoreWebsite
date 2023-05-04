@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem;
 
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.Locale;
@@ -19,6 +20,7 @@ import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
@@ -35,9 +37,10 @@ public class ShoppingCart {
     
     @ManyToOne
     @JoinColumn(name = "fk_member_id", unique = true)
+    @NotNull
     private Member member;
     
-    @OneToMany(cascade = CascadeType.PERSIST, orphanRemoval = true, mappedBy = "shoppingCart")
+    @OneToMany(orphanRemoval = true, mappedBy = "shoppingCart")
     private List<ShoppingCartCommodity> shoppingCartCommodities;
     
     @Temporal(TemporalType.TIMESTAMP)
@@ -75,6 +78,14 @@ public class ShoppingCart {
 		super();
 		this.shoppingCartId = shoppingCartId;
 		this.member = member;
+		this.shoppingCartCommodities = new ArrayList<>();
+	}
+
+
+
+
+	public ShoppingCart() {
+		super();
 	}
 
 
@@ -98,7 +109,10 @@ public class ShoppingCart {
 	}
 
 	public List<ShoppingCartCommodity> getShoppingCartCommodities() {
-		return shoppingCartCommodities;
+	    if (this.shoppingCartCommodities == null) {
+	        this.shoppingCartCommodities = new ArrayList<>();
+	    }
+	    return this.shoppingCartCommodities;
 	}
 
 	public void setShoppingCartCommodities(List<ShoppingCartCommodity> shoppingCartCommodities) {

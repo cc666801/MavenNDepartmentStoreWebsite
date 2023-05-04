@@ -19,7 +19,6 @@ public class ShoppingCartControllerApi {
 	// CREATE a shopping cart
     @PostMapping("")
     public void createShoppingCart(@RequestBody ShoppingCartDto shoppingCartDto) {
-    	System.out.println(shoppingCartDto);
         shoppingCartService.saveShoppingCartByDto(shoppingCartDto);
     }
 }
