@@ -29,17 +29,17 @@
 				<button type="button" data-bs-target="#carouselExampleIndicators"
 					data-bs-slide-to="2" aria-label="Slide 3"></button>
 			</div>
-			<div class="carousel-inner" style="height: 200px">
+			<div class="carousel-inner" style="height: 280px">
 				<div class="carousel-item active">
-					<img src="https://picsum.photos/300/100?random=10"
+					<img src="https://picsum.photos/1000/200?random=10"
 						class="d-block w-100" alt="...">
 				</div>
 				<div class="carousel-item">
-					<img src="https://picsum.photos/300/100?random=9"
+					<img src="https://picsum.photos/1000/200?random=9"
 						class="d-block w-100" alt="...">
 				</div>
 				<div class="carousel-item">
-					<img src="https://picsum.photos/300/100?random=8"
+					<img src="https://picsum.photos/1000/200?random=8"
 						class="d-block w-100" alt="...">
 				</div>
 			</div>
@@ -54,6 +54,20 @@
 				<span class="visually-hidden">Next</span>
 			</button>
 		</div>
+
+		<div>
+			<div class="container">
+				<div class="row justify-content-center" >
+					<div class="col-4">
+						.col-4<br>Since 9 + 4 = 13 &gt;ts wrapped onto a new line as one contiguous unit.
+					</div>
+					<div class="col-7">
+						.col-6<br>Subsequent columns continue along the new line.
+					</div>
+				</div>
+			</div>
+		</div>
+
 
 		<!-- list-group modal -->
 	</main>
