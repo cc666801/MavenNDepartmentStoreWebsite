@@ -83,7 +83,7 @@ button {
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"
 						method="GET">
 
-						<button type="submit">修改資料</button>
+						<button type="submit" class="btn btn-outline-primary">修改資料</button>
 					</form></td>
 
 			</tr>

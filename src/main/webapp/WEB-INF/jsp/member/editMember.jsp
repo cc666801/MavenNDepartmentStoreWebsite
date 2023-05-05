@@ -136,7 +136,7 @@ button {
 
 				<tr>
 					<td>
-						<button type="submit">確定</button>
+						<button type="submit" class="btn btn-outline-primary">確定</button>
 
 					</td>
 				</tr>
