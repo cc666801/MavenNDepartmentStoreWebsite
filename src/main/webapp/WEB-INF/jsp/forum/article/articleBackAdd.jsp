@@ -61,7 +61,7 @@
 							<img id="imagePreview" src="" style="display:none; max-width: 200px; max-height: 200px; object-fit: cover; margin-left: 10px;">
 						<br>
 						<input type="hidden" name="content" id="summernote-input">
-						<div id="summernote"></div>
+						<div id="summernote" required="required"></div>
 						<button type="submit">送出</button>
 					</form:form>
 				</div>

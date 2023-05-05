@@ -14,6 +14,8 @@
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 
+
+
 </head>
 <body>
 	<jsp:include page="../../layout/header.jsp"></jsp:include>
@@ -24,7 +26,8 @@
 			<div class="container">
 				<div class="row">
 					<div class="col-md-9 post-content" data-aos="fade-up">
-						<button id="like-btn">讚</button>
+						<button id="like-btn" data-articleID="${article.articleID}"
+							data-liked="${article.liked}">${article.liked ? "取消讚" : "讚"}</button>
 						<!-- ======= Single Post Content ======= -->
 						<div class="single-post">
 							<div class="post-meta">
@@ -42,7 +45,7 @@
 
 						<div class="comments">
 							<h5 class="comment-title py-4">${commentCount}Comments</h5>
-							<c:forEach items="${comment}" var="c">
+							<c:forEach items="${comments}" var="c">
 								<div class="comment d-flex mb-4">
 									<div class="comment d-flex">
 										<div class="flex-shrink-0">
@@ -60,18 +63,20 @@
 											<div class="comment-body">${c.commentContent}</div>
 											<c:if
 												test="${currentMember != null and c.member.id == currentMember.id}">
-												<div class="edit-comment-form" style="display:none;">
-													<form id="edit-comment-form-${c.commentID}"
-														action="${contextRoot}/showArticleContent/${article.articleID}/commentEdit/${c.commentID}"
-														method="POST">
-														<textarea class="form-control" name="commentContent">${c.commentContent}</textarea>
-														<button type="submit" class="btn btn-primary mt-3">Save</button>
+												<div class="comment">
+
+													<form method="post" class="edit-comment-form"
+														style="display: none;"
+														action="${contextRoot}/showArticleContent/${article.articleID}/commentEdit">
+														<textarea name="commentContent"></textarea>
+														<button type="submit" class="btn btn-primary">保存</button>
 														<button type="button"
-															class="btn btn-secondary mt-3 ms-2 cancel-edit-button"
-															data-comment-id="${c.commentID}">Cancel</button>
+															class="btn btn-secondary cancel-edit-button">取消</button>
+														<input type="hidden" name="commentID"
+															value="${c.commentID}" />
+
 													</form>
 												</div>
-
 												<div class="d-flex justify-content-end align-items-end">
 													<!-- edit comment button -->
 													<button type="button"
@@ -316,59 +321,86 @@
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 
 	<!-- 	點讚 -->
-	<!-- 	<script> -->
-	<!-- 		$(document).ready(function() { -->
-	<!--  			$('#like-btn').click(function() { -->
-	<!--  				var articleId = 1; // 假設這裡的文章 ID 是 1 -->
-	<!--  				var memberId = 2; // 假設這裡的會員 ID 是 2 -->
-	<!-- 				$.ajax({ -->
-	<!--  					url : '/like', -->
-	<!-- 					type : 'POST', -->
-	<!-- 					data : { -->
-	<!-- 						articleId : articleId, -->
-	<!--  						memberId : memberId -->
-	<!--  					}, -->
-	<!--  					success : function(response) { -->
-	<!--  						// 成功點讚後的動作 -->
-	<!--  						$('#like-btn').text('取消讚'); -->
-	<!--  					}, -->
-	<!--  					error : function(jqXHR, textStatus, errorThrown) { -->
-	<!--  						// 失敗時的動作 -->
-	<!--  						alert(jqXHR.responseText); -->
-	<!--  					} -->
-	<!-- 				}); -->
-	<!-- 			}); -->
-	<!--  		}); -->
-	<!-- 	</script> -->
 	<script>
-	$(document).ready(function() {
-		// 監聽編輯 icon 的點擊事件
-		$('.edit-comment-button').click(function() {
-			var commentID = $(this).data('comment-id'); // 留言 ID
-			var commentContent = $(this).closest('.comment').find('.comment-body').text().trim(); // 留言內容
-			// 將留言內容放入一個 textarea 元素中
-			var textarea = $('<textarea>').addClass('form-control').attr('name', 'commentContent').text(commentContent);
-			var form = $('<form>').addClass('edit-comment-form').attr('id', 'edit-comment-form-' + commentID)
-				.attr('action', '${contextRoot}/showArticleContent/${article.articleID}/commentEdit/' + commentID)
-				.attr('method', 'POST');
-			form.append(textarea); // 添加 textarea 元素到表單中
-			form.append($('<button>').addClass('btn btn-primary mt-3').attr('type', 'submit').text('Save')); // 添加 save 按鈕到表單中
-			form.append($('<button>').addClass('btn btn-secondary mt-3 ms-2 cancel-edit-button').attr('type', 'button')
-				.attr('data-comment-id', commentID).text('Cancel')); // 添加 cancel 按鈕到表單中
-			$(this).closest('.comment').find('.comment-body').html(form); // 將表單添加到留言容器中
-			$(this).closest('.comment').find('.edit-comment-form').show(); // 顯示編輯表單
-		});
+		$(document).ready(function() {
+			$('#like-btn').click(function() {
+				var articleId = $(this).data('articleID');
+				var liked = $(this).data('liked');
 
-		// 監聽取消編輯按鈕的點擊事件
-		$(document).on('click', '.cancel-edit-button', function() {
-			var commentID = $(this).data('comment-id'); // 留言 ID
-			$('#edit-comment-form-' + commentID).remove(); // 刪除表單元素
-			// 將留言內容恢復為原始內容
-			var commentContent = $(this).closest('.comment').find('.comment-body').data('comment-content');
-			$(this).closest('.comment').find('.comment-body').html(commentContent);
+				if (liked) {
+					// 取消點讚
+					$.ajax({
+						type : 'POST',
+						url : `${contextRoot}/article/${article.articleID}/unlike`,
+						success : function() {
+							$('#like-btn').data('liked', false);
+							$('#like-btn').text('讚');
+						},
+						error : function() {
+							
+							alert('取消點讚失敗');
+						}
+					});
+				} else {
+					// 點讚
+					$.ajax({
+						type : 'POST',
+						url : `${contextRoot}/article/${article.articleID}/like`,
+						success : function() {
+							$('#like-btn').data('liked', true);
+							$('#like-btn').text('取消讚');
+						},
+						error : function() {
+							
+							alert('點讚失敗');
+						}
+					});
+				}
+			});
 		});
-	});
 	</script>
+
+	<!-- 	編輯留言 -->
+	<script>
+		$(document)
+				.ready(
+						function() {
+							// 監聽編輯圖示的點擊事件
+							$('.edit-comment-button')
+									.click(
+											function() { // 切換表單的顯示狀態
+												$(this)
+														.closest('.comment')
+														.find(
+																'.edit-comment-form')
+														.toggle();
+												// 獲取留言內容
+												var commentContent = $(this)
+														.closest('.comment')
+														.find('.comment-body')
+														.text().trim();
+												// 將留言內容放入 textarea 元素中
+												$(this)
+														.closest('.comment')
+														.find(
+																'.edit-comment-form textarea[name="commentContent"]')
+														.val(commentContent);
+											});
+
+							// 監聽取消編輯按鈕的點擊事件
+							$(document).on(
+									'click',
+									'.cancel-edit-button',
+									function() {
+										// 切換表單的顯示狀態
+										$(this).closest('.comment').find(
+												'.edit-comment-form').hide();
+									});
+						});
+	</script>
+
+
+
 
 </body>
 </html>

@@ -81,6 +81,7 @@ public class Article {
 	@Column(name = "article_image", columnDefinition = "varbinary(MAX)")
 	 private byte[] articleImage;
 	
+	@Transient
 	private String articlePreview;
 	
 	@Transient
@@ -89,6 +90,20 @@ public class Article {
 	@Transient
 	private String articleBase64;
 	
+	
+	 @Transient
+	    private boolean liked;
+
+	    public boolean isLiked() {
+	        return liked;
+	    }
+	    
+	    
+	
+	public void setLiked(boolean liked) {
+			this.liked = liked;
+		}
+
 	public Article() {
 
 	}

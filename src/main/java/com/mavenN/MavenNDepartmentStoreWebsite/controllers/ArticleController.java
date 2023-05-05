@@ -12,6 +12,8 @@ import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -79,6 +81,11 @@ public class ArticleController {
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
+		}else {
+		    // 如果上傳的圖片為空，則設定預設圖片
+			Path imagePath = Paths.get("src/main/webapp/assetsForFrontend/img/noImage.png");
+			byte[] defaultImage = Files.readAllBytes(imagePath);
+			art.setArticleImage(defaultImage);
 		}
 
 		articleService.addArticle(art);
@@ -148,27 +155,42 @@ public class ArticleController {
 	//個別文章內容
 	@GetMapping("/articleContent/{id}")
 	public String getArticleById(@PathVariable Integer id, Model model, HttpSession session) {
+		 
 		//取得當前登入會員
-		Member currentMember = (Member) session.getAttribute("member");
-	    model.addAttribute("currentMember", currentMember);
-		Article article = articleService.findArticleById(id);
-		// XSS
-		String unescapedHtml = HtmlUtils.htmlUnescape(article.getArticleContent());
-		article.setArticleContent(unescapedHtml);
-		int commentCount = commentService.countCommentsByArticleId(id);
-		model.addAttribute("commentCount", commentCount);
-		 List<Comment> comment = commentService.findByArticleId(id);
-		model.addAttribute("article", article);
-		 model.addAttribute("comment", comment);
-		return "/forum/article/showArticleContent";
-	}
+			Member currentMember = (Member) session.getAttribute("member");
+		    model.addAttribute("currentMember", currentMember);
+		    //取得文章資料
+			Article article = articleService.findArticleById(id);
+			model.addAttribute("article", article);
+			// XSS
+			String unescapedHtml = HtmlUtils.htmlUnescape(article.getArticleContent());
+			article.setArticleContent(unescapedHtml);
+			//留言數
+			int commentCount = commentService.countCommentsByArticleId(id);		
+			model.addAttribute("commentCount", commentCount);
+			//取得該文章的留言資料
+			 List<Comment> comments = commentService.findByArticleId(id);		
+			 model.addAttribute("comments", comments);
+			 
+			return "/forum/article/showArticleContent";
+		}
+		
+		
+		
+	
 
 ///////////////前台//////////////////////////
 
 	// 前台文章列表
 	@GetMapping("/articleList")
-	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
-		Page<Article> page = articleService.findArticleByPage(pageNumber);
+	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId, Model model) {
+		
+		Page<Article> page;		
+	    if (categoryId != null) {
+	        page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber);
+	    } else {
+	        page = articleService.findArticleByPage(pageNumber);
+	    }
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
@@ -178,12 +200,15 @@ public class ArticleController {
 		}
 		// 預覽文章
 		for (Article art : page.getContent()) {
-			Document doc = Jsoup.parse(art.getArticleContent());
-			String articlePreview = doc.text().substring(0, Math.min(doc.text().length(), 20));
-			art.setArticlePreview(articlePreview);
-		}
-
+		    Document doc = Jsoup.parse(art.getArticleContent());
+		    String articlePreview = doc.text().substring(0, Math.min(doc.text().length(), 20));
+		    art.setArticlePreview(articlePreview);
+		
+		}		
 		model.addAttribute("page", page);
+		
+		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
+		model.addAttribute("categoryList", categoryList);
 		return "/forum/article/articleList";
 	}
 
@@ -313,33 +338,33 @@ public class ArticleController {
 		return "redirect:/articleManage";
 	}
 ///////////////////點讚系統////////////////
-//	@PostMapping("/article/{articleId}/like")
-//	public String like(@PathVariable("articleId") Integer articleId, HttpSession session) {
-//	    Integer memberId = (Integer) session.getAttribute("memberId");
-//
-//	    try {
-//	    	articleService.addLike(articleId, memberId);
-//	    } catch (Exception e) {
-//	        // 處理重複點讚的錯誤
-//	        e.printStackTrace();
-//	    }
-//
-//	    return "redirect:/article/showArticleContent/{articleId}";
-//	}
-//	
-//	
-//	@PostMapping("/article/{articleId}/unlike")
-//	public String unlike(@PathVariable("articleId") Integer articleId, HttpSession session) {
-//	    Integer memberId = (Integer) session.getAttribute("memberId");
-//
-//	    try {
-//	    	articleService.cancelLike(articleId, memberId);
-//	    } catch (Exception e) {
-//	        // 處理未點過讚的錯誤
-//	        e.printStackTrace();
-//	    }
-//
-//	    return "redirect:/article/showArticleContent/{articleId}";
-//	}
+	@PostMapping("/article/{articleID}/like")
+	public String like(@PathVariable("articleID") Integer articleID, HttpSession session) {
+	    Integer memberId = (Integer) session.getAttribute("memberId");
+
+	    try {
+	    	articleService.addLike(articleID, memberId);
+	    } catch (Exception e) {
+	        // 處理重複點讚的錯誤
+	        e.printStackTrace();
+	    }
+
+	    return "redirect:/showArticleContent/" + articleID;
+	}
+	
+	
+	@PostMapping("/article/{articleID}/unlike")
+	public String unlike(@PathVariable("articleID") Integer articleID, HttpSession session) {
+	    Integer memberId = (Integer) session.getAttribute("memberId");
+
+	    try {
+	    	articleService.cancelLike(articleID, memberId);
+	    } catch (Exception e) {
+	        // 處理未點過讚的錯誤
+	        e.printStackTrace();
+	    }
+
+	    return "redirect:/showArticleContent/" + articleID;
+	}
 
 }

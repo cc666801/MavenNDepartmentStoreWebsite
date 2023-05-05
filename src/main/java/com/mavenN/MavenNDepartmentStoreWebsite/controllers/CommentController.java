@@ -55,22 +55,31 @@ public class CommentController {
 		}
 	    
 	    
-	    @PutMapping("showArticleContent/{articleId}/commentEdit/{commentId}")
-	    public String putEditComment(@PathVariable Integer articleId, @PathVariable Integer commentId, @RequestParam String commentContent) {
-	        // XSS
-	        String escapedHtml = HtmlUtils.htmlEscape(commentContent);
-	        
-	        Comment newComment = new Comment();
-	        newComment.setCommentContent(escapedHtml);
-	        
-	        
-	        commentService.updateCommentById(commentId, newComment);
-	        
-	        
-	        
-	        return "redirect:/articleContent/" + articleId;
-	    }
 	    
+	    
+	    
+//	 // 更新留言
+//	    @PutMapping("showArticleContent/{id}/commentEdit")
+//	    public String putEditComment(@PathVariable Integer commentID,  @ModelAttribute("comment") Comment editedComment,@PathVariable Integer id) {
+//	        // XSS
+//	        String escapedHtml = HtmlUtils.htmlEscape(editedComment.getCommentContent());
+//	      
+//	        // update the edited comment
+//	        editedComment.setCommentContent(escapedHtml);
+//	        commentService.updateCommentById(commentID, editedComment);
+//	       
+//	        return "redirect:/articleContent/"+id;
+//	    }
+	    
+	    
+	 // 更新留言
+	    @PostMapping("showArticleContent/{id}/commentEdit")
+		public String putEditArticle(@ModelAttribute("comment") Comment comment, @RequestParam("commentID") Integer commentID, @RequestParam("commentContent") String content,@PathVariable Integer id) {			
+	    	 comment.setCommentID(commentID);
+	    	comment.setCommentContent(content);		
+			commentService.updateCommentById(commentID, comment);
+			return "redirect:/articleContent/"+ id ;
+		}
 	    
 	    
 }
