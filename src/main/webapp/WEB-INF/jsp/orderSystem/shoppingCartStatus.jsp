@@ -65,12 +65,57 @@
 
       </body>
       <script>
+        // Event for - button update quantityInput
         function decreaseQuantity(memberId, commodityId) {
+          let quantityInput = document.getElementById("quantity-input-" + commodityId);
+          if (quantityInput.value > 1) {
+            quantityInput.value = parseInt(quantityInput.value) - 1;
 
+          } else {
+
+          }
+          console.log(quantityInput.value);
         }
 
+        // Event for + button update quantityInput
         function increaseQuantity(memberId, commodityId) {
+          let quantityInput = document.getElementById("quantity-input-" + commodityId);
+          quantityInput.value = parseInt(quantityInput.value) + 1;
+          console.log(quantityInput.value);
 
+
+          // 發請求更新數量
+          fetch("${contextRoot}/api/shoppingCart/" + encodeURIComponent(memberId) + "/" + encodeURIComponent(commodityId) + "/" + encodeURIComponent(quantityInput.value), {
+            method: "PUT"
+          })
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+              // 把新資料放進表格
+              var tbody = document.querySelector("table tbody");
+              var htmlString = "";
+
+              data.forEach(function (shoppingCartCommodityDto, index) {
+                var commodityId = shoppingCartCommodityDto.commodityId;
+                var commodityName = shoppingCartCommodityDto.commodityName;
+                var quantity = shoppingCartCommodityDto.quantity;
+                var commodityPrice = shoppingCartCommodityDto.commodityPrice;
+                var subTotal = quantity * commodityPrice;
+
+                var rowHtml = "<tr>";
+                rowHtml += "<td>" + (index + 1) + "</td>";
+                rowHtml += "<td>" + commodityName + "</td>";
+                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                rowHtml += "<td>" + commodityPrice + "</td>";
+                rowHtml += "<td>" + subTotal + "</td>";
+                rowHtml += "</tr>";
+
+                htmlString += rowHtml;
+              });
+
+              tbody.innerHTML = htmlString;
+            })
+            .catch(error => console.error(error));
         }
 
         // load on 事件
@@ -98,7 +143,7 @@
                 var rowHtml = "<tr>";
                 rowHtml += "<td>" + (index + 1) + "</td>";
                 rowHtml += "<td>" + commodityName + "</td>";
-                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
                 rowHtml += "<td>" + commodityPrice + "</td>";
                 rowHtml += "<td>" + subTotal + "</td>";
                 rowHtml += "</tr>";
