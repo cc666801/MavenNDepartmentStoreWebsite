@@ -84,7 +84,8 @@
 					</div>
 					<div class="col-lg-6">
 						<div class="project-info">
-							<h3 class="mb-4">${commodityInfo.commName}</h3>
+<%-- 							<h3 class="mb-4">${commodityInfo.commName}</h3> --%>
+<!-- 上面這個是名稱欄位 可隱藏 -->
 							<p>${commodityInfo.commDesc}</p>
 
 							<div class="row mt-4">
@@ -116,7 +117,7 @@
 										<h5 class="mb-0">商品分類</h5>
 										<p>
 											<a
-												href="${contextRoot}/Store/Commodity/findCate?cateId=${commodityInfo.commCate.cateId}">${commodityInfo.commCate.cateName}</a>
+												href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityInfo.commCate.cateId}">${commodityInfo.commCate.cateName}</a>
 										</p>
 									</div>
 
@@ -145,15 +146,25 @@
 				</div>
 				<div class="row mt-5 justify-content-center">
 					<div class="col-lg-6 text-center">
-						<a
-							href="${contextRoot}/Store/Commodity/findComm?commId=${commodityInfo.commId-1}"
-							class="btn btn-dark">前一項產品</a> <a
-							href="${contextRoot}/Store/Commodity/findComm?commId=${commodityInfo.commId+1}"
-							class="btn btn-dark">後一項產品</a>
+<!-- 						<a -->
+<%-- 							href="${contextRoot}/Store/Commodity/findComm?commId=${commodityInfo.commId-1}" --%>
+<!-- 							class="btn btn-dark">前一項產品</a> <a -->
+<%-- 							href="${contextRoot}/Store/Commodity/findComm?commId=${commodityInfo.commId+1}" --%>
+<!-- 							class="btn btn-dark">後一項產品</a> -->
 					</div>
 				</div>
 			</div>
 		</section>
+	<div class="row">
+			<div class="col-lg-12">
+				<div class="pagination">
+					<ul class="list-inline d-block mx-auto">
+						<li class="list-inline-item"><a
+							href="${contextRoot}/Store/Commodity/findAllComm"
+							class="btn btn-primary">返回商品總表</a></li>
+					</ul>
+				</div>
+			</div>
 
 
 		<!-- 		5/3 常識判斷上下一筆資料  失敗-->
