@@ -104,18 +104,14 @@
 							</ul>
 						</nav>
 
-						<!-- .navbar -->
+		<div class="position-relative">
+			<a href="${contextRoot}/member/register" class="mx-2"> <span class="bi-person-circle"> ${member.name}</span></a> 
+			<a href="${contextRoot}/member/logout" class="mx-2"> <span class="bi bi-box-arrow-right"></span></a>
+			<a href="${contextRoot}/memberCentre" class="mx-2"> <span class="bi bi-tencent-qq"></span></a>
+			<a href="#" class="mx-2 js-search-open"> <span class="bi-search"></span></a> 
+			<i class="bi bi-list mobile-nav-toggle"></i>
 
-						<div class="position-relative">
-							<a href="#" class="mx-2"><span class="bi-facebook"></span></a> <a href="#"
-								class="mx-2"><span class="bi-twitter"></span></a> <a href="#" class="mx-2"><span
-									class="bi-instagram"></span></a> <a href="${contextRoot}/member/register"
-								class="mx-2"><span class="bi-person-circle">${member.name}</span></a> <a
-								href="${contextRoot}/member/logout" class="mx-2"><span
-									class="bi bi-box-arrow-right"></span></a> <a href="#"
-								class="mx-2 js-search-open"><span class="bi-search"></span></a> <i
-								class="bi bi-list mobile-nav-toggle"></i>
-
+						
 							<!-- ======= Search Form ======= -->
 							<div class="search-form-wrap js-search-form-wrap">
 								<form action="search-result.html" class="search-form">
