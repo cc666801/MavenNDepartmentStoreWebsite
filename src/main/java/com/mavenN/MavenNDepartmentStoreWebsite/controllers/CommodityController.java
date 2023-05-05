@@ -166,11 +166,13 @@ public class CommodityController {
 		Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
 //		System.out.println(commodityPage.getContent().get(0).getCommId());
 		model.addAttribute("commodityPage", commodityPage);
+		
+		
 
 		return "Store/Commodity/findCommByCate";
 	}
 
-//	這裡還可以執行 2023/05/01 11:27
+//	找所有類別這裡還可以執行 2023/05/01 11:27
 	@GetMapping("/Store/Commodity/findCate")
 	public String showAllCommByCommcate(CommCate commCate, Model model) {
 		List<Commodity> showAllCommByCommcate = commodityService.findAllCommByCommCate(commCate);
@@ -226,8 +228,7 @@ public class CommodityController {
 			model.addAttribute("commodity", nextComm);
 			Integer nextCommId = nextComm.getCommId();
 			model.addAttribute("nextCommId", nextCommId);
-//			ids[]
-//			[1, 3, 5, 7, 9]
+
 		}
 		return "Store/Commodity/CommodityDetail";
 	}
@@ -273,11 +274,11 @@ public class CommodityController {
 //		return "Store/Commodity/showCommodityByShelves";
 //	}
 
-//	可以動 不要問
+//	上下架可以動 不要問
 	@GetMapping("/Store/Commodity/commodities")
-	public String showCommodities(@RequestParam(name = "p", defaultValue = "0") Integer pageNumber, Model model) {
+	public String showCommodities(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
 
-	    Pageable pageable = PageRequest.of(pageNumber, 2); // 每頁 10 筆資料
+	    Pageable pageable = PageRequest.of(pageNumber-1, 2); // 每頁 10 筆資料
 	    Page<Commodity> page =  commodityService.findByCommShelveIsTrue(pageable);
 	    List<Commodity> commodities = page.getContent();
 
@@ -326,6 +327,9 @@ public class CommodityController {
 		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
 
 		model.addAttribute("page", page);
+		
+		List<CommCate> findAllCate = commCateService.findAllCate();
+		model.addAttribute("findAllCate",findAllCate);
 		return "Store/Storeindex";
 
 	}
@@ -333,15 +337,31 @@ public class CommodityController {
 
 //	5/4 開始模糊搜尋
 
-//	@GetMapping
-//    public ResponseEntity<List<Commodity>> findCommoditiesByCommNameContaining(@RequestParam("name") String name) {
-//        List<Commodity> commodities = commodityService.findCommodityBycommNameContaining(name);
-//        if (commodities.isEmpty()) {
-//            return ResponseEntity.noContent().build(); // 回傳 204 狀態碼，表示查詢無結果
-//        } else {
-//            return ResponseEntity.ok(commodities); // 回傳商品清單
-//        }
-//    }
+	@GetMapping("/Store/Commodity/findCommByName")
+    public String findByCommNameContaining(@RequestParam("commName") String commName,@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,Model model) {
+		Page<Commodity> page = commodityService.findByCommNameContaining(commName,pageNumber);
+    	model.addAttribute("page",page);
+    	return "Store/Storeindex";
+    	
+	}
+	
+	
+	
+	
+
+//	寫分頁欄  壞了
+	
+	
+	@GetMapping("/Store/Commodity/findCommByCate")
+    public String findByCommNameContaining1(@RequestParam("commName") String commName,@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,Model model) {
+		Page<Commodity> page = commodityService.findByCommNameContaining(commName,pageNumber);
+    	model.addAttribute("page",page);
+    	return "Store/Commodity/CatePage";
+    	
+	}
+	
+	
+	
 
 	public CommodityController() {
 		// TODO Auto-generated constructor stub

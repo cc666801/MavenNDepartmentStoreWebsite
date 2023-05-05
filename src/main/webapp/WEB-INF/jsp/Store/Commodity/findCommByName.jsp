@@ -42,20 +42,20 @@
 
 
 
-			<c:forEach var="commodity" items="${commodityList}">
+			<c:forEach var="page" items="${page.content}">
 				<div class="card">
 					<a
-						href="${contextRoot}/Store/Commodity/findComm?commId=${commodity.commId}">
+						href="${contextRoot}/Store/Commodity/findComm?commId=${name.commId}">
 						<img
-						src="data:image/png;base64,${commodity.base64StringcommPicture}"
+						src="data:image/png;base64,${name.base64StringcommPicture}"
 						class="card-img-top" alt="商品圖片"
 						style="width: 100px; height: 100px;">
 					</a>
 					<div class="card-body">
-						<p class="card-text">商品名稱:${commodity.commName}</p>
+						<p class="card-text">商品名稱:${name.commName}</p>
 						<a
-							href="${contextRoot}/Store/Commodity/findCate?cateId=${commodity.commCate.cateId}">商品分類:${commodity.commCate.cateName}</a>
-						<p class="card-text">商品價格:${commodity.commPrice}</p>
+							href="${contextRoot}/Store/Commodity/findCate?cateId=${name.commCate.cateId}">商品分類:${name.commCate.cateName}</a>
+						<p class="card-text">商品價格:${name.commPrice}</p>
 					</div>
 				</div>
 			</c:forEach>

@@ -26,10 +26,14 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 //	5/4邪教寫法 ， 可成功!
 //    List<Commodity> findByCommShelveIsTrue();
 
-//	5/4 以下開始亂寫
+//	5/4 以下開始亂寫 含分頁器
 	Page<Commodity> findByCommShelveIsTrue(Pageable pageable);
 
     
+	
+//	找尋關鍵字  5/4 開始
+//		邪教
+	Page<Commodity> findByCommNameContaining(String commName,Pageable pageable);
     
 	
 //	5/3 嘗試開始判斷 是否有下一筆 或者上一筆資料 失敗
@@ -43,10 +47,6 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 	Commodity findFirstByCommIdGreaterThanOrderByCommIdAsc(Long commId);
 
 	Commodity findFirstByCommIdLessThanOrderByCommIdDesc(Long commId);
-
-//	找尋關鍵字  5/4 開始
-//		邪教
-//    List<Commodity> findCommodityByCommNameContaining(String commName);
 
     
 //    @Query("SELECT commodity FROM Commodity c WHERE c.commName LIKE %:commName%")

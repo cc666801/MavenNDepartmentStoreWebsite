@@ -166,13 +166,21 @@ public class CommodityService {
 	
 	
 	
-	
-	
-	
 //	5/4 開始測試模糊搜尋
-//	public List<Commodity> findCommodityBycommNameContaining(String commName) {
-//	    return commodityRepository.findCommodityBycommNameContaining(commName);
-//	}
+	public Page<Commodity> findByCommNameContaining(String commName,Integer pageNumber) {
+	    
+		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
+		Page<Commodity> page = commodityRepository.findByCommNameContaining(commName, pgb);
+		for (Commodity commodity : page.getContent()) {
+			byte[] commPicture = commodity.getCommPicture();
+			String base64string = Base64.getEncoder().encodeToString(commPicture);
+			commodity.setBase64StringcommPicture(base64string);
+			}
+		
+		return page;
+		
+		
+	}
 	
 	
 

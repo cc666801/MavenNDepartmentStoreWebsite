@@ -49,25 +49,29 @@
 </head>
 <body>
 	<!-- ======= Header ======= -->
-	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../../layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 	<main id="main">
 
 		<!-- 			嘗試套分類樣版  有出現 但未能實現 -->
+		<div class="row mb-5">
+			<div class="col-10">
+				<div class="btn-group btn-group-toggle " data-toggle="buttons">
+					<label class="btn active "> <input type="radio"
+						name="shuffle-filter" value="all" checked="checked" />所有
+					</label> <label class="btn"> <input type="radio"
+						name="shuffle-filter" value="maple" />楓之谷
+					</label> <a href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${34}">神魔
+<%-- 						  <% %> 這邊用 jstl的寫法 --%>
+
+					
+					</a>
+				</div>
 
 
 
-		<div class="text-center my-4">
-			<a href="${contextRoot}/Store/Commodity/findAllComm"
-				class="btn btn-primary mx-3">返回商品總表</a>
-			<c:forEach var="findAllCate" items="${findAllCate}"
-				varStatus="status">
-				<a
-					href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${findAllCate.cateId}"
-					class="btn btn-primary mx-3 my-2">${findAllCate.cateName}</a>
-			</c:forEach>
+			</div>
 		</div>
-
 
 		<!-- 測試 -->
 		<!-- 		<div class="row mb-5"> -->
@@ -178,20 +182,16 @@
 
 
 
-
-		<div class="d-flex justify-content-end">
-			<form class="form-inline my-2 my-lg-0"
-				action="${contextRoot}/Store/Commodity/findCommByName" method="get">
-				<div class="input-group">
-					<input type="text" class="form-control" id="commName"
-						name="commName" placeholder="輸入商品名稱...">
-					<div class="input-group-append">
-						<button class="btn btn-outline-secondary" type="submit">搜尋</button>
-					</div>
+		<form class="form-inline my-2 my-lg-0"
+			action="${contextRoot}/Store/Commodity/findCommByName" method="get">
+			<div class="input-group">
+				<input type="text" class="form-control" id="commName"
+					name="commName" placeholder="輸入商品名稱...">
+				<div class="input-group-append">
+					<button class="btn btn-outline-secondary" type="submit">搜尋</button>
 				</div>
-			</form>
-		</div>
-
+			</div>
+		</form>
 
 
 
@@ -273,7 +273,7 @@
 
 
 	<!-- ======= Footer ======= -->
-	<jsp:include page="../layout/footer.jsp"></jsp:include>
+	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 	<!-- End Footer -->
 
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
