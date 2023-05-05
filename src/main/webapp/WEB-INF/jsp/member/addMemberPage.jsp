@@ -36,50 +36,59 @@ h1 {
 }
 </style>
 <script>
-function checkForm() {
-    var name = document.forms["myForm"]["name"].value;
-    var account = document.forms["myForm"]["account"].value;
-    var password = document.forms["myForm"]["password"].value;
-    var email = document.forms["myForm"]["email"].value;
-    var phone = document.forms["myForm"]["phone"].value;
-    var address = document.forms["myForm"]["address"].value;
-    var birthday = document.forms["myForm"]["birthday"].value;
+	function checkForm() {
+		var name = document.forms["myForm"]["name"].value;
+		var account = document.forms["myForm"]["account"].value;
+		var password = document.forms["myForm"]["password"].value;
+		var email = document.forms["myForm"]["email"].value;
+		var phone = document.forms["myForm"]["phone"].value;
+		var address = document.forms["myForm"]["address"].value;
+		var birthday = document.forms["myForm"]["birthday"].value;
 
-    if (name == "") {
-        alert("姓名不可為空！");
-        return false;
-    }
+		if (name == "" || account == ""|| password == ""|| email == "" || address == "" || phone == ""
+			|| password == "") {
+		alert("欄位不可為空");
+		return false;
+	}
+		var nameRegex = /^[\u4E00-\u9FA5A-Za-z]{1,10}$/;
+		if (!nameRegex.test(name)) {
+			alert("姓名必須為中英文，最多 10 個字");
+			return false;
+		}
+		
+		var accountRegex = /^(?=.*[a-zA-Z])(?=.*[0-9])[a-zA-Z0-9]+$/;
+		if (!accountRegex.test(account)) {
+		  alert("帳號必須為英文和阿拉伯數字混合");
+		  return false;
+		}
 
-    if (account == "") {
-        alert("帳號不可為空！");
-        return false;
-    }
+		var emailRegex = /^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$/;
+		if (!emailRegex.test(email)) {
+			alert("Email 格式不正確");
+			return false;
+		}
 
-    if (password == "") {
-        alert("密碼不可為空！");
-        return false;
-    }
+		var addressRegex = /^[\u4E00-\u9FA5]+$/;
+		if (!addressRegex.test(address)) {
+			alert("地址必須為中文，最多 50 個字");
+			return false;
+		}
 
-    if (email == "") {
-        alert("Email 不可為空！");
-        return false;
-    }
+		var phoneRegex = /^[0-9]{10}$/;
+		if (!phoneRegex.test(phone)) {
+			alert("電話必須為 10 個阿拉伯數字");
+			return false;
+		}
 
-    if (phone == "") {
-        alert("電話不可為空！");
-        return false;
-    }
+		var passwordRegex = /^[a-zA-Z0-9]{1,20}$/;
+		if (!passwordRegex.test(password)) {
+			alert("密碼必須為英文字母和數字，最多 20 個字");
+			return false;
+		}
 
-    if (address == "") {
-        alert("地址不可為空！");
-        return false;
-    }
-
-    if (birthday == "") {
-        alert("生日不可為空！");
-        return false;
-    }
-}
+		return true;
+		
+	}
 </script>
 </head>
 <body>
@@ -90,42 +99,33 @@ function checkForm() {
 			modelAttribute="member" onsubmit="return checkForm();">
 			<table>
 				<tr>
-					<td>姓名：</td>
-					<td><input type="text" name="name" maxlength="10"
-							pattern="^[\u4E00-\u9FA5A-Za-z]{1,10}$" title="最多輸入10個字，只能使用中英文" /></td>
+					<td><label for="name">姓名：</label></td>
+					<td><input type="text" name="name" id="name" /></td>
 				</tr>
 				<tr>
-					<td>帳號：</td>
-					<td><input type="text" name="account" maxlength="20"
-							pattern="^[a-zA-Z0-9]+$" title="只能輸入英文字母和數字，最多20個字" /></td>
+					<td><label for="account">帳號：</label></td>
+					<td><input type="text" name="account" id="account"/></td>
 				</tr>
 				<tr>
-					<td>密碼：</td>
-					<td><input type="password" name="password" maxlength="20"
-							pattern="^[a-zA-Z0-9]+$" title="只能輸入英文字母和數字，最多20個字" /></td>
+					<td><label for="password">密碼：</label></td>
+					<td><input type="password" name="password" id="password"/></td>
 				</tr>
 				<tr>
-								<tr>
-					<td>Email：</td>
-					<td><input type="email" name="email"
-							pattern="^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$"
-							title="請輸入正確的Email格式，例如：example@mail.com" /></td>
+					<td><label for="email">Email：</label></td>
+					<td><input type="email" name="email" id="email"/></td>
 				</tr>
 				<tr>
-					<td>電話：</td>
-					<td><input type="tel" name="phone" maxlength="10" pattern="^[0-9]+$"
-							title="只能輸入10個阿拉伯數字，不能輸入英文或中文" /></td>
+					<td><label for="phone">電話：</label></td>
+					<td><input type="tel" name="phone" id="phone"/></td>
 				</tr>
 				<tr>
-					<td>地址：</td>
-					<td><input type="text" name="address" maxlength="50"
-							pattern="^[\u4E00-\u9FA5]+$" title="只能輸入中文，最多50個字" /></td>
+					<td><label for="address">地址：</label></td>
+					<td><input type="text" name="address" id="address"/></td>
 				</tr>
 				<tr>
-					<td>生日：</td>
-					<td><input type="date" name="birthday" /></td>
+					<td><label for="birthday">生日：</label></td>
+					<td><input type="date" name="birthday" id="birthday" /></td>
 				</tr>
-
 				<tr>
 					<td colspan="2" class="center"><input type="submit"
 						class="btn btn-outline-primary" value="註冊" /> <a
@@ -136,4 +136,3 @@ function checkForm() {
 	</main>
 </body>
 </html>
-				

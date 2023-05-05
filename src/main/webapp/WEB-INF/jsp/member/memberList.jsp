@@ -8,7 +8,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>文章管理-後台</title>
+<title>會員管理-後台</title>
 <style>
 img {
 	max-width: 100px;

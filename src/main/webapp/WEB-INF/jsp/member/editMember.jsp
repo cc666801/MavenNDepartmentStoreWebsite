@@ -64,14 +64,19 @@
 			return false;
 		}
 
-		return true;
+		// 如果表單欄位都填寫正確，顯示確認視窗
+		if (confirm("確定要更新會員資料嗎？")) {
+			return true;
+		} else {
+			return false;
+		}
 	}
 </script>
 </head>
 <body>
 
 	<main id="main">
-  <h1>更新會員</h1>
+  <h1>修改會員資料</h1>
   <form name="myForm" action="${contextRoot}/member/edit/${sessionScope.member.id}" method="POST" onsubmit="return checkForm()">
     <input type="hidden" name="_method" value="PUT">
     <input type="hidden" name="id" value="${member.id}" />
@@ -97,7 +102,7 @@
         <td><input type="password" name="password" value="${member.password}" /></td>
       </tr>
     </table>
-    <button type="submit">更新</button>
+    <button type="submit">確定</button>
   </form>
 </main>
 </body>

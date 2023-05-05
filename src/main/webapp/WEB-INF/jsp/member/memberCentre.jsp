@@ -18,21 +18,19 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <!-- End Header -->
 <meta charset="UTF-8">
-<title>會員詳細資料</title>
+<title>會員資料</title>
 </head>
 <body>
 	<main id="main">
-		<h1>會員詳細資料</h1>
+		<h1>會員資料</h1>
 		<table>
 			<tr>
-
 				<th>姓名</th>
 				<td>${sessionScope.member.name}</td>
 			</tr>
 			<tr>
 				<th>帳號</th>
 				<td>${sessionScope.member.account}</td>
-
 			</tr>
 			<tr>
 				<th>密碼</th>
@@ -64,8 +62,8 @@
 				<td><form
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"
 						method="GET">
-						
-						<button type="submit">更新</button>
+
+						<button type="submit">修改資料</button>
 					</form></td>
 
 			</tr>
