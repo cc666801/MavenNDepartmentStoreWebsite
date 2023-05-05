@@ -24,11 +24,17 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	@GetMapping("/restaurantfront/reservation")
+	public String addreservations() {
+		return "restaurantfront/addreservation";
+	}
+	
+	
 	@GetMapping("/restaurantfront/UserQueryCompany")
-	public String showUserQueryCompany( @RequestParam("companyname") String companyname,
+	public String showUserQueryCompany(@RequestParam("companyname") String companyname,
 			@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
 		Page<Company> userQueryCompany = reService.findByUserQueryCompany(companyname, pageNumber);
-		for(Company company: userQueryCompany.getContent() ) {
+		for(Company company: userQueryCompany.getContent()) {
 			byte[] companyLogo = company.getCompanyLogo();
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);

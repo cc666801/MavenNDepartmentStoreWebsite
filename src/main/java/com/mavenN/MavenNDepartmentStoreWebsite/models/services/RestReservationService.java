@@ -29,7 +29,7 @@ public class RestReservationService {
 	}
 	
 	public Page<Company> findByUserQueryCompany(String companyname, Integer pageNumber){
-		PageRequest pg = PageRequest.of(pageNumber, 9);
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "companyId");
 		Page<Company> findByCompanyNameContaining = companyRepository.findByCompanyNameContaining(companyname, pg);
 		return findByCompanyNameContaining;
 	}

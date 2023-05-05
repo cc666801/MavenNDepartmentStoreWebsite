@@ -15,15 +15,16 @@
 	height: 250px;
 }
 </style>
-<title>餐廳頁面測試</title>
+<title>餐廳頁面</title>
 </head>
 <body>
 	<!-- ======= Header ======= -->
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<!-- End Header -->
 	<main id="main">
+		<div class="container-fluid">
 		<form action="${contextRoot}/restaurantfront/UserQueryCompany">
-			<div class="input-group mb-3 w-25">
+			<div class="input-group mb-3 justify-content-center">
 				<input type="text" class="form-control" placeholder="請輸入餐廳"
 					aria-label="請輸入餐廳" aria-describedby="basic-addon2" name="companyname"/>
 				<button class="btn btn-outline-secondary" type="submit"
@@ -32,7 +33,6 @@
 				</button>
 			</div>
 		</form>
-		<div class="container-fluid">
 			<div class="container">
 				<div class="row ">
 					<jstl:forEach var="company" items="${page.content}">
@@ -46,7 +46,7 @@
 									<h5 class="card-title">${company.companyName}</h5>
 									<p class="card-text">Some quick example text to build on
 										the card title and make up the bulk of the card's content.</p>
-									<a href="${contextRoot}/restaurant/add"
+									<a href="${contextRoot}/restaurantfront/reservation"
 										class="btn btn-primary stretched-link">訂位去</a>
 								</div>
 							</div>
