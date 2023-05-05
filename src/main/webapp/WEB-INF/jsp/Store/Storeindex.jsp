@@ -200,6 +200,7 @@
 			<div class="row">
 				<c:forEach var="commodity" items="${page.content}"
 					varStatus="status">
+<!-- 					page.content 會接到所有資料 然後這邊命名為 commodity　　所以下面運用該名稱. 去取得所需資料 -->
 
 					<div class="col-lg-4 col-6 mb-4 shuffle-item"
 						data-groups='["${category}"]'>
@@ -229,6 +230,30 @@
 							<a
 								href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodity.commCate.cateId}">商品分類:${commodity.commCate.cateName}</a>
 							<p class="card-text">商品特價:${commodity.commPrice*commodity.commDiscount}</p>
+								<div class="info">
+			
+										<form
+											action="${contextRoot}/add-to-cart/${commodityInfo.commId}"
+											method="POST">
+											<button type="submit" class="btn btn-outline-warning">加入購物車</button>
+										</form>
+									</div>
+
+									<div class="info">
+										
+										<form
+											action="${contextRoot}/add-to-wishlist/${commodityInfo.commId}"
+											method="POST">
+											<button type="submit" class="btn btn-outline-primary">心願清單</button>
+										</form>
+									</div>
+							
+<!-- 							<div class="info"> -->
+<!-- 										<h5 class="mb-0">數量</h5> -->
+<!-- 										<input type="number" name="quantity" id="quantity" min="1" -->
+<!-- 											max="10" value="1"> -->
+<!-- 									</div> -->
+							
 						</div>
 					</div>
 				</c:forEach>
@@ -255,7 +280,7 @@
 								<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
 									<li class="list-inline-item"><a
 										href="${contextRoot}/Store/Commodity/findAllComm?p=${pageNumber}"
-										style="display: inline"> <span>${pageNumber}</span>
+										> <span>${pageNumber}</span>
 									</a></li>
 								</c:forEach>
 
