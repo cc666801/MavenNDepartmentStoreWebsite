@@ -72,38 +72,76 @@
 		}
 	}
 </script>
+<style>
+table {
+	margin: auto;
+}
+
+button {
+	margin-top: 20px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
 </head>
 <body>
 
 	<main id="main">
-  <h1>修改會員資料</h1>
-  <form name="myForm" action="${contextRoot}/member/edit/${sessionScope.member.id}" method="POST" onsubmit="return checkForm()">
-    <input type="hidden" name="_method" value="PUT">
-    <input type="hidden" name="id" value="${member.id}" />
-    <table>
-      <tr>
-        <td><label for="name">姓名:</label></td>
-        <td><input type="text" name="name" value="${member.name}" /></td>
-      </tr>
-      <tr>
-        <td><label for="email">Email:</label></td>
-        <td><input type="text" name="email" value="${member.email}" /></td>
-      </tr>
-      <tr>
-        <td><label for="address">地址:</label></td>
-        <td><input name="address" value="${member.address}" /></td>
-      </tr>
-      <tr>
-        <td><label for="phone">電話:</label></td>
-        <td><input name="phone" value="${member.phone}" /></td>
-      </tr>
-      <tr>
-        <td><label for="password">密碼:</label></td>
-        <td><input type="password" name="password" value="${member.password}" /></td>
-      </tr>
-    </table>
-    <button type="submit">確定</button>
-  </form>
-</main>
+		<h1 style="text-align: center;">修改會員資料</h1>
+		<form name="myForm"
+			action="${contextRoot}/member/edit/${sessionScope.member.id}"
+			method="POST" onsubmit="return checkForm()">
+			<input type="hidden" name="_method" value="PUT"> <input
+				type="hidden" name="id" value="${member.id}" />
+			<table>
+				<tr>
+					<td><label for="name">姓名:</label></td>
+					<td><input type="text" name="name" value="${member.name}" /></td>
+				</tr>
+
+				<tr>
+					<td><label for="account">帳號:</label></td>
+					<td><input type="text" name="account"
+						value="${member.account}" readonly
+						style="border: none; outline: none;" /></td>
+				</tr>
+
+
+				<tr>
+					<td><label for="password">密碼:</label></td>
+					<td><input type="password" name="password"
+						value="${member.password}" /></td>
+				</tr>
+
+
+				<tr>
+					<td><label for="phone">電話:</label></td>
+					<td><input name="phone" value="${member.phone}" /></td>
+
+
+				</tr>
+
+
+				<tr>
+					<td><label for="email">Email:</label></td>
+					<td><input type="text" name="email" value="${member.email}" /></td>
+				</tr>
+
+
+				<tr>
+					<td><label for="address">地址:</label></td>
+					<td><input name="address" value="${member.address}" /></td>
+				</tr>
+
+				<tr>
+					<td>
+						<button type="submit">確定</button>
+
+					</td>
+				</tr>
+			</table>
+		</form>
+	</main>
 </body>
 </html>

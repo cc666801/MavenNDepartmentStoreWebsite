@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>Jump</title>
+	<title>成功！即將跳轉...</title>
 	<script>
 		setTimeout(function() {
 			window.location.href = "${pageContext.request.contextPath}/";

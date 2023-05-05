@@ -19,42 +19,62 @@
 <!-- End Header -->
 <meta charset="UTF-8">
 <title>會員資料</title>
+<style>
+input[type="password"] {
+	border: none;
+	background-color: transparent;
+	-webkit-box-shadow: none;
+	-moz-box-shadow: none;
+	box-shadow: none;
+}
+table {
+	margin: auto;
+}
+button {
+	margin-top: 20px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
+}
+</style>
 </head>
 <body>
 	<main id="main">
-		<h1>會員資料</h1>
+		<h1 style="text-align: center;">會員資料</h1>
 		<table>
 			<tr>
-				<th>姓名</th>
+				<th>姓名:</th>
 				<td>${sessionScope.member.name}</td>
 			</tr>
 			<tr>
-				<th>帳號</th>
+				<th>帳號:</th>
 				<td>${sessionScope.member.account}</td>
 			</tr>
 			<tr>
-				<th>密碼</th>
-				<td>${sessionScope.member.password}</td>
+				<th>密碼:</th>
+				<td><input type="password"
+					value="${sessionScope.member.password}" disabled></td>
 			</tr>
 			<tr>
-				<th>生日</th>
+				<th>生日:</th>
 				<td><fmt:formatDate value="${sessionScope.member.birthday}"
 						pattern="yyyy-MM-dd" /></td>
 			</tr>
 			<tr>
-				<th>電話</th>
+				<th>電話:</th>
 				<td>${sessionScope.member.phone}</td>
 			</tr>
 			<tr>
-				<th>地址</th>
+				<th>Email:</th>
+				<td>${sessionScope.member.email}</td>
+
+			</tr>
+			<tr>
+				<th>地址:</th>
 				<td>${sessionScope.member.address}</td>
 			</tr>
 			<tr>
-				<th>Email</th>
-				<td>${sessionScope.member.email}</td>
-			</tr>
-			<tr>
-				<th>點數</th>
+				<th>點數:</th>
 				<td>${sessionScope.member.points}</td>
 			</tr>
 

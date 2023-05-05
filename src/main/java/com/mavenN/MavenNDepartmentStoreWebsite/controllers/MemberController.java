@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
@@ -89,7 +88,7 @@ public class MemberController {
 	@DeleteMapping("/memberdelete/{id}")
 	public String deleteMember(@PathVariable Integer id) {
 		mService.deleteMemberById(id);
-		return "redirect:/jump";
+		return "redirect:/memberList";
 	}
 
 //--------------------------------------------------------------------------
