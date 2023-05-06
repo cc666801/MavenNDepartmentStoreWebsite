@@ -16,11 +16,6 @@
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
 </head>
-
-
-
-
-
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
 	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
@@ -34,53 +29,26 @@
 
 		<div id="layoutSidenav_content">
 
+			<main id="main">
 
-			<main id="main" class="container my-5">
-
-				<h1 class="mb-3">新增產品類別後台(新增後顯示畫面)</h1>
-				<form action="${contextRoot}/Store/CommCate/add">
-					<button type="submit" class="btn btn-primary mb-3">新增</button>
-				</form>
-				<table class="table table-striped" id="datatablesSimple">
-<!-- 				上面這行會出現套版效果 -->
-					<thead class="thead-dark">
-						<tr>
-							<th scope="col">類別id</th>
-							<th scope="col">類別名稱</th>
-							<th scope="col">類別敘述</th>
-							<th scope="col">類別建立日期</th>
-							<th scope="col">類別修改日期</th>
-							<th scope="col">編輯</th>
-							<th scope="col">刪除</th>
-						</tr>
-					</thead>
-					<tbody>
-						<c:forEach var="cate" items="${cateList}">
-							<tr>
-								<td>${cate.cateId}</td>
-								<td>${cate.cateName}</td>
-								<td>${cate.cateDesc}</td>
-								<td>${cate.cateCDay}</td>
-								<td>${cate.cateMDay}</td>
-								<td><form:form
-										action="${contextRoot}/Store/Commcate/editCommCate"
-										method="get">
-										<input type="hidden" name="cateId" value="${cate.cateId}">
-										<button type="submit" class="btn btn-warning">編輯</button>
+				<h1>新增廣告類別後台</h1>
+				<form:form method="post" modelAttribute="advertiseCate"
+					action="${contextRoot}/Advertise/Adv/postAdvertiseCate">
 
 
-									</form:form></td>
-								<td><form:form
-										action="${contextRoot}/Store/Commcate/delete" method="DELETE">
-										<input type="hidden" name="cateId" value="${cate.cateId}">
-										<button type="submit" class="btn btn-danger">刪除</button>
-									</form:form></td>
-							</tr>
-						</c:forEach>
-					</tbody>
-				</table>
+					<form:label path="advertiseCateName">廣告類別名稱<span
+							style="color: red">*</span>
+					</form:label>
+					<form:input path="advertiseCateName" type="text" required="true" />
+					<br>
+					<form:label path="advertiseCateDesc">廣告類別敘述</form:label>
+					<form:input path="advertiseCateDesc" />
+					<br>
 
+					<button type="submit" value="確定">送出</button>
+				</form:form>
 			</main>
+
 			<!-- End #main -->
 
 			<!-- ======= Footer ======= -->

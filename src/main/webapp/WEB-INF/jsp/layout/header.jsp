@@ -59,7 +59,7 @@
 								<li><a href="${contextRoot}/">首頁</a></li>
 								<li><a href="${contextRoot}/company">廠商專區</a></li>
 								<li><a href="${contextRoot}/company/floor">樓層簡介</a></li>
-								<li class="Store"><a href="${contextRoot}/Store/Storeindex"><span>線上商城</span>
+								<li class="Store"><a href="${contextRoot}/Store/findAllComm"><span>線上商城</span>
 										<i class="bi bi-chevron-down dropdown-indicator"></i></a></li>
 								<li class="dropdown"><a href="category.html"><span>Categories</span>
 										<i class="bi bi-chevron-down dropdown-indicator"></i></a>
@@ -104,14 +104,17 @@
 							</ul>
 						</nav>
 
-		<div class="position-relative">
-			<a href="${contextRoot}/member/register" class="mx-2"> <span class="bi-person-circle"> ${member.name}</span></a> 
-			<a href="${contextRoot}/member/logout" class="mx-2"> <span class="bi bi-box-arrow-right"></span></a>
-			<a href="${contextRoot}/memberCentre" class="mx-2"> <span class="bi bi-tencent-qq"></span></a>
-			<a href="#" class="mx-2 js-search-open"> <span class="bi-search"></span></a> 
-			<i class="bi bi-list mobile-nav-toggle"></i>
+						<div class="position-relative">
+							<a href="${contextRoot}/member/register" class="mx-2"> <span class="bi-person-circle">
+									${member.name}</span></a>
+							<a href="${contextRoot}/member/logout" class="mx-2"> <span
+									class="bi bi-box-arrow-right"></span></a>
+							<a href="${contextRoot}/memberCentre" class="mx-2"> <span
+									class="bi bi-tencent-qq"></span></a>
+							<a href="#" class="mx-2 js-search-open"> <span class="bi-search"></span></a>
+							<i class="bi bi-list mobile-nav-toggle"></i>
 
-						
+
 							<!-- ======= Search Form ======= -->
 							<div class="search-form-wrap js-search-form-wrap">
 								<form action="search-result.html" class="search-form">
