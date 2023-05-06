@@ -59,7 +59,10 @@
 								<li><a href="${contextRoot}/">首頁</a></li>
 								<li><a href="${contextRoot}/company">廠商專區</a></li>
 								<li><a href="${contextRoot}/company/floor">樓層簡介</a></li>
-								<li class="Store"><a href="${contextRoot}/Store/findAllComm"><span>線上商城</span>
+								<li class="Store"><a href="${contextRoot}/Store/Commodity/findAllComm"><span>線上商城</span>
+								
+							
+						
 										<i class="bi bi-chevron-down dropdown-indicator"></i></a></li>
 								<li class="dropdown"><a href="category.html"><span>Categories</span>
 										<i class="bi bi-chevron-down dropdown-indicator"></i></a>

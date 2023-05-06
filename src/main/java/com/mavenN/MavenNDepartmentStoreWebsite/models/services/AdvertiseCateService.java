@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.AdvertiseCate;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.AdvertiseCateRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.StoreSystem.AdvertiseCateRepository;
 
 @Service
 public class AdvertiseCateService {
