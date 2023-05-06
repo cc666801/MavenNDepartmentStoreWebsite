@@ -18,6 +18,8 @@
 .right {
 	padding-top: 20px;
 }
+
+
 </style>
 <title>餐廳頁面</title>
 </head>
@@ -33,7 +35,7 @@
 			<button type="button" data-bs-target="#carouselExampleIndicators"
 				data-bs-slide-to="2" aria-label="Slide 3"></button>
 		</div>
-		<div class="carousel-inner" style="height: 280px">
+		<div class="carousel-inner">
 			<div class="carousel-item active">
 				<img src="https://picsum.photos/1000/200?random=10"
 					class="d-block w-100" alt="...">
@@ -67,7 +69,6 @@
 			</div>
 
 			<div class="col-7 right border border-2 border-secondary rounded-2">
-				.col-7<br>Subsequent columns continue along the new line.
 
 				<div class="row justify-content-center">
 					<div class="col-5">
@@ -85,7 +86,7 @@
 					<div class="col-5">
 						用餐時間
 							<div class="input-group date" id="datepicker">
-		                        <input type="text" class="form-control" readonly/>
+		                        <input type="text" class="form-control" id="DId" readonly/>
 		                        <span class="input-group-append">
 		                            <span class="input-group-text bg-white d-block">
 		                                <i class="bi bi-calendar"></i>
@@ -108,14 +109,18 @@
     <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
      <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
 	<script type="text/javascript">
-        var now = new Date();
+        let now = new Date();
+        let year = now.getFullYear()
+        let mouth = (now.getMonth()+1).toString().padStart(2, '0');
+        let date = now.getDate().toString().padStart(2, '0');
+        document.getElementById('DId').value = year +"/"+ mouth +"/"+ date;
         $(function() {
             $('#datepicker').datepicker({
                     format: 'yyyy/mm/dd',
                     language: 'zh-TW',
-                    startDate: new Date(now.getFullYear(), now.getMonth(), 1),
+                    startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
                     endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
-                    // todayHighlight: true,
+                    todayHighlight: true,
                     autoclose: true
             });
         });
