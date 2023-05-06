@@ -16,6 +16,11 @@
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
 </head>
+
+
+
+
+
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
 	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
@@ -37,6 +42,7 @@
 					<button type="submit" class="btn btn-primary mb-3">新增</button>
 				</form>
 				<table class="table table-striped" id="datatablesSimple">
+<!-- 				上面這行會出現套版效果 -->
 					<thead class="thead-dark">
 						<tr>
 							<th scope="col">類別id</th>

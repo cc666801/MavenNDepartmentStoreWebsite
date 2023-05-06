@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
@@ -27,6 +26,11 @@ public class MemberController {
 	private MemberService mService;
 	@Autowired
 	private MemberRepository mRepository;
+	
+	@GetMapping("/memberCentre")
+	public String jumpPage(){
+		return "member/memberCentre";
+	}
 	
 	// 註冊會員  帳號重複不會顯示在前台
 	@GetMapping("/member/register")
@@ -61,21 +65,23 @@ public class MemberController {
 	public String findMemberById(@PathVariable Integer id,Model model) {
 		Member member = mService.findMemberById(id);
 	    model.addAttribute("member", member);
-	    return "member/memberdetail";
+	    return "redirect:/member/logout";
 		
 	}
 	// 更新會員資料
-	@GetMapping("/editmember/edit")
-	public String editMember(@RequestParam("id") Integer id, Model model) {
-		Member mem = mService.findMemberById(id);
-		model.addAttribute("member", mem);
-		return "member/editmember";
+	@GetMapping("/member/edit/{id}")
+	public String editMember(@PathVariable("id") Integer id, Model model) {
+	    Member mem = mService.findMemberById(id);
+	    model.addAttribute("member", mem);
+	    return "member/editMember";
 	}
 
-	@PutMapping("/editmember/edit")
-	public String putEditMember(@ModelAttribute("member") Member mem) {
-		mService.updateMemberById(mem.getId(), mem);
-		return "redirect:/memberlist";
+
+	@PutMapping("/member/edit/{id}")
+	public String updateMember(@PathVariable Integer id, @ModelAttribute("member") Member member, Model model) {
+	    member.setId(id);
+	    mService.updateMemberById(id, member);
+	    return "redirect:/member/{id}";
 	}
 
 	// 刪除會員資料
