@@ -24,11 +24,12 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	
+	
 	@GetMapping("/restaurantfront/reservation")
 	public String addreservations() {
 		return "restaurantfront/addreservation";
 	}
-	
 	
 	@GetMapping("/restaurantfront/UserQueryCompany")
 	public String showUserQueryCompany(@RequestParam("companyname") String companyname,
@@ -60,8 +61,11 @@ public class RestReservationController {
 		
 		model.addAttribute("page",page);
 		return "restaurantfront/showrest";
-	}	
+	}
 	
+	
+	
+//	以下為後台系統 ------------------
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
 		
