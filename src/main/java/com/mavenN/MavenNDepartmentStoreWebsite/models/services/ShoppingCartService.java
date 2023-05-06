@@ -3,6 +3,8 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 import java.util.Date;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -34,6 +36,7 @@ public class ShoppingCartService {
 	
 	// Api
 	// For saveShoppingCart()
+	@Transactional
 	public void saveShoppingCartByDto(ShoppingCartDto shoppingCartDto) {
 	    Integer memberId = shoppingCartDto.getMemberId();
 	    Integer quantity = shoppingCartDto.getQuantity();

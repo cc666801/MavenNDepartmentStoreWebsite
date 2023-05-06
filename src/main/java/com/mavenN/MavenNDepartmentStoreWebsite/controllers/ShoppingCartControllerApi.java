@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -13,6 +14,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.ShoppingCartCommodity;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.ShoppingCartCommodityId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.ShoppingCartCommodityDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.ShoppingCartDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ShoppingCartCommodityService;
@@ -57,6 +59,18 @@ public class ShoppingCartControllerApi {
     	        .collect(Collectors.toList());
     	
     	
+    	return shoppingCartCommodityDtos;
+    }
+    
+    @DeleteMapping("/{memberId}/{commodityId}")
+    public List<ShoppingCartCommodityDto> deleteShoppingCartCommodityByMemberIdAndCommodityId(
+    		@PathVariable Integer memberId,
+			@PathVariable Integer commodityId
+    		) {
+    	List<ShoppingCartCommodity> shoppingCartCommodities = shoppingCartCommodityService.deleteShoppingCartCommodityByMemberIdAndCommodityId(memberId, commodityId);
+    	List<ShoppingCartCommodityDto> shoppingCartCommodityDtos = shoppingCartCommodities.stream()
+    	        .map(ShoppingCartCommodityDto::new)
+    	        .collect(Collectors.toList());
     	return shoppingCartCommodityDtos;
     }
     

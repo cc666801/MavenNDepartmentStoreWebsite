@@ -4,6 +4,8 @@ import java.util.Date;
 import java.util.List;
 import java.util.Optional;
 
+import javax.transaction.Transactional;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +31,7 @@ public class ShoppingCartCommodityService {
 	}
 	
 	// For updateShoppingCartCommodityByMemberIdAndCommodityId()
+	@Transactional
 	public List<ShoppingCartCommodity> updateShoppingCartCommodityByMemberIdAndCommodityId(
 			Integer memberId,
 			Integer commodityId,
@@ -52,6 +55,27 @@ public class ShoppingCartCommodityService {
 	            return shoppingCartCommodities;
 	            
 			}
+		}
+		return null;
+	}
+	
+	public List<ShoppingCartCommodity> deleteShoppingCartCommodityByMemberIdAndCommodityId(
+					Integer memberId,
+					Integer commodityId){
+		Optional<ShoppingCart> optionalShoppingCart = shoppingCartRepository.findByMemberId(memberId);
+		if(optionalShoppingCart.isPresent()) {
+			ShoppingCart shoppingCart = optionalShoppingCart.get();
+	    	ShoppingCartCommodityId id = new ShoppingCartCommodityId(commodityId, shoppingCart.getShoppingCartId());
+	    	shoppingCartCommodityRepository.deleteById(id);
+	    	
+	    	Date now = new Date();
+            long time = now.getTime() / 1000 * 1000;
+            Date truncatedNow = new Date(time);
+            shoppingCart.setLastUpdatedTime(truncatedNow);
+            shoppingCartRepository.save(shoppingCart);
+            
+	    	List<ShoppingCartCommodity> shoppingCartCommodities = shoppingCartCommodityRepository.findByMemberId(memberId);
+	    	return shoppingCartCommodities;
 		}
 		return null;
 	}
