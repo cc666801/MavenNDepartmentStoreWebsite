@@ -5,15 +5,15 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Base64;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
@@ -25,6 +25,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.util.HtmlUtils;
 
@@ -171,6 +172,18 @@ public class ArticleController {
 			//取得該文章的留言資料
 			 List<Comment> comments = commentService.findByArticleId(id);		
 			 model.addAttribute("comments", comments);
+			// 判斷該會員是否已經點過該篇文章
+			 boolean isLiked = false;
+			 if (currentMember != null) {
+			     List<Member> likedMembers = articleService.getLikedMembers(id);
+			     for (Member member : likedMembers) {
+			         if (member.getId().equals(currentMember.getId())) {
+			             isLiked = true;
+			             break;
+			         }
+			     }
+			 }
+			    model.addAttribute("isLiked", isLiked);
 			 
 			return "/forum/article/showArticleContent";
 		}
@@ -198,17 +211,24 @@ public class ArticleController {
 				art.setArticleBase64(base64);
 			}
 		}
+		
+		Map<Integer, Integer> commentCounts = new HashMap<>();
 		// 預覽文章
 		for (Article art : page.getContent()) {
 		    Document doc = Jsoup.parse(art.getArticleContent());
 		    String articlePreview = doc.text().substring(0, Math.min(doc.text().length(), 20));
 		    art.setArticlePreview(articlePreview);
-		
+		  //取得該文章的留言數量
+			Integer commentCount = commentService.countCommentsByArticleId(art.getArticleID());
+			commentCounts.put(art.getArticleID(), commentCount);
 		}		
+		model.addAttribute("commentCounts", commentCounts);
 		model.addAttribute("page", page);
-		
+		//取得類別
 		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
 		model.addAttribute("categoryList", categoryList);
+		
+		
 		return "/forum/article/articleList";
 	}
 
@@ -338,27 +358,37 @@ public class ArticleController {
 		return "redirect:/articleManage";
 	}
 ///////////////////點讚系統////////////////
-	@PostMapping("/article/{articleID}/like")
-	public String like(@PathVariable("articleID") Integer articleID, HttpSession session) {
-	    Integer memberId = (Integer) session.getAttribute("memberId");
-
-	    try {
-	    	articleService.addLike(articleID, memberId);
+	@ResponseBody
+	@PostMapping("/showArticleContent/{articleID}/like")
+	public String like(@PathVariable("articleID") Integer articleID, HttpSession session,Model model) {
+		 Member currentMember = (Member) session.getAttribute("member");
+    try {
+    	 boolean isLiked = articleService.addLike(articleID, currentMember.getId());
+         model.addAttribute("isLiked", isLiked);
 	    } catch (Exception e) {
 	        // 處理重複點讚的錯誤
 	        e.printStackTrace();
+	        String errorMessage = "已經點過讚了!!";
+	        model.addAttribute("errorMessage", errorMessage);
+	        
 	    }
-
+    Article article = articleService.findArticleById(articleID);
+    model.addAttribute("article", article);
+ 
 	    return "redirect:/showArticleContent/" + articleID;
 	}
 	
-	
-	@PostMapping("/article/{articleID}/unlike")
+	@ResponseBody
+	@PostMapping("/showArticleContent/{articleID}/unlike")
 	public String unlike(@PathVariable("articleID") Integer articleID, HttpSession session) {
-	    Integer memberId = (Integer) session.getAttribute("memberId");
+		 Member currentMember = (Member) session.getAttribute("member");
+		 if (currentMember == null) {
+		        // 如果會員未登入，返回錯誤訊息
+		        return "error: 會員未登入";
+		    }
 
 	    try {
-	    	articleService.cancelLike(articleID, memberId);
+	    	articleService.cancelLike(articleID,currentMember.getId());
 	    } catch (Exception e) {
 	        // 處理未點過讚的錯誤
 	        e.printStackTrace();
@@ -366,5 +396,17 @@ public class ArticleController {
 
 	    return "redirect:/showArticleContent/" + articleID;
 	}
+	//檢查會員是否登入
+	@ResponseBody
+	@GetMapping("/checkLogin")
+	public String checkLogin(HttpSession session) {
+	    Member currentMember = (Member) session.getAttribute("member");
+	    if (currentMember == null) {
+	        return "false";
+	    } else {
+	        return "true";
+	    }
+	}
+	
 
 }

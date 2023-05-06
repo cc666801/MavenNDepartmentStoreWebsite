@@ -35,6 +35,7 @@
 									<div class="post-meta">
 										<span class="date">${art.articleCategory.articleCategoryName}</span>
 										<span class="mx-1">&bullet;</span> <span>${art.articleCreateTime}</span>
+										<span>留言數:${commentCounts[art.articleID]}/讚數:${art.articleLikes.size()}</span>
 									</div>
 									<h3>
 										<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>

@@ -5,6 +5,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags"%>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -13,7 +14,19 @@
 <!-- icon CDN -->
 <link rel="stylesheet"
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-
+<style>
+/* 讚 */
+  #like-btn {
+   font-size: 30px;
+    background-color: transparent;
+    border: none;
+    padding: 0;
+    margin: 0;
+    vertical-align: middle;
+    float: right;
+    
+  }
+</style>
 
 
 </head>
@@ -27,7 +40,8 @@
 				<div class="row">
 					<div class="col-md-9 post-content" data-aos="fade-up">
 						<button id="like-btn" data-articleID="${article.articleID}"
-							data-liked="${article.liked}">${article.liked ? "取消讚" : "讚"}</button>
+    data-liked="${isLiked}"><i class="fa${isLiked ? "s" : "r"} fa-heart"></i></button>
+    
 						<!-- ======= Single Post Content ======= -->
 						<div class="single-post">
 							<div class="post-meta">
@@ -116,7 +130,7 @@
 
 									<div class="col-12 mb-3">
 
-										<form method="post"
+										<form method="post" id="comment-form"
 											action="${contextRoot}/showArticleContent/${article.articleID}/comment">
 											<div class="form-group">
 												<label for="comment-message">留言内容：</label>
@@ -322,44 +336,80 @@
 
 	<!-- 	點讚 -->
 	<script>
-		$(document).ready(function() {
+		$(document).ready(function() {				
 			$('#like-btn').click(function() {
+				
 				var articleId = $(this).data('articleID');
 				var liked = $(this).data('liked');
-
-				if (liked) {
-					// 取消點讚
-					$.ajax({
-						type : 'POST',
-						url : `${contextRoot}/article/${article.articleID}/unlike`,
-						success : function() {
-							$('#like-btn').data('liked', false);
-							$('#like-btn').text('讚');
-						},
-						error : function() {
-							
-							alert('取消點讚失敗');
-						}
-					});
-				} else {
-					// 點讚
-					$.ajax({
-						type : 'POST',
-						url : `${contextRoot}/article/${article.articleID}/like`,
-						success : function() {
-							$('#like-btn').data('liked', true);
-							$('#like-btn').text('取消讚');
-						},
-						error : function() {
-							
-							alert('點讚失敗');
-						}
-					});
-				}
-			});
-		});
+				  // 先檢查會員登入狀態
+		        $.ajax({
+		            type: "GET",
+		            url: `${contextRoot}/checkLogin`,
+		            success: function(response) {
+		                if (response === "true") {
+		                    // 已登入，執行點讚動作
+		                    if (liked) {
+		                        // 取消點讚
+		                        $.ajax({
+		                            method: 'POST',
+		                            type: 'POST',
+		                            url: `${contextRoot}/showArticleContent/${article.articleID}/unlike`,
+		                            success: function() {
+		                                $('#like-btn').data('liked', false);
+		                                $('#like-btn i').removeClass('fas').addClass('far');
+		                                console.log($('#like-btn').data('liked'));
+		                            },
+		                            error: function() {
+		                                alert('取消點讚失敗');
+		                            }
+		                        });
+		                    } else {
+		                        // 點讚
+		                        $.ajax({
+		                            method: 'POST',
+		                            type: 'POST',
+		                            url: `${contextRoot}/showArticleContent/${article.articleID}/like`,
+		                            success: function() {
+		                                $('#like-btn').data('liked', true);
+		                                $('#like-btn i').removeClass('far').addClass('fas');
+		                                console.log($('#like-btn').data('liked'));
+		                            },
+		                            error: function() {
+		                                alert('點讚失敗');
+		                            }
+		                        });
+		                    }
+		                } else {
+		                    // 未登入，提示用戶登入會員
+		                    alert('請先登入會員');
+		                }
+		            },
+		            error: function() {
+		                alert('檢查登入狀態失敗');
+		            }
+		        });
+		    });
+		});	
 	</script>
-
+<!-- 	判斷留言會員登入 -->
+<script>
+	$("#comment-form").submit(function(event) {
+    event.preventDefault(); // 阻止表單提交
+    // 檢查會員登入狀態
+    $.ajax({
+        type: "GET",
+        url: `${contextRoot}/checkLogin`,
+        success: function(response) {
+            if (response === "true") {
+                // 已登入
+                $("#comment-form").unbind('submit').submit(); // 解除阻止表單提交
+            } else {
+                alert("請先登入會員");
+            }
+        }
+    });       
+});
+	</script>
 	<!-- 	編輯留言 -->
 	<script>
 		$(document)

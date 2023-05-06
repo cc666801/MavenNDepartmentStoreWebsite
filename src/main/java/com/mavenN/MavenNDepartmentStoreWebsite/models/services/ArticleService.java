@@ -93,7 +93,7 @@ public class ArticleService {
 	
 	///////////////////點讚系統////////////////////
 	 // 當會員點讚時，將點讚紀錄新增到資料庫
-	public void addLike(Integer articleId, Integer memberId) throws Exception {
+	public boolean addLike(Integer articleId, Integer memberId) throws Exception {
 	    Optional<Article> optionalArticle = articleRepository.findById(articleId);
 	    Optional<Member> optionalMember = memberRepository.findById(memberId);
 
@@ -116,7 +116,16 @@ public class ArticleService {
 	    ArticleLike articleLike = new ArticleLike();
 	    articleLike.setId(articleLikeId);
 
-	    articleLikeRepository.save(articleLike);
+	    boolean isLiked = false;
+	    ArticleLike savedArticleLike = articleLikeRepository.save(articleLike);
+	    if (savedArticleLike != null) {
+	    	 isLiked = true;
+	    	    article.setLiked(true);
+	    }
+
+	    article.setLiked(isLiked);
+	    articleRepository.save(article);
+	    return isLiked;
 	}
 
     // 當會員取消點讚時，將該點讚紀錄從資料庫中刪除
