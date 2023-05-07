@@ -196,8 +196,9 @@ public class ArticleController {
 
 	// 前台文章列表
 	@GetMapping("/articleList")
-	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId, Model model) {
+	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId,@RequestParam(name = "sortBy", defaultValue = "articleCreateTime") String sortBy, Model model) {
 		
+<<<<<<< HEAD
 <<<<<<< Updated upstream
 		Page<Article> page;		
 	    if (categoryId != null) {
@@ -206,6 +207,8 @@ public class ArticleController {
 	        page = articleService.findArticleByPage(pageNumber);
 	    }
 =======
+=======
+>>>>>>> main
 		 Page<Article> page;
 		
 		 if (categoryId != null) {
@@ -218,9 +221,14 @@ public class ArticleController {
 			 else {
 		    	page = articleService.findArticleByPage(pageNumber, sortBy);
 		    }
+<<<<<<< HEAD
 //////////
 		   
 >>>>>>> Stashed changes
+=======
+
+		   
+>>>>>>> main
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
@@ -238,7 +246,11 @@ public class ArticleController {
 		  //取得該文章的留言數量
 			Integer commentCount = commentService.countCommentsByArticleId(art.getArticleID());
 			commentCounts.put(art.getArticleID(), commentCount);
-		}		
+		}	
+		
+		
+		
+		
 		model.addAttribute("commentCounts", commentCounts);
 		model.addAttribute("page", page);
 		//取得類別

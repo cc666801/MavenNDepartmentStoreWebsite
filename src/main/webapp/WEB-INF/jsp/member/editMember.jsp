@@ -81,11 +81,8 @@ h1 {
 </style>
 </head>
 <body>
+<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
-		<div class="col-auto">
-			<a href="${contextRoot}/" class="btn btn-link text-decoration-none"
-				style="color: blue;">首頁</a>
-		</div>
 		<h1>更新會員資料</h1>
 		<form name="myForm"
 			action="${contextRoot}/member/edit/${sessionScope.member.id}"

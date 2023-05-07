@@ -24,6 +24,21 @@
 							<a href="${contextRoot}/articleFront/add"><button>發文</button></a>
 						</div>
 						<h3 class="category-title">討論區文章列表</h3>
+
+						<form id="sortForm" method="get"
+							action="${pageContext.request.contextPath}/articleList">
+							<select name="sortBy" onchange="this.form.submit()">
+								<option value="articleCreateTime"
+									${sortBy == 'articleCreateTime' ? 'selected' : ''}>發文時間</option>
+<!-- 								<option value="Article.articleLikes.size()" -->
+<%-- 									${sortBy == 'Article.articleLikes.size()' ? 'selected' : ''}>點讚數</option> --%>
+<!-- 								<option value="commentCounts" -->
+<%-- 									${sortBy == 'commentCounts' ? 'selected' : ''}>留言數</option> --%>
+								<option value="comments.commentEditTime"
+									${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後留言時間</option>
+							</select>
+						</form>
+
 						<c:forEach var="art" items="${page.content}">
 							<div class="d-md-flex post-entry-2 small-img">
 								<a href="${contextRoot}/articleContent/${art.articleID}"
@@ -43,7 +58,8 @@
 									<p>${art.articlePreview}</p>
 									<div class="d-flex align-items-center author">
 										<div class="photo">
-											<img src="assets/img/person-2.jpg" alt="" class="img-fluid">
+											<img src="../assetsForFront/img/person-2.jpg" alt=""
+												class="img-fluid">
 										</div>
 										<div class="name">
 											<h3 class="m-0 p-0">${art.member.name}</h3>
@@ -82,19 +98,19 @@
 					</div>
 
 					<div class="col-md-3">
-					
-					<div class="aside-block">
-									<h3 class="aside-title">類別選單</h3>
-									<ul class="aside-tags list-unstyled">
-									<li><a href="?category=">所有類別</a></li>
-										<c:forEach var="category" items="${categoryList}">
-											<li><a href="?category=${category.articleCategoryID}">${category.articleCategoryName}</a></li>
-										</c:forEach>
-									</ul>
-								</div>
-								<!-- End Tags -->
-					
-					
+
+						<div class="aside-block">
+							<h3 class="aside-title">類別選單</h3>
+							<ul class="aside-tags list-unstyled">
+								<li><a href="?category=">所有類別</a></li>
+								<c:forEach var="category" items="${categoryList}">
+									<li><a href="?category=${category.articleCategoryID}">${category.articleCategoryName}</a></li>
+								</c:forEach>
+							</ul>
+						</div>
+						<!-- End Tags -->
+
+
 						<!-- ======= Sidebar ======= -->
 						<div class="aside-block">
 
@@ -321,7 +337,7 @@
 								</div>
 								<!-- End Categories -->
 
-								
+
 
 							</div>
 
