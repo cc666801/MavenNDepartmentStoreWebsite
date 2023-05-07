@@ -196,14 +196,22 @@ public class ArticleController {
 
 	// 前台文章列表
 	@GetMapping("/articleList")
-	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId, Model model) {
+	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId,@RequestParam(name = "sortBy", defaultValue = "articleCreateTime") String sortBy, Model model) {
 		
-		Page<Article> page;		
-	    if (categoryId != null) {
-	        page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber);
-	    } else {
-	        page = articleService.findArticleByPage(pageNumber);
-	    }
+		 Page<Article> page;
+		
+		 if (categoryId != null) {
+			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
+//		    } else if ("articleLikes.size".equals(sortBy)) {
+//		    	page = articleService.findArticlesOrderByArticleLikesCount(pageNumber, sortBy);
+//		    } else if ("commentCount".equals(sortBy)) {
+//		    	page = articleService.findArticlesOrderByCommentsCount(pageNumber, sortBy);
+		    } 
+			 else {
+		    	page = articleService.findArticleByPage(pageNumber, sortBy);
+		    }
+
+		   
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
@@ -221,7 +229,11 @@ public class ArticleController {
 		  //取得該文章的留言數量
 			Integer commentCount = commentService.countCommentsByArticleId(art.getArticleID());
 			commentCounts.put(art.getArticleID(), commentCount);
-		}		
+		}	
+		
+		
+		
+		
 		model.addAttribute("commentCounts", commentCounts);
 		model.addAttribute("page", page);
 		//取得類別

@@ -86,10 +86,10 @@ public class ArticleService {
     }
 	
 	
-	public Page<Article> findArticleByCategoryAndPage(Integer categoryId, Integer pageNumber) {
-        Pageable pageable = PageRequest.of(pageNumber - 1,5, Sort.Direction.DESC, "articleCreateTime");
-        return articleRepository.findByArticleCategory_articleCategoryID(categoryId, pageable);
-    }
+//	public Page<Article> findArticleByCategoryAndPage(Integer categoryId, Integer pageNumber) {
+//        Pageable pageable = PageRequest.of(pageNumber - 1,5, Sort.Direction.DESC, "articleCreateTime");
+//        return articleRepository.findByArticleCategory_articleCategoryID(categoryId, pageable);
+//    }
 	
 	///////////////////點讚系統////////////////////
 	 // 當會員點讚時，將點讚紀錄新增到資料庫
@@ -166,5 +166,42 @@ public class ArticleService {
 	    return likedMembers;
 	}
 	
+	
+	//排序
+	public Page<Article> findArticleByCategoryAndPage(
+			  Integer categoryId, Integer pageNumber, String sortBy
+			) {
+			  Sort sort = Sort.by(sortBy).descending();
+			  Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
+			  return articleRepository.findByArticleCategory_articleCategoryID(categoryId, pageable);
+			}
+
+			public Page<Article> findArticleByPage(Integer pageNumber, String sortBy) {
+			  Sort sort = Sort.by(sortBy).descending();
+			  Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
+			  return articleRepository.findAll(pageable);
+			}
+			
+//			public Page<Article> findArticlesOrderByArticleLikesCount(Integer pageNumber, String sortBy) {
+//		        Pageable pageable = PageRequest.of(pageNumber - 1, 5, Sort.by(sortBy).descending());
+//		        Page<Object[]> result = articleRepository.findArticlesOrderByArticleLikesCount(pageable);
+//		        return result.map(objects -> (Article) objects[0]);
+//		    }
+//
+//			public Page<Article> findArticlesOrderByCommentsCount(Integer pageNumber, String sortBy) {
+//		        
+//		        Pageable pageable = PageRequest.of(pageNumber - 1,5, Sort.by(sortBy).descending());
+//
+//		        
+//		        Page<Object[]> result = articleRepository.findArticlesOrderByCommentsCount(pageable);
+//
+//		        
+//		        return result.map(row -> {
+//		            Article article = (Article) row[0];
+//		            Long commentCount = (Long) row[1];
+//		            article.setCommentCount(commentCount.intValue());
+//		            return article;
+//		        });
+//		    }
 	
 }
