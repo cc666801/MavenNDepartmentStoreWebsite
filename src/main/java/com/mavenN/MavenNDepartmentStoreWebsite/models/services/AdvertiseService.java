@@ -16,8 +16,7 @@ public class AdvertiseService {
 	@Autowired
 	private AdvertiseRepository advertiseRepository;
 	
-	@Autowired
-	private CompanyRepository companyRepository;
+
 	
 	
 

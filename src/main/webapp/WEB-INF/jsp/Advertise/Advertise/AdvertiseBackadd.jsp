@@ -89,12 +89,19 @@
 					<br>
 
 					<form:label path="advertiseStartDay">廣告上架日期</form:label>
-					<form:input path="advertiseStartDay" />
-					<br>
-					<form:label path="advertiseRemoveDay">廣告下架日期</form:label>
-					<form:input path="advertiseRemoveDay" />
+					<form:input type="datetime-local" path="advertiseStartDay" />
+
 					<br>
 
+
+
+					<form:label path="advertiseRemoveDay">廣告下架日期</form:label>
+					<form:input type="datetime-local" path="advertiseRemoveDay" />
+					<br>
+
+					<!-- 					嘗試新增 日期選擇器 原本的程式碼 -->
+
+					<%-- 				<form:input path="advertiseRemoveDay" id="datepicker" /> --%>
 
 
 
@@ -137,6 +144,19 @@
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
+
+
+	<!-- 嘗試新增日期選擇器 -->
+
+	<link rel="stylesheet"
+		href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+	<script src="//code.jquery.com/jquery-3.5.1.min.js"></script>
+	<script src="//code.jquery.com/ui/1.12.1/jquery-ui.min.js"></script>
+	<script>
+		$(function() {
+			$("#datepicker").datepicker();
+		});
+	</script>
 
 </body>
 </html>

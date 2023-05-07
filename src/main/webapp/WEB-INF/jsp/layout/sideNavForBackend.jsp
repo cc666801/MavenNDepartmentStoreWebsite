@@ -149,8 +149,8 @@
 									<a class="nav-link"
 										href="${contextRoot}/Advertise/Adv/addAdvertiseCate">新增廣告類別欄位</a>
 									<a class="nav-link" href="${contextRoot}/Advertise/Adv/ShowAllAdCate">查詢所有廣告類別</a>
-									<a class="nav-link" href="${contextRoot}/Store/Commodity/add">新增廣告資料</a>
-									<a class="nav-link" href="${contextRoot}/Store/Commodity/ShowAll">查詢所有廣告</a>
+									<a class="nav-link" href="${contextRoot}/Advertise/Advertise/add">新增廣告資料</a>
+									<a class="nav-link" href="${contextRoot}/Advertise/Advertise/advertiseBack">查詢所有廣告</a>
 								</nav>
 							</div>
 

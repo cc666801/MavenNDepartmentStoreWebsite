@@ -23,79 +23,80 @@ import org.springframework.web.multipart.MultipartFile;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 
 @Entity
-@Table (name="Advertise")
+@Table(name="advertise")
 public class Advertise {
 
-	
-	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(name="advertise_Id")
-	private  Integer advertiseId;
+	private Integer advertiseId;
 	
-	@Column(name="advertise_Name", columnDefinition = "nvarchar(50)",nullable = false)
+	
+	
+	@Column(name="advertise_Name", columnDefinition = "nvarchar(100)")
 	private  String advertiseName;
-	
-	@Column(name="advertise_Picture", columnDefinition = "varbinary(MAX)",nullable = true)
+
+	@Column(name="advertise_Picture", columnDefinition = "varbinary(MAX)")
 	private  byte[] advertisePicture;
-	
-	
+
 	@Transient
 	private MultipartFile transferToByteArray;
 
 	@Transient
-	private String base64StringcommPicture;
+	private String base64StringadvertisePicture;
 	
 	
-	
-	
-	@Column(name="advertise_Desc", columnDefinition = "nvarchar(100)",nullable = false)
+	@Column(name="advertise_Desc", columnDefinition = "nvarchar(300)")
 	private String advertiseDesc;
+
 	
-	
-	
-	@Column(name="advertise_URL", columnDefinition = "nvarchar(500)",nullable = true)
+	@Column(name="advertise_URL", columnDefinition = "nvarchar(800)")
 	private String advertiseURL;
+
+	
 	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@Column(name = "advertise_CDay", columnDefinition = "datetime",nullable = true)
-	private Date advertiseCDay;
+	@Column(name = "advertise_CDay", columnDefinition = "datetime")
+		private Date advertiseCDay;
 //	廣告創立日期
 	
-	
 	@Temporal(TemporalType.TIMESTAMP)
 	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@Column(name = "advertise_MDay", columnDefinition = "datetime",nullable = true)
+	@Column(name = "advertise_MDay", columnDefinition = "datetime")
 	private Date advertiseMDay;
 //	廣告修改日期
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@Column(name = "advertise_StartDay", columnDefinition = "datetime",nullable = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@Column(name = "advertise_StartDay", columnDefinition = "datetime")
 	private Date advertiseStartDay;
 //	廣告上架日期
 	
 	@Temporal(TemporalType.TIMESTAMP)
-	@DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-	@Column(name = "advertise_RemoveDay", columnDefinition = "datetime",nullable = true)
+	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+	@Column(name = "advertise_RemoveDay", columnDefinition = "datetime")
 	private Date advertiseRemoveDay;
 //	廣告下架日期
 	
+//	@DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")   這個跟上面的 創立日期或修改日期不同 ，若讓使用者自行新增 這邊要改 不然存不進資料庫之中
+
 	
-	@Column(name="advertise_Shelve", columnDefinition = "BIT",nullable = true)
+	
+	
+	@Column(name="advertise_Shelve", columnDefinition = "BIT")
 	private Boolean advertiseShelve;
 //	廣告上下架
 	
-	@Column(name="advertise_Fee", columnDefinition = "double",nullable = true)
+	@Column(name="advertise_Fee")
 	private Double advertiseFee;
 //	廣告費用
 	
-	
-	@Column(name="advertise_Discount", columnDefinition = "double",nullable = true)
+	@Column(name="advertise_Discount")
 	private Double advertiseDiscount;
+//	廣告折扣
 	
-	@Column(name="advertise_Frequency", columnDefinition = "Integer",nullable = true)
+	@Column(name="advertise_Frequency")
 	private Integer advertiseFrequency;
 //	紀錄廣告點擊次數
 	
@@ -103,6 +104,10 @@ public class Advertise {
 	@JoinColumn(name = "fk_advertiseCateId")
 	private AdvertiseCate advertiseCate;
 //	串接 多對一  對廣告分類表
+	
+	
+	
+	
 	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_companyId")
@@ -128,20 +133,10 @@ public class Advertise {
 	
 	
 	
-	public Advertise() {
-		// TODO Auto-generated constructor stub
-			
-	}
-
-
-
-
+	
 	public Integer getAdvertiseId() {
 		return advertiseId;
 	}
-
-
-
 
 
 
@@ -157,15 +152,9 @@ public class Advertise {
 
 
 
-
-
-
 	public String getAdvertiseName() {
 		return advertiseName;
 	}
-
-
-
 
 
 
@@ -181,15 +170,9 @@ public class Advertise {
 
 
 
-
-
-
 	public byte[] getAdvertisePicture() {
 		return advertisePicture;
 	}
-
-
-
 
 
 
@@ -205,15 +188,9 @@ public class Advertise {
 
 
 
-
-
-
 	public MultipartFile getTransferToByteArray() {
 		return transferToByteArray;
 	}
-
-
-
 
 
 
@@ -229,11 +206,8 @@ public class Advertise {
 
 
 
-
-
-
-	public String getBase64StringcommPicture() {
-		return base64StringcommPicture;
+	public String getBase64StringadvertisePicture() {
+		return base64StringadvertisePicture;
 	}
 
 
@@ -241,15 +215,9 @@ public class Advertise {
 
 
 
-
-
-
-	public void setBase64StringcommPicture(String base64StringcommPicture) {
-		this.base64StringcommPicture = base64StringcommPicture;
+	public void setBase64StringadvertisePicture(String base64StringadvertisePicture) {
+		this.base64StringadvertisePicture = base64StringadvertisePicture;
 	}
-
-
-
 
 
 
@@ -265,15 +233,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseDesc(String advertiseDesc) {
 		this.advertiseDesc = advertiseDesc;
 	}
-
-
-
 
 
 
@@ -289,15 +251,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseURL(String advertiseURL) {
 		this.advertiseURL = advertiseURL;
 	}
-
-
-
 
 
 
@@ -313,15 +269,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseCDay(Date advertiseCDay) {
 		this.advertiseCDay = advertiseCDay;
 	}
-
-
-
 
 
 
@@ -337,15 +287,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseMDay(Date advertiseMDay) {
 		this.advertiseMDay = advertiseMDay;
 	}
-
-
-
 
 
 
@@ -361,15 +305,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseStartDay(Date advertiseStartDay) {
 		this.advertiseStartDay = advertiseStartDay;
 	}
-
-
-
 
 
 
@@ -385,15 +323,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseRemoveDay(Date advertiseRemoveDay) {
 		this.advertiseRemoveDay = advertiseRemoveDay;
 	}
-
-
-
 
 
 
@@ -409,15 +341,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseShelve(Boolean advertiseShelve) {
 		this.advertiseShelve = advertiseShelve;
 	}
-
-
-
 
 
 
@@ -433,15 +359,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseFee(Double advertiseFee) {
 		this.advertiseFee = advertiseFee;
 	}
-
-
-
 
 
 
@@ -457,15 +377,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseDiscount(Double advertiseDiscount) {
 		this.advertiseDiscount = advertiseDiscount;
 	}
-
-
-
 
 
 
@@ -481,15 +395,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseFrequency(Integer advertiseFrequency) {
 		this.advertiseFrequency = advertiseFrequency;
 	}
-
-
-
 
 
 
@@ -505,15 +413,9 @@ public class Advertise {
 
 
 
-
-
-
 	public void setAdvertiseCate(AdvertiseCate advertiseCate) {
 		this.advertiseCate = advertiseCate;
 	}
-
-
-
 
 
 
@@ -529,12 +431,17 @@ public class Advertise {
 
 
 
-
-
-
 	public void setCompany(Company company) {
 		this.company = company;
 	}
-	
-	
+
+
+
+
+
+
+	public Advertise() {
+		// TODO Auto-generated constructor stub
+	}
+
 }

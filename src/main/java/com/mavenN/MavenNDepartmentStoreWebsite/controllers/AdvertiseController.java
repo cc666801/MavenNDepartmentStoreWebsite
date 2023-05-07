@@ -32,8 +32,7 @@ public class AdvertiseController {
 	@Autowired
 	private AdvertiseCateService advertiseCateService;
 	
-	@Autowired
-	private CompanyService companyService;
+
 	@Autowired
 	private CompanyRepository companyRepository;
 	
@@ -80,11 +79,11 @@ public class AdvertiseController {
 			byte[] imageData = advertise.getAdvertisePicture();
 			if (imageData != null) {
 				String base64String = Base64.getEncoder().encodeToString(imageData);
-				advertise.setBase64StringcommPicture(base64String);
+				advertise.setBase64StringadvertisePicture(base64String);
 			}
 		}
 		model.addAttribute("advertiseList",findAllAdvertise);
-		return "/Advertise/Advertise/advertiseBack";
+		return "/Advertise/Advertise/AdvertiseBack";
 			
 		
 	}
@@ -95,7 +94,7 @@ public class AdvertiseController {
 	@DeleteMapping("/Advertise/Advertise/delete")
 	public String deleteAdvertiseById(@RequestParam Integer advertiseId) {
 				advertiseService.deleteadvertiseById(advertiseId);
-		return "/Advertise/Advertise/advertiseBack";
+		return "/Advertise/Advertise/AdvertiseBack";
 
 	}
 	
