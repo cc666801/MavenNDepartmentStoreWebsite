@@ -107,7 +107,9 @@
 	<script src="${contextRoot}/bootstrap5.0.2/js/jquery.min.js"></script>
     <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script>
     <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
-     <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
+    <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
+    
+    
 	<script type="text/javascript">
         let now = new Date();
         let year = now.getFullYear()
@@ -117,11 +119,19 @@
         $(function() {
             $('#datepicker').datepicker({
                     format: 'yyyy/mm/dd',
+                    showMonthAfterYear: true,
+                    showOtherMonths: false,
                     language: 'zh-TW',
-                    startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-                    endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
-                    todayHighlight: true,
-                    autoclose: true
+//                     startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+//                     endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
+//                     todayHighlight: true,
+                    autoclose: true,
+                    
+                    beforeShowDay: function(date) {
+                        // 禁用今天之前和3個月之後的日期
+                    	 return date < now || date.getMonth() > (now.getMonth()+3) ? false : true;
+                    }
+                   
             });
         });
     </script>
