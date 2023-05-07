@@ -30,10 +30,10 @@
 							<select name="sortBy" onchange="this.form.submit()">
 								<option value="articleCreateTime"
 									${sortBy == 'articleCreateTime' ? 'selected' : ''}>發文時間</option>
-								<option value="Article.articleLikes.size()"
-									${sortBy == 'Article.articleLikes.size()' ? 'selected' : ''}>點讚數</option>
-								<option value="commentCounts"
-									${sortBy == 'commentCounts' ? 'selected' : ''}>留言數</option>
+<!-- 								<option value="Article.articleLikes.size()" -->
+<%-- 									${sortBy == 'Article.articleLikes.size()' ? 'selected' : ''}>點讚數</option> --%>
+<!-- 								<option value="commentCounts" -->
+<%-- 									${sortBy == 'commentCounts' ? 'selected' : ''}>留言數</option> --%>
 								<option value="comments.commentEditTime"
 									${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後留言時間</option>
 							</select>
