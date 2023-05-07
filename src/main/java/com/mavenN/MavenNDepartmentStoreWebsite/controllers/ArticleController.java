@@ -198,12 +198,29 @@ public class ArticleController {
 	@GetMapping("/articleList")
 	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId, Model model) {
 		
+<<<<<<< Updated upstream
 		Page<Article> page;		
 	    if (categoryId != null) {
 	        page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber);
 	    } else {
 	        page = articleService.findArticleByPage(pageNumber);
 	    }
+=======
+		 Page<Article> page;
+		
+		 if (categoryId != null) {
+			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
+//		    } else if ("articleLikes.size".equals(sortBy)) {
+//		    	page = articleService.findArticlesOrderByArticleLikesCount(pageNumber, sortBy);
+//		    } else if ("commentCount".equals(sortBy)) {
+//		    	page = articleService.findArticlesOrderByCommentsCount(pageNumber, sortBy);
+		    } 
+			 else {
+		    	page = articleService.findArticleByPage(pageNumber, sortBy);
+		    }
+//////////
+		   
+>>>>>>> Stashed changes
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
