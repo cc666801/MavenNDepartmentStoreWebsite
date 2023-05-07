@@ -108,7 +108,7 @@ button[type="submit"]:hover {
 				<td><form:form
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"
 						method="GET">
-						<button type="submit">確定</button>
+						<button type="submit">修改資料</button>
 					</form:form></td>
 			</tr>
 		</table>
