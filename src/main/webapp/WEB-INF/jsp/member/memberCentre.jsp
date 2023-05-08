@@ -105,6 +105,12 @@ button[type="submit"]:hover {
 				<td>${sessionScope.member.points}</td>
 			</tr>
 			<tr>
+				<th>驗證狀態:</th>
+				<td><a href="${contextRoot}/member/verifyEmail" class="btn-link">${sessionScope.member.verify}</a></td></td>
+			</tr>
+			
+			
+			<tr>
 				<td><form:form
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"
 						method="GET">

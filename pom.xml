@@ -68,7 +68,16 @@
 			<artifactId>spring-boot-starter-validation</artifactId>
 		</dependency>
 		<!--討論區用的,不要以為是BUG-->
-		
+		<!--google驗證用-->
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+		<!--google驗證用-->
 	</dependencies>
 	<build>
 		<plugins>
