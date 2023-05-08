@@ -6,6 +6,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.Locale;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -22,6 +23,7 @@ import javax.validation.constraints.NotNull;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CooperationStatus;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 
 @Entity
@@ -48,6 +50,10 @@ public class Order {
 	
 	@Column(name = "coupon_code", columnDefinition = "nvarchar(40)")
 	private String couponCode;
+	
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "fk_order_status_id")
+	private OrderStatus orderStatus;
 	
 	@PrePersist
     public void setCreateOrderTimeIfNull() {
@@ -77,6 +83,8 @@ public class Order {
 		this.orderId = orderId;
 		this.member = member;
 	}
+	
+	
 
 	public Order() {
 		super();
@@ -98,20 +106,36 @@ public class Order {
 		this.member = member;
 	}
 
-	public Date getLastUpdatedTime() {
-		return createOrderTime;
-	}
-
-	public void setLastUpdatedTime(Date createOrderTime) {
-		this.createOrderTime = createOrderTime;
-	}
-
 	public String getCouponCode() {
 		return couponCode;
 	}
 
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
+	}
+
+	public List<OrderDetail> getOrderDetails() {
+		return orderDetails;
+	}
+
+	public void setOrderDetails(List<OrderDetail> orderDetails) {
+		this.orderDetails = orderDetails;
+	}
+
+	public Date getCreateOrderTime() {
+		return createOrderTime;
+	}
+
+	public void setCreateOrderTime(Date createOrderTime) {
+		this.createOrderTime = createOrderTime;
+	}
+
+	public OrderStatus getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(OrderStatus orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 	
 	

@@ -70,4 +70,5 @@ public class OrderDetailId implements Serializable {
 		return Objects.equals(commodityId, other.commodityId) && Objects.equals(orderId, other.orderId);
 	}
     
+	
 }

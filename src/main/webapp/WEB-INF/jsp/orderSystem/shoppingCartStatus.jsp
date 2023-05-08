@@ -262,7 +262,7 @@
                 quantity: quantity
               });
             });
-
+            if(order.orderDetailDtos.length!==0){
             fetch('${contextRoot}/api/order', {
               method: 'POST',
               headers: {
@@ -271,15 +271,29 @@
               body: JSON.stringify(order)
             })
               .then(response => {
-                if (!response.ok) {
-                  throw new Error('Network response was not ok');
-                }
-                // handle response
+                {
+                  if (response.ok) {
+                        // handle response
+                        document.getElementById("total").innerHTML = 0;
+                        var tbody = document.querySelector("table tbody");
+                      var htmlString = "";
+                        tbody.innerHTML = htmlString;
+												console.log('加入訂單成功');
+												alert('加入訂單成功');
+											} else {
+												console.log('加入訂單失敗');
+												alert('加入訂單失敗');
+											}
+										}
+
               })
               .catch(error => {
                 console.error('There was a problem with the fetch operation:', error);
               });
-
+            }else {
+												console.log('加入空訂單失敗');
+												alert('加入空訂單失敗');
+											}
 
 
           });

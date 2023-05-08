@@ -30,12 +30,12 @@ public class OrderDetail {
     @JoinColumn(name = "fk_order_id")
     private Order order;
 
-	public OrderDetail(OrderDetailId id, Integer quantity, Commodity commodity, Order order) {
+	public OrderDetail(OrderDetailId id, Order order, Commodity commodity, Integer quantity) {
 		super();
 		this.id = id;
-		this.quantity = quantity;
 		this.commodity = commodity;
 		this.order = order;
+		this.quantity = quantity;
 	}
 
 	public OrderDetail() {
@@ -72,6 +72,12 @@ public class OrderDetail {
 
 	public void setOrder(Order order) {
 		this.order = order;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDetail [id=" + id + ", quantity=" + quantity + ", commodity=" + commodity + ", order=" + order
+				+ "]";
 	}
     
     
