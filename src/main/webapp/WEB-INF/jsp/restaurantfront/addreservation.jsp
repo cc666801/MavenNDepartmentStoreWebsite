@@ -9,17 +9,31 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link href="${contextRoot}/assetsForFrontend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
-<link href="${contextRoot}/assetsForFrontend/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
+<link
+	href="${contextRoot}/assetsForFrontend/vendor/bootstrap/css/bootstrap.min.css"
+	rel="stylesheet">
+<link
+	href="${contextRoot}/assetsForFrontend/vendor/bootstrap-icons/bootstrap-icons.css"
+	rel="stylesheet">
 
-<link rel="stylesheet" href="${contextRoot}/bootstrap5.0.2/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet" href="${contextRoot}/bootstrap5.0.2/css/font-awesome.min.css">
+<link rel="stylesheet"
+	href="${contextRoot}/bootstrap5.0.2/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet"
+	href="${contextRoot}/bootstrap5.0.2/css/font-awesome.min.css">
 <style>
-.right {
-	padding-top: 20px;
+.bt {
+	background-color: white;
+	border: 1px solid;
+	border-radius: 10px;
+	padding: 10px;
 }
 
-
+.bt.active {
+	background-color: red;
+	border: 1px solid;
+	border-radius: 10px;
+	padding: 10px;
+}
 </style>
 <title>餐廳頁面</title>
 </head>
@@ -64,11 +78,13 @@
 	<div class="container">
 		<div class="row gx-sm-3 mt-2 justify-content-center">
 			<div class="col-3 border border-2 border-secondary me-2">
-				.col-4<br>Since 9 + 4 = 13 &gt;ts wrapped onto a new line as
-				one contiguous unit.
+				.col-3<br>Since 9 + 4 = 13 &gt;ts wrapped onto a new line as
+				one contiguous unit. 
+				<img src="https://picsum.photos/300/200?random=1"
+					 class="img-fluid rounded " alt="...">
 			</div>
 
-			<div class="col-7 right border border-2 border-secondary rounded-2">
+			<div class="col-7 pt-3 border border-2 border-secondary rounded-2">
 
 				<div class="row justify-content-center">
 					<div class="col-5">
@@ -85,57 +101,93 @@
 					</div>
 					<div class="col-5">
 						用餐時間
-							<div class="input-group date" id="datepicker">
-		                        <input type="text" class="form-control" id="DId" readonly/>
-		                        <span class="input-group-append">
-		                            <span class="input-group-text bg-white d-block">
-		                                <i class="bi bi-calendar"></i>
-		                            </span>
-		                        </span>
-		                    </div>
-							
-
-
+						<div class="input-group date" id="datepicker">
+							<input type="text" class="form-control" id="DId" readonly /> <span
+								class="input-group-append"> <span
+								class="input-group-text bg-white d-block"> <i
+									class="bi bi-calendar"></i>
+							</span>
+							</span>
+						</div>
 					</div>
 				</div>
+
+				<div class="row">
+					<hr>
+					<form id="myForm" action="${contextRoot}/reservation/post">
+						<button class="bt" value="11:00">按鈕1</button>
+						<button class="bt" value="11:30">按鈕2</button>
+						<button class="bt" value="12:00">按鈕3</button>
+						<input type="text" name="selectedButton" id="selectedButton">
+						<input type="submit" value="送出表單">
+					</form>
+
+
+
+
+				</div>
+
+
 			</div>
 		</div>
 	</div>
 
-	<script src="${contextRoot}/assetsForFrontend/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-<%-- 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script> --%>
+	<script
+		src="${contextRoot}/assetsForFrontend/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+	<%-- 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script> --%>
 	<script src="${contextRoot}/bootstrap5.0.2/js/jquery.min.js"></script>
-    <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script>
-    <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
-    <script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
-    
-    
+	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script>
+	<script
+		src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
+	<script
+		src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
+
+
 	<script type="text/javascript">
-        let now = new Date();
-        let year = now.getFullYear()
-        let mouth = (now.getMonth()+1).toString().padStart(2, '0');
-        let date = now.getDate().toString().padStart(2, '0');
-        document.getElementById('DId').value = year +"/"+ mouth +"/"+ date;
-        $(function() {
-            $('#datepicker').datepicker({
-                    format: 'yyyy/mm/dd',
-                    showMonthAfterYear: true,
-                    showOtherMonths: false,
-                    language: 'zh-TW',
-//                     startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-//                     endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
-//                     todayHighlight: true,
-                    autoclose: true,
-                    
-                    beforeShowDay: function(date) {
-                        // 禁用今天之前和3個月之後的日期
-                    	 return date < now || date.getMonth() > (now.getMonth()+3) ? false : true;
-                    }
-                   
-            });
-        });
-    </script>
-	
+		let now = new Date();
+		let year = now.getFullYear()
+		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
+		let date = now.getDate().toString().padStart(2, '0');
+		document.getElementById('DId').value = year + "/" + mouth + "/" + date;
+		$(function() {
+			$('#datepicker')
+					.datepicker(
+							{
+								format : 'yyyy/mm/dd',
+								showOtherMonths : false,
+								language : 'zh-TW',
+								//                     startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+								//                     endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
+								//                     todayHighlight: true,
+								autoclose : true,
+
+								beforeShowDay : function(date) {
+
+									// 禁用今天之前和3個月之後的日期
+									return date < now
+											|| date.getMonth() > (now
+													.getMonth() + 3) ? false
+											: true;
+								}
+
+							});
+		});
+
+		//   ---------以下是按鈕事件
+		$('.bt').on('click', function() {
+			$('.bt').removeClass('active');
+			$(this).addClass('active');
+			$('#selectedButton').val($(this).val());
+		});
+
+		$('#myForm').on('submit', function(event) {
+			event.preventDefault();
+			const selectedButtonValue = $('#selectedButton').val();
+			console.log(selectedButtonValue); // 傳至後端的值
+			// 在此處發送表單至後端...
+		});
+	</script>
+
 </body>
 
 </html>
