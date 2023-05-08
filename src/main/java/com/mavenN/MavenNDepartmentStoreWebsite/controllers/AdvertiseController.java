@@ -11,9 +11,11 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.AdvertiseCate;
@@ -94,11 +96,67 @@ public class AdvertiseController {
 	@DeleteMapping("/Advertise/Advertise/delete")
 	public String deleteAdvertiseById(@RequestParam Integer advertiseId) {
 				advertiseService.deleteadvertiseById(advertiseId);
-		return "/Advertise/Advertise/AdvertiseBack";
+				return "redirect:/Advertise/Advertise/advertiseBack";
 
 	}
 	
 	
 	
+//	更新廣告  透過 id (原版)
 	
-}
+//	@GetMapping("/Advertise/Advertise/editAdvertise")
+//	public String editAdvertise(@RequestParam("advertiseId") Integer advertiseId, Model model) {
+//		Advertise advertise =advertiseService.findAdvertiseById(advertiseId);
+//		
+//		List<Advertise> advertiseList = advertiseService.findAllAdvertise();
+//		model.addAttribute("advertiseList",advertiseList);
+//		
+//		model.addAttribute("advertise",advertise);		
+//		return "/Advertise/Advertise/AdvertiseEdit";
+//		
+//		
+//	}
+	
+	
+	@GetMapping("/Advertise/Advertise/editAdvertise")
+	public String editAdvertise(@RequestParam("advertiseId") Integer advertiseId, Model model) {
+	Advertise advertise = advertiseService.findAdvertiseById(advertiseId);
+	model.addAttribute("advertise", advertise);
+	
+	List<AdvertiseCate> advertiseCateList = advertiseCateService.findAllAdCate();
+	model.addAttribute("advertiseCateList", advertiseCateList);
+	
+	List<Company> companyList = companyRepository.findAll();
+	model.addAttribute("companyList",companyList);
+
+	return "/Advertise/Advertise/AdvertiseEdit";
+	}
+	
+	
+	
+	
+	@PutMapping("/Advertise/Advertise/editAdvertise")
+	public String putEditAdvertise(@ModelAttribute("advertise") Advertise advertise,
+			@RequestParam(value = "transferToByteArray", required = false) MultipartFile advertisePictureFile) {
+		if (advertisePictureFile != null && !advertisePictureFile.isEmpty()) {
+			try {
+				// Get bytes of the uploaded file
+				byte[] advertisePicture = advertisePictureFile.getBytes();
+				advertise.setAdvertisePicture(advertisePicture);
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		} else {
+			Advertise oldadvertise = advertiseService.findAdvertiseById(advertise.getAdvertiseId());
+			advertise.setAdvertisePicture(oldadvertise.getAdvertisePicture());
+		}
+		advertiseService.updateAdvertiseById(advertise.getAdvertiseId(), advertise);
+		return "redirect:/Advertise/Advertise/advertiseBack";
+	}
+		
+		
+		
+		
+	}
+	
+	

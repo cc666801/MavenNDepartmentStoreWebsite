@@ -86,18 +86,18 @@
 								<td>${advertise.advertiseDiscount}</td>
 								<td>${advertise.advertiseFrequency}</td>
 								<td><form:form
-										action="${contextRoot}/Advertise/Adv/editAdCate" method="get">
-										<input type="hidden" name="advertiseCateId"
-											value="${cate.advertiseCateId}">
+										action="${contextRoot}/Advertise/Advertise/editAdvertise" method="get">
+										<input type="hidden" name="advertiseId"
+											value="${advertise.advertiseId}">
 										<button type="submit" class="btn btn-warning">編輯</button>
 
 
 									</form:form></td>
 								<td><form:form
-										action="${contextRoot}/Advertise/Adv/deleteAdCate"
+										action="${contextRoot}/Advertise/Advertise/delete"
 										method="DELETE">
-										<input type="hidden" name="advertiseCateId"
-											value="${cate.advertiseCateId}">
+										<input type="hidden" name="advertiseId"
+											value="${advertise.advertiseId}">
 										<button type="submit" class="btn btn-danger">刪除</button>
 									</form:form></td>
 							</tr>

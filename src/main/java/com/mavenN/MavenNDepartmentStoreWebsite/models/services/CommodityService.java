@@ -138,6 +138,7 @@ public class CommodityService {
 		return commodityRepository.findByCommShelveIsTrue(pageable);
 	}
 	
+	
 //	嘗試做分類的分頁器   
 	public Page<Commodity> usePgbToFindCommodityByCommcate(CommCate commCate, Integer pageNumber) {
 		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
