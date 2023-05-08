@@ -14,7 +14,7 @@
   * Author: BootstrapMade.com
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
-
+          <link rel="stylesheet" href="${contextRoot}/assetsForFrontend/css/floor.css">
 
       </head>
 

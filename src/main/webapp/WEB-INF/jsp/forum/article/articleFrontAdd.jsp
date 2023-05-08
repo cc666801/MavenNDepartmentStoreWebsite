@@ -24,14 +24,7 @@
 <!-- include summernote-ko-KR -->
 <script src="../summernote/lang/summernote-zh-TW.js"></script>
 
-<style>
-#imagePreview {
-	width: 200px;
-	height: 200px;
-	object-fit: cover;
-	margin-left: 10px;
-}
-</style>
+
 </head>
 <body>
 
@@ -42,7 +35,8 @@
 	<main id="main">
 		<div class="card">
 			<h1>文章管理-新增</h1>
-			<form:form modelAttribute="article" method="post" enctype="multipart/form-data"
+			<form:form modelAttribute="article" method="post"
+				enctype="multipart/form-data"
 				action="${contextRoot}/articleFront/post">
 				<form:label path="articleTitle">標題:</form:label>
 				<form:input path="articleTitle" required="required" />
@@ -58,7 +52,8 @@
 				<form:label path="articleImage">文章縮圖:</form:label>
 				<form:input id="articleImage" path="imgToByte" type="file"
 					accept="image/*"></form:input>
-				<img id="imagePreview" src="" alt="圖片預覽">
+				<img id="imagePreview" src=""
+					style="display: none; max-width: 200px; max-height: 200px; object-fit: cover; margin-left: 10px;">
 				<br>
 				<input type="hidden" name="content" id="summernote-input">
 				<div id="summernote"></div>
@@ -92,9 +87,22 @@
 		var input = document.getElementById('articleImage');
 		input.addEventListener('change', function() {
 			var preview = document.getElementById('imagePreview');
+			if (input.files.length === 0) {
+				preview.style.display = 'none';
+			} else {
+				preview.src = URL.createObjectURL(input.files[0]);
+				preview.style.display = 'inline-block';
+			}
+			var preview = document.getElementById('imagePreview');
 			preview.src = URL.createObjectURL(input.files[0]);
 		});
 	</script>
-
+	<script>
+		// 在View頁面中加入這個判斷
+		if ("${errorMsg}") {
+			alert("${errorMsg}");
+			window.location.href = "${contextRoot}/member/login";
+		}
+	</script>
 </body>
 </html>

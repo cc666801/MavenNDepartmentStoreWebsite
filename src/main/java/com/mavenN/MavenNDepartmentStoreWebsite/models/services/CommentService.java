@@ -70,5 +70,12 @@ public class CommentService {
 		return findAllComment;
 	}
 	
+	public List<Comment> findByArticleId(Integer articleId) {
+	    return commentRepository.findByArticleArticleID(articleId);
+	}
+	
+	public int countCommentsByArticleId(int articleId) {
+        return commentRepository.countByArticleId(articleId);
+    }
 	
 }

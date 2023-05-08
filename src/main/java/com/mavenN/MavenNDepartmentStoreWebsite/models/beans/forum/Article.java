@@ -22,8 +22,11 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.persistence.Transient;
 
+import org.hibernate.annotations.Formula;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.web.multipart.MultipartFile;
+
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 
 @Entity
 @Table(name = "article")
@@ -36,8 +39,11 @@ public class Article {
 
 	@Column(name = "title", nullable = false)
 	private String articleTitle;
-	@Column(name = "member_id")
-	private String memberID;
+	
+	
+	@ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 
 	@ManyToOne(fetch = FetchType.LAZY)
 	@JoinColumn(name = "article_category_id")
@@ -76,6 +82,7 @@ public class Article {
 	@Column(name = "article_image", columnDefinition = "varbinary(MAX)")
 	 private byte[] articleImage;
 	
+	@Transient
 	private String articlePreview;
 	
 	@Transient
@@ -84,6 +91,41 @@ public class Article {
 	@Transient
 	private String articleBase64;
 	
+	
+	 @Transient
+	    private boolean liked;
+
+	    public boolean isLiked() {
+	        return liked;
+	    }
+	    
+//	    @Formula("(SELECT COUNT(*) FROM ArticleLike al WHERE al.article_id = article_id)")
+//	    private Integer articleLikesCount;
+//	    
+//	    @Formula("(SELECT COUNT(*) FROM Comment c WHERE c.article_id = comment_id)")
+//	    private int commentCount;
+
+	
+//	public Integer getArticleLikesCount() {
+//			return articleLikesCount;
+//		}
+//
+//		public void setArticleLikesCount(Integer articleLikesCount) {
+//			this.articleLikesCount = articleLikesCount;
+//		}
+//
+//		public int getCommentCount() {
+//			return commentCount;
+//		}
+//
+//		public void setCommentCount(int commentCount) {
+//			this.commentCount = commentCount;
+//		}
+
+	public void setLiked(boolean liked) {
+			this.liked = liked;
+		}
+
 	public Article() {
 
 	}
@@ -104,12 +146,14 @@ public class Article {
 		this.articleTitle = articleTitle;
 	}
 
-	public String getMemberID() {
-		return memberID;
+	
+
+	public Member getMember() {
+		return member;
 	}
 
-	public void setMemberID(String memberID) {
-		this.memberID = memberID;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 	public ArticleCategory getArticleCategory() {

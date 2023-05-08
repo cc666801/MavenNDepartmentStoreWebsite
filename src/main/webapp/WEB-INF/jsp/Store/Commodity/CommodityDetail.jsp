@@ -1,25 +1,26 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8"
-	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
-<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
-<!DOCTYPE html>
-<html>
-<head>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
+	<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+		<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
+			<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt" %>
+				<c:set var="contextRoot" value="${pageContext.request.contextPath}" />
+				<!DOCTYPE html>
+				<html>
 
-<!-- =======================================================
+				<head>
+
+					<!-- =======================================================
   * Template Name: ZenBlog
   * Updated: Mar 10 2023 with Bootstrap v5.2.3
   * Template URL: https://bootstrapmade.com/zenblog-bootstrap-blog-template/
   * Author: BootstrapMade.com
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
-</head>
-<body class="sb-nav-fixed">
-	<!-- ======= Header ======= -->
-	<jsp:include page="../../layout/header.jsp"></jsp:include>
-	<!-- End Header -->
+				</head>
+
+				<body class="sb-nav-fixed">
+					<!-- ======= Header ======= -->
+					<jsp:include page="../../layout/header.jsp"></jsp:include>
+					<!-- End Header -->
 
 
 
@@ -92,7 +93,7 @@
 								<div class="col-lg-6">
 									<div class="info">
 										<h5 class="mb-0">商品編號</h5>
-										<p>${commodityInfo.commId}</p>
+										<p id="commodityId">${commodityInfo.commId}</p>
 									</div>
 
 									<div class="info">
@@ -123,11 +124,9 @@
 
 									<div class="info">
 										<h5 class="mb-0">加入購物車</h5>
-										<form
-											action="${contextRoot}/add-to-cart/${commodityInfo.commId}"
-											method="POST">
-											<button type="submit" class="btn btn-primary">加入購物車</button>
-										</form>
+										
+										<button class="btn btn-primary"  id="shopping-cart-button">加入購物車</button>
+										
 									</div>
 
 									<div class="info">
@@ -189,13 +188,13 @@
 	</main>
 
 
-	<!-- ======= Footer ======= -->
-	<jsp:include page="../../layout/footer.jsp"></jsp:include>
-	<!-- End Footer -->
+					<!-- ======= Footer ======= -->
+					<jsp:include page="../../layout/footer.jsp"></jsp:include>
+					<!-- End Footer -->
 
-	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
-	<!-- 	<script -->
-	<%-- 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
+					<!-- 引入 Bootstrap 的 JavaScript 文件 -->
+					<!-- 	<script -->
+					<%-- src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
 
 	<script>
 		// 		// 獲取商品原價元素
@@ -207,5 +206,50 @@
 	</script>
 
 
-</body>
-</html>
+
+						<!-- 	購物車 -->
+						<script>
+							// load on 事件
+							document.addEventListener("DOMContentLoaded", function () {
+								var shoppingCartButton = document.getElementById('shopping-cart-button');
+								var commodityId = document.getElementById('commodityId').innerText;
+								var memberId = "${member.id}";
+
+								shoppingCartButton.addEventListener('click', function (e) {
+									e.preventDefault(); // 防止表单提交
+
+									var quantity = document.getElementById('quantity').value; // 获取数量
+
+									console.log("memberId:" + memberId + "commodityId:" + commodityId + "quantity:" + quantity);
+
+									fetch('${contextRoot}/api/shoppingCart', {
+										method: 'POST',
+										headers: {
+											'Content-Type': 'application/json'
+										},
+										body: JSON.stringify({
+											commodityId: commodityId,
+											quantity: quantity,
+											memberId: memberId
+										})
+									})
+										.then(response => {
+											if (response.ok) {
+												console.log('加入購物車成功');
+												alert('加入購物車成功');
+											} else {
+												console.log('加入購物車失敗');
+												alert('加入購物車失敗');
+											}
+										})
+										.catch(error => {
+											console.error('Error:', error);
+										});
+								});
+							});
+						</script>
+
+
+				</body>
+
+				</html>

@@ -24,17 +24,33 @@
 							<a href="${contextRoot}/articleFront/add"><button>發文</button></a>
 						</div>
 						<h3 class="category-title">討論區文章列表</h3>
+
+						<form id="sortForm" method="get"
+							action="${pageContext.request.contextPath}/articleList">
+							<select name="sortBy" onchange="this.form.submit()">
+								<option value="articleCreateTime"
+									${sortBy == 'articleCreateTime' ? 'selected' : ''}>發文時間</option>
+<!-- 								<option value="Article.articleLikes.size()" -->
+<%-- 									${sortBy == 'Article.articleLikes.size()' ? 'selected' : ''}>點讚數</option> --%>
+<!-- 								<option value="commentCounts" -->
+<%-- 									${sortBy == 'commentCounts' ? 'selected' : ''}>留言數</option> --%>
+								<option value="comments.commentEditTime"
+									${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後留言時間</option>
+							</select>
+						</form>
+
 						<c:forEach var="art" items="${page.content}">
 							<div class="d-md-flex post-entry-2 small-img">
 								<a href="${contextRoot}/articleContent/${art.articleID}"
 									class="me-4 thumbnail"> <img
 									src="data:image/jpeg;base64,${art.articleBase64}" alt=""
-									class="img-fluid">
+									class="img-fluid" style="max-width: 80%; max-height: 80%;">
 								</a>
 								<div>
 									<div class="post-meta">
 										<span class="date">${art.articleCategory.articleCategoryName}</span>
 										<span class="mx-1">&bullet;</span> <span>${art.articleCreateTime}</span>
+										<span>留言數:${commentCounts[art.articleID]}/讚數:${art.articleLikes.size()}</span>
 									</div>
 									<h3>
 										<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
@@ -42,10 +58,11 @@
 									<p>${art.articlePreview}</p>
 									<div class="d-flex align-items-center author">
 										<div class="photo">
-											<img src="assets/img/person-2.jpg" alt="" class="img-fluid">
+											<img src="../assetsForFront/img/person-2.jpg" alt=""
+												class="img-fluid">
 										</div>
 										<div class="name">
-											<h3 class="m-0 p-0">發文者名稱</h3>
+											<h3 class="m-0 p-0">${art.member.name}</h3>
 										</div>
 									</div>
 								</div>
@@ -81,6 +98,19 @@
 					</div>
 
 					<div class="col-md-3">
+
+						<div class="aside-block">
+							<h3 class="aside-title">類別選單</h3>
+							<ul class="aside-tags list-unstyled">
+								<li><a href="?category=">所有類別</a></li>
+								<c:forEach var="category" items="${categoryList}">
+									<li><a href="?category=${category.articleCategoryID}">${category.articleCategoryName}</a></li>
+								</c:forEach>
+							</ul>
+						</div>
+						<!-- End Tags -->
+
+
 						<!-- ======= Sidebar ======= -->
 						<div class="aside-block">
 
@@ -262,10 +292,10 @@
 								<!-- End Trending -->
 
 								<!-- Latest -->
-								
-									<div class="tab-pane fade" id="pills-latest" role="tabpanel"
-										aria-labelledby="pills-latest-tab">
-										<c:forEach var="art" items="${page.content}">
+
+								<div class="tab-pane fade" id="pills-latest" role="tabpanel"
+									aria-labelledby="pills-latest-tab">
+									<c:forEach var="art" items="${page.content}">
 										<div class="post-entry-1 border-bottom">
 											<div class="post-meta">
 												<span class="date">${art.articleCategory.articleCategoryName}</span>
@@ -276,10 +306,10 @@
 											</h2>
 											<span class="author mb-3 d-block">發文者名稱</span>
 										</div>
-										</c:forEach>
-									</div>
-								
-								
+									</c:forEach>
+								</div>
+
+
 								<!-- End Latest -->
 
 
@@ -307,20 +337,7 @@
 								</div>
 								<!-- End Categories -->
 
-								<div class="aside-block">
-									<h3 class="aside-title">Tags</h3>
-									<ul class="aside-tags list-unstyled">
-										<li><a href="category.html">Business</a></li>
-										<li><a href="category.html">Culture</a></li>
-										<li><a href="category.html">Sport</a></li>
-										<li><a href="category.html">Food</a></li>
-										<li><a href="category.html">Politics</a></li>
-										<li><a href="category.html">Celebrity</a></li>
-										<li><a href="category.html">Startups</a></li>
-										<li><a href="category.html">Travel</a></li>
-									</ul>
-								</div>
-								<!-- End Tags -->
+
 
 							</div>
 

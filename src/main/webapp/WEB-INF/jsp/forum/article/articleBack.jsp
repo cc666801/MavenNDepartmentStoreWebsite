@@ -70,7 +70,7 @@
 											<td><img src="data:image/jpeg;base64,${art.articleBase64}"></td>
 											<td>${art.articleID}</td>
 											<td>${art.articleTitle}</td>
-											<td>帳號</td>
+											<td>${art.member.account}</td>
 											<td>${art.articleCategory.articleCategoryName}</td>
 											<td><a
 												href="${contextRoot}/articleContent/${art.articleID}">文章內容</a></td>

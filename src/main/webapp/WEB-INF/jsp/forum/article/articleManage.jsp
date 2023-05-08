@@ -54,17 +54,17 @@ img {
 								<td><img src="data:image/jpeg;base64,${art.articleBase64}"></td>
 								<td>${art.articleID}</td>
 								<td>${art.articleTitle}</td>
-								<td>帳號</td>
+								<td>${art.member.account}</td>
 								<td>${art.articleCategory.articleCategoryName}</td>
 								<td><a
 									href="${contextRoot}/articleContent/${art.articleID}">文章內容</a></td>
 								<td>${art.articleCreateTime}</td>
 								<td>${art.articleEditTime}</td>
-								<td><form action="${contextRoot}/articleBack/edit">
+								<td><form action="${contextRoot}/articleManage/edit">
 										<input type="hidden" name="id" value="${art.articleID}" /> <input
 											type="submit" value="編輯" />
 									</form></td>
-								<td><form action="${contextRoot}/articleBack/delete"
+								<td><form action="${contextRoot}/articleManage/delete"
 										method="post" onclick="return confirm('確定要刪除這篇文章嗎?')">
 										<input type="hidden" name="_method" value="delete" /> <input
 											type="hidden" name="id" value="${art.articleID}" /> <input
@@ -91,6 +91,14 @@ img {
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 	<!-- =================================== bootstrap ============================================= -->
+<script>
+    // 沒會員跳轉
+    if ("${errorMsg}") {
+        alert("${errorMsg}");
+        window.location.href = "${contextRoot}/member/login";
+    }
+</script>
+
 
 </body>
 </html>

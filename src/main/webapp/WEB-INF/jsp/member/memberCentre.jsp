@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 
@@ -33,14 +33,41 @@ table {
 	background-color: #4CAF50;
 	color: white;
 }
+
+.btn-link {
+	color: #4CAF50;
+	text-decoration: none;
+	border: none;
+	background-color: transparent;
+	font-size: 16px;
+	padding: 0;
+	margin-right: 20px;
+}
+
+.btn-link:hover {
+	color: #3e8e41;
+}
+button[type="submit"] {
+	background-color: #4CAF50;
+	border: none;
+	color: white;
+	padding: 10px 20px;
+	text-align: center;
+	text-decoration: none;
+	display: inline-block;
+	font-size: 16px;
+	margin-top: 20px;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #3e8e41;
+}
 </style>
 </head>
 <body>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
-		<div class="col-auto">
-			<a href="${contextRoot}/" class="btn btn-link text-decoration-none"
-				style="color: blue;">首頁</a>
-		</div>
 		<h1 style="text-align: center; color: #4CAF50;">會員資料</h1>
 		<table class="table">
 			<tr>
@@ -81,7 +108,7 @@ table {
 				<td><form:form
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"
 						method="GET">
-						<input type="submit" class="btn btn-custom btn-block" style="width: auto;" value="修改資料">
+						<button type="submit">修改資料</button>
 					</form:form></td>
 			</tr>
 		</table>
