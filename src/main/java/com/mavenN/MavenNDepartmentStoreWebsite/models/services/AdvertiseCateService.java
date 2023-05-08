@@ -14,24 +14,24 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.StoreSystem.Ad
 public class AdvertiseCateService {
 
 	@Autowired
-	private AdvertiseCateRepository AdvertiseCateRepository;
+	private AdvertiseCateRepository advertiseCateRepository;
 
 //	新增類別   名稱簡寫  
 
 	public void addAdvertiseCate(AdvertiseCate advertiseCate) {
-		AdvertiseCateRepository.save(advertiseCate);
+		advertiseCateRepository.save(advertiseCate);
 	}
 
 //	刪除透過 id 
 
 	public void deleteById(Integer advertiseCateId) {
-		AdvertiseCateRepository.deleteById(advertiseCateId);
+		advertiseCateRepository.deleteById(advertiseCateId);
 	}
 
 //	找尋 所有廣告類別
 
 	public List<AdvertiseCate> findAllAdCate() {
-		List<AdvertiseCate> findAllAdCate = AdvertiseCateRepository.findAll();
+		List<AdvertiseCate> findAllAdCate = advertiseCateRepository.findAll();
 		return findAllAdCate;
 	}
 
@@ -39,7 +39,7 @@ public class AdvertiseCateService {
 //	更新 透過id @Transactional這個要加 才會啟動交易
 	@Transactional
 	public AdvertiseCate updateAdCateById(Integer advertiseCateId , AdvertiseCate newcate) {
-		Optional<AdvertiseCate> option = AdvertiseCateRepository.findById(advertiseCateId);
+		Optional<AdvertiseCate> option = advertiseCateRepository.findById(advertiseCateId);
 		
 		if(option.isPresent()) {
 			AdvertiseCate adCate = option.get();
@@ -56,7 +56,7 @@ public class AdvertiseCateService {
 //	透過 id 去查詢類別 之後接著找到所有類別用
 	
 	public AdvertiseCate findAdCateById(Integer advertiseCateId) {
-		Optional<AdvertiseCate> option = AdvertiseCateRepository.findById(advertiseCateId);
+		Optional<AdvertiseCate> option = advertiseCateRepository.findById(advertiseCateId);
 		
 		if(option.isEmpty()) {
 			return null;

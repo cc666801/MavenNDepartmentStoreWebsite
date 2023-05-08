@@ -11,10 +11,10 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HomeController {
 
-	@GetMapping(value = { "/" })
-	public String getHomePage() {
-		return "frontend/index";
-	}
+//	@GetMapping(value = { "/" })
+//	public String getHomePage() {
+//		return "frontend/index";
+//	}
 
 	@GetMapping(value = { "/exampleFrontendPage" })
 	public String getExamplePage() {
@@ -27,18 +27,20 @@ public class HomeController {
 	}
 
 	
-//	5/5  嘗試新增錯誤頁面
-//	@GetMapping(value = {"/error"})
-//	@ControllerAdvice
-//	public class ExceptionHandlerController {
-//		@ExceptionHandler(Exception.class)
-//		public ModelAndView handleException(HttpServletRequest request, Exception ex) {
-//			ModelAndView modelAndView = new ModelAndView();
-//			modelAndView.addObject("exception", ex);
-//			modelAndView.addObject("url", request.getRequestURL());
-//			modelAndView.setViewName("error");
-//			return modelAndView;
-//		}
-	}
+	
+
+
+
+
+
+
+
+
+
+
+
+
+
+}
 
 

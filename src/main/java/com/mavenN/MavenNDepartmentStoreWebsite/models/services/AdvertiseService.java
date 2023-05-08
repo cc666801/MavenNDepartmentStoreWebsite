@@ -5,6 +5,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.StoreSystem.AdvertiseRepository;
@@ -52,7 +53,7 @@ public class AdvertiseService {
 	}
 
 //	透過 id廣告 更新
-
+	@Transactional
 	public Advertise updateAdvertiseById(Integer advertiseId, Advertise newadvertise) {
 		Optional<Advertise> option = advertiseRepository.findById(advertiseId);
 

@@ -117,11 +117,10 @@ public class AdvertiseController {
 //		
 //	}
 	
-	
+//	更新
 	@GetMapping("/Advertise/Advertise/editAdvertise")
 	public String editAdvertise(@RequestParam("advertiseId") Integer advertiseId, Model model) {
 	Advertise advertise = advertiseService.findAdvertiseById(advertiseId);
-	model.addAttribute("advertise", advertise);
 	
 	List<AdvertiseCate> advertiseCateList = advertiseCateService.findAllAdCate();
 	model.addAttribute("advertiseCateList", advertiseCateList);
@@ -129,6 +128,7 @@ public class AdvertiseController {
 	List<Company> companyList = companyRepository.findAll();
 	model.addAttribute("companyList",companyList);
 
+	model.addAttribute("advertise", advertise);
 	return "/Advertise/Advertise/AdvertiseEdit";
 	}
 	
@@ -147,8 +147,8 @@ public class AdvertiseController {
 				e.printStackTrace();
 			}
 		} else {
-			Advertise oldadvertise = advertiseService.findAdvertiseById(advertise.getAdvertiseId());
-			advertise.setAdvertisePicture(oldadvertise.getAdvertisePicture());
+			Advertise oldAdvertise = advertiseService.findAdvertiseById(advertise.getAdvertiseId());
+			advertise.setAdvertisePicture(oldAdvertise.getAdvertisePicture());
 		}
 		advertiseService.updateAdvertiseById(advertise.getAdvertiseId(), advertise);
 		return "redirect:/Advertise/Advertise/advertiseBack";
@@ -156,6 +156,29 @@ public class AdvertiseController {
 		
 		
 		
+//	嘗試顯示圖片在主畫面之中
+//	嘗試把資料庫圖片塞入網頁之中
+	@GetMapping(value = { "/" })
+	public String showAdPicture(Model model) {
+		List<Advertise> findAllAdvertise = advertiseService.findAllAdvertise();
+		for (Advertise advertise : findAllAdvertise) {
+			byte[] imageData = advertise.getAdvertisePicture();
+			if (imageData != null) {
+				String base64String = Base64.getEncoder().encodeToString(imageData);
+				advertise.setBase64StringadvertisePicture(base64String);
+			}
+		}
+
+		model.addAttribute("findAllAdvertise",findAllAdvertise);
+				
+		
+		return "frontend/index";
+		}
+
+
+	
+	
+	
 		
 	}
 	
