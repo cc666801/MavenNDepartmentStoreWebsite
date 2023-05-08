@@ -9,17 +9,12 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<link
-	href="${contextRoot}/assetsForFrontend/vendor/bootstrap/css/bootstrap.min.css"
-	rel="stylesheet">
-<link
-	href="${contextRoot}/assetsForFrontend/vendor/bootstrap-icons/bootstrap-icons.css"
-	rel="stylesheet">
+<link href="${contextRoot}/assetsForFrontend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+<link href="${contextRoot}/assetsForFrontend/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
-<link rel="stylesheet"
-	href="${contextRoot}/bootstrap5.0.2/css/bootstrap-datepicker.min.css">
-<link rel="stylesheet"
-	href="${contextRoot}/bootstrap5.0.2/css/font-awesome.min.css">
+<link rel="stylesheet" href="${contextRoot}/bootstrap5.0.2/css/bootstrap-datepicker.min.css">
+<link rel="stylesheet" href="${contextRoot}/bootstrap5.0.2/css/font-awesome.min.css">
+
 <style>
 .bt {
 	background-color: white;
@@ -33,6 +28,23 @@
 	border: 1px solid;
 	border-radius: 10px;
 	padding: 10px;
+}
+
+fieldset, legend {
+   all: revert;
+}
+fieldset{
+	padding: 0;
+	border: none;
+	border-top: 1px solid ;
+}
+
+.title{
+	
+/* 	margin: 10px; */
+	text-align: start;
+	font-size: 17px;
+	
 }
 </style>
 <title>餐廳頁面</title>
@@ -76,15 +88,13 @@
 	</div>
 
 	<div class="container">
-		<div class="row gx-sm-3 mt-2 justify-content-center">
-			<div class="col-3 border border-2 border-secondary me-2">
-				.col-3<br>Since 9 + 4 = 13 &gt;ts wrapped onto a new line as
-				one contiguous unit. 
+		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
+			<div class="col-sm-3 col-12 border border-2 border-secondary me-2">
 				<img src="https://picsum.photos/300/200?random=1"
-					 class="img-fluid rounded " alt="...">
+					 class="img-fluid rounded " alt="餐廳圖片">
 			</div>
 
-			<div class="col-7 pt-3 border border-2 border-secondary rounded-2">
+			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
 
 				<div class="row justify-content-center">
 					<div class="col-5">
@@ -113,12 +123,28 @@
 				</div>
 
 				<div class="row">
-					<hr>
-					<form id="myForm" action="${contextRoot}/reservation/post">
-						<button class="bt" value="11:00">按鈕1</button>
-						<button class="bt" value="11:30">按鈕2</button>
-						<button class="bt" value="12:00">按鈕3</button>
-						<input type="text" name="selectedButton" id="selectedButton">
+					
+					<form id="myForm" action="#">
+						<fieldset>
+							<legend class="title">中午</legend>
+							<button type="button" class="bt" value="11:00">按鈕1</button>
+							<button type="button" class="bt" value="11:30">按鈕2</button>
+							<button type="button" class="bt" value="12:00">按鈕3</button>
+						</fieldset>
+						<fieldset>
+							<legend class="title">下午</legend>
+							<button type="button" class="bt" value="13:00">按鈕1</button>
+							<button type="button" class="bt" value="13:30">按鈕2</button>
+							<button type="button" class="bt" value="14:30">按鈕3</button>
+							<button type="button" class="bt" value="14:40">按鈕3</button>
+						</fieldset>
+						<fieldset>
+							<legend class="title">下午</legend>
+							<button type="button" class="bt" value="18:00">按鈕1</button>
+							<button type="button" class="bt" value="18:30">按鈕2</button>
+							<button type="button" class="bt" value="19:00">按鈕3</button>
+							<input type="hidden" name="selectedButton" id="selectedButton">
+						</fieldset>
 						<input type="submit" value="送出表單">
 					</form>
 
@@ -137,10 +163,8 @@
 	<%-- 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script> --%>
 	<script src="${contextRoot}/bootstrap5.0.2/js/jquery.min.js"></script>
 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script>
-	<script
-		src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
-	<script
-		src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
+	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
+	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
 
 
 	<script type="text/javascript">
@@ -150,27 +174,21 @@
 		let date = now.getDate().toString().padStart(2, '0');
 		document.getElementById('DId').value = year + "/" + mouth + "/" + date;
 		$(function() {
-			$('#datepicker')
-					.datepicker(
-							{
-								format : 'yyyy/mm/dd',
-								showOtherMonths : false,
-								language : 'zh-TW',
-								//                     startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-								//                     endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
-								//                     todayHighlight: true,
-								autoclose : true,
+			$('#datepicker').datepicker({
+					format : 'yyyy/mm/dd',
+					showOtherMonths : false,
+					language : 'zh-TW',
+					//        startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
+					//        endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
+					//        todayHighlight: true,
+					autoclose : true,
 
-								beforeShowDay : function(date) {
+					beforeShowDay : function(date) {
+					// 禁用今天之前和3個月之後的日期
+					return date < now || date.getMonth() > (now.getMonth() + 3) ? false: true;
+					}
 
-									// 禁用今天之前和3個月之後的日期
-									return date < now
-											|| date.getMonth() > (now
-													.getMonth() + 3) ? false
-											: true;
-								}
-
-							});
+				});
 		});
 
 		//   ---------以下是按鈕事件
@@ -180,8 +198,7 @@
 			$('#selectedButton').val($(this).val());
 		});
 
-		$('#myForm').on('submit', function(event) {
-			event.preventDefault();
+		$('#myForm').on('submit', function() {
 			const selectedButtonValue = $('#selectedButton').val();
 			console.log(selectedButtonValue); // 傳至後端的值
 			// 在此處發送表單至後端...
