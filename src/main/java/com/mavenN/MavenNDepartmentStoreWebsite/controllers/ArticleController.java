@@ -195,40 +195,24 @@ public class ArticleController {
 ///////////////前台//////////////////////////
 
 	// 前台文章列表
+	
 	@GetMapping("/articleList")
 	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId,@RequestParam(name = "sortBy", defaultValue = "articleCreateTime") String sortBy, Model model) {
 		
-<<<<<<< HEAD
-<<<<<<< Updated upstream
-		Page<Article> page;		
-	    if (categoryId != null) {
-	        page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber);
-	    } else {
-	        page = articleService.findArticleByPage(pageNumber);
-	    }
-=======
-=======
->>>>>>> main
+
 		 Page<Article> page;
 		
 		 if (categoryId != null) {
 			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
-//		    } else if ("articleLikes.size".equals(sortBy)) {
-//		    	page = articleService.findArticlesOrderByArticleLikesCount(pageNumber, sortBy);
-//		    } else if ("commentCount".equals(sortBy)) {
-//		    	page = articleService.findArticlesOrderByCommentsCount(pageNumber, sortBy);
+		    } else if ("articleLikeCount".equals(sortBy)) {
+		        page = articleService.findArticleByArticleLikeCountAndPage(pageNumber, 5);
+		    } else if ("commentCount".equals(sortBy)) {
+		        page = articleService.findArticleByCommentCountAndPage(pageNumber,5);
 		    } 
 			 else {
 		    	page = articleService.findArticleByPage(pageNumber, sortBy);
 		    }
-<<<<<<< HEAD
-//////////
-		   
->>>>>>> Stashed changes
-=======
 
-		   
->>>>>>> main
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
@@ -247,16 +231,22 @@ public class ArticleController {
 			Integer commentCount = commentService.countCommentsByArticleId(art.getArticleID());
 			commentCounts.put(art.getArticleID(), commentCount);
 		}	
-		
-		
-		
-		
+				
+				
 		model.addAttribute("commentCounts", commentCounts);
 		model.addAttribute("page", page);
 		//取得類別
 		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
 		model.addAttribute("categoryList", categoryList);
-		
+		//最新文章
+		Page<Article> latestArticles = articleService.findArticleByPage(1);
+		model.addAttribute("latestArticles", latestArticles);
+		//熱門文章
+		Page<Article> hotsArticles = articleService.findArticleByArticleLikeCountAndPage(1, 5);
+		model.addAttribute("hotsArticles", hotsArticles);		
+		//人氣文章
+				Page<Article> commentsArticles = articleService.findArticleByCommentCountAndPage(1, 5);
+				model.addAttribute("commentsArticles", commentsArticles);
 		
 		return "/forum/article/articleList";
 	}

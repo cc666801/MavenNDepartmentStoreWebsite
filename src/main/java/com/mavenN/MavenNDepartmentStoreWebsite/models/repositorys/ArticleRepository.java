@@ -14,14 +14,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer>  {
 	
 	 Page<Article> findByArticleCategory_articleCategoryID(Integer categoryId, Pageable pageable);
 	
-	 
-//	// 按照文章点赞数排序
-//	 @Query("SELECT a, COUNT(al) FROM Article a LEFT JOIN a.articleLikes al GROUP BY a.articleID ORDER BY COUNT(al) DESC")
-//	    Page<Object[]> findArticlesOrderByArticleLikesCount(Pageable pageable);
-//
-//	 // 按照文章评论数排序
-//	    @Query("SELECT a, COUNT(c) FROM Article a LEFT JOIN a.comments c GROUP BY a.articleID ORDER BY COUNT(c) DESC")
-//	    Page<Object[]> findArticlesOrderByCommentsCount(Pageable pageable);
+
 	 
 	 
 	

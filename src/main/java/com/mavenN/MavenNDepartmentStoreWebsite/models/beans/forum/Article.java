@@ -99,28 +99,12 @@ public class Article {
 	        return liked;
 	    }
 	    
-//	    @Formula("(SELECT COUNT(*) FROM ArticleLike al WHERE al.article_id = article_id)")
-//	    private Integer articleLikesCount;
-//	    
-//	    @Formula("(SELECT COUNT(*) FROM Comment c WHERE c.article_id = comment_id)")
-//	    private int commentCount;
+	  @Formula("(select count(*) from articleLike al where al.article_id = article_id)")
+	    private int articleLikeCount;
+	  
+	    @Formula("(SELECT COUNT(*) FROM comment c WHERE c.article_id = article_id)")
+	    private int commentCount;
 
-	
-//	public Integer getArticleLikesCount() {
-//			return articleLikesCount;
-//		}
-//
-//		public void setArticleLikesCount(Integer articleLikesCount) {
-//			this.articleLikesCount = articleLikesCount;
-//		}
-//
-//		public int getCommentCount() {
-//			return commentCount;
-//		}
-//
-//		public void setCommentCount(int commentCount) {
-//			this.commentCount = commentCount;
-//		}
 
 	public void setLiked(boolean liked) {
 			this.liked = liked;
