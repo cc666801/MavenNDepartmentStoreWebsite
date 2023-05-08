@@ -3,6 +3,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem;
 import java.text.DateFormatSymbols;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 
 import javax.persistence.Column;
@@ -12,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.PrePersist;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -36,18 +38,21 @@ public class Order {
     @NotNull
     private Member member;
 	
+	@OneToMany(orphanRemoval = true, mappedBy = "order")
+    private List<OrderDetail> orderDetails;
+	
 	@Temporal(TemporalType.TIMESTAMP)
     @DateTimeFormat(pattern = "yyyy/MM/dd HH:mm:ss")
-    @Column(name = "last_updated_time", columnDefinition = "datetime")
-    private Date lastUpdatedTime;
+    @Column(name = "create_order_time", columnDefinition = "datetime")
+    private Date createOrderTime;
 	
 	@Column(name = "coupon_code", columnDefinition = "nvarchar(40)")
 	private String couponCode;
 	
 	@PrePersist
-    public void setLastUpdatedTimeIfNull() {
-        if (lastUpdatedTime == null) {
-        	lastUpdatedTime = new Date();
+    public void setCreateOrderTimeIfNull() {
+        if (createOrderTime == null) {
+        	createOrderTime = new Date();
         }
         SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss.SSS", Locale.US);
         dateFormat.setLenient(false);  // 禁用毫秒數格式化
@@ -62,8 +67,8 @@ public class Order {
                 return new String[]{"Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"};
             }
         });  // 避免月份被縮寫
-        lastUpdatedTime.setTime((lastUpdatedTime.getTime() / 1000) * 1000);  // 將毫秒數設為0
-        String formattedDate = dateFormat.format(lastUpdatedTime);
+        createOrderTime.setTime((createOrderTime.getTime() / 1000) * 1000);  // 將毫秒數設為0
+        String formattedDate = dateFormat.format(createOrderTime);
         System.out.println("Formatted date: " + formattedDate);
     }
 
@@ -94,11 +99,11 @@ public class Order {
 	}
 
 	public Date getLastUpdatedTime() {
-		return lastUpdatedTime;
+		return createOrderTime;
 	}
 
-	public void setLastUpdatedTime(Date lastUpdatedTime) {
-		this.lastUpdatedTime = lastUpdatedTime;
+	public void setLastUpdatedTime(Date createOrderTime) {
+		this.createOrderTime = createOrderTime;
 	}
 
 	public String getCouponCode() {

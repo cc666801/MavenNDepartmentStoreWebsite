@@ -17,12 +17,6 @@ public class ShoppingCartCommodityId implements Serializable {
     @Column(name = "fk_shopping_cart_id")
     private Integer shoppingCartId;
 
-	
-    
-    
-    
-    
-    
     
     public ShoppingCartCommodityId() {
 		super();

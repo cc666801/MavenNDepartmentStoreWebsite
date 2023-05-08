@@ -81,7 +81,7 @@
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
 						<li><a href="${contextRoot}/orderSystem/shoppingCart">購物車</a></li>
-						<li><a href="#">Drop Down 1</a></li>
+						<li><a href="${contextRoot}/orderSystem/order">訂單狀態</a></li>
 					</ul></li>
 
 				<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
