@@ -155,9 +155,9 @@ public class MemberController {
 	    if (member != null) {
 	        member.setVerify("已驗證");
 	        mRepository.save(member);
-	        return "redirect:/memberCentre";
+	        return "member/emailSucessJump";
 	    } else {
-	        return "redirect:/";
+	        return "member/emailFailJump";
 	    }
 	}
 
