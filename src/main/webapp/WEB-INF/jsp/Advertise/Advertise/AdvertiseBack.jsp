@@ -35,7 +35,7 @@
 		<div id="layoutSidenav_content">
 
 
-			<main id="main" >
+			<main id="main">
 
 				<h1 class="mb-3">新增廣告資料後台(新增後顯示畫面)</h1>
 				<form action="${contextRoot}/Advertise/Advertise/add">
@@ -59,7 +59,8 @@
 							<th scope="col">廣告資料上下架</th>
 							<th scope="col">廣告資料費用</th>
 							<th scope="col">廣告資料折扣</th>
-							<th scope="col">廣告點擊次數</th>
+							<th scope="col">廣告點擊次數設定</th>
+							<th scope="col">廣告已被點擊次數</th>
 							<th scope="col">編輯</th>
 							<th scope="col">刪除</th>
 						</tr>
@@ -85,8 +86,10 @@
 								<td>${advertise.advertiseFee}</td>
 								<td>${advertise.advertiseDiscount}</td>
 								<td>${advertise.advertiseFrequency}</td>
+								<td>${advertise.advertiseClick}</td>
 								<td><form:form
-										action="${contextRoot}/Advertise/Advertise/editAdvertise" method="get">
+										action="${contextRoot}/Advertise/Advertise/editAdvertise"
+										method="get">
 										<input type="hidden" name="advertiseId"
 											value="${advertise.advertiseId}">
 										<button type="submit" class="btn btn-warning">編輯</button>

@@ -100,6 +100,10 @@ public class Advertise {
 	private Integer advertiseFrequency;
 //	紀錄廣告點擊次數
 	
+	@Column(name="advertise_Click")
+	private Integer advertiseClick;
+//	紀錄廣告點擊次數
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_advertiseCateId")
 	private AdvertiseCate advertiseCate;
@@ -433,6 +437,24 @@ public class Advertise {
 
 	public void setCompany(Company company) {
 		this.company = company;
+	}
+
+
+
+
+
+
+	public Integer getAdvertiseClick() {
+		return advertiseClick;
+	}
+
+
+
+
+
+
+	public void setAdvertiseClick(Integer advertiseClick) {
+		this.advertiseClick = advertiseClick;
 	}
 
 

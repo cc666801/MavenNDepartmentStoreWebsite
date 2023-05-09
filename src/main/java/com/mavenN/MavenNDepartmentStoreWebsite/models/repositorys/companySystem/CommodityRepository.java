@@ -53,4 +53,10 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 //    List<Commodity> findCommodityBycommNameContaining(@Param("commName") String commName);
 //
 //    
+	
+//	嘗試撰寫 熱門商品排序寫法
+	List<Commodity>findByOrderByCommClickDesc();
+	
+	
+	
 }

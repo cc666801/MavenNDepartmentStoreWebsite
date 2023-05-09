@@ -55,7 +55,7 @@
 
 
 
-		<form:label path="company">類別分類</form:label>
+		<form:label path="company">公司</form:label>
 					<form:select path="company">
 						<c:forEach items="${companyList}" var="company">
 						

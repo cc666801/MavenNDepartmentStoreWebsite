@@ -19,6 +19,7 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commod
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.AdvertiseCate;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseCateService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseService;
@@ -36,6 +37,9 @@ public class AdvertiseController {
 	
 	@Autowired
 	private  CommodityService commodityService;
+	
+	@Autowired
+	private CommodityRepository commodityRepository;
 	
 
 	@Autowired
@@ -161,8 +165,10 @@ public class AdvertiseController {
 		
 //	嘗試顯示圖片在主畫面之中
 //	嘗試把資料庫圖片塞入網頁之中
+//	嘗試顯示 廣告上下架
 	@GetMapping(value = { "/" })
 	public String showAdPicture(Model model) {
+//		顯示廣告
 		List<Advertise> findAllAdvertise = advertiseService.findAllAdvertise();
 		for (Advertise advertise : findAllAdvertise) {
 			byte[] imageData = advertise.getAdvertisePicture();
@@ -174,7 +180,7 @@ public class AdvertiseController {
 
 		model.addAttribute("findAllAdvertise",findAllAdvertise);
 				
-		
+//		找尋所有商品
 		List<Commodity> findAllCommodities = commodityService.findAllCommodity();
 		
 		
@@ -189,13 +195,29 @@ public class AdvertiseController {
 		  
 		  model.addAttribute("findAllCommodities",findAllCommodities);
 		
+//		  商品按照點擊次數排序
+		  List<Commodity> hotCommodities = commodityRepository.findByOrderByCommClickDesc();
+		    model.addAttribute("hotCommodities", hotCommodities);
 		
-		
+//		    廣告上下架
+		List<Advertise> shelvesIsTrue = advertiseService.findByAdvertiseShelveIsTrue();
+
+		    model.addAttribute("shelvesIsTrue",shelvesIsTrue);
+		    
 		return "frontend/index";
 		}
 
 
+//	找單獨一支廣告
 	
+	@GetMapping("/Advertise/Advertise/findAdvertise")
+	public String findByAdveretiseId(@RequestParam(name="advertiseId")Integer advertise,Model model) {
+		Advertise advertiseInfo = advertiseService.findAdvertiseById(advertise);
+		advertiseService.recordClick(advertise);
+		
+		model.addAttribute("advertiseInfo",advertiseInfo);
+		return "Advertise/Advertise/advertiseDetail";
+	}
 	
 	
 		

@@ -192,6 +192,7 @@ public class CommodityController {
 	@GetMapping("/Store/Commodity/findComm")
 	public String findByCommId(@RequestParam(name = "commId") Integer commodity, Model model) {
 		Commodity commodityInfo = commodityService.getCommodityById(commodity);
+//		這邊開始記錄點擊次數
 		commodityService.recordClick(commodity);
 		
 		model.addAttribute("commodityInfo", commodityInfo);

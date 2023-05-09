@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.StoreSystem.AdvertiseRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
@@ -16,10 +17,6 @@ public class AdvertiseService {
 
 	@Autowired
 	private AdvertiseRepository advertiseRepository;
-	
-
-	
-	
 
 //	新增廣告詳細資料
 
@@ -72,24 +69,68 @@ public class AdvertiseService {
 //			這邊是更新 廣告類別跟公司
 			advertise.setAdvertiseCate(newadvertise.getAdvertiseCate());
 			advertise.setCompany(newadvertise.getCompany());
-			
-			
+
 			return advertise;
 
 		}
 		return null;
 	}
-	
-	
+
+//	顯示上下架
+
+	public List<Advertise> findByAdvertiseShelveIsTrue() {
+		return advertiseRepository.findByAdvertiseShelveIsTrue();
+	}
+
+//	紀錄廣告點擊次數
+
+	public void recordClick(Integer advertiseId) {
+		Optional<Advertise> optionadvertise = advertiseRepository.findById(advertiseId);
+		if (optionadvertise.isPresent()) {
+			Advertise advertise = optionadvertise.get();
+			advertise.setAdvertiseId(advertiseId);
+			if (advertise.getAdvertiseClick() != null) {
+				advertise.setAdvertiseClick(advertise.getAdvertiseClick() + 1); // 會記錄點擊次數 點擊後+1
+			} else {
+				advertise.setAdvertiseClick(1);// 若沒有點擊次數 就先設定為1
+			}
+			advertiseRepository.save(advertise);
+		} else {
+			// handle the case where the commodity with the given id is not found
+		}
+	}
+
+//	當廣告被點擊次數  大於等於 廣告預設次數  將廣告狀態改為下架
+//	public void setAdvertiseShelveIsFalse(Integer advertiseId, boolean advertiseShelve) {
+//		Optional<Advertise> optionalAdvertise = advertiseRepository.findById(advertiseId);
+//		if (optionalAdvertise.isPresent()) {
+//			Advertise advertise = optionalAdvertise.get();
+//			advertise.getAdvertiseClick()>=advertise.getAdvertiseFrequency();
+//			advertise.setAdvertiseShelve(false);
+			
+//			advertiseRepository.save(advertise);
+//		} else {
+			// 廣告不存在，你可以選擇拋出異常或執行其他處理
+//		}
+//	}
 
 	
 	
-	
+	@Transactional
+	public List<Advertise> updateAdvertiseShelveByadvertiseClick() {
+	    List<Advertise> advertises = advertiseRepository.findAll();
+	    for (Advertise advertise : advertises) {
+	        if (advertise.getAdvertiseClick() >= advertise.getAdvertiseFrequency()) {
+	            advertise.setAdvertiseShelve(false);
+	            advertiseRepository.save(advertise);
+	        }
+	    }
+	    return advertises;
+	}
 	
 	
 	public AdvertiseService() {
 		// TODO Auto-generated constructor stub
 	}
-	
 
 }
