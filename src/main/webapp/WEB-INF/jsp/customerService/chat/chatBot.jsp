@@ -90,18 +90,19 @@
 .chat-input textarea {
 	flex: 1;
 	border-radius: 5px;
-	padding: 10px;
+	padding: 10px 120px 10px 10px;
 	margin-right: 10px;
 	border: none;
 	resize: none;
 	font-size: 14px;
 	box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.1);
+
 }
 
 /* 送出按鈕 */
 .chat-input button {
 	border-radius: 5px;
-	padding: 10px;
+	padding: 10px 10px 10px 10px;
 	border: none;
 	background-color: #4CAF50;
 	color: #fff;
@@ -136,12 +137,12 @@
 			<h2>客服聊天室</h2>
 		</div>
 		<div class="chat-messages">
-			<div class="chat-message chat-message-received">
+			<div class="chat-message chat-message-received" style="display: none;">
 				<div class="chat-message-text">
 					<div id="response"></div>
 				</div>
 			</div>
-			<div class="chat-message chat-message-sent">
+			<div class="chat-message chat-message-sent" style="display: none;">
 				<div class="chat-message-text">
 				<div id="sent"></div>
 				</div>
@@ -149,16 +150,28 @@
 			<!-- 在這裡插入更多訊息 -->
 		</div>
 		<div class="chat-input">
-			<textarea placeholder="輸入訊息" id="prompt"></textarea>
-			<button id="submit">送出</button>
+			<form id="chat-form">
+				<textarea placeholder="輸入訊息" id="prompt" onkeydown="if(event.keyCode==13) $('#chat-form').submit();"></textarea>
+				<button id="submit">送出</button>
+			</form>
 		</div>
 	</div>
 	<script>
 	$(document).ready(function() {
-	    $("#submit").click(function() {
+		 var $chatMessageReceived = $('<div class="chat-message chat-message-received"><div class="chat-message-text"></div></div>');
+	        $chatMessageReceived.find('.chat-message-text').text("您好,請問有什麼需要幫助的嗎?");
+	        $('.chat-messages').append($chatMessageReceived);
+	        $("#chat-form").submit(function(event) {
+		        event.preventDefault();
 	        var prompt = $("#prompt").val();
 	        $("#sent").text(prompt);
 	        $("#prompt").val("");
+	        var $chatMessageSent = $('<div class="chat-message chat-message-sent"><div class="chat-message-text"></div></div>');
+	        $chatMessageSent.find('.chat-message-text').text(prompt);
+	        $('.chat-messages').append($chatMessageSent);
+	        $chatMessageSent.show();
+	        
+	       
 	        $.ajax({
 	            type : "POST",
 	            url : "${contextRoot}/chat",
@@ -169,8 +182,9 @@
 	            success : function(data) {
 	                var response = data.response;
 	                var $chatMessageReceived = $('<div class="chat-message chat-message-received"><div class="chat-message-text"></div></div>');
-	                $chatMessageReceived.find('.chat-message-text').text(response);
+	                $chatMessageReceived.find('.chat-message-text').text(JSON.stringify(response));
 	                $('.chat-messages').append($chatMessageReceived);
+	                $chatMessageReceived.show();
 	            },
 	            error : function(jqXHR, textStatus, errorThrown) {
 	                console.log(jqXHR.responseText);
