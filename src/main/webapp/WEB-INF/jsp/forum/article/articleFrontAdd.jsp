@@ -23,7 +23,92 @@
 	src="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.js"></script>
 <!-- include summernote-ko-KR -->
 <script src="../summernote/lang/summernote-zh-TW.js"></script>
+<style>
+/* Center the card */
+.card {
+	margin: 0 auto;
+	padding: 20px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
+	max-width: 800px;
+}
 
+.card-header {
+  background-color: #f8f9fa;
+  padding: 1rem;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+}
+
+.card-title {
+  margin-bottom: 0;
+}
+
+/* Style the form elements */
+label {
+	font-weight: bold;
+}
+
+input[type="text"], select {
+	width: 100%;
+	padding: 12px 20px;
+	margin: 8px 0;
+	display: inline-block;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+	box-sizing: border-box;
+}
+
+input[type="file"] {
+	display: none;
+}
+
+/* Style the submit button */
+button[type="submit"] {
+	background-color: #4CAF50;
+	color: white;
+	padding: 12px 20px;
+	border: none;
+	border-radius: 4px;
+	cursor: pointer;
+}
+
+button[type="submit"]:hover {
+	background-color: #45a049;
+}
+
+/* Style the image preview */
+#imagePreview {
+	display: block;
+	max-width: 200px;
+	max-height: 200px;
+	object-fit: cover;
+	margin-left: 10px;
+	margin-top: 10px;
+}
+
+/* Style the editor */
+#summernote {
+	margin-top: 10px;
+	border: 1px solid #ccc;
+	border-radius: 4px;
+}
+
+/* Style the error messages */
+.error {
+	color: red;
+	font-size: small;
+	display: block;
+	margin-top: 5px;
+}
+
+/* Responsive design */
+@media only screen and (max-width: 600px) {
+	.card {
+		max-width: 100%;
+	}
+}
+</style>
 
 </head>
 <body>
@@ -34,7 +119,10 @@
 	<jsp:include page="../../layout/header.jsp"></jsp:include>
 	<main id="main">
 		<div class="card">
-			<h1>文章管理-新增</h1>
+			<div class="card-header">
+				<h2 class="card-title">發表文章</h2>
+			</div>
+
 			<form:form modelAttribute="article" method="post"
 				enctype="multipart/form-data"
 				action="${contextRoot}/articleFront/post">
@@ -57,6 +145,7 @@
 				<br>
 				<input type="hidden" name="content" id="summernote-input">
 				<div id="summernote"></div>
+				<br>
 				<button type="submit">送出</button>
 			</form:form>
 		</div>

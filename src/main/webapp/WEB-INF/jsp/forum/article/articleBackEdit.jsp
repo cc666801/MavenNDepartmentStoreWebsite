@@ -26,6 +26,97 @@
 	href="https://cdn.jsdelivr.net/npm/summernote@0.8.18/dist/summernote-lite.min.css"
 	rel="stylesheet">
 
+<style>
+    /* 設定 body 的背景顏色與文字顏色 */
+    body {
+        background-color: #f8f9fa;
+        color: #333333;
+    }
+
+    /* 設定 card 樣式 */
+    .card {
+        margin: 20px;
+        padding: 20px;
+        border: none;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        background-color: white;
+    }
+
+    /* 設定 card-header 樣式 */
+    .card-header {
+        border-bottom: none;
+        padding-bottom: 0;
+    }
+
+    /* 設定 card-title 樣式 */
+    .card-title {
+        font-size: 24px;
+        font-weight: bold;
+        margin: 0;
+    }
+
+    /* 設定 label 樣式 */
+    label {
+        font-size: 16px;
+        font-weight: bold;
+    }
+
+    /* 設定 input 樣式 */
+    input[type="text"],
+    select {
+        font-size: 16px;
+        padding: 8px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        width: 100%;
+    }
+
+    /* 設定 input[type="file"] 樣式 */
+    input[type="file"] {
+        display: block;
+        margin-bottom: 10px;
+    }
+
+    /* 設定 img 樣式 */
+    img {
+        max-width: 200px;
+        max-height: 200px;
+        object-fit: cover;
+        margin-left: 10px;
+    }
+
+    /* 設定 summernote 樣式 */
+    #summernote {
+        font-size: 16px;
+        padding: 10px;
+        border: 1px solid #cccccc;
+        border-radius: 4px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+        width: 100%;
+        height: 300px;
+    }
+
+    /* 設定 button 樣式 */
+    button[type="submit"] {
+        background-color: #007bff;
+        color: white;
+        font-size: 16px;
+        font-weight: bold;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    }
+
+    /* 設定 button:hover 樣式 */
+    button[type="submit"]:hover {
+        background-color: #0069d9;
+    }
+</style>
+
 </head>
 <body class="sb-nav-fixed">
 	<!-- ======= Header ======= -->
@@ -42,7 +133,9 @@
 			<main>
 				<div class="container-fluid px-4">
 					<div class="card">
-						<h1>編輯文章</h1>
+						<div class="card-header">
+							<h2 class="card-title">文章管理-編輯</h2>
+						</div>
 						<form:form modelAttribute="art" method="put"
 							enctype="multipart/form-data"
 							action="${contextRoot}/articleBack/edit">
@@ -72,6 +165,7 @@
 							<form:hidden name="articleContent" path="articleContent"
 								id="summernote-input" />
 							<div id="summernote">${articleContent}</div>
+							<br>
 							<button type="submit">送出</button>
 						</form:form>
 					</div>
