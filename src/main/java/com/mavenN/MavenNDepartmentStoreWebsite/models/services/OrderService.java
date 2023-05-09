@@ -55,6 +55,7 @@ public class OrderService {
 			Member member = optionalMember.get();
 			Order newOrder = new Order(null, member);
 			newOrder.setCreateOrderTimeIfNull();
+			newOrder.setTotal(orderDto.getTotal());
 			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(3);
 			OrderStatus orderStatus = optionalOrderStatus.get();
 			newOrder.setOrderStatus(orderStatus);
@@ -65,8 +66,7 @@ public class OrderService {
 				if (optionalCommodity.isPresent()) {
 					Commodity commodity = optionalCommodity.get();
 					OrderDetailId id = new OrderDetailId(commodity.getCommId(), order.getOrderId());
-					OrderDetail newOrderDetail = new OrderDetail(id, order, commodity, orderDetailDto.getQuantity());
-					System.out.println(newOrderDetail);
+					OrderDetail newOrderDetail = new OrderDetail(id, orderDetailDto.getQuantity(), orderDetailDto.getCommodityPrice(), commodity, order);
 					orderDetailRepository.save(newOrderDetail);
 				}
 			}
@@ -80,6 +80,20 @@ public class OrderService {
 	
 	// For findByMemberId
 	public List<Order> findByMemberId(Integer memberId){
+		return orderRepository.findByMemberId(memberId);
+	}
+	
+	// For changeOrderStatusByOrderId
+	public List<Order> changeOrderStatusByOrderId(Integer orderId, Integer memberId){
+		Optional<Order> optionalOrder = orderRepository.findById(orderId);
+		if(optionalOrder.isPresent()) {
+			Order order = optionalOrder.get();
+			// DataLiner 的 id:1 是 已取消訂單
+			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(1);
+			OrderStatus orderStatus = optionalOrderStatus.get();
+			order.setOrderStatus(orderStatus);
+			orderRepository.save(order);
+		}
 		return orderRepository.findByMemberId(memberId);
 	}
 }

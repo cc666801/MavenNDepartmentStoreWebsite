@@ -51,6 +51,9 @@ public class Order {
 	@Column(name = "coupon_code", columnDefinition = "nvarchar(40)")
 	private String couponCode;
 	
+	@Column(name = "total", columnDefinition = "int")
+	private Integer total;
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_order_status_id")
 	private OrderStatus orderStatus;
@@ -102,6 +105,15 @@ public class Order {
 		return member;
 	}
 
+	
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
+
 	public void setMember(Member member) {
 		this.member = member;
 	}
@@ -136,6 +148,13 @@ public class Order {
 
 	public void setOrderStatus(OrderStatus orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+
+	@Override
+	public String toString() {
+		return "Order [orderId=" + orderId + ", member=" + member + ", orderDetails=" + orderDetails
+				+ ", createOrderTime=" + createOrderTime + ", couponCode=" + couponCode + ", total=" + total
+				+ ", orderStatus=" + orderStatus + "]";
 	}
 	
 	

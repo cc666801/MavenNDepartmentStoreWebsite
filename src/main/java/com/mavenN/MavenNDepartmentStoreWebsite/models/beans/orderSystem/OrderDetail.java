@@ -19,6 +19,9 @@ public class OrderDetail {
 	    
     @Column(name = "quantity")
     private Integer quantity;
+    
+    @Column(name = "price")
+    private Integer commodityPrice;
 
     @ManyToOne
     @MapsId("commodityId")
@@ -30,12 +33,15 @@ public class OrderDetail {
     @JoinColumn(name = "fk_order_id")
     private Order order;
 
-	public OrderDetail(OrderDetailId id, Order order, Commodity commodity, Integer quantity) {
+	
+
+	public OrderDetail(OrderDetailId id, Integer quantity, Integer commodityPrice, Commodity commodity, Order order) {
 		super();
 		this.id = id;
+		this.quantity = quantity;
+		this.commodityPrice = commodityPrice;
 		this.commodity = commodity;
 		this.order = order;
-		this.quantity = quantity;
 	}
 
 	public OrderDetail() {
@@ -73,12 +79,24 @@ public class OrderDetail {
 	public void setOrder(Order order) {
 		this.order = order;
 	}
+	
+	
+
+	public Integer getCommodityPrice() {
+		return commodityPrice;
+	}
+
+	public void setCommodityPrice(Integer commodityPrice) {
+		this.commodityPrice = commodityPrice;
+	}
 
 	@Override
 	public String toString() {
-		return "OrderDetail [id=" + id + ", quantity=" + quantity + ", commodity=" + commodity + ", order=" + order
-				+ "]";
+		return "OrderDetail [id=" + id + ", quantity=" + quantity + ", commodityPrice=" + commodityPrice
+				+ ", commodity=" + commodity + ", order=" + order + "]";
 	}
+
+	
     
     
 }

@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -35,7 +36,16 @@ public class OrderControllerApi {
     	        .map(OrderDto::new)
     	        .collect(Collectors.toList());
     	System.out.println(orderDtos);
-    	return null;
+    	return orderDtos;
+    }
+    
+    @PutMapping("/{memberId}/{orderId}")
+    public List<OrderDto> changeOrderStatusByOrderId(@PathVariable Integer orderId, @PathVariable Integer memberId) {
+    	List<Order> orders = orderService.changeOrderStatusByOrderId(orderId, memberId);
+    	List<OrderDto> orderDtos = orders.stream()
+    	        .map(OrderDto::new)
+    	        .collect(Collectors.toList());
+    	return orderDtos;
     }
 
 }

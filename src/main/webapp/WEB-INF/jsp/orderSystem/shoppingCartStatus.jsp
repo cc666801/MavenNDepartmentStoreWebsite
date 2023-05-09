@@ -93,25 +93,24 @@
                 var total = 0;
 
                 data.forEach(function (shoppingCartCommodityDto, index) {
-                  var commodityId = shoppingCartCommodityDto.commodityId;
-                  var commodityName = shoppingCartCommodityDto.commodityName;
-                  var quantity = shoppingCartCommodityDto.quantity;
-                  var commodityPrice = shoppingCartCommodityDto.commodityPrice;
-                  var subTotal = quantity * commodityPrice;
-                  total += subTotal;
+                var commodityId = shoppingCartCommodityDto.commodityId;
+                var commodityName = shoppingCartCommodityDto.commodityName;
+                var quantity = shoppingCartCommodityDto.quantity;
+                var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
+                var subTotal = quantity * commodityPrice;
+                total += subTotal;
 
-                  var rowHtml = "<tr>";
-                  rowHtml += "<td>" + (index + 1) + "</td>";
-                  rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                  rowHtml += "<td>" + commodityName + "</td>";
-                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                  rowHtml += "<td>" + commodityPrice + "</td>";
-                  rowHtml += "<td>" + subTotal + "</td>";
-                  rowHtml += "</tr>";
+                var rowHtml = "<tr>";
+                rowHtml += "<td>" + (index + 1) + "</td>";
+                rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
+                rowHtml += "<td>" + commodityName + "</td>";
+                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                rowHtml += "<td>" + commodityPrice + "</td>";
+                rowHtml += "<td>" + subTotal + "</td>";
+                rowHtml += "</tr>";
 
-                  htmlString += rowHtml;
-
-                });
+                htmlString += rowHtml;
+              });
 
                 document.getElementById("total").innerHTML = total;
                 tbody.innerHTML = htmlString;
@@ -133,24 +132,24 @@
 
 
                 data.forEach(function (shoppingCartCommodityDto, index) {
-                  var commodityId = shoppingCartCommodityDto.commodityId;
-                  var commodityName = shoppingCartCommodityDto.commodityName;
-                  var quantity = shoppingCartCommodityDto.quantity;
-                  var commodityPrice = shoppingCartCommodityDto.commodityPrice;
-                  var subTotal = quantity * commodityPrice;
-                  total += subTotal;
+                var commodityId = shoppingCartCommodityDto.commodityId;
+                var commodityName = shoppingCartCommodityDto.commodityName;
+                var quantity = shoppingCartCommodityDto.quantity;
+                var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
+                var subTotal = quantity * commodityPrice;
+                total += subTotal;
 
-                  var rowHtml = "<tr>";
-                  rowHtml += "<td>" + (index + 1) + "</td>";
-                  rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                  rowHtml += "<td>" + commodityName + "</td>";
-                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                  rowHtml += "<td>" + commodityPrice + "</td>";
-                  rowHtml += "<td>" + subTotal + "</td>";
-                  rowHtml += "</tr>";
+                var rowHtml = "<tr>";
+                rowHtml += "<td>" + (index + 1) + "</td>";
+                rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
+                rowHtml += "<td>" + commodityName + "</td>";
+                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                rowHtml += "<td>" + commodityPrice + "</td>";
+                rowHtml += "<td>" + subTotal + "</td>";
+                rowHtml += "</tr>";
 
-                  htmlString += rowHtml;
-                });
+                htmlString += rowHtml;
+              });
 
                 tbody.innerHTML = htmlString;
                 document.getElementById("total").innerHTML = total;
@@ -185,7 +184,7 @@
                 var commodityId = shoppingCartCommodityDto.commodityId;
                 var commodityName = shoppingCartCommodityDto.commodityName;
                 var quantity = shoppingCartCommodityDto.quantity;
-                var commodityPrice = shoppingCartCommodityDto.commodityPrice;
+                var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
                 var subTotal = quantity * commodityPrice;
                 total += subTotal;
 
@@ -226,7 +225,7 @@
                 var commodityId = shoppingCartCommodityDto.commodityId;
                 var commodityName = shoppingCartCommodityDto.commodityName;
                 var quantity = shoppingCartCommodityDto.quantity;
-                var commodityPrice = shoppingCartCommodityDto.commodityPrice;
+                var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
                 var subTotal = quantity * commodityPrice;
                 total += subTotal;
 
@@ -235,7 +234,7 @@
                 rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
                 rowHtml += "<td>" + commodityName + "</td>";
                 rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                rowHtml += "<td>" + commodityPrice + "</td>";
+                rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                 rowHtml += "<td>" + subTotal + "</td>";
                 rowHtml += "</tr>";
 
@@ -246,20 +245,23 @@
             })
             .catch(error => console.error(error));
 
-
-          document.getElementById("cash-on-delivery").addEventListener("click", function () {
+            document.getElementById("cash-on-delivery").addEventListener("click", function () {
+            let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
             let order = {
               'memberId': memberId,
-              'orderDetailDtos': []
+              'orderDetailDtos': [],
+              'total': total
             };
 
             rows.forEach(function (row) {
               var commodityId = row.querySelector('#commodity-id').textContent;
+              var commodityPrice = row.querySelector('#commodity-price').textContent;
               var quantity = row.querySelector('#quantity-input-' + commodityId).value;
               order.orderDetailDtos.push({
-                commodityId: commodityId,
-                quantity: quantity
+                "commodityId": commodityId,
+                "quantity": quantity,
+                "commodityPrice":commodityPrice
               });
             });
             if(order.orderDetailDtos.length!==0){

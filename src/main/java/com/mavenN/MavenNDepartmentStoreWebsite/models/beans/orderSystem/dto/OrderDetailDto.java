@@ -10,6 +10,10 @@ public class OrderDetailDto {
 	    
     private Integer quantity;
 
+    private Integer commodityPrice;
+    
+    private String commodityName;
+    
 	public OrderDetailDto(Integer commodityId, Integer orderId, Integer quantity) {
 		super();
 		this.commodityId = commodityId;
@@ -25,13 +29,10 @@ public class OrderDetailDto {
 		this.commodityId = orderDetail.getCommodity().getCommId();
 		this.orderId = orderDetail.getOrder().getOrderId();
 		this.quantity = orderDetail.getQuantity();
+		this.commodityPrice = orderDetail.getCommodityPrice();
+		this.commodityName = orderDetail.getCommodity().getCommName();
 	}
 	
-
-	@Override
-	public String toString() {
-		return "OrderDetailDto [commodityId=" + commodityId + ", orderId=" + orderId + ", quantity=" + quantity + "]";
-	}
 
 	public Integer getCommodityId() {
 		return commodityId;
@@ -44,6 +45,16 @@ public class OrderDetailDto {
 	public Integer getOrderId() {
 		return orderId;
 	}
+	
+	
+
+	public String getCommodityName() {
+		return commodityName;
+	}
+
+	public void setCommodityName(String commodityName) {
+		this.commodityName = commodityName;
+	}
 
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
@@ -55,6 +66,20 @@ public class OrderDetailDto {
 
 	public void setQuantity(Integer quantity) {
 		this.quantity = quantity;
+	}
+
+	public Integer getCommodityPrice() {
+		return commodityPrice;
+	}
+
+	public void setCommodityPrice(Integer commodityPrice) {
+		this.commodityPrice = commodityPrice;
+	}
+
+	@Override
+	public String toString() {
+		return "OrderDetailDto [commodityId=" + commodityId + ", orderId=" + orderId + ", quantity=" + quantity
+				+ ", commodityPrice=" + commodityPrice + ", commodityName=" + commodityName + "]";
 	}
     
 	

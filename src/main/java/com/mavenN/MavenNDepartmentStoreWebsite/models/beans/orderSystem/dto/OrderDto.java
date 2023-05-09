@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto;
 
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -16,13 +17,18 @@ public class OrderDto {
 	
 	private String couponCode;
 	
+	private Integer total;
+	
+	private Date createOrderTime;
+	
 
-	public OrderDto(Integer orderId, Integer memberId, List<OrderDetailDto> orderDetailDtos, String couponCode) {
+	public OrderDto(Integer orderId, Integer memberId, List<OrderDetailDto> orderDetailDtos, String couponCode, Integer total) {
 		super();
 		this.orderId = orderId;
 		this.memberId = memberId;
 		this.orderDetailDtos = orderDetailDtos;
 		this.couponCode = couponCode;
+		this.total = total;
 	}
 	
 	public OrderDto(Order order) {
@@ -34,6 +40,8 @@ public class OrderDto {
     	        .map(OrderDetailDto::new)
     	        .collect(Collectors.toList());
 		this.orderDetailDtos = orderDetailDtos;
+		this.total = order.getTotal();
+		this.createOrderTime = order.getCreateOrderTime();
 	}
 
 
@@ -55,7 +63,17 @@ public class OrderDto {
 	public Integer getMemberId() {
 		return memberId;
 	}
+	
+	
 
+
+	public Date getCreateOrderTime() {
+		return createOrderTime;
+	}
+
+	public void setCreateOrderTime(Date createOrderTime) {
+		this.createOrderTime = createOrderTime;
+	}
 
 	public void setMemberId(Integer memberId) {
 		this.memberId = memberId;
@@ -80,13 +98,25 @@ public class OrderDto {
 	public void setCouponCode(String couponCode) {
 		this.couponCode = couponCode;
 	}
+	
+	
 
+
+	public Integer getTotal() {
+		return total;
+	}
+
+	public void setTotal(Integer total) {
+		this.total = total;
+	}
 
 	@Override
 	public String toString() {
 		return "OrderDto [orderId=" + orderId + ", memberId=" + memberId + ", orderDetailDtos=" + orderDetailDtos
-				+ ", couponCode=" + couponCode + "]";
+				+ ", couponCode=" + couponCode + ", total=" + total + "]";
 	}
+
+	
 
 	
 }
