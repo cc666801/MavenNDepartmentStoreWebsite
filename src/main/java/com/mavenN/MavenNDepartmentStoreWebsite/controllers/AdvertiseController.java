@@ -22,7 +22,7 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.AdvertiseCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseCateService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CompanyService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommodityService;
 
 @Controller
 public class AdvertiseController {
@@ -33,6 +33,9 @@ public class AdvertiseController {
 	
 	@Autowired
 	private AdvertiseCateService advertiseCateService;
+	
+	@Autowired
+	private  CommodityService commodityService;
 	
 
 	@Autowired
@@ -171,6 +174,22 @@ public class AdvertiseController {
 
 		model.addAttribute("findAllAdvertise",findAllAdvertise);
 				
+		
+		List<Commodity> findAllCommodities = commodityService.findAllCommodity();
+		
+		
+		  for (Commodity commodity : findAllCommodities) {
+		        byte[] imageData = commodity.getCommPicture();
+		        if (imageData != null) {
+		            String base64String = Base64.getEncoder().encodeToString(imageData);
+		            commodity.setBase64StringcommPicture(base64String);
+		        }
+		    }
+		
+		  
+		  model.addAttribute("findAllCommodities",findAllCommodities);
+		
+		
 		
 		return "frontend/index";
 		}

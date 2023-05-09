@@ -184,6 +184,26 @@ public class CommodityService {
 	}
 	
 	
+//	5/9 開始記錄點擊次數
+	
+	public void recordClick(Integer commId) {
+	    Optional<Commodity> optioncommodity = commodityRepository.findById(commId);
+	    if (optioncommodity.isPresent()) {
+	        Commodity commodity = optioncommodity.get();
+	        commodity.setCommId(commId);
+	        if (commodity.getCommClick() != null) {
+	            commodity.setCommClick(commodity.getCommClick() + 1); //會記錄點擊次數  點擊後+1
+	        } else {
+	            commodity.setCommClick(1);//若沒有點擊次數  就先設定為1
+	        }
+	        commodityRepository.save(commodity);
+	    } else {
+	        // handle the case where the commodity with the given id is not found
+	    }
+	}
+	
+	
+	
 
 	public CommodityService() {
 		// TODO Auto-generated constructor stub

@@ -192,6 +192,8 @@ public class CommodityController {
 	@GetMapping("/Store/Commodity/findComm")
 	public String findByCommId(@RequestParam(name = "commId") Integer commodity, Model model) {
 		Commodity commodityInfo = commodityService.getCommodityById(commodity);
+		commodityService.recordClick(commodity);
+		
 		model.addAttribute("commodityInfo", commodityInfo);
 		return "Store/Commodity/CommodityDetail";
 	}
@@ -349,6 +351,31 @@ public class CommodityController {
 		return "Store/Storeindex";
 
 	}
+	
+	
+	
+	
+//	5/9我要來把 商品資料 送到前端之中  以修正成 透過 advertis那邊的controller完成
+	
+//	@GetMapping
+//	public String showCommodityPicture(Model model) {
+//		List<Commodity> findAllCommodities = commodityService.findAllCommodity();
+//		
+//		  for (Commodity commodity : findAllCommodities) {
+//		        byte[] imageData = commodity.getCommPicture();
+//		        if (imageData != null) {
+//		            String base64String = Base64.getEncoder().encodeToString(imageData);
+//		            commodity.setBase64StringcommPicture(base64String);
+//		        }
+//		    }
+//		
+//		  
+//		  model.addAttribute("findAllCommodities",findAllCommodities);
+//		  
+//		  return "frontend/index";
+//	}
+	
+	
 	
 	
 	
