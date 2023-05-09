@@ -35,33 +35,33 @@
                   </h3>
                 </div>
               </div>
-
+              <ul class="list-group">
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Order #123
+                  <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#order123" aria-expanded="false" aria-controls="order123">Details</button>
+                </li>
+                <div class="collapse" id="order123">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Product 1</li>
+                    <li class="list-group-item">Product 2</li>
+                    <li class="list-group-item">Product 3</li>
+                  </ul>
+                </div>
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                  Order #456
+                  <button class="btn btn-primary btn-sm" type="button" data-bs-toggle="collapse" data-bs-target="#order456" aria-expanded="false" aria-controls="order456">Details</button>
+                </li>
+                <div class="collapse" id="order456">
+                  <ul class="list-group list-group-flush">
+                    <li class="list-group-item">Product 4</li>
+                    <li class="list-group-item">Product 5</li>
+                  </ul>
+                </div>
+              </ul>
               <div>
-<!--                 <table class="table"> -->
-<!--                   <thead> -->
-<!--                     <tr> -->
-<!--                       <th scope="col"></th> -->
-<!--                       <th scope="col">商品名稱</th> -->
-<!--                       <th scope="col" style=width:30%;>商品數量</th> -->
-<!--                       <th scope="col">商品價格</th> -->
-<!--                       <th scope="col">小計</th> -->
-<!--                     </tr> -->
-<!--                   </thead> -->
-<!--                   <tbody> -->
 
-<!--                   </tbody> -->
-<!--                   <tfoot> -->
-<!--                     <tr> -->
-<!--                       <td colspan="5" style="padding-left: 82%;">總計: <span id="total" -->
-<!--                           style="display: inline-block;"></span></td> -->
-<!--                     </tr> -->
-<!--                   </tfoot> -->
-<!--                 </table> -->
               </div>
-<!--               <button type="button" class="btn btn-primary btn-lg" id="cash-on-delivery" data-toggle="modal" -->
-<!--                 data-target="#checkoutModal"><i class="fa-solid fa-truck fa-2xs"></i><span> 貨到付款</span></button> -->
-<!--               <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkoutModal"><i -->
-<!--                   class="fa-solid fa-credit-card fa-2xs"></i><span> 信用卡付款</span></button> -->
+
 
             </div>
           </section>
@@ -73,202 +73,29 @@
         <!-- End Footer -->
 
       </body>
-<!--       <script> -->
-//         // Event for - button update quantityInput
-//         function decreaseQuantity(memberId, commodityId) {
-//           let quantityInput = document.getElementById("quantity-input-" + commodityId);
-//           // 數量大於 1 在 quantityInput -1 後發請求更新數量
-//           if (quantityInput.value > 1) {
-//             quantityInput.value = parseInt(quantityInput.value) - 1;
-//             // 發請求更新數量
-//             fetch("${contextRoot}/api/shoppingCart/" + encodeURIComponent(memberId) + "/" + encodeURIComponent(commodityId) + "/" + encodeURIComponent(quantityInput.value), {
-//               method: "PUT"
-//             })
-//               .then(response => response.json())
-//               .then(data => {
-//                 console.log(data);
-//                 // 把新資料放進表格
-//                 var tbody = document.querySelector("table tbody");
-//                 var htmlString = "";
-//                 var total = 0;
+      <script>
 
-//                 data.forEach(function (shoppingCartCommodityDto, index) {
-//                   var commodityId = shoppingCartCommodityDto.commodityId;
-//                   var commodityName = shoppingCartCommodityDto.commodityName;
-//                   var quantity = shoppingCartCommodityDto.quantity;
-//                   var commodityPrice = shoppingCartCommodityDto.commodityPrice;
-//                   var subTotal = quantity * commodityPrice;
-//                   total += subTotal;
+        // load on 事件
+        document.addEventListener("DOMContentLoaded", function () {
 
-//                   var rowHtml = "<tr>";
-//                   rowHtml += "<td>" + (index + 1) + "</td>";
-//                   rowHtml += "<td id='commodity-id'>" + commodityId + "</td>";
-//                   rowHtml += "<td>" + commodityName + "</td>";
-//                   rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-//                   rowHtml += "<td>" + commodityPrice + "</td>";
-//                   rowHtml += "<td>" + subTotal + "</td>";
-//                   rowHtml += "</tr>";
+          var memberId = "${member.id}";
+          console.log(memberId);
 
-//                   htmlString += rowHtml;
+          // 在一開始抓到該會員購物車的資料
+          fetch("${contextRoot}/api/order/" + memberId)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
 
-//                 });
-
-//                 document.getElementById("total").innerHTML = total;
-//                 tbody.innerHTML = htmlString;
-//               })
-//               .catch(error => console.error(error));
-
-//             // 數量小於等於 1 發請求刪除購物車內的商品
-//           } else {
-//             fetch("${contextRoot}/api/shoppingCart/" + encodeURIComponent(memberId) + "/" + encodeURIComponent(commodityId), {
-//               method: "DELETE"
-//             })
-//               .then(response => response.json())
-//               .then(data => {
-//                 console.log(data);
-//                 // 把新資料放進表格
-//                 var tbody = document.querySelector("table tbody");
-//                 var htmlString = "";
-//                 var total = 0;
+              
+             
+              
+            })
+            .catch(error => console.error(error));
 
 
-//                 data.forEach(function (shoppingCartCommodityDto, index) {
-//                   var commodityId = shoppingCartCommodityDto.commodityId;
-//                   var commodityName = shoppingCartCommodityDto.commodityName;
-//                   var quantity = shoppingCartCommodityDto.quantity;
-//                   var commodityPrice = shoppingCartCommodityDto.commodityPrice;
-//                   var subTotal = quantity * commodityPrice;
-//                   total += subTotal;
+        });
 
-//                   var rowHtml = "<tr>";
-//                   rowHtml += "<td>" + (index + 1) + "</td>";
-//                   rowHtml += "<td id='commodity-id'>" + commodityId + "</td>";
-//                   rowHtml += "<td>" + commodityName + "</td>";
-//                   rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-//                   rowHtml += "<td>" + commodityPrice + "</td>";
-//                   rowHtml += "<td>" + subTotal + "</td>";
-//                   rowHtml += "</tr>";
-
-//                   htmlString += rowHtml;
-//                 });
-
-//                 tbody.innerHTML = htmlString;
-//                 document.getElementById("total").innerHTML = total;
-//               })
-//               .catch(error => console.error(error));
-
-//           }
-//           console.log(quantityInput.value);
-//         }
-
-//         // Event for + button update quantityInput
-//         function increaseQuantity(memberId, commodityId) {
-//           let quantityInput = document.getElementById("quantity-input-" + commodityId);
-//           quantityInput.value = parseInt(quantityInput.value) + 1;
-//           console.log(quantityInput.value);
-
-
-//           // 發請求更新數量
-//           fetch("${contextRoot}/api/shoppingCart/" + encodeURIComponent(memberId) + "/" + encodeURIComponent(commodityId) + "/" + encodeURIComponent(quantityInput.value), {
-//             method: "PUT"
-//           })
-//             .then(response => response.json())
-//             .then(data => {
-//               console.log(data);
-//               // 把新資料放進表格
-//               var tbody = document.querySelector("table tbody");
-//               var htmlString = "";
-//               var total = 0;
-
-
-//               data.forEach(function (shoppingCartCommodityDto, index) {
-//                 var commodityId = shoppingCartCommodityDto.commodityId;
-//                 var commodityName = shoppingCartCommodityDto.commodityName;
-//                 var quantity = shoppingCartCommodityDto.quantity;
-//                 var commodityPrice = shoppingCartCommodityDto.commodityPrice;
-//                 var subTotal = quantity * commodityPrice;
-//                 total += subTotal;
-
-//                 var rowHtml = "<tr>";
-//                 rowHtml += "<td>" + (index + 1) + "</td>";
-//                 rowHtml += "<td id='commodity-id'>" + commodityId + "</td>";
-//                 rowHtml += "<td>" + commodityName + "</td>";
-//                 rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-//                 rowHtml += "<td>" + commodityPrice + "</td>";
-//                 rowHtml += "<td>" + subTotal + "</td>";
-//                 rowHtml += "</tr>";
-
-//                 htmlString += rowHtml;
-//               });
-
-//               document.getElementById("total").innerHTML = total;
-//               tbody.innerHTML = htmlString;
-//             })
-//             .catch(error => console.error(error));
-//         }
-
-//         // load on 事件
-//         document.addEventListener("DOMContentLoaded", function () {
-
-//           var memberId = "${member.id}";
-//           console.log(memberId);
-
-//           // 在一開始抓到該會員購物車的資料
-//           fetch("${contextRoot}/api/shoppingCart/" + memberId)
-//             .then(response => response.json())
-//             .then(data => {
-//               console.log(data);
-
-//               var tbody = document.querySelector("table tbody");
-//               var htmlString = "";
-//               var total = 0;
-//               data.forEach(function (shoppingCartCommodityDto, index) {
-//                 var commodityId = shoppingCartCommodityDto.commodityId;
-//                 var commodityName = shoppingCartCommodityDto.commodityName;
-//                 var quantity = shoppingCartCommodityDto.quantity;
-//                 var commodityPrice = shoppingCartCommodityDto.commodityPrice;
-//                 var subTotal = quantity * commodityPrice;
-//                 total += subTotal;
-
-//                 var rowHtml = "<tr>";
-//                 rowHtml += "<td>" + (index + 1) + "</td>";
-//                 rowHtml += "<td id='commodity-id'>" + commodityId + "</td>";
-//                 rowHtml += "<td>" + commodityName + "</td>";
-//                 rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-//                 rowHtml += "<td>" + commodityPrice + "</td>";
-//                 rowHtml += "<td>" + subTotal + "</td>";
-//                 rowHtml += "</tr>";
-
-//                 htmlString += rowHtml;
-//               });
-//               document.getElementById("total").innerHTML = total;
-//               tbody.innerHTML = htmlString;
-//             })
-//             .catch(error => console.error(error));
-
-//           document.getElementById("cash-on-delivery").addEventListener("click", function () {
-//             var rows = document.querySelectorAll('.table tbody tr');
-//             let order = {
-//               'memberId':memberId,
-//               'orderDetailDtos' : []
-//             };
-
-//             rows.forEach(function (row) {
-//               var commodityId = row.querySelector('#commodity-id').textContent;
-//               var quantity = row.querySelector('#quantity-input-' + commodityId).value;
-//               console.log(quantity);
-//               order.cart.push({
-//                 commodityId: commodityId,
-//                 quantity: quantity
-//               });
-//             });
-
-            
-//             console.log(order);
-//           });
-
-//         });
-
-<!--       </script> -->
+</script>
 
       </html>

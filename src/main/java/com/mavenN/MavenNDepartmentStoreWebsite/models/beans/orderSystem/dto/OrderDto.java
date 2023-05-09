@@ -1,6 +1,10 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto;
 
 import java.util.List;
+import java.util.stream.Collectors;
+
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Order;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetail;
 
 public class OrderDto {
 	
@@ -19,6 +23,17 @@ public class OrderDto {
 		this.memberId = memberId;
 		this.orderDetailDtos = orderDetailDtos;
 		this.couponCode = couponCode;
+	}
+	
+	public OrderDto(Order order) {
+		this.orderId=order.getOrderId();
+		this.memberId=order.getMember().getId();
+		this.couponCode=order.getCouponCode();
+		List<OrderDetail> orderDetails = order.getOrderDetails();
+		List<OrderDetailDto> orderDetailDtos = orderDetails.stream()
+    	        .map(OrderDetailDto::new)
+    	        .collect(Collectors.toList());
+		this.orderDetailDtos = orderDetailDtos;
 	}
 
 

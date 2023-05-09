@@ -1,14 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto;
 
-import javax.persistence.Column;
-import javax.persistence.EmbeddedId;
-import javax.persistence.Entity;
-import javax.persistence.JoinColumn;
-import javax.persistence.ManyToOne;
-import javax.persistence.MapsId;
-import javax.persistence.Table;
-
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetail;
 
 public class OrderDetailDto {
 	
@@ -29,6 +21,11 @@ public class OrderDetailDto {
 		super();
 	}
 
+	public OrderDetailDto(OrderDetail orderDetail) {
+		this.commodityId = orderDetail.getCommodity().getCommId();
+		this.orderId = orderDetail.getOrder().getOrderId();
+		this.quantity = orderDetail.getQuantity();
+	}
 	
 
 	@Override
