@@ -27,7 +27,10 @@ public class RestReservationController {
 	
 	
 	@GetMapping("/restaurantfront/reservation")
-	public String addreservations() {
+	public String addreservations(Model model) {
+		List<Company> findAllCompany = reService.findAllCompany();
+		model.addAttribute("findAllCompany",findAllCompany);
+		
 		return "restaurantfront/addreservation";
 	}
 	

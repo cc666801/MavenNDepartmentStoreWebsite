@@ -33,19 +33,24 @@
 fieldset, legend {
    all: revert;
 }
+
 fieldset{
 	padding: 0;
 	border: none;
-	border-top: 1px solid ;
+	border-top: 1px solid gray;
 }
 
 .title{
-	
-/* 	margin: 10px; */
+ 	margin-bottom: 10px; 
 	text-align: start;
 	font-size: 17px;
-	
 }
+
+/* .datepicker td{ */
+/*   border: 1px solid #ccc; */
+/* } */
+
+
 </style>
 <title>餐廳頁面</title>
 </head>
@@ -90,8 +95,10 @@ fieldset{
 	<div class="container">
 		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
 			<div class="col-sm-3 col-12 border border-2 border-secondary me-2">
-				<img src="https://picsum.photos/300/200?random=1"
-					 class="img-fluid rounded " alt="餐廳圖片">
+				<div>
+					<img src="https://picsum.photos/300/200?random=1"
+						 class="img-fluid rounded " alt="餐廳圖片">
+				</div>
 			</div>
 
 			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
@@ -112,11 +119,11 @@ fieldset{
 					<div class="col-5">
 						用餐時間
 						<div class="input-group date" id="datepicker">
-							<input type="text" class="form-control" id="DId" readonly /> <span
-								class="input-group-append"> <span
-								class="input-group-text bg-white d-block"> <i
-									class="bi bi-calendar"></i>
-							</span>
+							<input type="text" class="form-control" id="DId" readonly />
+							 <span class="input-group-append"> 
+							 	<span class="input-group-text bg-white d-block"> 
+							 		<i class="bi bi-calendar"></i>
+								</span>
 							</span>
 						</div>
 					</div>
@@ -127,28 +134,54 @@ fieldset{
 					<form id="myForm" action="#">
 						<fieldset>
 							<legend class="title">中午</legend>
-							<button type="button" class="bt" value="11:00">按鈕1</button>
-							<button type="button" class="bt" value="11:30">按鈕2</button>
-							<button type="button" class="bt" value="12:00">按鈕3</button>
+							<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+								<jstl:forEach var="i" begin="11" end="13">
+									<jstl:forEach var="j" begin="00" end="30" step="15">
+									<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+									<div class="col">
+										<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+									</div>
+									</jstl:forEach>
+								</jstl:forEach>
+							</div>
 						</fieldset>
-						<fieldset>
+						
+						<fieldset class="mt-3">
 							<legend class="title">下午</legend>
-							<button type="button" class="bt" value="13:00">按鈕1</button>
-							<button type="button" class="bt" value="13:30">按鈕2</button>
-							<button type="button" class="bt" value="14:30">按鈕3</button>
-							<button type="button" class="bt" value="14:40">按鈕3</button>
+							<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+								<jstl:forEach var="i" begin="11" end="13">
+									<jstl:forEach var="j" begin="00" end="30" step="15">
+									<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+									<div class="col">
+										<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+									</div>
+									</jstl:forEach>
+								</jstl:forEach>
+							</div>
 						</fieldset>
-						<fieldset>
+						<fieldset class="mt-3">
 							<legend class="title">下午</legend>
-							<button type="button" class="bt" value="18:00">按鈕1</button>
-							<button type="button" class="bt" value="18:30">按鈕2</button>
-							<button type="button" class="bt" value="19:00">按鈕3</button>
-							<input type="hidden" name="selectedButton" id="selectedButton">
+							<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+								<jstl:forEach var="i" begin="11" end="13">
+									<jstl:forEach var="j" begin="00" end="30" step="15">
+									<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+									<div class="col">
+										<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+									</div>
+									</jstl:forEach>
+								</jstl:forEach>
+							</div>
 						</fieldset>
+						<div>
+						<input type="hidden" name="selectedButton" id="selectedButton">
 						<input type="submit" value="送出表單">
+						</div>
 					</form>
-
-
+					
+					<div class="justify-content-center">
+						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3088.3696025510344!2d120.21466690330259!3d22.99764855243827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e768d1a35d7a9%3A0x1689894ccb6260d4!2z5oiQ5Yqf5aSn5a24IOWFieW-qeagoeWNgOaTjeWgtA!5e0!3m2!1szh-TW!2stw!4v1683616858505!5m2!1szh-TW!2stw" 
+						width="100%" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
+					</div>
 
 
 				</div>
@@ -158,29 +191,23 @@ fieldset{
 		</div>
 	</div>
 
-	<script
-		src="${contextRoot}/assetsForFrontend/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-	<%-- 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script> --%>
+	<script src="${contextRoot}/assetsForFrontend/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="${contextRoot}/bootstrap5.0.2/js/jquery.min.js"></script>
-	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script>
+	<%-- 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap.bundle.min.js"></script> --%>
 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.min.js"></script>
 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
 
 
-	<script type="text/javascript">
-		let now = new Date();
-		let year = now.getFullYear()
-		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
-		let date = now.getDate().toString().padStart(2, '0');
-		document.getElementById('DId').value = year + "/" + mouth + "/" + date;
-		$(function() {
+	<script type="text/javascript">		
+		$(document).ready(function() {
+			let now = new Date();
 			$('#datepicker').datepicker({
 					format : 'yyyy/mm/dd',
 					showOtherMonths : false,
 					language : 'zh-TW',
-					//        startDate: new Date(now.getFullYear(), now.getMonth(), now.getDate()),
-					//        endDate: new Date(now.getFullYear(), now.getMonth() + 3, 0),
-					//        todayHighlight: true,
+					// 		startDate: new Date(now.getFullYear(), now.getMonth(), 1),
+					// 		endDate: new Date(now.getFullYear(), now.getMonth() + 1, 0),
+					//      todayHighlight: true,
 					autoclose : true,
 
 					beforeShowDay : function(date) {
@@ -189,6 +216,10 @@ fieldset{
 					}
 
 				});
+			let year = now.getFullYear()
+	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
+	 		let date = now.getDate().toString().padStart(2, '0');
+			$('#DId').val(year + '/' + mouth + '/' + date);
 		});
 
 		//   ---------以下是按鈕事件
@@ -199,6 +230,7 @@ fieldset{
 		});
 
 		$('#myForm').on('submit', function() {
+// 			event.preventDefault();
 			const selectedButtonValue = $('#selectedButton').val();
 			console.log(selectedButtonValue); // 傳至後端的值
 			// 在此處發送表單至後端...
