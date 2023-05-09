@@ -84,6 +84,10 @@ button[type="submit"]:hover {
 							type="hidden" name="name" value="${member.name}" /> <input
 							type="hidden" name="phone" value="${member.phone}" /> <input
 							type="hidden" name="address" value="${member.address}" />
+							<input
+							type="hidden" name=verify value="${member.verify}" />
+							<input
+							type="hidden" name=token value="${member.token}" />
 						<button type="submit" class="btn btn-success">驗證信箱</button>
 					</form>
 				</td>

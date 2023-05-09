@@ -12,7 +12,8 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 public interface MemberRepository extends JpaRepository<Member, Integer> {
 	
     Optional<Member> findByAccount(String account);
-
+    Member findByVerify(String verify);
+    Member findByToken(String token);
     
 
 }

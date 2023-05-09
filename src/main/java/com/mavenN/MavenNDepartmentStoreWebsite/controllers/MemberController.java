@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
@@ -37,7 +38,7 @@ public class MemberController {
 		return "member/memberCentre";
 	}
 	
-	// 註冊會員  帳號重複不會顯示在前台
+	// 註冊會員
 	@GetMapping("/member/register")
 	public String addMember(Model model) {
 		model.addAttribute("member", new Member());
@@ -139,6 +140,7 @@ public class MemberController {
 	@PostMapping("/member/verifyEmail")
 	public String sendVerificationEmail(HttpSession session, Model model, @ModelAttribute("member") Member member) {
 	    String token = UUID.randomUUID().toString();
+	    member.setToken(token); // 設置 token 值
 	    mService.addMember(member);
 	    emailService.sendVerificationEmail(member, token);
 	    member.setVerify("未驗證");
@@ -147,5 +149,19 @@ public class MemberController {
 	    return "redirect:/memberCentre";
 	}
 
+	@GetMapping("/member/verify")
+	public String verifyMember(@RequestParam(name = "token", required = true) String token) {
+	    Member member = mRepository.findByToken(token);
+	    if (member != null) {
+	        member.setVerify("已驗證");
+	        mRepository.save(member);
+	        return "redirect:/memberCentre";
+	    } else {
+	        return "redirect:/";
+	    }
+	}
 
+
+
+	
 }

@@ -47,6 +47,7 @@ table {
 .btn-link:hover {
 	color: #3e8e41;
 }
+
 button[type="submit"] {
 	background-color: #4CAF50;
 	border: none;
@@ -106,10 +107,14 @@ button[type="submit"]:hover {
 			</tr>
 			<tr>
 				<th>驗證狀態:</th>
-				<td><a href="${contextRoot}/member/verifyEmail" class="btn-link">${sessionScope.member.verify}</a></td></td>
+				<td><c:if test="${sessionScope.member.verify == '已驗證'}">
+            已驗證
+        </c:if> <c:if test="${sessionScope.member.verify != '已驗證'}">
+						<a href="${contextRoot}/member/verifyEmail" class="btn-link">${sessionScope.member.verify}</a>
+					</c:if></td>
 			</tr>
-			
-			
+
+
 			<tr>
 				<td><form:form
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"

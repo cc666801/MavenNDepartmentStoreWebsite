@@ -61,7 +61,16 @@ public class Member {
 	@Column(name = "verify")
 	private String verify = "未驗證";
 
-	
+	@Column(name = "token")
+	private String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
 
 	public String getVerify() {
 		return verify;
