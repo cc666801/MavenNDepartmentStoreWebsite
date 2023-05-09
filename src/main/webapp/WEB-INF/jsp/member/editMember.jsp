@@ -17,8 +17,6 @@
 	href="https://cdn.staticfile.org/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <!-- 自訂 CSS -->
 <style>
-
-
 table {
 	margin: auto;
 }
@@ -81,7 +79,7 @@ h1 {
 </style>
 </head>
 <body>
-<jsp:include page="../layout/header.jsp"></jsp:include>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
 		<h1>更新會員資料</h1>
 		<form name="myForm"
@@ -119,7 +117,8 @@ h1 {
 
 				<tr>
 					<th><label for="email">Email:</label></th>
-					<td><input type="text" name="email" value="${member.email}" /></td>
+					<td><input type="text" name="email" value="${member.email}"
+						readonly style="border: none; outline: none;" /></td>
 				</tr>
 
 

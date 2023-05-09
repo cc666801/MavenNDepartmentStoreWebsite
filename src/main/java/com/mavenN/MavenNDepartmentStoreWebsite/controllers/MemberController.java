@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -17,6 +18,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.EmailService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
@@ -26,6 +28,8 @@ public class MemberController {
 	private MemberService mService;
 	@Autowired
 	private MemberRepository mRepository;
+	@Autowired
+    private EmailService emailService;
 	
 	
 	@GetMapping("/memberCentre")
@@ -121,6 +125,27 @@ public class MemberController {
     }
 	
 //-------------------------------------------------------------------------------------------------------------------------
-	
+	//驗證信
+	@GetMapping("/member/verifyEmail")
+	public String verifyEmail(HttpSession session, Model model) {
+	    Member member = (Member) session.getAttribute("verify");
+	    
+	    model.addAttribute("member", member);
+	    model.addAttribute("success", false);
+	    model.addAttribute("failure", false);
+	    return "member/verifyEmailPage";
+	}
+
+	@PostMapping("/member/verifyEmail")
+	public String sendVerificationEmail(HttpSession session, Model model, @ModelAttribute("member") Member member) {
+	    String token = UUID.randomUUID().toString();
+	    mService.addMember(member);
+	    emailService.sendVerificationEmail(member, token);
+	    member.setVerify("未驗證");
+	    mRepository.save(member);
+	    session.removeAttribute("verify");
+	    return "redirect:/memberCentre";
+	}
+
 
 }
