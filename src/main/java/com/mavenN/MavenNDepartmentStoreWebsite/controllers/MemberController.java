@@ -34,8 +34,11 @@ public class MemberController {
 	
 	
 	@GetMapping("/memberCentre")
-	public String jumpPage(){
-		return "member/memberCentre";
+	public String jumpPage(HttpSession session){
+	    Member member = (Member) session.getAttribute("member");
+		Member updatedMember = mService.findMemberById(member.getId());
+        session.setAttribute("member", updatedMember);
+        return "member/memberCentre";
 	}
 	
 	// 註冊會員
