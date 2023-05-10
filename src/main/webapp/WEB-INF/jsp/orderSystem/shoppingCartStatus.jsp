@@ -335,7 +335,9 @@
     console.log(html);
     let paymentFlowForm = document.getElementById("payment-flow-form");
     paymentFlowForm.innerHTML=html;
-    console.log(paymentFlowForm);
+    // 手動觸發表單提交
+const form = document.getElementById('allPayAPIForm');
+form.submit();
   })
   .catch(error => console.log(error));
             } else {
