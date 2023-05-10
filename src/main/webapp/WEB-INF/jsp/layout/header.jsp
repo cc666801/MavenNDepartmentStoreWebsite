@@ -99,7 +99,9 @@
 						<li><a href="#">客服中心</a></li>
 						<li><a href="#">關於我們</a></li>
 					</ul></li>
-				<li><a href="${contextRoot}/backend">後台系統</a></li>
+				<jstl:if test="${sessionScope.member.permissions eq '管理員'}">
+					<li><a href="${contextRoot}/backend">後台系統</a></li>
+				</jstl:if>
 			</ul>
 		</nav>
 
@@ -118,7 +120,7 @@
 
 				<a href="${contextRoot}/memberCentre" class="mx-2"> <span
 					class="bi-person-circle"> ${member.name}</span></a>
-				
+
 				<a href="${contextRoot}/member/logout" class="mx-2"> <span
 					class="bi bi-box-arrow-right"></span></a>
 
