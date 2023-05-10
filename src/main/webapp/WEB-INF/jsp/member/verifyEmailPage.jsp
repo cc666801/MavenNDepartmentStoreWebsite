@@ -45,6 +45,7 @@ table {
 .btn-link:hover {
 	color: #3e8e41;
 }
+
 button[type="submit"] {
 	background-color: #4CAF50;
 	border: none;
@@ -72,7 +73,7 @@ button[type="submit"]:hover {
 		<table class="table">
 			<tr>
 				<th>即將傳送驗證信到以下信箱：${member.email}</th>
-				
+
 			</tr>
 			<tr>
 				<td>
@@ -83,11 +84,10 @@ button[type="submit"]:hover {
 							type="hidden" name="email" value="${member.email}" /> <input
 							type="hidden" name="name" value="${member.name}" /> <input
 							type="hidden" name="phone" value="${member.phone}" /> <input
-							type="hidden" name="address" value="${member.address}" />
-							<input
-							type="hidden" name=verify value="${member.verify}" />
-							<input
-							type="hidden" name=token value="${member.token}" />
+							type="hidden" name="address" value="${member.address}" /> <input
+							type="hidden" name=verify value="${member.verify}" /> <input
+							type="hidden" name=token value="${member.token}" /> <input
+							type="hidden" name=birthday value="${member.birthday}" />
 						<button type="submit" class="btn btn-success">驗證信箱</button>
 					</form>
 				</td>
