@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -15,7 +16,6 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDet
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetailId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderStatus;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.ShoppingCart;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.ShoppingCartCommodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.OrderDetailDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.OrderDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
@@ -24,6 +24,9 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.Or
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderStatusRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.ShoppingCartRepository;
+
+import ecpay.payment.integration.AllInOne;
+import ecpay.payment.integration.domain.AioCheckOutALL;
 
 @Service
 public class OrderService {
@@ -66,7 +69,8 @@ public class OrderService {
 				if (optionalCommodity.isPresent()) {
 					Commodity commodity = optionalCommodity.get();
 					OrderDetailId id = new OrderDetailId(commodity.getCommId(), order.getOrderId());
-					OrderDetail newOrderDetail = new OrderDetail(id, orderDetailDto.getQuantity(), orderDetailDto.getCommodityPrice(), commodity, order);
+					OrderDetail newOrderDetail = new OrderDetail(id, orderDetailDto.getQuantity(),
+							orderDetailDto.getCommodityPrice(), commodity, order);
 					orderDetailRepository.save(newOrderDetail);
 				}
 			}
@@ -77,16 +81,16 @@ public class OrderService {
 			}
 		}
 	}
-	
+
 	// For findByMemberId
-	public List<Order> findByMemberId(Integer memberId){
+	public List<Order> findByMemberId(Integer memberId) {
 		return orderRepository.findByMemberId(memberId);
 	}
-	
+
 	// For changeOrderStatusByOrderId
-	public List<Order> changeOrderStatusByOrderId(Integer orderId, Integer memberId){
+	public List<Order> changeOrderStatusByOrderId(Integer orderId, Integer memberId) {
 		Optional<Order> optionalOrder = orderRepository.findById(orderId);
-		if(optionalOrder.isPresent()) {
+		if (optionalOrder.isPresent()) {
 			Order order = optionalOrder.get();
 			// DataLiner 的 id:1 是 已取消訂單
 			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(1);
@@ -95,5 +99,25 @@ public class OrderService {
 			orderRepository.save(order);
 		}
 		return orderRepository.findByMemberId(memberId);
+	}
+
+	// For paymentFlow
+	public String ecpayCheckout(OrderDto orderDto) {
+
+		String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
+
+		AllInOne all = new AllInOne("");
+
+		AioCheckOutALL obj = new AioCheckOutALL();
+		obj.setMerchantTradeNo(uuId);
+		obj.setMerchantTradeDate("2017/01/01 08:05:23");
+		obj.setTotalAmount(orderDto.getTotal().toString());
+		obj.setTradeDesc("test Description");
+		obj.setItemName("TestItem");
+		obj.setReturnURL("http://211.23.128.214:5000");
+		obj.setNeedExtraPaidInfo("N");
+		String form = all.aioCheckOut(obj, null);
+
+		return form;
 	}
 }

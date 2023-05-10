@@ -60,9 +60,12 @@
               </div>
               <button type="button" class="btn btn-primary btn-lg" id="cash-on-delivery" data-toggle="modal"
                 data-target="#checkoutModal"><i class="fa-solid fa-truck fa-2xs"></i><span> 貨到付款</span></button>
-              <button type="button" class="btn btn-primary btn-lg" data-toggle="modal" data-target="#checkoutModal"><i
+              <button type="button" class="btn btn-primary btn-lg" id="payment-flow" data-toggle="modal" data-target="#checkoutModal"><i
                   class="fa-solid fa-credit-card fa-2xs"></i><span> 信用卡付款</span></button>
 
+            </div>
+            <div id="payment-flow-form">
+              
             </div>
           </section>
         </main>
@@ -93,24 +96,24 @@
                 var total = 0;
 
                 data.forEach(function (shoppingCartCommodityDto, index) {
-                var commodityId = shoppingCartCommodityDto.commodityId;
-                var commodityName = shoppingCartCommodityDto.commodityName;
-                var quantity = shoppingCartCommodityDto.quantity;
-                var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
-                var subTotal = quantity * commodityPrice;
-                total += subTotal;
+                  var commodityId = shoppingCartCommodityDto.commodityId;
+                  var commodityName = shoppingCartCommodityDto.commodityName;
+                  var quantity = shoppingCartCommodityDto.quantity;
+                  var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
+                  var subTotal = quantity * commodityPrice;
+                  total += subTotal;
 
-                var rowHtml = "<tr>";
-                rowHtml += "<td>" + (index + 1) + "</td>";
-                rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                rowHtml += "<td>" + commodityName + "</td>";
-                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                rowHtml += "<td>" + commodityPrice + "</td>";
-                rowHtml += "<td>" + subTotal + "</td>";
-                rowHtml += "</tr>";
+                  var rowHtml = "<tr>";
+                  rowHtml += "<td>" + (index + 1) + "</td>";
+                  rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
+                  rowHtml += "<td>" + commodityName + "</td>";
+                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                  rowHtml += "<td>" + commodityPrice + "</td>";
+                  rowHtml += "<td>" + subTotal + "</td>";
+                  rowHtml += "</tr>";
 
-                htmlString += rowHtml;
-              });
+                  htmlString += rowHtml;
+                });
 
                 document.getElementById("total").innerHTML = total;
                 tbody.innerHTML = htmlString;
@@ -132,24 +135,24 @@
 
 
                 data.forEach(function (shoppingCartCommodityDto, index) {
-                var commodityId = shoppingCartCommodityDto.commodityId;
-                var commodityName = shoppingCartCommodityDto.commodityName;
-                var quantity = shoppingCartCommodityDto.quantity;
-                var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
-                var subTotal = quantity * commodityPrice;
-                total += subTotal;
+                  var commodityId = shoppingCartCommodityDto.commodityId;
+                  var commodityName = shoppingCartCommodityDto.commodityName;
+                  var quantity = shoppingCartCommodityDto.quantity;
+                  var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
+                  var subTotal = quantity * commodityPrice;
+                  total += subTotal;
 
-                var rowHtml = "<tr>";
-                rowHtml += "<td>" + (index + 1) + "</td>";
-                rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                rowHtml += "<td>" + commodityName + "</td>";
-                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                rowHtml += "<td>" + commodityPrice + "</td>";
-                rowHtml += "<td>" + subTotal + "</td>";
-                rowHtml += "</tr>";
+                  var rowHtml = "<tr>";
+                  rowHtml += "<td>" + (index + 1) + "</td>";
+                  rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
+                  rowHtml += "<td>" + commodityName + "</td>";
+                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                  rowHtml += "<td>" + commodityPrice + "</td>";
+                  rowHtml += "<td>" + subTotal + "</td>";
+                  rowHtml += "</tr>";
 
-                htmlString += rowHtml;
-              });
+                  htmlString += rowHtml;
+                });
 
                 tbody.innerHTML = htmlString;
                 document.getElementById("total").innerHTML = total;
@@ -245,7 +248,8 @@
             })
             .catch(error => console.error(error));
 
-            document.getElementById("cash-on-delivery").addEventListener("click", function () {
+          // 貨到付款按鈕
+          document.getElementById("cash-on-delivery").addEventListener("click", function () {
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
             let order = {
@@ -261,45 +265,84 @@
               order.orderDetailDtos.push({
                 "commodityId": commodityId,
                 "quantity": quantity,
-                "commodityPrice":commodityPrice
+                "commodityPrice": commodityPrice
               });
             });
-            if(order.orderDetailDtos.length!==0){
-            fetch('${contextRoot}/api/order', {
-              method: 'POST',
-              headers: {
-                'Content-Type': 'application/json'
-              },
-              body: JSON.stringify(order)
-            })
-              .then(response => {
-                {
-                  if (response.ok) {
-                        // handle response
-                        document.getElementById("total").innerHTML = 0;
-                        var tbody = document.querySelector("table tbody");
-                      var htmlString = "";
-                        tbody.innerHTML = htmlString;
-												console.log('加入訂單成功');
-												alert('加入訂單成功');
-											} else {
-												console.log('加入訂單失敗');
-												alert('加入訂單失敗');
-											}
-										}
-
+            if (order.orderDetailDtos.length !== 0) {
+              fetch('${contextRoot}/api/order', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
               })
-              .catch(error => {
-                console.error('There was a problem with the fetch operation:', error);
-              });
-            }else {
-												console.log('加入空訂單失敗');
-												alert('加入空訂單失敗');
-											}
+                .then(response => {
+                  {
+                    if (response.ok) {
+                      // handle response
+                      document.getElementById("total").innerHTML = 0;
+                      var tbody = document.querySelector("table tbody");
+                      var htmlString = "";
+                      tbody.innerHTML = htmlString;
+                      console.log('加入訂單成功');
+                      alert('加入訂單成功');
+                    } else {
+                      console.log('加入訂單失敗');
+                      alert('加入訂單失敗');
+                    }
+                  }
 
-
+                })
+                .catch(error => {
+                  console.error('There was a problem with the fetch operation:', error);
+                });
+            } else {
+              console.log('加入空訂單失敗');
+              alert('加入空訂單失敗');
+            }
           });
 
+          // 信用卡付款按鈕
+          document.getElementById("payment-flow").addEventListener("click", function () {
+            let total = document.getElementById("total").innerHTML
+            var rows = document.querySelectorAll('.table tbody tr');
+            let order = {
+              'memberId': memberId,
+              'orderDetailDtos': [],
+              'total': total
+            };
+
+            rows.forEach(function (row) {
+              var commodityId = row.querySelector('#commodity-id').textContent;
+              var commodityPrice = row.querySelector('#commodity-price').textContent;
+              var quantity = row.querySelector('#quantity-input-' + commodityId).value;
+              order.orderDetailDtos.push({
+                "commodityId": commodityId,
+                "quantity": quantity,
+                "commodityPrice": commodityPrice
+              });
+            });
+            if (order.orderDetailDtos.length !== 0) {
+              fetch('${contextRoot}/api/order/ecpayCheckout', {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(order)
+              })
+              .then(response => response.text())
+  .then(html => {
+    console.log(html);
+    let paymentFlowForm = document.getElementById("payment-flow-form");
+    paymentFlowForm.innerHTML=html;
+    console.log(paymentFlowForm);
+  })
+  .catch(error => console.log(error));
+            } else {
+              console.log('加入空訂單失敗');
+              alert('加入空訂單失敗');
+            }
+          });
         });
 
       </script>

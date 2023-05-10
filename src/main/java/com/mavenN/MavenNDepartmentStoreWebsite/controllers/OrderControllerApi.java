@@ -47,5 +47,13 @@ public class OrderControllerApi {
     	        .collect(Collectors.toList());
     	return orderDtos;
     }
+    
+    // For paymentFlow
+    @PostMapping("/ecpayCheckout")
+	public String ecpayCheckout(@RequestBody OrderDto orderDto) {
+		String aioCheckOutALLForm = orderService.ecpayCheckout(orderDto);
+		
+		return aioCheckOutALLForm;
+	}
 
 }
