@@ -34,7 +34,6 @@ public class CuisineTypeController {
 	@PostMapping("/cuisiontype/post")
 	public String postCuisiontype(@ModelAttribute("cuisinetype") CuisineType cuisinetype, Model model) {
 		cuisineTypeService.addCuisineType(cuisinetype);
-		model.addAttribute("cuisinetype", new CuisineType());
-		return "restaurant/addCuisibeType";
+		return "redirect:/cuisiontype/add";
 	}
 }

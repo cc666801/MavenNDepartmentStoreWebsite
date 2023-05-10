@@ -19,7 +19,7 @@ public class RestaurantInformation {
 	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Integer Resid;
+	private Integer resid;
 	
 	@OneToOne
 	@JoinColumn(name="company_id",foreignKey = @ForeignKey(name="fk_company"))
@@ -33,12 +33,13 @@ public class RestaurantInformation {
 		super();
 	}
 
+	
 	public Integer getResid() {
-		return Resid;
+		return resid;
 	}
 
 	public void setResid(Integer resid) {
-		Resid = resid;
+		this.resid = resid;
 	}
 
 	public Company getCompany() {

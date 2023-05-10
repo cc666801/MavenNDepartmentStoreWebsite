@@ -33,13 +33,22 @@
 				<h1>新增訂位</h1>
 				<div>
 					<form:form class="form-control" method="post"
-						modelAttribute="cuisinetype"
-						action="${contextRoot}/cuisiontype/post">
+						modelAttribute="RestInformation"
+						action="${contextRoot}/restaurantInformation/post">
+						<label for="restId">餐廳名稱：</label>
+						<form:select path="company" id="restId" class="form-select" style="width: 200px">
+							<jstl:forEach items="${AllRestaurants}" var="Restaurants">
+								<option value="${Restaurants.companyId}">${Restaurants.companyName}</option>
+							</jstl:forEach>
+						</form:select>
+						
+						<label for="CId">料理類型：</label>
+						<form:select path="cuisineType" id="CId" class="form-select" style="width: 200px">
+							<jstl:forEach items="${CuisineType}" var="ctype">	
+								<option value="${ctype.cuisineTypeId}">${ctype.cuisineTypeName}</option>
+							</jstl:forEach>
+						</form:select>
 
-						<label for="typename">料理類型：</label>
-						<br>
-						<form:input type="text" path="cuisineTypeName" id="typename" autofocus="autofocus"/>
-						<br>
 						<button type="submit" class="btn btn-primary">送出</button>
 					</form:form>
 				</div>

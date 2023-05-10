@@ -38,10 +38,11 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	public Page<Company> findByCompanyNameContaining(String companyname, Pageable page);
 	
 	
-	@Query(value="select * from company INNER JOIN industry_category"
-		   +"on fk_industry_category_id = industry_category_id"
-		   +"where industry_category_name = '餐廳'", nativeQuery = true)
+	@Query(value="select * from company INNER JOIN industry_category "
+		   +"on fk_industry_category_id=industry_category_id "
+		   +"where industry_category_name='餐廳' ", nativeQuery = true)
 	public List<Company> findAllByCompanyName();
+	
 	
 
 }

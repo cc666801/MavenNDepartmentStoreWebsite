@@ -32,7 +32,7 @@
 			<main>
 				<h1>料理分類查詢</h1>
 				<div>
-					<a href="#"><button
+					<a href="${contextRoot}/restaurantInformation/add"><button
 							class="btn btn-dark">新增</button></a>
 				</div>
 				
@@ -41,7 +41,7 @@
 					<thead>
 						<tr>
 <!-- 				        <td>訂位單號碼</td> -->
-							<th>餐廳詳細資料id</th>     
+							<th>餐廳詳細表編號</th>     
 							<th>廠商名稱</th>
 							<th>料理類型</th>
 
@@ -53,9 +53,9 @@
 						<jstl:forEach items="${restInformation}" var="restInformation">
 							<tr>
 								<%-- 	<td>${far.id}</td>    --%>
-								<td>${restInformation.Resid}</td>
-								<td>${restInformation.company}</td>
-								<td>${restInformation.cuisineType}</td>
+								<td>${restInformation.resid}</td>
+								<td>${restInformation.company.companyName}</td>
+								<td>${restInformation.cuisineType.cuisineTypeName}</td>
 
 								<td><form action="#">
 										<input type="hidden" name="r_id" value="" /> <input
