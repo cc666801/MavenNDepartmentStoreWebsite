@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/core" prefix="jstl" %>
-
+<jstl:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html lang="en">
 
@@ -13,6 +13,60 @@
   * Author: BootstrapMade.com
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
+  
+  <link rel="stylesheet"
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+  
+  <style >
+/*   客服 */
+  #chatbot-icon {
+  position: fixed;
+  bottom: 150px;
+  right: 20px;
+  width: 50px;
+  height: 50px;
+  z-index: 999;
+  border-radius: 50%;
+    background-color: #ccc;
+     display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: background-color 0.5s ease-in-out;
+} 
+#chatbot-icon i {
+  font-size: 40px;  
+}
+#chatbot-icon:hover {
+  background-color: #999;
+}
+.visible {
+  display: block !important;
+}
+
+#chatbot-container {
+  position: fixed;
+  bottom: 20px;
+	right: 60px;
+	width: 450px;
+	height: 550px;
+  z-index: 999;
+   display: flex;
+  justify-content: center;
+  align-items: center;
+  display: none;
+  opacity: 0;
+  transition: opacity 3s ease-in-out;
+}
+#chatbot-container iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  
+}
+#chatbot-container.visible {
+  opacity: 1;
+}
+  </style>
 </head>
 
 <body>
@@ -506,6 +560,31 @@
     </section><!-- End Lifestyle Category Section -->
 
   </main><!-- End #main -->
+  
+  <a href="#" id="chatbot-icon">
+  <i class="fa-solid fa-headset"></i>
+</a>
+
+<div id="chatbot-container">
+ <iframe src="${contextRoot}/chat#chatBot"></iframe>
+</div>
+
+
+<script>
+//获取图标和聊天室的元素
+var chatIcon = document.getElementById('chatbot-icon');
+var chatContainer = document.getElementById('chatbot-container');
+
+// 当图标被单击时，切换聊天室的可见性
+chatIcon.addEventListener('click', function() {
+  chatContainer.classList.toggle('visible');
+});
+
+</script>
+  
+  
+  
+  
   
  <!-- ======= Footer ======= -->
 	<jsp:include page="../layout/footer.jsp"></jsp:include>

@@ -96,7 +96,7 @@
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
 						<li><a href="${contextRoot}/LostAndFound">失物招領</a></li>
-						<li><a href="#">客服中心</a></li>
+						<li><a href="${contextRoot}/chat">客服中心</a></li>
 						<li><a href="#">關於我們</a></li>
 					</ul></li>
 				<li><a href="${contextRoot}/backend">後台系統</a></li>

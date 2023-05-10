@@ -15,8 +15,8 @@
 	position: fixed;
 	bottom: 20px;
 	right: 20px;
-	width: 400px;
-	height: 600px;
+	width: 350px;
+	height: 400px;
 	border: 1px solid #ccc;
 	display: flex;
 	flex-direction: column;
@@ -90,7 +90,7 @@
 .chat-input textarea {
 	flex: 1;
 	border-radius: 5px;
-	padding: 10px 120px 10px 10px;
+	padding: 10px 70px 10px 10px;
 	margin-right: 10px;
 	border: none;
 	resize: none;
@@ -132,7 +132,7 @@
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 </head>
 <body>
-	<div class="chat-container">
+	<div class="chat-container" id=chatBot>
 		<div class="chat-header">
 			<h2>客服聊天室</h2>
 		</div>
