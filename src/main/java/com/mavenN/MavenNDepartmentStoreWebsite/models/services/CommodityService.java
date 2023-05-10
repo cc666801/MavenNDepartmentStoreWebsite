@@ -108,15 +108,7 @@ public class CommodityService {
 		return null;
 	}
 
-//嘗試顯示價格變動...
-//	public Double calculateDiscountedPrice(Double price, String discount) {
-//	    if (discount == null) {
-//	        return price;
-//	    } else {
-//	        double discountPercentage = Double.parseDouble(discount.replace("%", "")) / 100;
-//	        return price * (1 - discountPercentage);
-//	    }
-//	}
+
 
 //	嘗試顯示單一類別產品
 
@@ -133,17 +125,21 @@ public class CommodityService {
 	
 	
 	
-//	開始亂寫
+//	開始亂寫上架
 	public Page<Commodity>findByCommShelveIsTrue(Pageable pageable){
 		return commodityRepository.findByCommShelveIsTrue(pageable);
 	}
 	
+//	5/11新增 點類別不可出現未上架產品
+	public Page<Commodity> findByCommCateAndCommShelveIsTrue(CommCate commCate, Pageable pageable) {
+	    return commodityRepository.findByCommCateAndCommShelveIsTrue(commCate, pageable);
+	}
 	
 //	嘗試做分類的分頁器   
 	public Page<Commodity> usePgbToFindCommodityByCommcate(CommCate commCate, Integer pageNumber) {
 		Pageable pgb = PageRequest.of(pageNumber - 1, 3, Sort.Direction.ASC, "commId");
 		Page<Commodity> page = commodityRepository.findCommodityByCommCate(commCate, pgb);
-		System.out.println(page);
+		
 		for (Commodity commodity : page.getContent()) {
 		byte[] commPicture = commodity.getCommPicture();
 		String base64string = Base64.getEncoder().encodeToString(commPicture);
@@ -201,6 +197,9 @@ public class CommodityService {
 	        // handle the case where the commodity with the given id is not found
 	    }
 	}
+	
+	
+	
 	
 	
 	

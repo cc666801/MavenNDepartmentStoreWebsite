@@ -81,7 +81,7 @@
 
 			<div class="container">
 				<div class="row">
-					<c:forEach var="commodity" items="${commodityPage.content}"
+					<c:forEach var="commodity" items="${commodityTrue.content}"
 						varStatus="status">
 						<div class="col-lg-4 col-6 mb-4 shuffle-item"
 							data-groups='["${category}"]'>
@@ -137,9 +137,9 @@
 					<ul class="list-inline d-block mx-auto">
 
 						<c:forEach var="pageNumber" begin="1"
-							end="${commodityPage.totalPages}">
+							end="${commodityTrue.totalPages}">
 							<li class="list-inline-item"><a
-								href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}">
+								href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityTrue.content.get(0).commCate.cateId}&p=${pageNumber}">
 									<span>${pageNumber}</span>
 							</a></li>
 						</c:forEach>

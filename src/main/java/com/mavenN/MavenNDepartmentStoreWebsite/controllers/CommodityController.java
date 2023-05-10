@@ -158,20 +158,35 @@ public class CommodityController {
 //
 //	}
 
-//	分類的分頁器  5/3 12:27 未完成
+//	分類的分頁器   原版可動版本 5/10 晚上可動
+//	@GetMapping("/Store/Commodity/findAllCommByCate")
+//	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
+//			@RequestParam(name = "cateId", required = false) Integer cateId, Model model) {
+//		CommCate commCate = commCateService.findcateById(cateId);
+//		Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
+//		
+//		model.addAttribute("commodityPage", commodityPage);
+//		
+//		
+//
+//		return "Store/Commodity/findCommByCate";
+//	}
+
+	
+	//5/11 嘗試做動 讓其點選類別僅出現上架產品
 	@GetMapping("/Store/Commodity/findAllCommByCate")
 	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-			@RequestParam(name = "cateId", required = false) Integer cateId, Model model) {
-		CommCate commCate = commCateService.findcateById(cateId);
-		Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
-//		System.out.println(commodityPage.getContent().get(0).getCommId());
-		model.addAttribute("commodityPage", commodityPage);
-		
-		
-
-		return "Store/Commodity/findCommByCate";
+	                             @RequestParam(name = "cateId", required = false) Integer cateId, Model model) {
+	    CommCate commCate = commCateService.findcateById(cateId);
+	    Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
+	    Page<Commodity> commodityTrue = commodityService.findByCommCateAndCommShelveIsTrue(commCate, PageRequest.of(0, 3));
+	    model.addAttribute("commodityPage", commodityPage);
+	    model.addAttribute("commodityTrue", commodityTrue);
+	    return "Store/Commodity/findCommByCate";
 	}
-
+	
+	
+	
 //	找所有類別這裡還可以執行 2023/05/01 11:27
 	@GetMapping("/Store/Commodity/findCate")
 	public String showAllCommByCommcate(CommCate commCate, Model model) {
@@ -211,7 +226,7 @@ public class CommodityController {
 //	    return "commodityDetail";
 //	}
 
-//	5/3 嘗試來做 判斷上下一筆資料
+//	5/3 嘗試來做 判斷上下一筆資料 未成功
 
 	@GetMapping("/Store/Commodity/prevComm/{commId}")
 	public String getPrevComm(@PathVariable Long commId, Model model) {
@@ -298,35 +313,7 @@ public class CommodityController {
 	    return "Store/Commodity/showCommodityByShelves";
 	}
 
-//	5/5gpt寫的 可動 但不理解
 
-//	@GetMapping("/Store/Commodity/commodities")
-//	public String showCommodities(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
-//		Pageable pageable = PageRequest.of(pageNumber, 3); // 每頁 3 筆資料
-//		Page<Commodity> page = commodityService.findByCommShelveIsTrue(pageable);
-//		List<Commodity> commodities = new ArrayList<>(page.getContent()); // 複製分頁結果，避免修改原始結果
-//
-//		// 篩選下架商品，並移除
-//		List<Commodity> soldOutCommodities = commodities.stream().filter(c -> !c.getCommShelve())
-//				.collect(Collectors.toList());
-//		commodities.removeAll(soldOutCommodities);
-//
-//		for (Commodity commodity : commodities) {
-//			byte[] imageData = commodity.getCommPicture();
-//			if (imageData != null) {
-//				String base64String = Base64.getEncoder().encodeToString(imageData);
-//				commodity.setBase64StringcommPicture(base64String);
-//			}
-//		}
-//
-//		model.addAttribute("page", new PageImpl<>(commodities, pageable, commodities.size())); // 使用修改後的商品列表建立新的分頁結果
-//		model.addAttribute("commodities", commodities);
-//		return "Store/Commodity/showCommodityByShelves";
-//	}
-
-	
-	
-	
 	
 	
 	
@@ -377,28 +364,7 @@ public class CommodityController {
 //	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-//	偷下上面的分頁器 失敗
-//	@GetMapping("/Store/Commodity/findAllComm")
-//	public String findByPage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber, Model model) {
-//		Page<Commodity> page = commodityService.usePgbToFindAllCommodity(pageNumber);
-//
-//		model.addAttribute("page", page);
-//		
-//		List<CommCate> findAllCate = commCateService.findAllCate();
-//		model.addAttribute("findAllCate",findAllCate);
-//		return "Store/Storeindex";
-//
-//	}
-//	
+
 
 //	5/4 開始模糊搜尋
 
@@ -414,17 +380,7 @@ public class CommodityController {
 	
 	
 
-//	寫分頁欄  壞了
-	
-	
-	@GetMapping("/Store/Commodity/findCommByCate")
-    public String findByCommNameContaining1(@RequestParam("commName") String commName,@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Commodity> page = commodityService.findByCommNameContaining(commName,pageNumber);
-    	model.addAttribute("page",page);
-    	return "Store/Commodity/CatePage";
-    	
-	}
-	
+
 	
 	
 
