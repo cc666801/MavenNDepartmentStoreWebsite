@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.EmailService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
@@ -26,13 +29,16 @@ public class MemberController {
 	private MemberService mService;
 	@Autowired
 	private MemberRepository mRepository;
+	@Autowired
+    private EmailService emailService;
+	
 	
 	@GetMapping("/memberCentre")
 	public String jumpPage(){
 		return "member/memberCentre";
 	}
 	
-	// 註冊會員  帳號重複不會顯示在前台
+	// 註冊會員
 	@GetMapping("/member/register")
 	public String addMember(Model model) {
 		model.addAttribute("member", new Member());
@@ -119,93 +125,43 @@ public class MemberController {
         return "member/jump";
     }
 	
-	
-////-------------------------------------------------------------------------
-//
-//	// 新增會員最愛資料
-//	@ResponseBody
-//	@PostMapping("/newmemberfavorite")
-//	public ResponseEntity<Void> createMemberFavorite(@RequestBody MemberFavorite memberFavorite) {
-//	    memberService.createMemberFavorite(memberFavorite);
-//	    return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//	
-//	// 刪除會員最愛資料
-//	@ResponseBody
-//	@DeleteMapping("/deletememberfavorite/{id}")
-//	public ResponseEntity<Void> deleteMemberFavorite(@PathVariable Integer id) {
-//	    memberService.deleteMemberFavorite(id);
-//	    return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//	
-//	// 搜尋會員所有最愛資料
-//	@ResponseBody
-//	@GetMapping("/allmemberfavorite/{memberAccount}")
-//	public ResponseEntity<List<MemberFavorite>> getMemberFavoritesByAccount(@PathVariable String memberAccount) {
-//		List<MemberFavorite> memberFavorites = memberService.getMemberFavoritesByAccount(memberAccount);
-//		return new ResponseEntity<>(memberFavorites, memberFavorites.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//	}
-//	
-////-------------------------------------------------------------------------
-//	
-//	// 新增會員等級
-//	@ResponseBody
-//	@PostMapping("/newmemberlevel")
-//	public ResponseEntity<Void> createMemberLevel(@RequestBody MemberLevel memberLevel) {
-//		memberService.createMemberLevel(memberLevel);
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	// 搜尋會員等級資料
-//	@ResponseBody
-//	@GetMapping("/memberlevel/{memberAccount}")
-//	public ResponseEntity<List<MemberLevel>> findMemberLevelByMemberAccount(@PathVariable String memberAccount) {
-//		List<MemberLevel> memberLevels = memberService.findMemberLevelByMemberAccount(memberAccount);
-//		return new ResponseEntity<>(memberLevels, memberLevels.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//	}
-//
-//	// 更新會員等級
-//	@ResponseBody
-//	@PutMapping("/updatememberlevel")
-//	public ResponseEntity<Void> updateMemberLevel(@RequestBody MemberLevel memberLevel) {
-//		memberService.updateMemberLevel(memberLevel);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//	
-////-------------------------------------------------------------------------
-//
-//	// 新增會員違規紀錄
-//	@ResponseBody
-//	@PostMapping("/newmembershopviolation")
-//	public ResponseEntity<Void> createMemberShopViolation(@RequestBody MemberShopViolation memberShopViolation) {
-//		memberService.createMemberShopViolation(memberShopViolation);
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	// 查詢會員違規紀錄
-//	@ResponseBody
-//	@GetMapping("/membershopviolation/{memberAccount}")
-//	public ResponseEntity<List<MemberShopViolation>> getMemberShopViolationsByAccount(
-//			@PathVariable String memberAccount) {
-//		List<MemberShopViolation> memberShopViolations = memberService.getMemberShopViolationsByAccount(memberAccount);
-//		return new ResponseEntity<>(memberShopViolations,
-//				memberShopViolations.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//	}
-//
-//	// 更新違規紀錄
-//	@ResponseBody
-//	@PutMapping("/updatemembershopviolation")
-//	public ResponseEntity<Void> updateMemberShopViolation(@RequestBody MemberShopViolation memberShopViolation) {
-//		memberService.updateMemberShopViolation(memberShopViolation);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//
-//	// 刪除違規紀錄
-//	@ResponseBody
-//	@DeleteMapping("/deletemembershopviolation/{id}")
-//	public ResponseEntity<Void> deleteMemberShopViolation(@PathVariable Integer id) {
-//		memberService.deleteMemberShopViolation(id);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
+//-------------------------------------------------------------------------------------------------------------------------
+	//驗證信
+	@GetMapping("/member/verifyEmail")
+	public String verifyEmail(HttpSession session, Model model) {
+	    Member member = (Member) session.getAttribute("verify");
+	    
+	    model.addAttribute("member", member);
+	    model.addAttribute("success", false);
+	    model.addAttribute("failure", false);
+	    return "member/verifyEmailPage";
+	}
 
+	@PostMapping("/member/verifyEmail")
+	public String sendVerificationEmail(HttpSession session, Model model, @ModelAttribute("member") Member member) {
+	    String token = UUID.randomUUID().toString();
+	    member.setToken(token); // 設置 token 值
+	    mService.addMember(member);
+	    emailService.sendVerificationEmail(member, token);
+	    member.setVerify("未驗證");
+	    mRepository.save(member);
+	    session.removeAttribute("verify");
+	    return "redirect:/memberCentre";
+	}
+
+	@GetMapping("/member/verify")
+	public String verifyMember(@RequestParam(name = "token", required = true) String token) {
+	    Member member = mRepository.findByToken(token);
+	    if (member != null) {
+	        member.setVerify("已驗證");
+	        mRepository.save(member);
+	        return "member/emailSucessJump";
+	    } else {
+	        return "member/emailFailJump";
+	    }
+	}
+
+
+
+	
 }
