@@ -203,9 +203,7 @@ public class AdvertiseController {
 		List<Advertise> shelvesIsTrue = advertiseService.findByAdvertiseShelveIsTrue();
 		    model.addAttribute("shelvesIsTrue",shelvesIsTrue);
 		    
-////		    讓
-//		    List<Advertise> clickAD = advertiseService.updateAdvertiseShelveByadvertiseClick();
-//		    model.addAttribute("clickAD",clickAD);
+
 
 		    
 		    return "frontend/index";
@@ -229,23 +227,48 @@ public class AdvertiseController {
 		
 	
 	
-//	修改版本   5/10 
+//	修改版本   5/10   可做動版本  這個可以紀錄點擊次數 且 點擊次數超過設定時 讓廣告下架
 	
+//	@GetMapping("/Advertise/Advertise/findAdvertise")
+//	public String findByAdveretiseId(@RequestParam(name="advertiseId")Integer advertise,Model model) {
+//		Advertise advertiseInfo = advertiseService.findAdvertiseById(advertise);
+//		advertiseService.recordClickAndUpdateShelve(advertise);
+//		
+//		model.addAttribute("advertiseInfo",advertiseInfo);
+//		return "Advertise/Advertise/advertiseDetail";
+//	}
+	
+
+	
+	
+	
+	//	5/10  14:0測試時間 成功! 
+//	@GetMapping("/Advertise/Advertise/findAdvertise")
+//	public String findByAdveretiseId(@RequestParam(name="advertiseId")Integer advertise,Model model) {
+//		Advertise advertiseInfo = advertiseService.updateAdvertiseStatus(advertise);
+//								
+//		
+//		model.addAttribute("advertiseInfo",advertiseInfo);
+//		return "Advertise/Advertise/advertiseDetail";
+//	}
+	
+	
+	
+	//	5/10  三點要測試送廣告圖片到廣告詳細資料
 	@GetMapping("/Advertise/Advertise/findAdvertise")
 	public String findByAdveretiseId(@RequestParam(name="advertiseId")Integer advertise,Model model) {
-		Advertise advertiseInfo = advertiseService.findAdvertiseById(advertise);
-		advertiseService.recordClickAndUpdateShelve(advertise);
-		
-//		advertiseService.updateAdvertiseShelveByadvertiseClick();  //這行不會做動
-
+		Advertise advertiseInfo = advertiseService.updateAdvertiseStatus(advertise);
+		Advertise advertiseDetail = advertiseService.findAdvertiseById(advertise);
+		byte[] imageData = advertiseDetail.getAdvertisePicture(); // 取得廣告圖片資料
+		if (imageData != null) {
+		    String base64String = Base64.getEncoder().encodeToString(imageData);
+		    advertiseDetail.setBase64StringadvertisePicture(base64String); // 將 Base64 編碼後的字串設定到 advertiseDetail 物件的 base64StringadvertisePicture 欄位中
+		}
 		model.addAttribute("advertiseInfo",advertiseInfo);
+		model.addAttribute("advertiseDetail",advertiseDetail);
 		return "Advertise/Advertise/advertiseDetail";
+	
 	}
-	
-	
-	
-	
-	
 	
 	}
 	

@@ -87,13 +87,13 @@
 						<div class="project-info">
 <%-- 							<h3 class="mb-4">${commodityInfo.commName}</h3> --%>
 <!-- 上面這個是名稱欄位 可隱藏 -->
-							<p>${commodityInfo.commDesc}</p>
+							
 
 							<div class="row mt-4">
 								<div class="col-lg-6">
 									<div class="info">
-										<h5 class="mb-0">商品編號</h5>
-										<p id="commodityId">${commodityInfo.commId}</p>
+										<h5 class="mb-0">商品名稱</h5>
+										<p id="commodityName">${commodityInfo.commName}</p>
 									</div>
 
 									<div class="info">
@@ -111,6 +111,12 @@
 										<input type="number" name="quantity" id="quantity" min="1"
 											max="10" value="1">
 									</div>
+									<br>
+									<div class="info">
+										<h5 class="mb-0">商品敘述</h5>
+										<p>${commodityInfo.commDesc}</p>
+									</div>
+									
 								</div>
 
 								<div class="col-lg-6">
