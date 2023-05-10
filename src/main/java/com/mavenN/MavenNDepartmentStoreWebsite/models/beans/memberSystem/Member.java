@@ -1,6 +1,5 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem;
 
-
 import java.util.Date;
 
 import javax.persistence.Column;
@@ -19,46 +18,67 @@ import com.fasterxml.jackson.annotation.JsonFormat;
 @Table(name = "member")
 public class Member {
 
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
-    private Integer id;
+	@Id
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
+	@Column(name = "id")
+	private Integer id;
 
-    @NotBlank
-    @Column(name = "name", nullable = false)
-    private String name;
+	@NotBlank
+	@Column(name = "name", nullable = false)
+	private String name;
 
-    @NotBlank
-    @Column(name = "account", nullable = false, unique = true)
-    private String account;
+	@NotBlank
+	@Column(name = "account", nullable = false, unique = true)
+	private String account;
 
-    @NotBlank
-    @Column(name = "password", nullable = false)
-    private String password;
-    
-    
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
-    @DateTimeFormat(pattern = "yyyy-MM-dd")
-    @Column(name = "birthday", columnDefinition = "date")
-    private Date birthday;
+	@NotBlank
+	@Column(name = "password", nullable = false)
+	private String password;
 
-    @NotBlank
-    @Column(name = "email", nullable = false)
-    private String email;
+	@JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd")
+	@DateTimeFormat(pattern = "yyyy-MM-dd")
+	@Column(name = "birthday", columnDefinition = "date")
+	private Date birthday;
 
-    @NotBlank
-    @Column(name = "phone")
-    private String phone;
+	@NotBlank
+	@Column(name = "email", nullable = false)
+	private String email;
 
-    @NotBlank
-    @Column(name = "address")
-    private String address;
+	@NotBlank
+	@Column(name = "phone")
+	private String phone;
+
+	@NotBlank
+	@Column(name = "address")
+	private String address;
 
 //    @Column(name = "picture")
 //    private String picture;
 
-    @Column(name = "points")
-    private Integer points=0;
+	@Column(name = "points")
+	private Integer points = 0;
+
+	@Column(name = "verify")
+	private String verify = "未驗證";
+
+	@Column(name = "token")
+	private String token;
+
+	public String getToken() {
+		return token;
+	}
+
+	public void setToken(String token) {
+		this.token = token;
+	}
+
+	public String getVerify() {
+		return verify;
+	}
+
+	public void setVerify(String verify) {
+		this.verify = verify;
+	}
 
 	public Integer getId() {
 		return id;
@@ -139,6 +159,5 @@ public class Member {
 	public void setPoints(Integer points) {
 		this.points = points;
 	}
-    
-	
+
 }

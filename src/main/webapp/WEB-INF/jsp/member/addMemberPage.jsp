@@ -43,6 +43,12 @@ body {
 						<form:form name="myForm" method="post"
 							action="${contextRoot}/member/post" modelAttribute="member"
 							onsubmit="return checkForm();">
+							
+							<c:if test="${not empty error}">
+                                <div class="alert alert-danger" role="alert">
+                                    ${error}
+                                </div>
+                            </c:if>
 							<div class="form-group">
 								<label for="name">姓名：</label>
 								<form:input path="name" id="name" cssClass="form-control"

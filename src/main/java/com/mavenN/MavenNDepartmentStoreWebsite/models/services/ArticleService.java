@@ -8,6 +8,7 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -181,27 +182,15 @@ public class ArticleService {
 			  Pageable pageable = PageRequest.of(pageNumber - 1, 5, sort);
 			  return articleRepository.findAll(pageable);
 			}
+			 
+			public Page<Article> findArticleByCommentCountAndPage(int pageNumber, int pageSize) {
+			    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, "commentCount"));
+			    return articleRepository.findAll(pageable);
+			}
 			
-//			public Page<Article> findArticlesOrderByArticleLikesCount(Integer pageNumber, String sortBy) {
-//		        Pageable pageable = PageRequest.of(pageNumber - 1, 5, Sort.by(sortBy).descending());
-//		        Page<Object[]> result = articleRepository.findArticlesOrderByArticleLikesCount(pageable);
-//		        return result.map(objects -> (Article) objects[0]);
-//		    }
-//
-//			public Page<Article> findArticlesOrderByCommentsCount(Integer pageNumber, String sortBy) {
-//		        
-//		        Pageable pageable = PageRequest.of(pageNumber - 1,5, Sort.by(sortBy).descending());
-//
-//		        
-//		        Page<Object[]> result = articleRepository.findArticlesOrderByCommentsCount(pageable);
-//
-//		        
-//		        return result.map(row -> {
-//		            Article article = (Article) row[0];
-//		            Long commentCount = (Long) row[1];
-//		            article.setCommentCount(commentCount.intValue());
-//		            return article;
-//		        });
-//		    }
+			public Page<Article> findArticleByArticleLikeCountAndPage(int pageNumber, int pageSize) {
+			    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, "articleLikeCount"));
+			    return articleRepository.findAll(pageable);
+			}
 	
 }
