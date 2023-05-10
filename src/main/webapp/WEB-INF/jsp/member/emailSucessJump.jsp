@@ -16,7 +16,6 @@
 <body>
 	<div style="text-align:center;">
 		<h1>驗證成功！即將跳轉...</h1>
-		<h2>下次登入時就會顯示已驗證!</h2>
 		<p>若未跳轉，請點擊<a href="${pageContext.request.contextPath}/">這裡</a></p>
 	</div>
 </body>
