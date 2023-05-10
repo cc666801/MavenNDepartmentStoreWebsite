@@ -66,12 +66,12 @@ public class MemberController {
 		return "member/memberList";
 	}
 
-	// 搜索單筆會員
+	// 搜索單筆修改會員
 	@GetMapping("/member/{id}")
 	public String findMemberById(@PathVariable Integer id,Model model) {
 		Member member = mService.findMemberById(id);
 	    model.addAttribute("member", member);
-	    return "redirect:/member/logout";
+	    return "redirect:/memberCentre";
 		
 	}
 	// 更新會員資料
