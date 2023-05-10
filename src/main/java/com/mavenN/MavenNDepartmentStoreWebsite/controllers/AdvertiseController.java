@@ -201,26 +201,52 @@ public class AdvertiseController {
 		
 //		    廣告上下架
 		List<Advertise> shelvesIsTrue = advertiseService.findByAdvertiseShelveIsTrue();
-
 		    model.addAttribute("shelvesIsTrue",shelvesIsTrue);
 		    
-		return "frontend/index";
+////		    讓
+//		    List<Advertise> clickAD = advertiseService.updateAdvertiseShelveByadvertiseClick();
+//		    model.addAttribute("clickAD",clickAD);
+
+		    
+		    return "frontend/index";
 		}
 
 
-//	找單獨一支廣告
+//	找單獨一支廣告 原本可做動版本
+	
+//	@GetMapping("/Advertise/Advertise/findAdvertise")
+//	public String findByAdveretiseId(@RequestParam(name="advertiseId")Integer advertise,Model model) {
+//		Advertise advertiseInfo = advertiseService.findAdvertiseById(advertise);
+//		advertiseService.recordClick(advertise);
+//		
+//
+//
+//		model.addAttribute("advertiseInfo",advertiseInfo);
+//		return "Advertise/Advertise/advertiseDetail";
+//	}
+//	
+	
+		
+	
+	
+//	修改版本   5/10 
 	
 	@GetMapping("/Advertise/Advertise/findAdvertise")
 	public String findByAdveretiseId(@RequestParam(name="advertiseId")Integer advertise,Model model) {
 		Advertise advertiseInfo = advertiseService.findAdvertiseById(advertise);
-		advertiseService.recordClick(advertise);
+		advertiseService.recordClickAndUpdateShelve(advertise);
 		
+//		advertiseService.updateAdvertiseShelveByadvertiseClick();  //這行不會做動
+
 		model.addAttribute("advertiseInfo",advertiseInfo);
 		return "Advertise/Advertise/advertiseDetail";
 	}
 	
 	
-		
+	
+	
+	
+	
 	}
 	
 	

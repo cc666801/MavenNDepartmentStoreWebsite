@@ -14,8 +14,8 @@ public interface AdvertiseRepository extends JpaRepository <Advertise, Integer>{
 	List<Advertise>findByAdvertiseShelveIsTrue();
 	
 	
-//	修改狀態
-//	List<Advertise> updateAdvertiseShelveByadvertiseClick();
+//	修改狀態    會出錯
+//	List<Advertise> findByAdvertiseShelveByadvertiseClick();
 	
 	
 

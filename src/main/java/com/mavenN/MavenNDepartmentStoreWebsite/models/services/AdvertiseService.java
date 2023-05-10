@@ -82,23 +82,23 @@ public class AdvertiseService {
 		return advertiseRepository.findByAdvertiseShelveIsTrue();
 	}
 
-//	紀錄廣告點擊次數
+//	紀錄廣告點擊次數  可正確做動 
 
-	public void recordClick(Integer advertiseId) {
-		Optional<Advertise> optionadvertise = advertiseRepository.findById(advertiseId);
-		if (optionadvertise.isPresent()) {
-			Advertise advertise = optionadvertise.get();
-			advertise.setAdvertiseId(advertiseId);
-			if (advertise.getAdvertiseClick() != null) {
-				advertise.setAdvertiseClick(advertise.getAdvertiseClick() + 1); // 會記錄點擊次數 點擊後+1
-			} else {
-				advertise.setAdvertiseClick(1);// 若沒有點擊次數 就先設定為1
-			}
-			advertiseRepository.save(advertise);
-		} else {
-			// handle the case where the commodity with the given id is not found
-		}
-	}
+//	public void recordClick(Integer advertiseId) {
+//		Optional<Advertise> optionadvertise = advertiseRepository.findById(advertiseId);
+//		if (optionadvertise.isPresent()) {
+//			Advertise advertise = optionadvertise.get();
+//			advertise.setAdvertiseId(advertiseId);
+//			if (advertise.getAdvertiseClick() != null) {
+//				advertise.setAdvertiseClick(advertise.getAdvertiseClick() + 1); // 會記錄點擊次數 點擊後+1
+//			} else {
+//				advertise.setAdvertiseClick(1);// 若沒有點擊次數 就先設定為1
+//			}
+//			advertiseRepository.save(advertise);
+//		} else {
+//
+//		}
+//	}
 
 //	當廣告被點擊次數  大於等於 廣告預設次數  將廣告狀態改為下架
 //	public void setAdvertiseShelveIsFalse(Integer advertiseId, boolean advertiseShelve) {
@@ -107,28 +107,52 @@ public class AdvertiseService {
 //			Advertise advertise = optionalAdvertise.get();
 //			advertise.getAdvertiseClick()>=advertise.getAdvertiseFrequency();
 //			advertise.setAdvertiseShelve(false);
-			
+
 //			advertiseRepository.save(advertise);
 //		} else {
-			// 廣告不存在，你可以選擇拋出異常或執行其他處理
+	// 廣告不存在，你可以選擇拋出異常或執行其他處理
 //		}
 //	}
 
+	//調整狀態
+//	@Transactional
+//	public List<Advertise> updateAdvertiseShelveByadvertiseClick() {
+//		List<Advertise> advertises = advertiseRepository.findAll();
+//
+//		for (Advertise advertise : advertises) {
+//			if (advertise.getAdvertiseClick() >= advertise.getAdvertiseFrequency()) {
+//				advertise.setAdvertiseShelve(false);
+//				advertiseRepository.save(advertise);
+//			}
+//		}
+//		return advertises;
+//	}
+
+//	嘗試混和
 	
 	
 	@Transactional
-	public List<Advertise> updateAdvertiseShelveByadvertiseClick() {
-	    List<Advertise> advertises = advertiseRepository.findAll();
-	    for (Advertise advertise : advertises) {
-	        if (advertise.getAdvertiseClick() >= advertise.getAdvertiseFrequency()) {
-	            advertise.setAdvertiseShelve(false);
-	            advertiseRepository.save(advertise);
-	        }
-	    }
-	    return advertises;
+	public void recordClickAndUpdateShelve(Integer advertiseId) {
+		Optional<Advertise> optionadvertise = advertiseRepository.findById(advertiseId);
+		if (optionadvertise.isPresent()) {
+			Advertise advertise = optionadvertise.get();
+			advertise.setAdvertiseId(advertiseId);
+			if (advertise.getAdvertiseClick() != null) {
+				advertise.setAdvertiseClick(advertise.getAdvertiseClick() + 1);
+			} else {
+				advertise.setAdvertiseClick(1);
+			}
+			advertiseRepository.save(advertise);
+
+			if (advertise.getAdvertiseClick() >= advertise.getAdvertiseFrequency()) {
+				advertise.setAdvertiseShelve(false);
+				advertiseRepository.save(advertise);
+			}
+		} else {
+			// 處理廣告不存在的情況
+		}
 	}
-	
-	
+
 	public AdvertiseService() {
 		// TODO Auto-generated constructor stub
 	}
