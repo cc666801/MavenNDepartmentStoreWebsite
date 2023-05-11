@@ -379,6 +379,27 @@ public class ArticleController {
 				articleService.updateArticleById(art.getArticleID(), art);
 		return "redirect:/articleManage";
 	}
+	@GetMapping("/articleCollect")
+	public String findAllArtCollect(Model model, HttpSession session, HttpServletRequest request) {
+		try {
+	        Member currentMember = (Member) session.getAttribute("member");
+	        List<Article> findAllArt = articleService.getLikedArticlesByMemberId(currentMember.getId());
+	        for (Article art : findAllArt) {
+	            if (art.getArticleImage() != null) {
+	                String base64 = Base64.getEncoder().encodeToString(art.getArticleImage());
+	                art.setArticleBase64(base64);
+	            }
+	        }
+	        model.addAttribute("artList", findAllArt);
+	        return "/forum/article/articleCollect";
+	    } catch (NullPointerException e) {
+	        // 添加錯誤訊息到model中
+	        model.addAttribute("errorMsg", "請先登入會員");
+	        return "/forum/article/articleCollect";
+	    }
+	}
+	
+	
 ///////////////////點讚系統////////////////
 	@ResponseBody
 	@PostMapping("/showArticleContent/{articleID}/like")

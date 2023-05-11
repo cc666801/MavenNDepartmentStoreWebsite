@@ -8,7 +8,8 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>會員個人文章管理</title>
+<title>收藏文章</title>
+
 <!-- =================== 後台表格CSS ======================================-->
 <link
 	href="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/style.min.css"
@@ -26,14 +27,14 @@ img {
 </style>
 </head>
 <body>
-	<jsp:include page="../../layout/header.jsp"></jsp:include>
+<jsp:include page="../../layout/header.jsp"></jsp:include>
 	<main id="main">
-		<div class="card mb-4" style="max-width: 85%; margin: 0 auto;">
-			<div class="card-header">
-				<i class="fas fa-table me-1"></i>文章管理列表
+		<div class="card mb-4" style="max-width: 70%; margin: 0 auto;">
+			<div class="card-header" >
+				<i class="fas fa-table me-1"></i>收藏文章
 			</div>
-			<div class="card-body">
-				<table id="datatablesSimple">
+			<div class="card-body" >
+				<table id="datatablesSimple" >
 					<thead>
 						<tr>
 							<th>縮圖</th>
@@ -42,10 +43,6 @@ img {
 							<th>發文者帳號</th>
 							<th>類別</th>
 							<th>文章內容</th>
-							<th>建立日期</th>
-							<th>最後更新日期</th>
-							<th>編輯</th>
-							<th>刪除</th>
 						</tr>
 					</thead>
 					<tbody>
@@ -58,19 +55,6 @@ img {
 								<td>${art.articleCategory.articleCategoryName}</td>
 								<td><a
 									href="${contextRoot}/articleContent/${art.articleID}">文章內容</a></td>
-								<td>${art.articleCreateTime}</td>
-								<td>${art.articleEditTime}</td>
-								<td><form action="${contextRoot}/articleManage/edit">
-										<input type="hidden" name="id" value="${art.articleID}" /> <input
-											type="submit" value="編輯" />
-									</form></td>
-								<td><form action="${contextRoot}/articleManage/delete"
-										method="post" onclick="return confirm('確定要刪除這篇文章嗎?')">
-										<input type="hidden" name="_method" value="delete" /> <input
-											type="hidden" name="id" value="${art.articleID}" /> <input
-											type="submit" value="刪除" />
-									</form></td>
-							</tr>
 						</c:forEach>
 					</tbody>
 				</table>
@@ -79,7 +63,8 @@ img {
 	</main>
 
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
-
+	
+	
 	<!-- =============================== bootstrap ================================================= -->
 	<script
 		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
@@ -98,7 +83,5 @@ img {
         window.location.href = "${contextRoot}/member/login";
     }
 </script>
-
-
 </body>
 </html>

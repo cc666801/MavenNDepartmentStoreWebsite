@@ -12,6 +12,7 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer>  {
 	List<Article> findAllByMemberId(Integer memberId);
+		
 	
 	 Page<Article> findByArticleCategory_articleCategoryID(Integer categoryId, Pageable pageable);
 	
