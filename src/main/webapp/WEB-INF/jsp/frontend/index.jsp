@@ -36,7 +36,7 @@
 													varStatus="status" begin="0" end="2">
 													<div class="swiper-slide">
 
-														<a href="single-post.html" class="img-bg d-flex align-items-end"
+														<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}" class="img-bg d-flex align-items-end"
 															style="background-image: url(data:image/png;base64,${advertise.base64StringadvertisePicture});">
 															<div class="img-bg-inner">
 																<h2>${advertise.advertiseName}</h2>
@@ -105,7 +105,7 @@
 												<div class="post-entry-1">
 													<P style="font-size :32px">近期活動</P>
 													<jstl:forEach var="advertise" items="${shelvesIsTrue}"
-														varStatus="status" begin="2">
+														varStatus="status" begin="1">
 														<!--放上面才可以顯示 begin="3" end="5" -->
 														<a
 															href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img

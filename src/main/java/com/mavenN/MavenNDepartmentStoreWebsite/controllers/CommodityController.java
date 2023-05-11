@@ -175,13 +175,11 @@ public class CommodityController {
 	
 	//5/11 嘗試做動 讓其點選類別僅出現上架產品
 	@GetMapping("/Store/Commodity/findAllCommByCate")
-	public String findByCatePage(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,
-	                             @RequestParam(name = "cateId", required = false) Integer cateId, Model model) {
+	public String showCommodityList(@RequestParam("cateId") Integer cateId, @RequestParam(name="p",defaultValue = "1") Integer pageNumber, Model model) {
 	    CommCate commCate = commCateService.findcateById(cateId);
-	    Page<Commodity> commodityPage = commodityService.usePgbToFindCommodityByCommcate(commCate, pageNumber);
-	    Page<Commodity> commodityTrue = commodityService.findByCommCateAndCommShelveIsTrue(commCate, PageRequest.of(0, 3));
+	    Page<Commodity> commodityPage = commodityService.findByCommCateAndCommShelveIsTrue(commCate, pageNumber, 3);
+	    
 	    model.addAttribute("commodityPage", commodityPage);
-	    model.addAttribute("commodityTrue", commodityTrue);
 	    return "Store/Commodity/findCommByCate";
 	}
 	

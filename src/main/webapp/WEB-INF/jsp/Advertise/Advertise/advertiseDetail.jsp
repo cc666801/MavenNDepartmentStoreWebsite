@@ -117,8 +117,8 @@
 				<div class="pagination">
 					<ul class="list-inline d-block mx-auto">
 						<li class="list-inline-item"><a
-							href="${contextRoot}/Store/Commodity/findAllComm"
-							class="btn btn-primary">返回商品總表</a></li>
+							href="${contextRoot}/"
+							class="btn btn-primary">返回百貨公司首頁</a></li>
 					</ul>
 				</div>
 			</div>
@@ -127,20 +127,7 @@
 			<!-- 		5/3 常識判斷上下一筆資料  失敗-->
 
 
-			<div class="col-lg-6 text-center">
-				<c:if test="${not empty prevCommId}">
-					<a href="${contextRoot}/Store/Commodity/prevComm/${prevCommId}"
-						class="btn btn-dark"> <img
-						src="${contextRoot}/resources/images/prevButton.png" alt="上一項產品">
-					</a>
-				</c:if>
-				<c:if test="${not empty nextCommId}">
-					<a href="${contextRoot}/Store/Commodity/nextComm/${nextCommId}"
-						class="btn btn-dark"> <img
-						src="${contextRoot}/resources/images/nextButton.png" alt="下一項產品">
-					</a>
-				</c:if>
-			</div>
+	
 	</main>
 
 
