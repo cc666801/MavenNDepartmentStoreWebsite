@@ -180,7 +180,7 @@ public class MemberController {
 		member.setVerify("未驗證");
 		mRepository.save(member);
 		session.removeAttribute("verify");
-		return "redirect:/memberCentre";
+		return "member/emailSendSucess";
 	}
 
 	@GetMapping("/member/verify")
