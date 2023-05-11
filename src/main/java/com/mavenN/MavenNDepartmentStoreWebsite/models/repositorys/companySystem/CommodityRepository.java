@@ -16,12 +16,10 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 //	這邊設計的是所有商品的分頁器
 	List<Commodity> findAllCommByCommCate(CommCate commCate);
 
-//	嘗試使用分頁器  方法名稱改為 findCommodityByCommCate
+//	嘗試使用分頁器  方法名稱改為 findCommodityByCommCate   5/10暫時隱蔽
 	Page<Commodity> findCommodityByCommCate(CommCate commCate, Pageable pageable);
 
-//嘗試僅顯示 上架產品
 
-//	List<Commodity> findBycommShelve(boolean commShelve);
 
 //	5/4邪教寫法 ， 可成功!
 //    List<Commodity> findByCommShelveIsTrue();
@@ -49,8 +47,20 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 	Commodity findFirstByCommIdLessThanOrderByCommIdDesc(Long commId);
 
     
-//    @Query("SELECT commodity FROM Commodity c WHERE c.commName LIKE %:commName%")
-//    List<Commodity> findCommodityBycommNameContaining(@Param("commName") String commName);
-//
-//    
+
+	
+//	嘗試撰寫 熱門商品排序寫法
+	List<Commodity>findByOrderByCommClickDesc();
+
+	
+//	點類別 顯示上架產品
+	Page<Commodity> findByCommCateAndCommShelveIsTrue(CommCate commCate, Pageable pageable);
+	
+	
+	
+//	重寫分類與分頁器
+//	Page<Commodity>findCommodityByCommCate(Pageable pageable);
+	
+	
+	
 }

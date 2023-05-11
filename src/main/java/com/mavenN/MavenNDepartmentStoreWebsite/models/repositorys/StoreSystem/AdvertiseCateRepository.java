@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.StoreSystem;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 

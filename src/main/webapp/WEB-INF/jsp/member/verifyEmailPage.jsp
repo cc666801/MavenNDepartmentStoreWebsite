@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 
@@ -11,20 +11,12 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta http-equiv="X-UA-Compatible" content="ie=edge">
-<title>會員資料</title>
+<title>驗證信箱</title>
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.staticfile.org/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
 <!-- 自訂 CSS -->
 <style>
-input[type="password"] {
-	border: none;
-	background-color: transparent;
-	-webkit-box-shadow: none;
-	-moz-box-shadow: none;
-	box-shadow: none;
-}
-
 table {
 	margin: auto;
 }
@@ -34,11 +26,13 @@ table {
 	color: white;
 }
 
+.btn-primary:hover {
+	background-color: #3e8e41 !important;
+}
 
 form {
 	margin-top: 50px;
 }
-
 
 button[type="submit"] {
 	background-color: #4CAF50;
@@ -91,68 +85,42 @@ h1 {
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
-		<h1>會員資料</h1>
+		<h1 style="text-align: center; color: #4CAF50;">驗證信箱</h1>
 		<div class="row justify-content-center">
-      <div class="col-md-8 col-lg-6">
-        <div class="card">
-          <div class="card-body">
-            <table class="table">
-			<tr>
-				<th>姓名:</th>
-				<td>${sessionScope.member.name}</td>
-			</tr>
-			<tr>
-				<th>帳號:</th>
-				<td>${sessionScope.member.account}</td>
-			</tr>
-			<tr>
-				<th>密碼:</th>
-				<td><input type="password"
-					value="${sessionScope.member.password}" disabled></td>
-			</tr>
-			<tr>
-				<th>生日:</th>
-				<td><fmt:formatDate value="${sessionScope.member.birthday}"
-						pattern="yyyy-MM-dd" /></td>
-			</tr>
-			<tr>
-				<th>電話:</th>
-				<td>${sessionScope.member.phone}</td>
-			</tr>
-			<tr>
-				<th>Email:</th>
-				<td>${sessionScope.member.email}</td>
-			</tr>
-			<tr>
-				<th>地址:</th>
-				<td>${sessionScope.member.address}</td>
-			</tr>
-			<tr>
-				<th>點數:</th>
-				<td>${sessionScope.member.points}</td>
-			</tr>
-			<tr>
-				<th>驗證狀態:</th>
-				<td><c:if test="${sessionScope.member.verify == '已驗證'}">
-            已驗證
-        </c:if> <c:if test="${sessionScope.member.verify != '已驗證'}">
-						<a href="${contextRoot}/member/verifyEmail" class="btn-link">${sessionScope.member.verify}</a>
-					</c:if></td>
-			</tr>
+			<div class="col-md-8 col-lg-6">
+				<div class="card">
+					<div class="card-body">
 
+						<table class="table">
+							<tr>
+								<th style="text-align: center;">即將傳送驗證信到以下信箱:</th>
+							</tr>
+							<tr>
+								<th style="text-align: center;">${member.email}</th>
+							</tr>
+							<tr>
+								<td style="text-align: center;">
+									<form action="${contextRoot}/member/verifyEmail" method="POST">
+										<input type="hidden" name="id" value="${member.id}" /> <input
+											type="hidden" name="account" value="${member.account}" /> <input
+											type="hidden" name="password" value="${member.password}" />
+										<input type="hidden" name="email" value="${member.email}" />
+										<input type="hidden" name="name" value="${member.name}" /> <input
+											type="hidden" name="phone" value="${member.phone}" /> <input
+											type="hidden" name="address" value="${member.address}" /> <input
+											type="hidden" name="verify" value="${member.verify}" /> <input
+											type="hidden" name="token" value="${member.token}" /> <input
+											type="hidden" name="birthday" value="${member.birthday}" />
+										<button type="submit" class="btn btn-primary btn-block">傳送驗證</button>
+									</form>
+								</td>
+							</tr>
 
-			<tr>
-				<td colspan="2"><form:form
-						action="${contextRoot}/member/edit/${sessionScope.member.id}"
-						method="GET">
-						<button type="submit" class="btn btn-primary btn-block">修改資料</button>
-					</form:form></td>
-			</tr>
-		</table>
-          </div>
-        </div>
-      </div>
-    </div>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
 
 	<!-- jQuery -->

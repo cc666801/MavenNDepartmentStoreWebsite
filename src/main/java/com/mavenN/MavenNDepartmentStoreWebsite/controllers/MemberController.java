@@ -2,6 +2,7 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.List;
 import java.util.Optional;
+import java.util.UUID;
 
 import javax.servlet.http.HttpSession;
 
@@ -14,9 +15,11 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.EmailService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
@@ -26,32 +29,19 @@ public class MemberController {
 	private MemberService mService;
 	@Autowired
 	private MemberRepository mRepository;
-	
+	@Autowired
+	private EmailService emailService;
+
+	// 跳轉會員中心時把新的資料塞入
 	@GetMapping("/memberCentre")
-	public String jumpPage(){
+	public String jumpPage(HttpSession session) {
+		Member member = (Member) session.getAttribute("member");
+		Member updatedMember = mService.findMemberById(member.getId());
+		session.setAttribute("member", updatedMember);
 		return "member/memberCentre";
 	}
-	
-	// 註冊會員  帳號重複不會顯示在前台
-	@GetMapping("/member/register")
-	public String addMember(Model model) {
-		model.addAttribute("member", new Member());
-		return "member/addMemberPage";// 跳到JSP
 
-	}
-
-	@PostMapping("/member/post")
-	public String postMember(@ModelAttribute("member") Member mem, Model model) {
-	    Optional<Member> existingMember = mRepository.findByAccount(mem.getAccount());
-	    if (existingMember.isPresent()) {
-	        model.addAttribute("error", "該帳號已經存在");
-	        return "member/addMemberPage";
-	    } else {
-	        mService.addMember(mem);
-	        return "member/jump";
-	    }
-	}
-
+//----------------------------------------------------------------------------------------
 	// 搜索所有會員
 	@GetMapping("/memberList")
 	public String findAllLostBack(Model model) {
@@ -60,28 +50,58 @@ public class MemberController {
 		return "member/memberList";
 	}
 
-	// 搜索單筆會員
+	// 搜索單筆修改會員
 	@GetMapping("/member/{id}")
-	public String findMemberById(@PathVariable Integer id,Model model) {
+	public String findMemberById(@PathVariable Integer id, Model model) {
 		Member member = mService.findMemberById(id);
-	    model.addAttribute("member", member);
-	    return "redirect:/member/logout";
-		
+		model.addAttribute("member", member);
+		return "redirect:/memberCentre";
+
 	}
+//-----------------------------------------------------------------------------------------------
 	// 更新會員資料
 	@GetMapping("/member/edit/{id}")
 	public String editMember(@PathVariable("id") Integer id, Model model) {
-	    Member mem = mService.findMemberById(id);
-	    model.addAttribute("member", mem);
-	    return "member/editMember";
+		Member mem = mService.findMemberById(id);
+		model.addAttribute("member", mem);
+		return "member/editMember";
 	}
-
 
 	@PutMapping("/member/edit/{id}")
 	public String updateMember(@PathVariable Integer id, @ModelAttribute("member") Member member, Model model) {
-	    member.setId(id);
-	    mService.updateMemberById(id, member);
-	    return "redirect:/member/{id}";
+		member.setId(id);
+		mService.updateMemberById(id, member);
+		return "redirect:/member/{id}";
+	}
+
+	// 修改會員密碼
+	@GetMapping("/member/editPassword/{id}")
+	public String editMemberPassword(@PathVariable("id") Integer id, Model model) {
+		Member mem = mService.findMemberById(id);
+		model.addAttribute("member", mem);
+		return "member/editMemberPassword";
+	}
+
+	@PutMapping("/member/editPassword/{id}")
+	public String updateMemberPassword(@PathVariable Integer id, @ModelAttribute("member") Member member, Model model) {
+		member.setId(id);
+		mService.updateMemberById(id, member);
+		return "redirect:/member/logout";
+	}
+//-----------------------------------------------------------------------------------------------
+	// 更改會員權限
+	@PostMapping("/updatePermission/{id}")
+	public String updatePermission(@PathVariable Integer id) {
+		Member member = mRepository.findById(id).orElse(null);
+		if (member != null) {
+			if (member.getPermissions().equals("會員")) {
+				member.setPermissions("管理員");
+			} else if (member.getPermissions().equals("管理員")) {
+				member.setPermissions("會員");
+			}
+			mRepository.save(member);
+		}
+		return "redirect:/memberList"; // 重新導向到會員列表頁面
 	}
 
 	// 刪除會員資料
@@ -92,120 +112,143 @@ public class MemberController {
 	}
 
 //--------------------------------------------------------------------------
-	//會員登入
+	// 註冊會員
+	@GetMapping("/member/register")
+	public String addMember(Model model) {
+		model.addAttribute("member", new Member());
+		return "member/addMemberPage";// 跳到JSP
+
+	}
+
+	@PostMapping("/member/post")
+	public String postMember(@ModelAttribute("member") Member mem, Model model) {
+		Optional<Member> existingMember = mRepository.findByAccount(mem.getAccount());
+		if (existingMember.isPresent()) {
+			model.addAttribute("error", "該帳號已經存在");
+			return "member/addMemberPage";
+		} else {
+			mService.addMember(mem);
+			return "member/jump";
+		}
+	}
+
+	// 會員登入
 	@GetMapping("/member/login")
 	public String loginMember(Model model) {
-	    model.addAttribute("member", new Member());
-	    return "member/login";
+		model.addAttribute("member", new Member());
+		return "member/login";
 	}
 
 	@PostMapping("/member/login")
 	public String postLoginMember(@ModelAttribute("member") Member mem, Model model, HttpSession session) {
-	    Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
-	    if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
-	        session.setAttribute("member", memberOpt.get());
-	        return "member/jump";
-	    } else {
-	        model.addAttribute("error", "帳號或密碼錯誤");
-	        return "member/login";
-	    }
+		Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
+		if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
+			session.setAttribute("member", memberOpt.get());
+			return "member/jump";
+		} else {
+			model.addAttribute("error", "帳號或密碼錯誤");
+			return "member/login";
+		}
 	}
-	
-	@GetMapping("/member/logout")
-    public String logout(HttpSession session) {
-        // 刪除session中的會員資訊
-        session.removeAttribute("member");
-        // 重定向到首頁
-        return "member/jump";
-    }
-	
-	
-////-------------------------------------------------------------------------
-//
-//	// 新增會員最愛資料
-//	@ResponseBody
-//	@PostMapping("/newmemberfavorite")
-//	public ResponseEntity<Void> createMemberFavorite(@RequestBody MemberFavorite memberFavorite) {
-//	    memberService.createMemberFavorite(memberFavorite);
-//	    return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//	
-//	// 刪除會員最愛資料
-//	@ResponseBody
-//	@DeleteMapping("/deletememberfavorite/{id}")
-//	public ResponseEntity<Void> deleteMemberFavorite(@PathVariable Integer id) {
-//	    memberService.deleteMemberFavorite(id);
-//	    return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//	
-//	// 搜尋會員所有最愛資料
-//	@ResponseBody
-//	@GetMapping("/allmemberfavorite/{memberAccount}")
-//	public ResponseEntity<List<MemberFavorite>> getMemberFavoritesByAccount(@PathVariable String memberAccount) {
-//		List<MemberFavorite> memberFavorites = memberService.getMemberFavoritesByAccount(memberAccount);
-//		return new ResponseEntity<>(memberFavorites, memberFavorites.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//	}
-//	
-////-------------------------------------------------------------------------
-//	
-//	// 新增會員等級
-//	@ResponseBody
-//	@PostMapping("/newmemberlevel")
-//	public ResponseEntity<Void> createMemberLevel(@RequestBody MemberLevel memberLevel) {
-//		memberService.createMemberLevel(memberLevel);
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	// 搜尋會員等級資料
-//	@ResponseBody
-//	@GetMapping("/memberlevel/{memberAccount}")
-//	public ResponseEntity<List<MemberLevel>> findMemberLevelByMemberAccount(@PathVariable String memberAccount) {
-//		List<MemberLevel> memberLevels = memberService.findMemberLevelByMemberAccount(memberAccount);
-//		return new ResponseEntity<>(memberLevels, memberLevels.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//	}
-//
-//	// 更新會員等級
-//	@ResponseBody
-//	@PutMapping("/updatememberlevel")
-//	public ResponseEntity<Void> updateMemberLevel(@RequestBody MemberLevel memberLevel) {
-//		memberService.updateMemberLevel(memberLevel);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//	
-////-------------------------------------------------------------------------
-//
-//	// 新增會員違規紀錄
-//	@ResponseBody
-//	@PostMapping("/newmembershopviolation")
-//	public ResponseEntity<Void> createMemberShopViolation(@RequestBody MemberShopViolation memberShopViolation) {
-//		memberService.createMemberShopViolation(memberShopViolation);
-//		return new ResponseEntity<>(HttpStatus.CREATED);
-//	}
-//
-//	// 查詢會員違規紀錄
-//	@ResponseBody
-//	@GetMapping("/membershopviolation/{memberAccount}")
-//	public ResponseEntity<List<MemberShopViolation>> getMemberShopViolationsByAccount(
-//			@PathVariable String memberAccount) {
-//		List<MemberShopViolation> memberShopViolations = memberService.getMemberShopViolationsByAccount(memberAccount);
-//		return new ResponseEntity<>(memberShopViolations,
-//				memberShopViolations.isEmpty() ? HttpStatus.NOT_FOUND : HttpStatus.OK);
-//	}
-//
-//	// 更新違規紀錄
-//	@ResponseBody
-//	@PutMapping("/updatemembershopviolation")
-//	public ResponseEntity<Void> updateMemberShopViolation(@RequestBody MemberShopViolation memberShopViolation) {
-//		memberService.updateMemberShopViolation(memberShopViolation);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
-//
-//	// 刪除違規紀錄
-//	@ResponseBody
-//	@DeleteMapping("/deletemembershopviolation/{id}")
-//	public ResponseEntity<Void> deleteMemberShopViolation(@PathVariable Integer id) {
-//		memberService.deleteMemberShopViolation(id);
-//		return new ResponseEntity<>(HttpStatus.OK);
-//	}
 
+	@GetMapping("/member/logout")
+	public String logout(HttpSession session) {
+		// 刪除session中的會員資訊
+		session.removeAttribute("member");
+		// 重定向到首頁
+		return "member/jump";
+	}
+
+//-------------------------------------------------------------------------------------------------------------------------
+	// 驗證信
+	@GetMapping("/member/verifyEmail")
+	public String verifyEmail(HttpSession session, Model model) {
+		Member member = (Member) session.getAttribute("verify");
+
+		model.addAttribute("member", member);
+		model.addAttribute("success", false);
+		model.addAttribute("failure", false);
+		return "member/verifyEmailPage";
+	}
+
+	@PostMapping("/member/verifyEmail")
+	public String sendVerificationEmail(HttpSession session, Model model, @ModelAttribute("member") Member member) {
+		String token = UUID.randomUUID().toString();
+		member.setToken(token); // 設置 token 值
+		mService.addMember(member);
+		emailService.sendVerificationEmail(member, token);
+		member.setVerify("未驗證");
+		mRepository.save(member);
+		session.removeAttribute("verify");
+		return "member/emailSendSucess";
+	}
+
+	@GetMapping("/member/verify")
+	public String verifyMember(@RequestParam(name = "token", required = true) String token) {
+		Member member = mRepository.findByToken(token);
+		if (member != null) {
+			member.setVerify("已驗證");
+			mRepository.save(member);
+			return "member/emailSucessJump";
+		} else {
+			return "member/emailFailJump";
+		}
+	}
+//-------------------------------------------------------------------------------------------------------------------------
+	// 忘記密碼驗證信
+	// 顯示忘記密碼頁面
+    @GetMapping("/member/forgotPassword")
+    public String showForgotPassword() {
+        return "member/forgotPasswordPage";
+    }
+    
+    // 發送重設密碼驗證信
+    @PostMapping("/member/sendResetPasswordEmail")
+    public String sendResetPasswordEmail(@RequestParam("email") String email, Model model) {
+        Member member = mRepository.findByEmail(email);
+        if (member == null) {
+            model.addAttribute("error", "該電子郵件地址未被註冊！");
+            return "member/forgotPasswordPage";
+        } else {
+            String token = UUID.randomUUID().toString();
+            member.setToken(token);
+            mRepository.save(member);
+            emailService.sendVerificationPassword(member, token);
+            model.addAttribute("success", "驗證信已發送至您的電子郵件，請查收！");
+            return "member/emailSendSucess";
+        }
+    }
+    
+    // 顯示重設密碼頁面
+    @GetMapping("/member/resetPassword")
+    public String showResetPassword(@RequestParam("token") String token, Model model) {
+        Member member = mRepository.findByToken(token);
+        if (member == null) {
+            model.addAttribute("error", "該驗證鏈接無效或已過期！");
+            return "member/emailFailJump";
+        } else {
+            model.addAttribute("member", member);
+            return "member/resetPasswordPage";
+        }
+    }
+    
+    // 提交重設密碼表單
+    @PostMapping("/member/resetPassword")
+    public String resetPassword(@ModelAttribute("member") Member member, Model model) {
+        Member originalMember = mRepository.findByEmail(member.getEmail());
+        if (originalMember == null) {
+            model.addAttribute("error", "該用戶不存在！");
+            return "member/emailFailJump";
+        } else {
+            originalMember.setPassword(member.getPassword());
+            originalMember.setToken(null);
+            mRepository.save(originalMember);
+            model.addAttribute("success", "密碼已成功重設！");
+            return "redirect:/member/logout";
+        }
+    }
+
+
+	
+	
 }

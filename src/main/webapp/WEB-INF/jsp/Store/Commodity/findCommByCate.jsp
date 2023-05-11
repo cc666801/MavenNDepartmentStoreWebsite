@@ -55,14 +55,14 @@
 	<main id="main">
 
 
-		<!-- 嘗試中 -->
+<!-- 嘗試中 -->
 
 
 
 
 		<dl style="font-size: larger;">
 			<dt>您現在所在分類：</dt>
-			<dd>${page.content.get(0).commCate.cateName}</dd>
+			<dd>${commodityPage.content.get(0).commCate.cateName}</dd>
 		</dl>
 
 		<div class="row">
@@ -76,16 +76,13 @@
 				</div>
 			</div>
 
-			<%-- <c:forEach var="commodity" items="${commodityPage.content}" --%>
-
 
 
 
 			<div class="container">
 				<div class="row">
-					<c:forEach var="commodity" items="${page.content}"
+					<c:forEach var="commodity" items="${commodityPage.content}"
 						varStatus="status">
-
 						<div class="col-lg-4 col-6 mb-4 shuffle-item"
 							data-groups='["${category}"]'>
 							<div class="position-relative inner-box">
@@ -117,50 +114,55 @@
 							</div>
 						</div>
 					</c:forEach>
-
 				</div>
 			</div>
+		</div>
 
 
-			<!-- 				這裡是分頁器 陽春 -->
-			<%-- 		<c:forEach var="pageNumber" begin="1" --%>
-			<%-- 			end="${commodityPage.totalPages}"> --%>
-			<!-- 			<a -->
-			<%-- 				href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}">${pageNumber}</a> --%>
-			<%-- 		</c:forEach> --%>
 
 
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="pagination">
-						<ul class="list-inline d-block mx-auto">
-
-							<c:forEach var="pageNumber" begin="1"
-								end="${commodityPage.totalPages}">
-								<li class="list-inline-item"><a
-									href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}">
-										<span>${pageNumber}</span>
-								</a></li>
-							</c:forEach>
 
 
-						</ul>
-					</div>
+		<!-- 				這裡是分頁器 陽春 -->
+		<%-- 		<c:forEach var="pageNumber" begin="1" --%>
+		<%-- 			end="${commodityPage.totalPages}"> --%>
+		<!-- 			<a -->
+		<%-- 				href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}">${pageNumber}</a> --%>
+		<%-- 		</c:forEach> --%>
+
+
+		<div class="row">
+			<div class="col-lg-12">
+				<div class="pagination">
+					<ul class="list-inline d-block mx-auto">
+
+						<c:forEach var="pageNumber" begin="1"
+							end="${commodityPage.totalPages}">
+							<li class="list-inline-item"><a
+								href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}">
+									<span>${pageNumber}</span>
+							</a></li>
+						</c:forEach>
+
+
+					</ul>
 				</div>
 			</div>
+		</div>
 
 
 
 
-			<!-- 加點gpt特效 -->
-			<!-- 		<div class="pagination"> -->
-			<%-- 			<c:forEach var="pageNumber" begin="1" --%>
-			<%-- 				end="${commodityPage.totalPages}"> --%>
-			<!-- 				<a -->
-			<%-- 					href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}" --%>
-			<%-- 					class="page-link">${pageNumber}</a> --%>
-			<%-- 			</c:forEach> --%>
-			<!-- 		</div> -->
+		<!-- 加點gpt特效 -->
+		<!-- 		<div class="pagination"> -->
+		<%-- 			<c:forEach var="pageNumber" begin="1" --%>
+		<%-- 				end="${commodityPage.totalPages}"> --%>
+		<!-- 				<a -->
+		<%-- 					href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityPage.content.get(0).commCate.cateId}&p=${pageNumber}" --%>
+		<%-- 					class="page-link">${pageNumber}</a> --%>
+		<%-- 			</c:forEach> --%>
+		<!-- 		</div> -->
+
 	</main>
 
 	<!-- ======= Footer ======= -->

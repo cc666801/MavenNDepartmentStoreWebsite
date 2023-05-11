@@ -19,7 +19,7 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseCateServ
 public class AdvertiseCateController {
 
 	@Autowired
-	private AdvertiseCateService AdvertiseCateService;
+	private AdvertiseCateService advertiseCateService;
 
 //	新增類別
 
@@ -32,7 +32,7 @@ public class AdvertiseCateController {
 
 	@PostMapping("/Advertise/Adv/postAdvertiseCate")
 	public String postAdvertiseCate(@ModelAttribute("advertiseCate") AdvertiseCate advertiseCate, Model model) {
-		AdvertiseCateService.addAdvertiseCate(advertiseCate);
+		advertiseCateService.addAdvertiseCate(advertiseCate);
 		model.addAttribute("advertiseCate", advertiseCate);
 
 		return "redirect:/Advertise/Adv/ShowAllAdCate";
@@ -44,7 +44,7 @@ public class AdvertiseCateController {
 	@GetMapping("/Advertise/Adv/ShowAllAdCate")
 	public String findAllAdCateBack(Model model) {
 
-		List<AdvertiseCate> findAllAdCate = AdvertiseCateService.findAllAdCate();
+		List<AdvertiseCate> findAllAdCate = advertiseCateService.findAllAdCate();
 		model.addAttribute("AdCateList", findAllAdCate);
 		return "/Advertise/Adv/AdvertiseCateBack";
 
@@ -54,14 +54,14 @@ public class AdvertiseCateController {
 
 	@DeleteMapping("/Advertise/Adv/deleteAdCate")
 	public String deleteAdCate(@RequestParam Integer advertiseCateId) {
-		AdvertiseCateService.deleteById(advertiseCateId);
+		advertiseCateService.deleteById(advertiseCateId);
 		return "redirect:/Advertise/Adv/ShowAllAdCate";
 	}
 
 //	更新
 	@GetMapping("/Advertise/Adv/editAdCate")
 	public String editAdCate(@RequestParam("advertiseCateId") Integer advertiseCateId, Model model) {
-		AdvertiseCate advertiseCate = AdvertiseCateService.findAdCateById(advertiseCateId);
+		AdvertiseCate advertiseCate = advertiseCateService.findAdCateById(advertiseCateId);
 		model.addAttribute("advertiseCate", advertiseCate);
 
 		return "/Advertise/Adv/AdvertiseCateEdit";
@@ -70,7 +70,7 @@ public class AdvertiseCateController {
 
 	@PutMapping("/Advertise/Adv/editAdCate")
 	public String puteditAdCate(@ModelAttribute("advertiseCate") AdvertiseCate advertiseCate) {
-		AdvertiseCateService.updateAdCateById(advertiseCate.getAdvertiseCateId() , advertiseCate);
+		advertiseCateService.updateAdCateById(advertiseCate.getAdvertiseCateId() , advertiseCate);
 		return "redirect:/Advertise/Adv/ShowAllAdCate";
 		
 	}
