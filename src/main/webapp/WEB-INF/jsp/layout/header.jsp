@@ -10,7 +10,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 
-<title>MavenN百貨</title>
+<title>Mavenn百貨</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -64,7 +64,7 @@
 		<a href="${contextRoot}/" class="logo d-flex align-items-center">
 			<!-- Uncomment the line below if you also wish to use an image logo -->
 			<!-- <img src="assetsForFrontend/img/logo.png" alt=""> -->
-			<h1>ZenBlog</h1>
+			<h1>Mavenn百貨</h1>
 		</a>
 
 
