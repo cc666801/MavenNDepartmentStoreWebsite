@@ -81,61 +81,54 @@ h1 {
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
-		<h1>更新會員資料</h1>
-		<form name="myForm"
-			action="${contextRoot}/member/edit/${sessionScope.member.id}"
-			method="POST" onsubmit="return checkForm()">
-			<input type="hidden" name="_method" value="PUT"> <input
-				type="hidden" name="id" value="${member.id}" />
-			<table class="table">
-				<tr>
-					<th><label for="name">姓名:</label></th>
-					<td><input type="text" name="name" value="${member.name}" /></td>
-				</tr>
-				<tr>
-					<th><label for="account">帳號:</label></th>
-					<td><input type="text" name="account"
-						value="${member.account}" readonly
-						style="border: none; outline: none;" /></td>
-				</tr>
+  <h1>更新會員資料</h1>
 
+  <form name="myForm" action="${contextRoot}/member/edit/${sessionScope.member.id}" method="POST" onsubmit="return checkForm()">
+    <input type="hidden" name="_method" value="PUT">
+    <input type="hidden" name="id" value="${member.id}" />
 
-				<tr>
-					<th><label for="password">密碼:</label></th>
-					<td><input type="password" name="password"
-						value="${member.password}" /></td>
-				</tr>
+    <div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <table class="table">
+              <tr>
+                <th><label for="name">姓名:</label></th>
+                <td><input type="text" name="name" value="${member.name}" /></td>
+              </tr>
+              <tr>
+                <th><label for="account">帳號:</label></th>
+                <td><input type="text" name="account" value="${member.account}" readonly style="border: none; outline: none;" /></td>
+              </tr>
+              <tr>
+                <th><label for="password">密碼:</label></th>
+                <td><input type="password" name="password" value="${member.password}" readonly style="border: none; outline: none;"/><a href="${contextRoot}/member/editPassword/${sessionScope.member.id}" class="btn-link">修改密碼</a></td>
+              </tr>
+              <tr>
+                <th><label for="phone">電話:</label></th>
+                <td><input name="phone" value="${member.phone}" /></td>
+              </tr>
+              <tr>
+                <th><label for="email">Email:</label></th>
+                <td><input type="text" name="email" value="${member.email}" readonly style="border: none; outline: none;" /></td>
+              </tr>
+              <tr>
+                <th><label for="address">地址:</label></th>
+                <td><input name="address" value="${member.address}" /></td>
+              </tr>
+              <tr>
+                <td colspan="2">
+                  <button type="submit" class="btn btn-primary btn-block">確定</button>
+                </td>
+              </tr>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
 
-
-				<tr>
-					<th><label for="phone">電話:</label></th>
-					<td><input name="phone" value="${member.phone}" /></td>
-
-
-				</tr>
-
-
-				<tr>
-					<th><label for="email">Email:</label></th>
-					<td><input type="text" name="email" value="${member.email}"
-						readonly style="border: none; outline: none;" /></td>
-				</tr>
-
-
-				<tr>
-					<th><label for="address">地址:</label></th>
-					<td><input name="address" value="${member.address}" /></td>
-				</tr>
-
-				<tr>
-					<td colspan="2">
-						<button type="submit">確定</button>
-					</td>
-				</tr>
-			</table>
-		</form>
-	</main>
-
+  </form>
+</main>
 	<!-- jQuery -->
 	<script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
 	<!-- Bootstrap JavaScript -->

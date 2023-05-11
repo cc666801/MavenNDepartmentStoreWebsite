@@ -7,7 +7,6 @@ import java.util.UUID;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -32,7 +31,8 @@ public class MemberController {
 	private MemberRepository mRepository;
 	@Autowired
 	private EmailService emailService;
-	//跳轉會員中心時把新的資料塞入
+
+	// 跳轉會員中心時把新的資料塞入
 	@GetMapping("/memberCentre")
 	public String jumpPage(HttpSession session) {
 		Member member = (Member) session.getAttribute("member");
@@ -40,8 +40,7 @@ public class MemberController {
 		session.setAttribute("member", updatedMember);
 		return "member/memberCentre";
 	}
-	
-	
+
 //----------------------------------------------------------------------------------------
 	// 搜索所有會員
 	@GetMapping("/memberList")
@@ -59,7 +58,7 @@ public class MemberController {
 		return "redirect:/memberCentre";
 
 	}
-
+//-----------------------------------------------------------------------------------------------
 	// 更新會員資料
 	@GetMapping("/member/edit/{id}")
 	public String editMember(@PathVariable("id") Integer id, Model model) {
@@ -75,29 +74,43 @@ public class MemberController {
 		return "redirect:/member/{id}";
 	}
 
+	// 修改會員密碼
+	@GetMapping("/member/editPassword/{id}")
+	public String editMemberPassword(@PathVariable("id") Integer id, Model model) {
+		Member mem = mService.findMemberById(id);
+		model.addAttribute("member", mem);
+		return "member/editMemberPassword";
+	}
+
+	@PutMapping("/member/editPassword/{id}")
+	public String updateMemberPassword(@PathVariable Integer id, @ModelAttribute("member") Member member, Model model) {
+		member.setId(id);
+		mService.updateMemberById(id, member);
+		return "redirect:/member/logout";
+	}
+//-----------------------------------------------------------------------------------------------
+	// 更改會員權限
+	@PostMapping("/updatePermission/{id}")
+	public String updatePermission(@PathVariable Integer id) {
+		Member member = mRepository.findById(id).orElse(null);
+		if (member != null) {
+			if (member.getPermissions().equals("會員")) {
+				member.setPermissions("管理員");
+			} else if (member.getPermissions().equals("管理員")) {
+				member.setPermissions("會員");
+			}
+			mRepository.save(member);
+		}
+		return "redirect:/memberList"; // 重新導向到會員列表頁面
+	}
+
 	// 刪除會員資料
 	@DeleteMapping("/memberdelete/{id}")
 	public String deleteMember(@PathVariable Integer id) {
 		mService.deleteMemberById(id);
 		return "redirect:/memberList";
 	}
-	
-	//更改會員權限
-	@PostMapping("/updatePermission/{id}")
-    public String updatePermission(@PathVariable Integer id) {
-        Member member = mRepository.findById(id).orElse(null);
-        if (member != null) {
-            if (member.getPermissions().equals("會員")) {
-                member.setPermissions("管理員");
-            } else if (member.getPermissions().equals("管理員")) {
-                member.setPermissions("會員");
-            }
-            mRepository.save(member);
-        }
-        return "redirect:/memberList"; // 重新導向到會員列表頁面
-    }
-	
-	
+
 //--------------------------------------------------------------------------
 	// 註冊會員
 	@GetMapping("/member/register")
@@ -106,7 +119,7 @@ public class MemberController {
 		return "member/addMemberPage";// 跳到JSP
 
 	}
-	
+
 	@PostMapping("/member/post")
 	public String postMember(@ModelAttribute("member") Member mem, Model model) {
 		Optional<Member> existingMember = mRepository.findByAccount(mem.getAccount());
