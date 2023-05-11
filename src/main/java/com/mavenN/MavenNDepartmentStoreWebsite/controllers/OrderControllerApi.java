@@ -3,7 +3,10 @@ package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import javax.servlet.http.HttpSession;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -12,8 +15,10 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Order;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.OrderDto;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.OrderService;
 
 @RestController
@@ -22,7 +27,10 @@ public class OrderControllerApi {
 	
 	@Autowired
 	public OrderService orderService;
-
+	
+	@Autowired
+	public MemberService memberService;
+	
 	// CREATE shoppingCart and shoppingCartCommodity
     @PostMapping("")
     public void createOrder(@RequestBody OrderDto orderDto) {
@@ -50,9 +58,16 @@ public class OrderControllerApi {
     
     // For paymentFlow
     @PostMapping("/ecpayCheckout")
-	public String ecpayCheckout(@RequestBody OrderDto orderDto) {
-		String aioCheckOutALLForm = orderService.ecpayCheckout(orderDto);
+	public String ecpayCheckout(@RequestBody OrderDto orderDto, HttpSession session) {
+    	Order order = orderService.saveOrderByDto(orderDto);
+		Member member = (Member) session.getAttribute("member");
+		System.out.println("==========登入前"+member.getName());
+//	    if(member != null) {
+//	        Member updatedMember = memberService.findMemberById(member.getId());
+//	        session.setAttribute("member", updatedMember);
+//	    }
 		
+	    String aioCheckOutALLForm = orderService.ecpayCheckout(order);
 		return aioCheckOutALLForm;
 	}
 

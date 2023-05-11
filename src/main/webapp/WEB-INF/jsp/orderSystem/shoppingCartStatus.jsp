@@ -60,12 +60,12 @@
               </div>
               <button type="button" class="btn btn-primary btn-lg" id="cash-on-delivery" data-toggle="modal"
                 data-target="#checkoutModal"><i class="fa-solid fa-truck fa-2xs"></i><span> 貨到付款</span></button>
-              <button type="button" class="btn btn-primary btn-lg" id="payment-flow" data-toggle="modal" data-target="#checkoutModal"><i
-                  class="fa-solid fa-credit-card fa-2xs"></i><span> 信用卡付款</span></button>
+              <button type="button" class="btn btn-primary btn-lg" id="payment-flow" data-toggle="modal"
+                data-target="#checkoutModal"><i class="fa-solid fa-credit-card fa-2xs"></i><span> 信用卡付款</span></button>
 
             </div>
             <div id="payment-flow-form">
-              
+
             </div>
           </section>
         </main>
@@ -108,7 +108,7 @@
                   rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
                   rowHtml += "<td>" + commodityName + "</td>";
                   rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                  rowHtml += "<td>" + commodityPrice + "</td>";
+                  rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                   rowHtml += "<td>" + subTotal + "</td>";
                   rowHtml += "</tr>";
 
@@ -147,7 +147,7 @@
                   rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
                   rowHtml += "<td>" + commodityName + "</td>";
                   rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                  rowHtml += "<td>" + commodityPrice + "</td>";
+                  rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                   rowHtml += "<td>" + subTotal + "</td>";
                   rowHtml += "</tr>";
 
@@ -196,7 +196,7 @@
                 rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
                 rowHtml += "<td>" + commodityName + "</td>";
                 rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
-                rowHtml += "<td>" + commodityPrice + "</td>";
+                rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                 rowHtml += "<td>" + subTotal + "</td>";
                 rowHtml += "</tr>";
 
@@ -314,6 +314,8 @@
 
             rows.forEach(function (row) {
               var commodityId = row.querySelector('#commodity-id').textContent;
+              console.log(commodityId);
+              console.log(row.querySelector('#commodity-price'));
               var commodityPrice = row.querySelector('#commodity-price').textContent;
               var quantity = row.querySelector('#quantity-input-' + commodityId).value;
               order.orderDetailDtos.push({
@@ -330,16 +332,19 @@
                 },
                 body: JSON.stringify(order)
               })
-              .then(response => response.text())
-  .then(html => {
-    console.log(html);
-    let paymentFlowForm = document.getElementById("payment-flow-form");
-    paymentFlowForm.innerHTML=html;
-    // 手動觸發表單提交
-const form = document.getElementById('allPayAPIForm');
-form.submit();
-  })
-  .catch(error => console.log(error));
+                .then(response => response.text())
+                .then(html => {
+                  let paymentFlowForm = document.getElementById("payment-flow-form");
+                  paymentFlowForm.innerHTML = html;
+                  // 手動觸發表單提交
+                  const form = document.getElementById('allPayAPIForm');
+                  form.submit();
+                  form.addEventListener('submit', function (event) {
+                    event.preventDefault(); // 取消預設的提交事件
+                    form.submit();
+                  });
+                })
+                .catch(error => console.log(error));
             } else {
               console.log('加入空訂單失敗');
               alert('加入空訂單失敗');
@@ -350,3 +355,5 @@ form.submit();
       </script>
 
       </html>
+
+      <!-- https://payment-stage.ecpay.com.tw/Cashier/AioCheckOut/V5 -->

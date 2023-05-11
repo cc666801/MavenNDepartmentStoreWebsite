@@ -1,5 +1,6 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
@@ -52,7 +53,7 @@ public class OrderService {
 	// Api
 	// For saveShoppingCart()
 	@Transactional
-	public void saveOrderByDto(OrderDto orderDto) {
+	public Order saveOrderByDto(OrderDto orderDto) {
 		Optional<Member> optionalMember = memberRepository.findById(orderDto.getMemberId());
 		if (optionalMember.isPresent()) {
 			Member member = optionalMember.get();
@@ -79,7 +80,9 @@ public class OrderService {
 				ShoppingCart shoppingCart = optionalShoppingCart.get();
 				shoppingCartRepository.deleteById(shoppingCart.getShoppingCartId());
 			}
+			return order;
 		}
+		return null;
 	}
 
 	// For findByMemberId
@@ -102,19 +105,28 @@ public class OrderService {
 	}
 
 	// For paymentFlow
-	public String ecpayCheckout(OrderDto orderDto) {
+	public String ecpayCheckout(Order order) {
 
-		String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
-
+//		String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
+		
+		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+        String formattedDate = dateFormat.format(order.getCreateOrderTime());
+        long milliseconds = order.getCreateOrderTime().getTime();
+        
+        String uuId = order.getOrderId().toString() +"D"+ milliseconds;
+        
 		AllInOne all = new AllInOne("");
 
 		AioCheckOutALL obj = new AioCheckOutALL();
 		obj.setMerchantTradeNo(uuId);
-		obj.setMerchantTradeDate("2017/01/01 08:05:23");
-		obj.setTotalAmount(orderDto.getTotal().toString());
+		obj.setMerchantTradeDate(formattedDate);
+		obj.setTotalAmount(order.getTotal().toString());
 		obj.setTradeDesc("test Description");
 		obj.setItemName("TestItem");
 		obj.setReturnURL("http://localhost:8080/MavenNDepartmentStoreWebsite/orderSystem/order");
+		obj.set
+		obj.setOrderResultURL("http://localhost:8080/MavenNDepartmentStoreWebsite/orderSystem/order/post");
+		
 		obj.setNeedExtraPaidInfo("N");
 		String form = all.aioCheckOut(obj, null);
 
