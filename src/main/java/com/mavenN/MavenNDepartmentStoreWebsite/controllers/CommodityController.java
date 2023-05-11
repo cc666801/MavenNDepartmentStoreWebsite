@@ -178,7 +178,8 @@ public class CommodityController {
 	public String showCommodityList(@RequestParam("cateId") Integer cateId, @RequestParam(name="p",defaultValue = "1") Integer pageNumber, Model model) {
 	    CommCate commCate = commCateService.findcateById(cateId);
 	    Page<Commodity> commodityPage = commodityService.findByCommCateAndCommShelveIsTrue(commCate, pageNumber, 3);
-	    
+	    List<CommCate> findAllCate = commCateService.findAllCate();
+		model.addAttribute("findAllCate",findAllCate);
 	    model.addAttribute("commodityPage", commodityPage);
 	    return "Store/Commodity/findCommByCate";
 	}
@@ -375,7 +376,14 @@ public class CommodityController {
 	}
 	
 	
-	
+//	5/11嘗試抓單類別狀態資料欄
+	@GetMapping("/Store/Commodity/findCommcate")
+	public String commCateOnTop(Model model) {
+		List<CommCate> findAllCate = commCateService.findAllCate();
+		model.addAttribute("findAllCate",findAllCate);
+//原本的		return "Store/Commodity/findCommcate";
+		return "Store/Commodity/findCommByCate";
+	}
 	
 
 

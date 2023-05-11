@@ -51,12 +51,14 @@
 
 
 
-
 	<main id="main">
 
 
-<!-- 嘗試中 -->
 
+		
+		<!-- 5/11嘗試中 -->
+		<jsp:include page="../../Store/Commodity/findCommcate.jsp"></jsp:include>
+<!-- End Header -->
 
 
 
@@ -65,16 +67,22 @@
 			<dd>${commodityPage.content.get(0).commCate.cateName}</dd>
 		</dl>
 
-		<div class="row">
-			<div class="col-lg-12">
-				<div class="pagination">
-					<ul class="list-inline d-block mx-auto">
-						<li class="list-inline-item"><a
-							href="${contextRoot}/Store/Commodity/findAllComm"
-							class="btn btn-primary">返回商品總表</a></li>
-					</ul>
-				</div>
-			</div>
+
+
+
+
+
+
+<!-- 		<div class="row"> -->
+<!-- 			<div class="col-lg-12"> -->
+<!-- 				<div class="pagination"> -->
+<!-- 					<ul class="list-inline d-block mx-auto"> -->
+<!-- 						<li class="list-inline-item"><a -->
+<%-- 							href="${contextRoot}/Store/Commodity/findAllComm" --%>
+<!-- 							class="btn btn-primary">返回商品總表</a></li> -->
+<!-- 					</ul> -->
+<!-- 				</div> -->
+<!-- 			</div> -->
 
 
 
@@ -165,9 +173,9 @@
 
 	</main>
 
-	<!-- ======= Footer ======= -->
-	<%-- 	<jsp:include page="../../layout/footer.jsp"></jsp:include> --%>
-	<!-- End Footer -->
+<!-- 	======= Footer ======= -->
+		<jsp:include page="../../layout/footer.jsp"></jsp:include>
+<!-- 	End Footer -->
 
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
 	<!-- 	<script -->
