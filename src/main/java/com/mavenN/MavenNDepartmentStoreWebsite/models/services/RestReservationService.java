@@ -33,9 +33,9 @@ public class RestReservationService {
 		resRepository.save(res);
 	}
 	
-	public Page<Company> findByUserQueryCompany(String companyname, Integer pageNumber){
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "companyId");
-		Page<Company> findByCompanyNameContaining = companyRepository.findByCompanyNameContaining(companyname, pg);
+	public Page<RestaurantInformation> findByUserQueryCompany(String companyname, Integer pageNumber){
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		Page<RestaurantInformation> findByCompanyNameContaining = restInformationRepository.findrestByCompanyname(companyname, pg);
 		return findByCompanyNameContaining;
 	}
 	
