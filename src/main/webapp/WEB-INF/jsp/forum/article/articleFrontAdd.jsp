@@ -24,89 +24,86 @@
 <!-- include summernote-ko-KR -->
 <script src="../summernote/lang/summernote-zh-TW.js"></script>
 <style>
-/* Center the card */
+#main {
+  margin-top: 50px;
+}
+
 .card {
-	margin: 0 auto;
-	padding: 20px;
-	border: 1px solid #ccc;
-	border-radius: 5px;
-	box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.3);
-	max-width: 800px;
+  padding: 20px;
+  border: none;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15);
+  border-radius: 0.5rem;
+  background-color: #fff;
 }
 
 .card-header {
-  background-color: #f8f9fa;
+  background-color: #f7f7f7;
+  border-bottom: 1px solid #dee2e6;
   padding: 1rem;
-  border-bottom: 1px solid rgba(0, 0, 0, 0.125);
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
 }
 
 .card-title {
+  font-size: 1.5rem;
   margin-bottom: 0;
 }
 
-/* Style the form elements */
 label {
-	font-weight: bold;
+  font-size: 1rem;
+  font-weight: bold;
+  margin-bottom: 0.5rem;
+  display: block;
 }
 
-input[type="text"], select {
-	width: 100%;
-	padding: 12px 20px;
-	margin: 8px 0;
-	display: inline-block;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-	box-sizing: border-box;
+input[type="text"],
+select,
+textarea {
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem;
+  width: 100%;
+  font-size: 1rem;
+  margin-bottom: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
 }
 
-input[type="file"] {
-	display: none;
+textarea {
+  min-height: 200px;
 }
 
-/* Style the submit button */
+#summernote {
+  margin-bottom: 1rem;
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.1);
+}
+
+#summernote .note-editable {
+  font-size: 1rem;
+  padding: 1rem;
+  min-height: 200px;
+}
+
 button[type="submit"] {
-	background-color: #4CAF50;
-	color: white;
-	padding: 12px 20px;
-	border: none;
-	border-radius: 4px;
-	cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 0.25rem;
+  padding: 0.5rem 1rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
 }
 
 button[type="submit"]:hover {
-	background-color: #45a049;
+  background-color: #0069d9;
 }
 
-/* Style the image preview */
-#imagePreview {
-	display: block;
-	max-width: 200px;
-	max-height: 200px;
-	object-fit: cover;
-	margin-left: 10px;
-	margin-top: 10px;
-}
-
-/* Style the editor */
-#summernote {
-	margin-top: 10px;
-	border: 1px solid #ccc;
-	border-radius: 4px;
-}
-
-/* Style the error messages */
-.error {
-	color: red;
-	font-size: small;
-	display: block;
-	margin-top: 5px;
-}
-
-/* Responsive design */
-@media only screen and (max-width: 600px) {
-	.card {
-		max-width: 100%;
-	}
+img#imagePreview {
+  display: block;
+  max-width: 200px;
+  max-height: 200px;
+  object-fit: cover;
+  margin-top: 1rem;
 }
 </style>
 

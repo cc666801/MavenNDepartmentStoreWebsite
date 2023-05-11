@@ -192,5 +192,10 @@ public class ArticleService {
 			    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, "articleLikeCount"));
 			    return articleRepository.findAll(pageable);
 			}
+			//關鍵字
+			 public Page<Article> findArticleByKeywordAndPage(String keyword, int pageNumber, int pageSize) {
+			        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.Direction.DESC, "articleCreateTime");
+			        return articleRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+			    }
 	
 }

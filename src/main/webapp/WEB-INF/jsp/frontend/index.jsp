@@ -560,7 +560,7 @@
     </section><!-- End Lifestyle Category Section -->
 
   </main><!-- End #main -->
-  
+<!--===============  客服  ===========================-->
   <a href="#" id="chatbot-icon">
   <i class="fa-solid fa-headset"></i>
 </a>
@@ -571,17 +571,17 @@
 
 
 <script>
-//获取图标和聊天室的元素
+
 var chatIcon = document.getElementById('chatbot-icon');
 var chatContainer = document.getElementById('chatbot-container');
 
-// 当图标被单击时，切换聊天室的可见性
+
 chatIcon.addEventListener('click', function() {
   chatContainer.classList.toggle('visible');
 });
 
 </script>
-  
+  <!--===============  客服  ===========================-->
   
   
   
