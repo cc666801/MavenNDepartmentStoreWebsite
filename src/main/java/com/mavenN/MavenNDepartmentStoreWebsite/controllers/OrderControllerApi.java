@@ -34,16 +34,33 @@ public class OrderControllerApi {
 	// CREATE shoppingCart and shoppingCartCommodity
     @PostMapping("")
     public void createOrder(@RequestBody OrderDto orderDto) {
-    	orderService.saveOrderByDto(orderDto);
+    	orderService.saveCashOnDeliverOrderByDto(orderDto);
     }
     
-    @GetMapping("/{memberId}")
-    public List<OrderDto> findAllOrderDtoByMemberId(@PathVariable Integer memberId) {
-    	List<Order> orders = orderService.findByMemberId(memberId);
+    @GetMapping("/cashOnDeliverOrder/{memberId}")
+    public List<OrderDto> findAllCashOnDeliverOrderDtoByMemberId(@PathVariable Integer memberId) {
+    	List<Order> orders = orderService.findAllCashOnDeliverOrderDtoByMemberId(memberId);
     	List<OrderDto> orderDtos = orders.stream()
     	        .map(OrderDto::new)
     	        .collect(Collectors.toList());
-    	System.out.println(orderDtos);
+    	return orderDtos;
+    }
+    
+    @GetMapping("/paymentFlowOrder/{memberId}")
+    public List<OrderDto> findAllPaymentFlowOrderDtoByMemberId(@PathVariable Integer memberId) {
+    	List<Order> orders = orderService.findAllPaymentFlowOrderDtoByMemberId(memberId);
+    	List<OrderDto> orderDtos = orders.stream()
+    	        .map(OrderDto::new)
+    	        .collect(Collectors.toList());
+    	return orderDtos;
+    }
+    
+    @GetMapping("/cancelOrder/{memberId}")
+    public List<OrderDto> findAllCancelOrderByMemberId(@PathVariable Integer memberId) {
+    	List<Order> orders = orderService.findAllCancelOrderByMemberId(memberId);
+    	List<OrderDto> orderDtos = orders.stream()
+    	        .map(OrderDto::new)
+    	        .collect(Collectors.toList());
     	return orderDtos;
     }
     
@@ -59,7 +76,7 @@ public class OrderControllerApi {
     // For paymentFlow
     @PostMapping("/ecpayCheckout")
 	public String ecpayCheckout(@RequestBody OrderDto orderDto, HttpSession session) {
-    	Order order = orderService.saveOrderByDto(orderDto);
+    	Order order = orderService.savePaymentFlowOrderByDto(orderDto);
 		Member member = (Member) session.getAttribute("member");
 		System.out.println("==========登入前"+member.getName());
 //	    if(member != null) {

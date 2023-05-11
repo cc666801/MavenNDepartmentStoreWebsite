@@ -53,13 +53,14 @@ public class OrderService {
 	// Api
 	// For saveShoppingCart()
 	@Transactional
-	public Order saveOrderByDto(OrderDto orderDto) {
+	public Order saveCashOnDeliverOrderByDto(OrderDto orderDto) {
 		Optional<Member> optionalMember = memberRepository.findById(orderDto.getMemberId());
 		if (optionalMember.isPresent()) {
 			Member member = optionalMember.get();
 			Order newOrder = new Order(null, member);
 			newOrder.setCreateOrderTimeIfNull();
 			newOrder.setTotal(orderDto.getTotal());
+			// 設定為貨到付款訂單
 			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(3);
 			OrderStatus orderStatus = optionalOrderStatus.get();
 			newOrder.setOrderStatus(orderStatus);
@@ -85,9 +86,53 @@ public class OrderService {
 		return null;
 	}
 
+	@Transactional
+	public Order savePaymentFlowOrderByDto(OrderDto orderDto) {
+		Optional<Member> optionalMember = memberRepository.findById(orderDto.getMemberId());
+		if (optionalMember.isPresent()) {
+			Member member = optionalMember.get();
+			Order newOrder = new Order(null, member);
+			newOrder.setCreateOrderTimeIfNull();
+			newOrder.setTotal(orderDto.getTotal());
+			// 設定為信用卡付款訂單
+			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(2);
+			OrderStatus orderStatus = optionalOrderStatus.get();
+			newOrder.setOrderStatus(orderStatus);
+			Order order = orderRepository.save(newOrder);
+			List<OrderDetailDto> orderDetailDtos = orderDto.getOrderDetailDtos();
+			for (OrderDetailDto orderDetailDto : orderDetailDtos) {
+				Optional<Commodity> optionalCommodity = commodityRepository.findById(orderDetailDto.getCommodityId());
+				if (optionalCommodity.isPresent()) {
+					Commodity commodity = optionalCommodity.get();
+					OrderDetailId id = new OrderDetailId(commodity.getCommId(), order.getOrderId());
+					OrderDetail newOrderDetail = new OrderDetail(id, orderDetailDto.getQuantity(),
+							orderDetailDto.getCommodityPrice(), commodity, order);
+					orderDetailRepository.save(newOrderDetail);
+				}
+			}
+			Optional<ShoppingCart> optionalShoppingCart = shoppingCartRepository.findByMemberId(orderDto.getMemberId());
+			if (optionalShoppingCart.isPresent()) {
+				ShoppingCart shoppingCart = optionalShoppingCart.get();
+				shoppingCartRepository.deleteById(shoppingCart.getShoppingCartId());
+			}
+			return order;
+		}
+		return null;
+	}
+
+	// For findAllCashOnDeliverOrderDtoByMemberId
+	public List<Order> findAllCashOnDeliverOrderDtoByMemberId(Integer memberId) {
+		return orderRepository.findAllCashOnDeliverByMemberId(memberId);
+	}
+
+	// For findAllPaymentFlowOrderDtoByMemberId
+	public List<Order> findAllPaymentFlowOrderDtoByMemberId(Integer memberId) {
+		return orderRepository.findAllPaymentFlowByMemberId(memberId);
+	}
+
 	// For findByMemberId
-	public List<Order> findByMemberId(Integer memberId) {
-		return orderRepository.findByMemberId(memberId);
+	public List<Order> findAllCancelOrderByMemberId(Integer memberId) {
+		return orderRepository.findAllCancelOrderByMemberId(memberId);
 	}
 
 	// For changeOrderStatusByOrderId
@@ -101,20 +146,20 @@ public class OrderService {
 			order.setOrderStatus(orderStatus);
 			orderRepository.save(order);
 		}
-		return orderRepository.findByMemberId(memberId);
+		return orderRepository.findAllOrderByMemberId(memberId);
 	}
 
 	// For paymentFlow
 	public String ecpayCheckout(Order order) {
 
 //		String uuId = UUID.randomUUID().toString().replaceAll("-", "").substring(0, 20);
-		
+
 		SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
-        String formattedDate = dateFormat.format(order.getCreateOrderTime());
-        long milliseconds = order.getCreateOrderTime().getTime();
-        
-        String uuId = order.getOrderId().toString() +"D"+ milliseconds;
-        
+		String formattedDate = dateFormat.format(order.getCreateOrderTime());
+		long milliseconds = order.getCreateOrderTime().getTime();
+
+		String uuId = order.getOrderId().toString() + "D" + milliseconds;
+
 		AllInOne all = new AllInOne("");
 
 		AioCheckOutALL obj = new AioCheckOutALL();
@@ -124,9 +169,9 @@ public class OrderService {
 		obj.setTradeDesc("test Description");
 		obj.setItemName("TestItem");
 		obj.setReturnURL("http://localhost:8080/MavenNDepartmentStoreWebsite/orderSystem/order");
-		obj.set
+
 		obj.setOrderResultURL("http://localhost:8080/MavenNDepartmentStoreWebsite/orderSystem/order/post");
-		
+
 		obj.setNeedExtraPaidInfo("N");
 		String form = all.aioCheckOut(obj, null);
 

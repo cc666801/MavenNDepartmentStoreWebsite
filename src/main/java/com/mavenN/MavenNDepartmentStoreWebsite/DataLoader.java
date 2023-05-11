@@ -87,7 +87,7 @@ public class DataLoader implements CommandLineRunner {
 		
 		// OrderStatus
 		OrderStatus orderStatus1 = new OrderStatus(1, "已取消訂單");
-		OrderStatus orderStatus2 = new OrderStatus(2, "已付款訂單");
+		OrderStatus orderStatus2 = new OrderStatus(2, "信用卡付款訂單");
 		OrderStatus orderStatus3 = new OrderStatus(3, "貨到付款訂單");
 		List<OrderStatus> orderStatusList = Arrays.asList(orderStatus1, orderStatus2, orderStatus3);
 		orderStatusRepository.saveAll(orderStatusList);

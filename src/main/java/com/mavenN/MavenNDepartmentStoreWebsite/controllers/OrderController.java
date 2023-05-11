@@ -20,8 +20,6 @@ public class OrderController {
 	
 	@PostMapping(value = {"/orderSystem/order/post"})
 	public String getOrderStatusByPost(HttpSession session){
-		Member member =(Member) session.getAttribute("member");
-		System.out.println("登入後================"+member.getName());
 		return "orderSystem/orderStatus";
 	}
 

@@ -151,7 +151,7 @@
           const listGroup = document.querySelector(".list-group");
 
           // 在一開始抓到該會員訂單的資料
-          fetch("${contextRoot}/api/order/" + memberId)
+          fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId)
             .then(response => response.json())
             .then(data => {
               console.log(data);
