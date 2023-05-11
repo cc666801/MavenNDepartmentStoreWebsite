@@ -26,6 +26,10 @@ table {
 	color: white;
 }
 
+.btn-primary:hover {
+	background-color: #3e8e41 !important;
+}
+
 form {
 	margin-top: 50px;
 }
@@ -82,41 +86,43 @@ h1 {
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
 		<h1>修改密碼</h1>
-		<form id="password-form" name="myForm"
-			action="${contextRoot}/member/editPassword/${sessionScope.member.id}"
-			method="POST" onsubmit="return checkForm()">
-			<input type="hidden" name="_method" value="PUT"> <input
-				type="hidden" name="id" value="${member.id}" />
-			<table class="table">
-
-
-
-
-				<tr>
-					<th><label for="oldPassword">舊密碼:</label></th>
-					<td><input type="password" name="oldPassword" /></td>
-				</tr>
-				<tr>
-					<th><label for="password">新密碼:</label></th>
-					<td><input type="password" name="password" /></td>
-				</tr>
-
-
-				<tr>
-					<td colspan="2"><input type="hidden" name="id"
-						value="${member.id}" /> <input type="hidden" name="account"
-						value="${member.account}" /> <input type="hidden" name="email"
-						value="${member.email}" /> <input type="hidden" name="name"
-						value="${member.name}" /> <input type="hidden" name="phone"
-						value="${member.phone}" /> <input type="hidden" name="address"
-						value="${member.address}" /> <input type="hidden" name=verify
-						value="${member.verify}" /> <input type="hidden" name=token
-						value="${member.token}" /> <input type="hidden" name=birthday
-						value="${member.birthday}" />
-						<button type="submit">確定修改</button></td>
-				</tr>
-			</table>
-		</form>
+		<div class="row justify-content-center">
+			<div class="col-md-8 col-lg-6">
+				<div class="card">
+					<div class="card-body">
+						<form:form id="password-form" name="myForm"
+							action="${contextRoot}/member/editPassword/${sessionScope.member.id}"
+							method="POST" onsubmit="return checkForm()">
+							<input type="hidden" name="_method" value="PUT">
+							<input type="hidden" name="id" value="${member.id}" />
+							<table class="table">
+								<tr>
+									<th><label for="oldPassword">舊密碼:</label></th>
+									<td><input type="password" name="oldPassword" /></td>
+								</tr>
+								<tr>
+									<th><label for="password">新密碼:</label></th>
+									<td><input type="password" name="password" /></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="hidden" name="id"
+										value="${member.id}" /> <input type="hidden" name="account"
+										value="${member.account}" /> <input type="hidden"
+										name="email" value="${member.email}" /> <input type="hidden"
+										name="name" value="${member.name}" /> <input type="hidden"
+										name="phone" value="${member.phone}" /> <input type="hidden"
+										name="address" value="${member.address}" /> <input
+										type="hidden" name=verify value="${member.verify}" /> <input
+										type="hidden" name=token value="${member.token}" /> <input
+										type="hidden" name=birthday value="${member.birthday}" />
+										<button type="submit" class="btn btn-primary btn-block">確定修改</button></td>
+								</tr>
+							</table>
+						</form:form>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
 
 	<!-- jQuery -->
@@ -143,6 +149,5 @@ h1 {
 			return true;
 		}
 	</script>
-
 </body>
 </html>

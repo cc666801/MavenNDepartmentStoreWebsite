@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
@@ -14,9 +15,8 @@
 <!-- Bootstrap CSS -->
 <link rel="stylesheet"
 	href="https://cdn.staticfile.org/twitter-bootstrap/4.6.0/css/bootstrap.min.css">
+<!-- 自訂 CSS -->
 <style>
-
-
 table {
 	margin: auto;
 }
@@ -26,18 +26,11 @@ table {
 	color: white;
 }
 
-.btn-link {
-	color: #4CAF50;
-	text-decoration: none;
-	border: none;
-	background-color: transparent;
-	font-size: 16px;
-	padding: 0;
-	margin-right: 20px;
+.btn-primary:hover {
+  background-color: #3e8e41 !important;
 }
-
-.btn-link:hover {
-	color: #3e8e41;
+form {
+	margin-top: 50px;
 }
 
 button[type="submit"] {
@@ -56,26 +49,93 @@ button[type="submit"] {
 button[type="submit"]:hover {
 	background-color: #3e8e41;
 }
+
+label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+th {
+	text-align: right;
+	font-weight: bold;
+}
+
+h1 {
+	text-align: center;
+	color: #4CAF50;
+	margin-bottom: 30px;
+}
+
+.btn-link {
+	color: #4CAF50;
+	text-decoration: none;
+	border: none;
+	background-color: transparent;
+	font-size: 16px;
+	padding: 0;
+	margin-right: 20px;
+}
+
+.btn-link:hover {
+	color: #3e8e41;
+}
 </style>
 </head>
 <body>
-<jsp:include page="../layout/header.jsp"></jsp:include>
-<main id="main" class="container">
-	<h1>重設密碼</h1>
-	<p>請輸入新的密碼以重設您的帳戶密碼：</p>
-
-	<form method="POST" action="${contextRoot}/member/resetPassword">
-		<input type="hidden" name="email" value="${member.email}"> <label
-			for="password">新密碼：</label> <input type="password" id="password"
-			name="password"> <br>
-		<br> <label for="confirmPassword">確認新密碼：</label> <input
-			type="password" id="confirmPassword" name="confirmPassword">
-		<br>
-		<br> <input type="submit" value="重設密碼">
-	</form>
-
-	<p style="color: red;">${error}</p>
-	<p style="color: green;">${success}</p>
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<main id="main" class="container">
+		<h1>重設密碼</h1>
+		<div class="row justify-content-center">
+			<div class="col-md-8 col-lg-6">
+				<div class="card">
+					<div class="card-body">
+						<table class="table">
+							<form:form method="POST"
+								action="${contextRoot}/member/resetPassword" onsubmit="return validateForm();">
+								<input type="hidden" name="email" value="${member.email}">
+								<tr>
+									<th><label for="password">新密碼：</label></th>
+									<td><input type="password" id="password" name="password"></td>
+								</tr>
+								<tr>
+									<th><label for="confirmPassword">確認新密碼：</label></th>
+									<td><input type="password" id="confirmPassword"
+										name="confirmPassword"></td>
+								</tr>
+								<tr>
+									<td colspan="2"><input type="submit" value="重設密碼"
+										class="btn btn-primary btn-block"></td>
+								</tr>
+							</form:form>
+						</table>
+					</div>
+				</div>
+			</div>
+		</div>
 	</main>
+	<!-- jQuery -->
+	<script src="https://cdn.staticfile.org/jquery/3.6.0/jquery.min.js"></script>
+	<!-- Bootstrap JavaScript -->
+	<script
+		src="https://cdn.staticfile.org/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+
+<script>
+  function validateForm() {
+    var password = document.getElementById('password').value;
+    var confirmPassword = document.getElementById('confirmPassword').value;
+
+    if (password.trim() === '' || confirmPassword.trim() === '') {
+      alert('請輸入新密碼和確認新密碼');
+      return false;
+    } else if (password !== confirmPassword) {
+      alert('新密碼和確認新密碼不一致');
+      return false;
+    }
+
+    return true;
+  }
+</script>
+
+
 </body>
 </html>
