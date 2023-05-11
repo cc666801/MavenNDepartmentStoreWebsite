@@ -90,9 +90,14 @@ public class HomeController {
 		  
 		  model.addAttribute("findAllCommodities",findAllCommodities);
 		
-//		  商品按照點擊次數排序
-		  List<Commodity> hotCommodities = commodityRepository.findByOrderByCommClickDesc();
+//		  商品按照點擊次數排序 且檢查上下架狀態。
+		  List<Commodity> hotCommodities = commodityRepository.findByCommShelveIsTrueOrderByCommClickDesc();
 		    model.addAttribute("hotCommodities", hotCommodities);
+		    
+		    
+
+		    
+		    
 		
 //		    廣告上下架
 		List<Advertise> shelvesIsTrue = advertiseService.findByAdvertiseShelveIsTrue();

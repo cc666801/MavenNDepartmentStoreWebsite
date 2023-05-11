@@ -32,7 +32,7 @@
 									<div class="col-12">
 										<div class="swiper sliderFeaturedPosts">
 											<div class="swiper-wrapper">
-												<jstl:forEach var="advertise" items="${findAllAdvertise}"
+												<jstl:forEach var="advertise" items="${shelvesIsTrue}"
 													varStatus="status" begin="0" end="2">
 													<div class="swiper-slide">
 
@@ -75,7 +75,7 @@
 													src="assetsForFrontend/img/post-landscape-1.jpg" alt=""
 													class="img-fluid"></a>
 											<div class="post-meta">
-												<span class="date">本月活動</span> <span class="mx-1">&bullet;</span>
+												<span class="date">本月主打活動</span> <span class="mx-1">&bullet;</span>
 												<span>5/5 ~ 5/14 母親節活動</span>
 											</div>
 											<h2>
