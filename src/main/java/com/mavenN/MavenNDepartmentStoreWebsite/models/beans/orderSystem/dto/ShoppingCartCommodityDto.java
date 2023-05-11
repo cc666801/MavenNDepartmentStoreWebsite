@@ -12,6 +12,8 @@ public class ShoppingCartCommodityDto {
 	
 	private Integer commodityPrice;
 	
+	private Double commodityDiscount;
+	
 	private Integer quantity;
 	
 	private String base64CommodityPictureString;
@@ -27,6 +29,7 @@ public class ShoppingCartCommodityDto {
 		this.commodityName = shoppingCartCommodity.getCommodity().getCommName();
 		this.commodityPrice =Integer.valueOf(shoppingCartCommodity.getCommodity().getCommPrice().intValue());
 		this.quantity = shoppingCartCommodity.getQuantity();
+		this.commodityDiscount =Double.valueOf(shoppingCartCommodity.getCommodity().getCommDiscount());
 		this.base64CommodityPictureString = Base64.getEncoder().encodeToString(shoppingCartCommodity.getCommodity().getCommPicture());
 	}
 
@@ -65,6 +68,16 @@ public class ShoppingCartCommodityDto {
 
 	public Integer getQuantity() {
 		return quantity;
+	}
+	
+	
+
+	public Double getCommodityDiscount() {
+		return commodityDiscount;
+	}
+
+	public void setCommodityDiscount(Double commodityDiscount) {
+		this.commodityDiscount = commodityDiscount;
 	}
 
 	public void setQuantity(Integer quantity) {

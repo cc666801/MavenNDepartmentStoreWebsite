@@ -47,7 +47,8 @@ img {
 										<th>會員信箱</th>
 										<th>會員手機</th>
 										<th>會員地址</th>
-										<th>操作</th>
+										<th>權限</th>
+										<th>刪除</th>
 									</tr>
 								</thead>
 								<tbody>
@@ -61,10 +62,20 @@ img {
 											<td>${member.address}</td>
 											<td>
 												<form method="post"
+													action="${contextRoot}/updatePermission/${member.id}"
+													onsubmit="return confirm('您確定要變更此會員權限嗎？');">
+													<button type="submit" class="btn btn-outline-warning">${member.permissions}</button>
+												</form>
+
+
+
+											</td>
+											<td>
+												<form method="post"
 													action="${contextRoot}/memberdelete/${member.id}"
 													onsubmit="return confirm('您確定要刪除此會員資料嗎？');">
 													<input type="hidden" name="_method" value="DELETE">
-													<button type="submit" class="btn btn-danger">刪除</button>
+													<button type="submit" class="btn btn-outline-danger">刪除</button>
 												</form>
 											</td>
 										</tr>
