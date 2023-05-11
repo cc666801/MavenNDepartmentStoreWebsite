@@ -16,14 +16,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
 
 @Controller
 public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
-	
-	
 	
 	@GetMapping("/restaurantfront/reservation")
 	public String addreservations(Model model) {
@@ -52,12 +51,12 @@ public class RestReservationController {
 	
 	@GetMapping("/restaurantfront")
 	public String ShowAllReservationByPage(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Company> page = reService.findAllReservationByPage(pageNumber);
-		for(Company company: page.getContent() ) {
-			byte[] companyLogo = company.getCompanyLogo();
+		Page<RestaurantInformation> page = reService.findAllrestInformationPage(pageNumber);
+		for(RestaurantInformation restaurant : page.getContent() ) {
+			byte[] companyLogo = restaurant.getCompany().getCompanyLogo();
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
-				company.setBase64StringCompanyLogo(encodeToString); 
+				restaurant.getCompany().setBase64StringCompanyLogo(encodeToString); 
 			}
 		}
 		

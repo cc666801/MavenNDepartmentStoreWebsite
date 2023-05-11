@@ -16,4 +16,8 @@ public interface RestaurantInformationRepository extends JpaRepository<Restauran
 			+ "INNER JOIN CooperationStatus st ON c.cooperationStatus = st "
 			+ "WHERE ri.cuisineType IS NULL AND id.industryCategoryName='餐廳' AND st.cooperationStatusName='在櫃中'")
 	public List<Company> findCompanyNoCuisineType();
+	
+	
+	
+	
 }

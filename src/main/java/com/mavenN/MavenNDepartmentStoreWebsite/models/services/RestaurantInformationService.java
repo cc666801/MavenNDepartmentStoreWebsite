@@ -16,27 +16,29 @@ public class RestaurantInformationService {
 	@Autowired
 	private RestaurantInformationRepository resInformationRepository;
 	
-	@Autowired
-	private CompanyRepository companyRepository;
-	
 	public String addRestaurantInformation(RestaurantInformation rest) {
-		System.out.println("***************");
-		Integer companyId = rest.getCompany().getCompanyId();
-		System.out.println(companyId);
-		boolean companyexist = false; 
-		List<RestaurantInformation> findAll = resInformationRepository.findAll();
-		for(RestaurantInformation companykey : findAll) {
-			if( companyId == companykey.getCompany().getCompanyId()) {
-				companyexist = true;
-				break;
-			} 
-		}
-		
-		if(companyexist) {
-			return "新增失敗,此餐廳已建立料理類型";
+//		System.out.println("***************");
+		if(rest.getCompany() == null) {
+			return "所有餐廳已新增料理分類完畢無須新增";
 		}else {
-			resInformationRepository.save(rest);
-			return "已新增餐廳料理類型";
+			Integer companyId = rest.getCompany().getCompanyId();
+			System.out.println(companyId);
+			
+			boolean companyexist = false; 
+			List<RestaurantInformation> findAll = resInformationRepository.findAll();
+			for(RestaurantInformation companykey : findAll) {
+				if( companyId == companykey.getCompany().getCompanyId()) {
+					companyexist = true;
+					break;
+				} 
+			}
+			
+			if(companyexist) {
+				return "新增失敗,此餐廳已建立料理類型";
+			}else {
+				resInformationRepository.save(rest);
+				return "已新增餐廳料理類型";
+			}
 		}
 	}
 	 
@@ -45,10 +47,6 @@ public class RestaurantInformationService {
 		return findAllRestInformation;
 	}
 	
-	public List<Company> findAllRestaurants(){
-		List<Company> findAllRestaurant = companyRepository.findAllByCompanyName();
-		return findAllRestaurant;
-	}
 	
 	public List<Company> findCompanyNoCuisineType(){
 		List<Company> findAllRestaurant = resInformationRepository.findCompanyNoCuisineType();

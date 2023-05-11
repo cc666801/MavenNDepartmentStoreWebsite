@@ -38,16 +38,18 @@
 				</div>
 			</div>
 			<div class="row">
-				<jstl:forEach var="company" items="${page.content}">
+				<jstl:forEach var="restaurant" items="${page.content}">
 					<div class="col-12 col-md-4">
 						<div class="card mb-3">
 							<img
-								src="data:image/png;base64,${company.base64StringCompanyLogo}"
+								src="data:image/png;base64,${restaurant.company.base64StringCompanyLogo}"
 								class="card-img-top img-thumbnail"
-								alt="${company.companyName}的logo">
+								alt="${restaurant.company.companyName}的logo">
 							<div class="card-body">
-								<h5 class="card-title">${company.companyName}</h5>
-								<p class="card-text">Some quick example text to build on the
+								<h5 class="card-title">${restaurant.company.companyName}</h5>
+								<p class="card-text">
+									位置:${restaurant.company.address.addressName}<br>
+									料理類型:${restaurant.cuisineType.cuisineTypeName}<br>
 									card title and make up the bulk of the card's content.</p>
 								<a href="${contextRoot}/restaurantfront/reservation"
 									class="btn btn-primary stretched-link">訂位去</a>

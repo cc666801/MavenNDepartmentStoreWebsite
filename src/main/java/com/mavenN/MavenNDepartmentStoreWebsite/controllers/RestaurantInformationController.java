@@ -40,23 +40,23 @@ public class RestaurantInformationController {
 		
 		List<CuisineType> findAllCuisineType = cuisineTypeService.findAllCuisineType();
 		model.addAttribute("CuisineType", findAllCuisineType);
-			
+		
 		return "restaurant/addRestInformation";
 	}
 	
 	@PostMapping("/restaurantInformation/post")
 	public String postRestInformation(@ModelAttribute("RestInformation") RestaurantInformation rest, Model model) {
-		String companyexist = restInformationService.addRestaurantInformation(rest);
-		model.addAttribute("companyexist",companyexist);
 		
 		model.addAttribute("RestInformation", new RestaurantInformation());
 		
-		List<Company> findAllRestaurants = restInformationService.findAllRestaurants();
+		List<Company> findAllRestaurants = restInformationService.findCompanyNoCuisineType();
 		model.addAttribute("AllRestaurants", findAllRestaurants);
 		
 		List<CuisineType> findAllCuisineType = cuisineTypeService.findAllCuisineType();
 		model.addAttribute("CuisineType", findAllCuisineType);
-			
+
+		String companyexist = restInformationService.addRestaurantInformation(rest);
+		model.addAttribute("companyexist", companyexist);
 		return "restaurant/addRestInformation";
 	}
 	
