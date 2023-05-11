@@ -34,19 +34,11 @@ table {
 	color: white;
 }
 
-.btn-link {
-	color: #4CAF50;
-	text-decoration: none;
-	border: none;
-	background-color: transparent;
-	font-size: 16px;
-	padding: 0;
-	margin-right: 20px;
+
+form {
+	margin-top: 50px;
 }
 
-.btn-link:hover {
-	color: #3e8e41;
-}
 
 button[type="submit"] {
 	background-color: #4CAF50;
@@ -64,13 +56,47 @@ button[type="submit"] {
 button[type="submit"]:hover {
 	background-color: #3e8e41;
 }
+
+label {
+	font-weight: bold;
+	margin-right: 10px;
+}
+
+th {
+	text-align: right;
+	font-weight: bold;
+}
+
+h1 {
+	text-align: center;
+	color: #4CAF50;
+	margin-bottom: 30px;
+}
+
+.btn-link {
+	color: #4CAF50;
+	text-decoration: none;
+	border: none;
+	background-color: transparent;
+	font-size: 16px;
+	padding: 0;
+	margin-right: 20px;
+}
+
+.btn-link:hover {
+	color: #3e8e41;
+}
 </style>
 </head>
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
-		<h1 style="text-align: center; color: #4CAF50;">會員資料</h1>
-		<table class="table">
+		<h1>會員資料</h1>
+		<div class="row justify-content-center">
+      <div class="col-md-8 col-lg-6">
+        <div class="card">
+          <div class="card-body">
+            <table class="table">
 			<tr>
 				<th>姓名:</th>
 				<td>${sessionScope.member.name}</td>
@@ -116,13 +142,17 @@ button[type="submit"]:hover {
 
 
 			<tr>
-				<td><form:form
+				<td colspan="2"><form:form
 						action="${contextRoot}/member/edit/${sessionScope.member.id}"
 						method="GET">
-						<button type="submit">修改資料</button>
+						<button type="submit" class="btn btn-primary btn-block">修改資料</button>
 					</form:form></td>
 			</tr>
 		</table>
+          </div>
+        </div>
+      </div>
+    </div>
 	</main>
 
 	<!-- jQuery -->
