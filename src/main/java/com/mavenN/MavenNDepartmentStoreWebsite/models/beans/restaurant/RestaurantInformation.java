@@ -57,6 +57,14 @@ public class RestaurantInformation {
 	public void setCuisineType(CuisineType cuisineType) {
 		this.cuisineType = cuisineType;
 	}
+
+
+	@Override
+	public String toString() {
+		return "RestaurantInformation [resid=" + resid + ", company=" + company + ", cuisineType=" + cuisineType + "]";
+	}
+	
+	
 	
 	
 	

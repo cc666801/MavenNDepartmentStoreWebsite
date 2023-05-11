@@ -35,7 +35,7 @@ public class RestaurantInformationController {
 	public String addRestInformationPage(Model model) {
 		model.addAttribute("RestInformation", new RestaurantInformation());
 		
-		List<Company> findAllRestaurants = restInformationService.findAllRestaurants();
+		List<Company> findAllRestaurants = restInformationService.findCompanyNoCuisineType();
 		model.addAttribute("AllRestaurants", findAllRestaurants);
 		
 		List<CuisineType> findAllCuisineType = cuisineTypeService.findAllCuisineType();
@@ -46,8 +46,18 @@ public class RestaurantInformationController {
 	
 	@PostMapping("/restaurantInformation/post")
 	public String postRestInformation(@ModelAttribute("RestInformation") RestaurantInformation rest, Model model) {
-		restInformationService.addRestaurantInformation(rest);
-		return "redirect:/restaurantInformation/add";
+		String companyexist = restInformationService.addRestaurantInformation(rest);
+		model.addAttribute("companyexist",companyexist);
+		
+		model.addAttribute("RestInformation", new RestaurantInformation());
+		
+		List<Company> findAllRestaurants = restInformationService.findAllRestaurants();
+		model.addAttribute("AllRestaurants", findAllRestaurants);
+		
+		List<CuisineType> findAllCuisineType = cuisineTypeService.findAllCuisineType();
+		model.addAttribute("CuisineType", findAllCuisineType);
+			
+		return "restaurant/addRestInformation";
 	}
 	
 	

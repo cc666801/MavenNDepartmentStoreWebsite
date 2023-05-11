@@ -30,8 +30,9 @@
 
 		<div id="layoutSidenav_content" style="background-color: #fdf5e6">
 			<main>
-				<h1>新增訂位</h1>
+				<h1>新增餐廳料理類型</h1>
 				<div>
+					<div><p style="color:red">${companyexist}</p></div>
 					<form:form class="form-control" method="post"
 						modelAttribute="RestInformation"
 						action="${contextRoot}/restaurantInformation/post">
