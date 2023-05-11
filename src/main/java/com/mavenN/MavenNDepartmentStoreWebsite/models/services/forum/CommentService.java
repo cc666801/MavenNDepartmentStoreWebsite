@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum;
 
 import java.util.List;
 import java.util.Optional;
@@ -12,8 +12,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Comment;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleRepository;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.CommentRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.CommentRepository;
 
 @Service
 public class CommentService {

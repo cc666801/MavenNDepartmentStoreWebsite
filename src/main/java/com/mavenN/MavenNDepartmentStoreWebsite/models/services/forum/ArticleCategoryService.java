@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum;
 
 import java.util.List;
 import java.util.Optional;
@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleCategoryRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleCategoryRepository;
 
 @Service
 public class ArticleCategoryService {

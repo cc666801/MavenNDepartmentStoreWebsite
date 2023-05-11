@@ -80,9 +80,15 @@
 			<artifactId>json</artifactId>
 			<version>20201115</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
 		<!--討論區用的,不要以為是BUG-->
-<<<<<<< HEAD
-=======
 		<!--google驗證用-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -94,7 +100,6 @@
 			<version>1.6.2</version>
 		</dependency>
 		<!--google驗證用-->
->>>>>>> dbcfda1c16124015d06f03022109fff18a63698d
 	</dependencies>
 	<build>
 		<plugins>

@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum;
 
 
 import java.util.ArrayList;
@@ -8,7 +8,6 @@ import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,8 +18,8 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleLike;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleLikeId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleLikeRepository;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleLikeRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
 
 @Service

@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
+package com.mavenN.MavenNDepartmentStoreWebsite.controllers.forum;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -33,10 +33,10 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Comment;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleCategoryService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommentService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleCategoryService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.CommentService;
 
 @Controller
 public class ArticleController {
