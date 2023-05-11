@@ -67,6 +67,9 @@ body {
 				<p class="text-center">
 					還沒有帳號？<a href="${contextRoot}/member/register">立即註冊</a>
 				</p>
+				<p class="text-center">
+					<a href="${contextRoot}/member/forgotPassword">忘記密碼?</a>
+				</p>
 			</div>
 		</div>
 	</div>

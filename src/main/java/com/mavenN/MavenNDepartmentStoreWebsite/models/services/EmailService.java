@@ -22,4 +22,15 @@ public class EmailService {
             + "此信件為系統自動發送，請勿回覆。\n\n" + "MavenNDepartmentStoreWebsite團隊 敬上");
         mailSender.send(message);
     }
+    
+    @ResponseBody
+    public void sendVerificationPassword(Member member, String token) {
+        SimpleMailMessage message = new SimpleMailMessage();
+        message.setTo(member.getEmail());
+        message.setSubject("MavenNDepartmentStoreWebsite 忘記密碼信");
+        message.setText("親愛的 " + member.getName() + " 您好，\n\n請點擊以下連結進行修改：\n\n"
+            + "http://localhost:8080/MavenNDepartmentStoreWebsite/member/resetPassword?token=" + token + "\n\n"
+            + "此信件為系統自動發送，請勿回覆。\n\n" + "MavenNDepartmentStoreWebsite團隊 敬上");
+        mailSender.send(message);
+    }
 }

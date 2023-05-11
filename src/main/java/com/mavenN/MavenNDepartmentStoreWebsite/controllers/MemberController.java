@@ -194,5 +194,61 @@ public class MemberController {
 			return "member/emailFailJump";
 		}
 	}
+//-------------------------------------------------------------------------------------------------------------------------
+	// 忘記密碼驗證信
+	// 顯示忘記密碼頁面
+    @GetMapping("/member/forgotPassword")
+    public String showForgotPassword() {
+        return "member/forgotPasswordPage";
+    }
+    
+    // 發送重設密碼驗證信
+    @PostMapping("/member/sendResetPasswordEmail")
+    public String sendResetPasswordEmail(@RequestParam("email") String email, Model model) {
+        Member member = mRepository.findByEmail(email);
+        if (member == null) {
+            model.addAttribute("error", "該電子郵件地址未被註冊！");
+            return "member/forgotPasswordPage";
+        } else {
+            String token = UUID.randomUUID().toString();
+            member.setToken(token);
+            mRepository.save(member);
+            emailService.sendVerificationPassword(member, token);
+            model.addAttribute("success", "驗證信已發送至您的電子郵件，請查收！");
+            return "member/emailSendSucess";
+        }
+    }
+    
+    // 顯示重設密碼頁面
+    @GetMapping("/member/resetPassword")
+    public String showResetPassword(@RequestParam("token") String token, Model model) {
+        Member member = mRepository.findByToken(token);
+        if (member == null) {
+            model.addAttribute("error", "該驗證鏈接無效或已過期！");
+            return "member/emailFailJump";
+        } else {
+            model.addAttribute("member", member);
+            return "member/resetPasswordPage";
+        }
+    }
+    
+    // 提交重設密碼表單
+    @PostMapping("/member/resetPassword")
+    public String resetPassword(@ModelAttribute("member") Member member, Model model) {
+        Member originalMember = mRepository.findByEmail(member.getEmail());
+        if (originalMember == null) {
+            model.addAttribute("error", "該用戶不存在！");
+            return "member/emailFailJump";
+        } else {
+            originalMember.setPassword(member.getPassword());
+            originalMember.setToken(null);
+            mRepository.save(originalMember);
+            model.addAttribute("success", "密碼已成功重設！");
+            return "redirect:/member/logout";
+        }
+    }
 
+
+	
+	
 }
