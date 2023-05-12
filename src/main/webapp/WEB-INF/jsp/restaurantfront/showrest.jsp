@@ -51,7 +51,7 @@
 									位置:${restaurant.company.address.addressName}<br>
 									料理類型:${restaurant.cuisineType.cuisineTypeName}<br>
 									card title and make up the bulk of the card's content.</p>
-								<a href="${contextRoot}/restaurantfront/reservation"
+								<a href="${contextRoot}/restaurantfront/reservation?restid=${restaurant.resid}"
 									class="btn btn-primary stretched-link">訂位去</a>
 							</div>
 						</div>

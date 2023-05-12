@@ -45,6 +45,11 @@ fieldset{
 	text-align: start;
 	font-size: 17px;
 }
+#myForm{
+	margin:0px;
+	padding: 0;
+	border: none;
+}
 
 /* .datepicker td{ */
 /*   border: 1px solid #ccc; */
@@ -95,98 +100,160 @@ fieldset{
 	<div class="container">
 		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
 			<div class="col-sm-3 col-12 border border-2 border-secondary me-2">
-				<div>
-					<img src="https://picsum.photos/300/200?random=1"
-						 class="img-fluid rounded " alt="餐廳圖片">
+				<div class="mt-2" style="height: 200px;">
+					<img src="data:image/png;base64,${findRestaurant.company.base64StringCompanyLogo}"
+						 class="img-fluid mx-auto d-block h-100 rounded"
+						 alt="${findRestaurant.company.companyName}的logo">
 				</div>
 			</div>
 
 			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
 
-				<div class="row justify-content-center">
-					<div class="col-5">
-						用餐人數 <select id="AId" class="form-select">
-							<jstl:forEach var="i" begin="0" end="10">
-								<option value="${i}">${i}位大人</option>
-							</jstl:forEach>
-						</select><br> <select id="CId" class="form-select">
-							<jstl:forEach var="i" begin="0" end="10">
-								<option value="${i}">${i}位小孩</option>
-							</jstl:forEach>
-						</select><br>
-
-					</div>
-					<div class="col-5">
-						用餐時間
-						<div class="input-group date" id="datepicker">
-							<input type="text" class="form-control" id="DId" readonly />
-							 <span class="input-group-append"> 
-							 	<span class="input-group-text bg-white d-block"> 
-							 		<i class="bi bi-calendar"></i>
+				<form:form class="row justify-content-center" id="myForm" 
+						method="post" modelAttribute="reservation"
+						action="${contextRoot}/restaurantfront/post">
+						<div class="col-5">
+							用餐人數 
+							<form:select path="adult" id="AId" class="form-select">
+								<jstl:forEach var="i" begin="0" end="10">
+									<option value="${i}">${i}位大人</option>
+								</jstl:forEach>
+							</form:select><br> 
+							
+							<form:select path="children" id="CId" class="form-select">
+								<jstl:forEach var="i" begin="0" end="10">
+									<option value="${i}">${i}位小孩</option>
+								</jstl:forEach>
+							</form:select><br>
+	
+						</div>
+						<div class="col-5">
+							用餐時間
+							<div class="input-group date" id="datepicker">
+								<form:input type="text" path="date" class="form-control" id="DId" readonly="readonly" />
+								 <span class="input-group-append"> 
+								 	<span class="input-group-text bg-white d-block"> 
+								 		<i class="bi bi-calendar"></i>
+									</span>
 								</span>
-							</span>
+							</div><br>
+							<form:input type="text" path="company" value="${findRestaurant.company.companyId}" readonly="readonly" />
 						</div>
-					</div>
-				</div>
-
+					
+	
+						<div class="col-12">						
+								<fieldset>
+									<legend class="title">晚上</legend>
+									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+										<jstl:forEach var="i" begin="11" end="14">
+											<jstl:choose>
+												<jstl:when test="${i == 14}">
+													<jstl:forEach var="j" begin="00" end="00">
+													<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+													<div class="col">
+														<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+													</div>
+													</jstl:forEach>
+												</jstl:when>
+												<jstl:otherwise>
+													<jstl:forEach var="j" begin="00" end="30" step="30">
+													<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+													<div class="col">
+														<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+													</div>
+													</jstl:forEach>
+												</jstl:otherwise>
+											</jstl:choose>
+										</jstl:forEach>
+									</div>
+								</fieldset>
+								
+								<fieldset class="mt-3">
+									<legend class="title">下午</legend>
+									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+										<jstl:forEach var="i" begin="15" end="17">
+											<jstl:choose>
+												<jstl:when test="${i == 17}">
+													<jstl:forEach var="j" begin="00" end="00">
+													<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+													<div class="col">
+														<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+													</div>
+													</jstl:forEach>
+												</jstl:when>
+												<jstl:otherwise>
+													<jstl:forEach var="j" begin="00" end="30" step="30">
+													<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+													<div class="col">
+														<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+													</div>
+													</jstl:forEach>
+												</jstl:otherwise>
+											</jstl:choose>
+										</jstl:forEach>
+									</div>
+								</fieldset>
+								<fieldset class="mt-3">
+									<legend class="title">晚上</legend>
+									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
+										<jstl:forEach var="i" begin="17" end="22">
+											<jstl:choose>
+												<jstl:when test="${i == 17}">
+													<jstl:forEach var="j" begin="30" end="50" step="30">
+													<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+													<div class="col">
+														<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+													</div>
+													</jstl:forEach>
+												</jstl:when>
+												<jstl:otherwise>
+													<jstl:forEach var="j" begin="00" end="30" step="30">
+													<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
+													<div class="col">
+														<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
+													</div>
+													</jstl:forEach>
+												</jstl:otherwise>
+											</jstl:choose>
+										</jstl:forEach>
+									</div>
+								</fieldset>
+								<div>
+								<form:input type="text" path="time_interval" id="timeintervalcode" readonly="readonly" />
+								<form:input type="text" path="time" id="timecode" readonly="readonly" />
+								</div>						
+						</div>
+						<br>
+					
+						<div class="col-6" >
+							<label for="NId">姓名：</label>
+							<br>
+							<form:input type="text" path="name" id="NId" />
+							<br>
+							<label for="TId">電話：</label>
+							<br>
+							<form:input type="text" path="telephone" id="TId" />
+							<br>
+							<label for="EId">email:</label>
+							<br>
+							<form:input type="text" path="email" id="EId" />
+							<br>
+							<label for="note">備註：</label>
+							<br>
+							<form:textarea id="note" path="remark" cols="30" rows="10"></form:textarea>
+							</div>
+							<div class="col-9">
+								<button type="submit" class="btn btn-primary">送出</button>
+						</div>
+					</form:form>
+					
 				<div class="row">
-					
-					<form id="myForm" action="#">
-						<fieldset>
-							<legend class="title">中午</legend>
-							<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
-								<jstl:forEach var="i" begin="11" end="13">
-									<jstl:forEach var="j" begin="00" end="30" step="15">
-									<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
-									<div class="col">
-										<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
-									</div>
-									</jstl:forEach>
-								</jstl:forEach>
-							</div>
-						</fieldset>
-						
-						<fieldset class="mt-3">
-							<legend class="title">下午</legend>
-							<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
-								<jstl:forEach var="i" begin="11" end="13">
-									<jstl:forEach var="j" begin="00" end="30" step="15">
-									<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
-									<div class="col">
-										<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
-									</div>
-									</jstl:forEach>
-								</jstl:forEach>
-							</div>
-						</fieldset>
-						<fieldset class="mt-3">
-							<legend class="title">下午</legend>
-							<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
-								<jstl:forEach var="i" begin="11" end="13">
-									<jstl:forEach var="j" begin="00" end="30" step="15">
-									<fmt:formatNumber var="jj" value="${j}" pattern="00"/>
-									<div class="col">
-										<button type="button" class="bt w-100" value="${i}:${jj}">${i}:${jj}</button>
-									</div>
-									</jstl:forEach>
-								</jstl:forEach>
-							</div>
-						</fieldset>
-						<div>
-						<input type="hidden" name="selectedButton" id="selectedButton">
-						<input type="submit" value="送出表單">
-						</div>
-					</form>
-					
 					<div class="justify-content-center">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3088.3696025510344!2d120.21466690330259!3d22.99764855243827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e768d1a35d7a9%3A0x1689894ccb6260d4!2z5oiQ5Yqf5aSn5a24IOWFieW-qeagoeWNgOaTjeWgtA!5e0!3m2!1szh-TW!2stw!4v1683616858505!5m2!1szh-TW!2stw" 
 						width="100%" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
-
-
 				</div>
-
-
+			
 			</div>
 		</div>
 	</div>
@@ -202,7 +269,7 @@ fieldset{
 		$(document).ready(function() {
 			let now = new Date();
 			$('#datepicker').datepicker({
-					format : 'yyyy/mm/dd',
+					format : 'yyyy-mm-dd',
 					showOtherMonths : false,
 					language : 'zh-TW',
 					// 		startDate: new Date(now.getFullYear(), now.getMonth(), 1),
@@ -219,22 +286,19 @@ fieldset{
 			let year = now.getFullYear()
 	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
 	 		let date = now.getDate().toString().padStart(2, '0');
-			$('#DId').val(year + '/' + mouth + '/' + date);
+			$('#DId').val(year + '-' + mouth + '-' + date);
 		});
 
 		//   ---------以下是按鈕事件
 		$('.bt').on('click', function() {
 			$('.bt').removeClass('active');
 			$(this).addClass('active');
-			$('#selectedButton').val($(this).val());
+			$('#timecode').val($(this).val());
+			let timetime = $(this).closest('fieldset').find('legend').text();
+			$('#timeintervalcode').val(timetime);
+			
 		});
 
-		$('#myForm').on('submit', function() {
-// 			event.preventDefault();
-			const selectedButtonValue = $('#selectedButton').val();
-			console.log(selectedButtonValue); // 傳至後端的值
-			// 在此處發送表單至後端...
-		});
 	</script>
 
 </body>

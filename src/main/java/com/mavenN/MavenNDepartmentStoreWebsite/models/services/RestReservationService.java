@@ -33,6 +33,17 @@ public class RestReservationService {
 		resRepository.save(res);
 	}
 	
+	
+	public RestaurantInformation findRestaurantById(Integer restid) {
+		Optional<RestaurantInformation> option = restInformationRepository.findById(restid);
+		
+		if(option.isEmpty()) {
+			return null;
+		}
+		
+		return option.get();
+	}
+	
 	public Page<RestaurantInformation> findByUserQueryCompany(String companyname, Integer pageNumber){
 		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
 		Page<RestaurantInformation> findByCompanyNameContaining = restInformationRepository.findrestByCompanyname(companyname, pg);

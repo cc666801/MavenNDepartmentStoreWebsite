@@ -24,10 +24,29 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	@PostMapping("/restaurantfront/post")
+	public String restfrontReservation(@ModelAttribute("reservation") Reservation res, Model model) {
+		
+		model.addAttribute("findRestaurant", res.getR_id());
+		
+		reService.addreservation(res);
+		model.addAttribute("reservation",new Reservation());
+		return "restaurantfront/addreservation";
+	}
+	
 	@GetMapping("/restaurantfront/reservation")
-	public String addreservations(Model model) {
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+	public String addreservations(@RequestParam("restid") Integer restid,Model model) {
+		RestaurantInformation findRestById = reService.findRestaurantById(restid);
+		
+		byte[] restLogo = findRestById.getCompany().getCompanyLogo();
+		if(restLogo != null) {
+			String encodeToString = Base64.getEncoder().encodeToString(restLogo);
+			findRestById.getCompany().setBase64StringCompanyLogo(encodeToString);
+		}
+		
+		model.addAttribute("findRestaurant", findRestById);
+		
+		model.addAttribute("reservation", new Reservation());
 		
 		return "restaurantfront/addreservation";
 	}
