@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.annotation.MemberLogin;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.EmailService;
@@ -61,6 +62,7 @@ public class MemberController {
 	}
 //-----------------------------------------------------------------------------------------------
 	// 更新會員資料
+	@MemberLogin
 	@GetMapping("/member/edit/{id}")
 	public String editMember(@PathVariable("id") Integer id, Model model) {
 		Member mem = mService.findMemberById(id);
@@ -76,6 +78,7 @@ public class MemberController {
 	}
 
 	// 修改會員密碼
+	@MemberLogin
 	@GetMapping("/member/editPassword/{id}")
 	public String editMemberPassword(@PathVariable("id") Integer id, Model model) {
 		Member mem = mService.findMemberById(id);
@@ -178,7 +181,8 @@ public class MemberController {
 	}
 
 //-------------------------------------------------------------------------------------------------------------------------
-	// 驗證信
+	// 信箱驗證信
+	@MemberLogin
 	@GetMapping("/member/verifyEmail")
 	public String verifyEmail(HttpSession session, Model model) {
 		Member member = (Member) session.getAttribute("verify");
