@@ -12,11 +12,13 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Cooper
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Counter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.IndustryCategory;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.OpeningHours;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderStatus;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.AddressRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CooperationStatusRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.IndustryCategoryRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.OpeningHoursRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderStatusRepository;
 
 @Component
 public class DataLoader implements CommandLineRunner {
@@ -31,6 +33,9 @@ public class DataLoader implements CommandLineRunner {
 	private OpeningHoursRepository openingHoursRepository;
 	@Autowired
 	private CounterRepository counterRepository;
+	@Autowired
+	private OrderStatusRepository orderStatusRepository;
+	
 
 	@Override
 	public void run(String... args) throws Exception {
@@ -79,6 +84,13 @@ public class DataLoader implements CommandLineRunner {
 		// 裝成 List 存進 Database
 		List<Counter> counterList = Arrays.asList(counter1, counter2, counter3, counter4, counter5, counter6, counter7, counter8);
 		counterRepository.saveAll(counterList);
+		
+		// OrderStatus
+		OrderStatus orderStatus1 = new OrderStatus(1, "已取消訂單");
+		OrderStatus orderStatus2 = new OrderStatus(2, "已付款訂單");
+		OrderStatus orderStatus3 = new OrderStatus(3, "貨到付款訂單");
+		List<OrderStatus> orderStatusList = Arrays.asList(orderStatus1, orderStatus2, orderStatus3);
+		orderStatusRepository.saveAll(orderStatusList);
 	}
 
 }

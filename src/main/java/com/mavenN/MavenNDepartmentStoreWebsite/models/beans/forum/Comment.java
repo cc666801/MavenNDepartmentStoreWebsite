@@ -18,6 +18,8 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
+
 @Entity
 @Table(name = "comment")
 public class Comment {
@@ -37,8 +39,9 @@ public class Comment {
     private Article article;
 	
 	
-	@Column(name = "member_id")
-	private String memberID;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "member_id")
+	private Member member;
 	
 	
 	
@@ -95,12 +98,14 @@ public class Comment {
 		this.article = article;
 	}
 
-	public String getMemberID() {
-		return memberID;
+	
+
+	public Member getMember() {
+		return member;
 	}
 
-	public void setMemberID(String memberID) {
-		this.memberID = memberID;
+	public void setMember(Member member) {
+		this.member = member;
 	}
 
 	public Date getCommentCreateTime() {

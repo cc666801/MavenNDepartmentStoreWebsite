@@ -80,6 +80,10 @@ public class MemberService {
 		return findAllMember;
 	}
 
+	
+	
+	
+	
 //-------------------------------------------------------------------------
 
 }

@@ -67,6 +67,16 @@ public class Commodity {
 	@Column(name="comm_Discount", columnDefinition = "nvarchar(15)",nullable = true)
 	private String commDiscount;
 	
+	
+//	新增 紀錄點擊次數
+	
+	@Column(name="comm_Click")
+	private Integer commClick;
+	
+	
+	
+	
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_cateId")
 	private CommCate commCate;
@@ -280,6 +290,22 @@ public class Commodity {
 
 	public void setCommCate(CommCate commCate) {
 		this.commCate = commCate;
+	}
+
+
+
+
+
+	public Integer getCommClick() {
+		return commClick;
+	}
+
+
+
+
+
+	public void setCommClick(Integer commClick) {
+		this.commClick = commClick;
 	}
 
 
