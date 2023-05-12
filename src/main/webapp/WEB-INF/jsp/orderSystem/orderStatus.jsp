@@ -35,15 +35,33 @@
                   </h3>
                 </div>
               </div>
+              <div id="cash-on-delivery-order-div">
+                <h4>貨到付款訂單</h4>
+                <ul class="list-group" id="cash-on-delivery-order">
+                  
+                </ul>
+              </div>
+              
+              <div id="payment-flow-order-div">
+                <h4>信用卡付款訂單</h4>
+                <ul class="list-group" id="payment-flow-order">
+                  
+                </ul>
+              </div>
+              
+              <!-- style="display: none;" -->
+              <div 
+               id="cancelled-order-div">
+                <h4>已取消訂單</h4>
+                <ul class="list-group" id="cancelled-order" >
 
-              <ul class="list-group">
-
-              </ul>
-              <div>
-
+                </ul>
               </div>
 
 
+
+
+              </div>
             </div>
           </section>
         </main>
@@ -57,100 +75,16 @@
       <script>
         function fetchOrderDetails(orderId) {
           var memberId = "${member.id}";
-          const listGroup = document.querySelector(".list-group");
-          listGroup.innerHTML = "";
-          fetch("${contextRoot}/api/order/" + memberId + "/" + orderId, {
-            method: "PUT"
-          })
-            .then(response => response.json())
-            .then(data => {
-              // 在這裡可以處理從後端取得的資料
+          
+          const cashOnDeliveryOrder = document.querySelector("#cash-on-delivery-order");
+          const paymentFlowOrder = document.querySelector("#payment-flow-order");
+          const cancelledOrder = document.querySelector("#cancelled-order");
 
-              data.forEach(orderDto => {
-                // 轉成台灣時間
-                const utcDate = new Date(orderDto.createOrderTime);
-                const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+          cashOnDeliveryOrder.innerHTML="";
+          paymentFlowOrder.innerHTML="";
+          cancelledOrder.innerHTML="";
 
-                // 訂單資訊 list item
-                const li = document.createElement('li');
-                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
-
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
-
-                // 按鈕區域
-                const buttonContainer = document.createElement('div');
-                buttonContainer.classList.add('btn-group');
-
-                // Detail 按鈕
-                const detailButton = document.createElement('button');
-                detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
-                detailButton.type = 'button';
-                detailButton.dataset.bsToggle = 'collapse';
-                detailButton.dataset.bsTarget = '#order' + orderDto.orderId;
-                detailButton.ariaExpanded = 'false';
-                detailButton.ariaControls = 'order' + orderDto.id;
-                detailButton.textContent = '訂單明細';
-                buttonContainer.appendChild(detailButton);
-
-                // 你新增的按鈕
-                const customButton = document.createElement('button');
-                customButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'ms-1');
-                customButton.type = 'button';
-                customButton.textContent = '刪除訂單';
-                customButton.addEventListener('click', () => {
-                  fetchOrderDetails(orderDto.orderId);
-                });
-                buttonContainer.appendChild(customButton);
-
-                li.appendChild(buttonContainer);
-                listGroup.appendChild(li);
-
-                // Details 區域
-                const div = document.createElement('div');
-                div.classList.add('collapse');
-                div.id = 'order' + orderDto.orderId;
-                listGroup.appendChild(div);
-
-                const detailsUl = document.createElement('ul');
-                detailsUl.classList.add('list-group', 'list-group-flush');
-                div.appendChild(detailsUl);
-
-                orderDto.orderDetailDtos.forEach(orderDetailDto => {
-                  const detailsLi = document.createElement('li');
-                  detailsLi.classList.add('list-group-item');
-
-                  const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
-                  detailsLi.appendChild(commodityNameSpan);
-
-                  const quantitySpan = document.createElement('span');
-                  quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
-                  detailsLi.appendChild(quantitySpan);
-
-                  const commodityPriceSpan = document.createElement('span');
-                  commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
-                  detailsLi.appendChild(commodityPriceSpan);
-
-                  detailsUl.appendChild(detailsLi);
-                });
-
-              });
-            })
-            .catch(error => console.error(error));
-        }
-
-
-
-        // load on 事件
-        document.addEventListener("DOMContentLoaded", function () {
-
-          var memberId = "${member.id}";
-
-          const listGroup = document.querySelector(".list-group");
-
-          // 在一開始抓到該會員訂單的資料
+          // 在一開始抓到該會員貨到付款訂單的資料
           fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId)
             .then(response => response.json())
             .then(data => {
@@ -173,7 +107,7 @@
                 const buttonContainer = document.createElement('div');
                 buttonContainer.classList.add('btn-group');
 
-                // Detail 按鈕
+                // 訂單明細按鈕
                 const detailButton = document.createElement('button');
                 detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
                 detailButton.type = 'button';
@@ -184,7 +118,7 @@
                 detailButton.textContent = '訂單明細';
                 buttonContainer.appendChild(detailButton);
 
-                // 你新增的按鈕
+                // 刪除訂單按鈕
                 const customButton = document.createElement('button');
                 customButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'ms-1');
                 customButton.type = 'button';
@@ -195,13 +129,93 @@
                 buttonContainer.appendChild(customButton);
 
                 li.appendChild(buttonContainer);
-                listGroup.appendChild(li);
+                cashOnDeliveryOrder.appendChild(li);
 
                 // Details 區域
                 const div = document.createElement('div');
                 div.classList.add('collapse');
                 div.id = 'order' + orderDto.orderId;
-                listGroup.appendChild(div);
+                cashOnDeliveryOrder.appendChild(div);
+
+                const detailsUl = document.createElement('ul');
+                detailsUl.classList.add('list-group', 'list-group-flush');
+                div.appendChild(detailsUl);
+
+                orderDto.orderDetailDtos.forEach(orderDetailDto => {
+                  const detailsLi = document.createElement('li');
+                  detailsLi.classList.add('list-group-item');
+
+                  const commodityNameSpan = document.createElement('span');
+                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  detailsLi.appendChild(commodityNameSpan);
+
+                  const quantitySpan = document.createElement('span');
+                  quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
+                  detailsLi.appendChild(quantitySpan);
+
+                  const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
+                  detailsLi.appendChild(commodityPriceSpan);
+
+                  detailsUl.appendChild(detailsLi);
+                });
+
+              });
+
+            })
+            .catch(error => console.error(error));
+
+            // 在一開始抓到該會員信用卡付款訂單的資料
+            fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId)
+            .then(response => response.json())
+            .then(data => {
+
+              data.forEach(orderDto => {
+                // 轉成台灣時間
+                const utcDate = new Date(orderDto.createOrderTime);
+                const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+
+                // 訂單資訊 list item
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const span = document.createElement('span');
+                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
+                li.appendChild(span);
+
+                // 按鈕區域
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('btn-group');
+
+                // 訂單明細按鈕
+                const detailButton = document.createElement('button');
+                detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                detailButton.type = 'button';
+                detailButton.dataset.bsToggle = 'collapse';
+                detailButton.dataset.bsTarget = '#order' + orderDto.orderId;
+                detailButton.ariaExpanded = 'false';
+                detailButton.ariaControls = 'order' + orderDto.id;
+                detailButton.textContent = '訂單明細';
+                buttonContainer.appendChild(detailButton);
+
+                // 刪除訂單按鈕
+                const customButton = document.createElement('button');
+                customButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'ms-1');
+                customButton.type = 'button';
+                customButton.textContent = '刪除訂單';
+                customButton.addEventListener('click', () => {
+                  fetchOrderDetails(orderDto.orderId);
+                });
+                buttonContainer.appendChild(customButton);
+
+                li.appendChild(buttonContainer);
+                paymentFlowOrder.appendChild(li);
+
+                // Details 區域
+                const div = document.createElement('div');
+                div.classList.add('collapse');
+                div.id = 'order' + orderDto.orderId;
+                paymentFlowOrder.appendChild(div);
 
                 const detailsUl = document.createElement('ul');
                 detailsUl.classList.add('list-group', 'list-group-flush');
@@ -232,6 +246,321 @@
             .catch(error => console.error(error));
 
 
+            // 在一開始抓到該會員已取消訂單的資料
+            fetch("${contextRoot}/api/order/cancelOrder/" + memberId)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+
+              data.forEach(orderDto => {
+                // 轉成台灣時間
+                const utcDate = new Date(orderDto.createOrderTime);
+                const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+
+                // 訂單資訊 list item
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const span = document.createElement('span');
+                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
+                li.appendChild(span);
+
+                // 按鈕區域
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('btn-group');
+
+                // 訂單明細按鈕
+                const detailButton = document.createElement('button');
+                detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                detailButton.type = 'button';
+                detailButton.dataset.bsToggle = 'collapse';
+                detailButton.dataset.bsTarget = '#order' + orderDto.orderId;
+                detailButton.ariaExpanded = 'false';
+                detailButton.ariaControls = 'order' + orderDto.id;
+                detailButton.textContent = '訂單明細';
+                buttonContainer.appendChild(detailButton);
+
+                li.appendChild(buttonContainer);
+                cancelledOrder.appendChild(li);
+
+                // Details 區域
+                const div = document.createElement('div');
+                div.classList.add('collapse');
+                div.id = 'order' + orderDto.orderId;
+                cancelledOrder.appendChild(div);
+
+                const detailsUl = document.createElement('ul');
+                detailsUl.classList.add('list-group', 'list-group-flush');
+                div.appendChild(detailsUl);
+
+                orderDto.orderDetailDtos.forEach(orderDetailDto => {
+                  const detailsLi = document.createElement('li');
+                  detailsLi.classList.add('list-group-item');
+
+                  const commodityNameSpan = document.createElement('span');
+                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  detailsLi.appendChild(commodityNameSpan);
+
+                  const quantitySpan = document.createElement('span');
+                  quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
+                  detailsLi.appendChild(quantitySpan);
+
+                  const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
+                  detailsLi.appendChild(commodityPriceSpan);
+
+                  detailsUl.appendChild(detailsLi);
+                });
+
+              });
+
+            })
+            .catch(error => console.error(error));
+        }
+
+
+
+        // load on 事件
+        document.addEventListener("DOMContentLoaded", function () {
+
+          var memberId = "${member.id}";
+
+          const cashOnDeliveryOrder = document.querySelector("#cash-on-delivery-order");
+          const paymentFlowOrder = document.querySelector("#payment-flow-order");
+          const cancelledOrder = document.querySelector("#cancelled-order");
+
+          // 在一開始抓到該會員貨到付款訂單的資料
+          fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+
+              data.forEach(orderDto => {
+                // 轉成台灣時間
+                const utcDate = new Date(orderDto.createOrderTime);
+                const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+
+                // 訂單資訊 list item
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const span = document.createElement('span');
+                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
+                li.appendChild(span);
+
+                // 按鈕區域
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('btn-group');
+
+                // 訂單明細按鈕
+                const detailButton = document.createElement('button');
+                detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                detailButton.type = 'button';
+                detailButton.dataset.bsToggle = 'collapse';
+                detailButton.dataset.bsTarget = '#order' + orderDto.orderId;
+                detailButton.ariaExpanded = 'false';
+                detailButton.ariaControls = 'order' + orderDto.id;
+                detailButton.textContent = '訂單明細';
+                buttonContainer.appendChild(detailButton);
+
+                // 刪除訂單按鈕
+                const customButton = document.createElement('button');
+                customButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'ms-1');
+                customButton.type = 'button';
+                customButton.textContent = '刪除訂單';
+                customButton.addEventListener('click', () => {
+                  fetchOrderDetails(orderDto.orderId);
+                });
+                buttonContainer.appendChild(customButton);
+
+                li.appendChild(buttonContainer);
+                cashOnDeliveryOrder.appendChild(li);
+
+                // Details 區域
+                const div = document.createElement('div');
+                div.classList.add('collapse');
+                div.id = 'order' + orderDto.orderId;
+                cashOnDeliveryOrder.appendChild(div);
+
+                const detailsUl = document.createElement('ul');
+                detailsUl.classList.add('list-group', 'list-group-flush');
+                div.appendChild(detailsUl);
+
+                orderDto.orderDetailDtos.forEach(orderDetailDto => {
+                  const detailsLi = document.createElement('li');
+                  detailsLi.classList.add('list-group-item');
+
+                  const commodityNameSpan = document.createElement('span');
+                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  detailsLi.appendChild(commodityNameSpan);
+
+                  const quantitySpan = document.createElement('span');
+                  quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
+                  detailsLi.appendChild(quantitySpan);
+
+                  const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
+                  detailsLi.appendChild(commodityPriceSpan);
+
+                  detailsUl.appendChild(detailsLi);
+                });
+
+              });
+
+            })
+            .catch(error => console.error(error));
+
+            // 在一開始抓到該會員信用卡付款訂單的資料
+            fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId)
+            .then(response => response.json())
+            .then(data => {
+
+              data.forEach(orderDto => {
+                // 轉成台灣時間
+                const utcDate = new Date(orderDto.createOrderTime);
+                const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+
+                // 訂單資訊 list item
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const span = document.createElement('span');
+                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
+                li.appendChild(span);
+
+                // 按鈕區域
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('btn-group');
+
+                // 訂單明細按鈕
+                const detailButton = document.createElement('button');
+                detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                detailButton.type = 'button';
+                detailButton.dataset.bsToggle = 'collapse';
+                detailButton.dataset.bsTarget = '#order' + orderDto.orderId;
+                detailButton.ariaExpanded = 'false';
+                detailButton.ariaControls = 'order' + orderDto.id;
+                detailButton.textContent = '訂單明細';
+                buttonContainer.appendChild(detailButton);
+
+                // 刪除訂單按鈕
+                const customButton = document.createElement('button');
+                customButton.classList.add('btn', 'btn-secondary', 'btn-sm', 'ms-1');
+                customButton.type = 'button';
+                customButton.textContent = '刪除訂單';
+                customButton.addEventListener('click', () => {
+                  fetchOrderDetails(orderDto.orderId);
+                });
+                buttonContainer.appendChild(customButton);
+
+                li.appendChild(buttonContainer);
+                paymentFlowOrder.appendChild(li);
+
+                // Details 區域
+                const div = document.createElement('div');
+                div.classList.add('collapse');
+                div.id = 'order' + orderDto.orderId;
+                paymentFlowOrder.appendChild(div);
+
+                const detailsUl = document.createElement('ul');
+                detailsUl.classList.add('list-group', 'list-group-flush');
+                div.appendChild(detailsUl);
+
+                orderDto.orderDetailDtos.forEach(orderDetailDto => {
+                  const detailsLi = document.createElement('li');
+                  detailsLi.classList.add('list-group-item');
+
+                  const commodityNameSpan = document.createElement('span');
+                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  detailsLi.appendChild(commodityNameSpan);
+
+                  const quantitySpan = document.createElement('span');
+                  quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
+                  detailsLi.appendChild(quantitySpan);
+
+                  const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
+                  detailsLi.appendChild(commodityPriceSpan);
+
+                  detailsUl.appendChild(detailsLi);
+                });
+
+              });
+
+            })
+            .catch(error => console.error(error));
+
+
+            // 在一開始抓到該會員已取消訂單的資料
+            fetch("${contextRoot}/api/order/cancelOrder/" + memberId)
+            .then(response => response.json())
+            .then(data => {
+              console.log(data);
+
+              data.forEach(orderDto => {
+                // 轉成台灣時間
+                const utcDate = new Date(orderDto.createOrderTime);
+                const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
+
+                // 訂單資訊 list item
+                const li = document.createElement('li');
+                li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
+
+                const span = document.createElement('span');
+                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
+                li.appendChild(span);
+
+                // 按鈕區域
+                const buttonContainer = document.createElement('div');
+                buttonContainer.classList.add('btn-group');
+
+                // 訂單明細按鈕
+                const detailButton = document.createElement('button');
+                detailButton.classList.add('btn', 'btn-primary', 'btn-sm');
+                detailButton.type = 'button';
+                detailButton.dataset.bsToggle = 'collapse';
+                detailButton.dataset.bsTarget = '#order' + orderDto.orderId;
+                detailButton.ariaExpanded = 'false';
+                detailButton.ariaControls = 'order' + orderDto.id;
+                detailButton.textContent = '訂單明細';
+                buttonContainer.appendChild(detailButton);
+
+                li.appendChild(buttonContainer);
+                cancelledOrder.appendChild(li);
+
+                // Details 區域
+                const div = document.createElement('div');
+                div.classList.add('collapse');
+                div.id = 'order' + orderDto.orderId;
+                cancelledOrder.appendChild(div);
+
+                const detailsUl = document.createElement('ul');
+                detailsUl.classList.add('list-group', 'list-group-flush');
+                div.appendChild(detailsUl);
+
+                orderDto.orderDetailDtos.forEach(orderDetailDto => {
+                  const detailsLi = document.createElement('li');
+                  detailsLi.classList.add('list-group-item');
+
+                  const commodityNameSpan = document.createElement('span');
+                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  detailsLi.appendChild(commodityNameSpan);
+
+                  const quantitySpan = document.createElement('span');
+                  quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
+                  detailsLi.appendChild(quantitySpan);
+
+                  const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
+                  detailsLi.appendChild(commodityPriceSpan);
+
+                  detailsUl.appendChild(detailsLi);
+                });
+
+              });
+
+            })
+            .catch(error => console.error(error));
         });
 
       </script>

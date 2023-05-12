@@ -130,7 +130,7 @@ public class OrderService {
 		return orderRepository.findAllPaymentFlowByMemberId(memberId);
 	}
 
-	// For findByMemberId
+	// For findAllCancelOrderByMemberId
 	public List<Order> findAllCancelOrderByMemberId(Integer memberId) {
 		return orderRepository.findAllCancelOrderByMemberId(memberId);
 	}
