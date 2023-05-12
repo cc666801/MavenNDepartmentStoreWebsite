@@ -132,7 +132,7 @@ public class MemberController {
 			return "member/addMemberPage";
 		}else {
 			mService.addMember(mem);
-			return "member/jump";
+			return "redirect:/member/login";
 		}
 	}
 
@@ -148,7 +148,7 @@ public class MemberController {
 		Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
 		if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
 			session.setAttribute("member", memberOpt.get());
-			return "member/jump";
+			return "redirect:/";
 		} else {
 			model.addAttribute("error", "帳號或密碼錯誤");
 			return "member/login";
@@ -160,7 +160,7 @@ public class MemberController {
 		// 刪除session中的會員資訊
 		session.removeAttribute("member");
 		// 重定向到首頁
-		return "member/jump";
+		return "redirect:/";
 	}
 
 //-------------------------------------------------------------------------------------------------------------------------

@@ -146,7 +146,12 @@ h1 {
 				return false;
 			}
 
-			return true;
+			// 如果表單欄位都填寫正確，顯示確認視窗
+			if (confirm("確定要更新會員資料嗎？")) {
+				return true;
+			} else {
+				return false;
+			}
 		}
 	</script>
 </body>
