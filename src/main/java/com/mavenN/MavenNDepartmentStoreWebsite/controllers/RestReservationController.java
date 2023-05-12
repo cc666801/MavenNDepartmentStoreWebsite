@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.annotation.MemberLogin;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
@@ -34,6 +35,7 @@ public class RestReservationController {
 		return "restaurantfront/addreservation";
 	}
 	
+//	@MemberLogin
 	@GetMapping("/restaurantfront/reservation")
 	public String addreservations(@RequestParam("restid") Integer restid,Model model) {
 		RestaurantInformation findRestById = reService.findRestaurantById(restid);

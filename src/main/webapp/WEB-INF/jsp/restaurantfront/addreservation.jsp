@@ -137,7 +137,7 @@ fieldset{
 									</span>
 								</span>
 							</div><br>
-							<form:input type="text" path="company" value="${findRestaurant.company.companyId}" readonly="readonly" />
+							<form:input type="hidden" path="company" value="${findRestaurant.company.companyId}" readonly="readonly" />
 						</div>
 					
 	
@@ -219,16 +219,29 @@ fieldset{
 									</div>
 								</fieldset>
 								<div>
-								<form:input type="text" path="time_interval" id="timeintervalcode" readonly="readonly" />
-								<form:input type="text" path="time" id="timecode" readonly="readonly" />
+								<form:input type="hidden" path="time_interval" id="timeintervalcode" readonly="readonly" />
+								<form:input type="hidden" path="time" id="timecode" readonly="readonly" />
 								</div>						
 						</div>
 						<br>
 					
-						<div class="col-6" >
+						
+<!--           有按鈕會員登入 
+						<jstl:if test="${empty member}">
+			
+							
+							<a href="${contextRoot}/member/login" class="mx-2">
+								<button type="button" class="btn btn-primary" id="memberlogin">送出</button>
+							</a>
+					
+						</jstl:if>
+			
+						<jstl:if test="${not empty member}">
+			
+							<div class="col-6" >
 							<label for="NId">姓名：</label>
 							<br>
-							<form:input type="text" path="name" id="NId" />
+							<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}"/>
 							<br>
 							<label for="TId">電話：</label>
 							<br>
@@ -244,7 +257,36 @@ fieldset{
 							</div>
 							<div class="col-9">
 								<button type="submit" class="btn btn-primary">送出</button>
+							</div>
+			
+						</jstl:if>
+	-->					
+
+<!-- 			-----------------以下為會員登入-->
+						<div class="col-11" >
+							<label for="NId">姓名：</label>
+							<br>
+							<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}"/>
+							<br>
+							<label for="TId">電話：</label>
+							<br>
+							<form:input type="text" path="telephone" id="TId" value="${sessionScope.member.phone}"/>
+							<br>
+							<label for="EId">email:</label>
+							<br>
+							<form:input type="text" path="email" id="EId" value="${sessionScope.member.email}"/>
+							<br>
+							<label for="note">備註：</label>
+							<br>
+							<form:textarea id="note" path="remark" cols="30" rows="10"></form:textarea>
+							</div>
+							<div class="col-9">
+								<button type="submit" class="btn btn-primary btn-block">送出</button>
 						</div>
+					
+
+
+
 					</form:form>
 					
 				<div class="row">
