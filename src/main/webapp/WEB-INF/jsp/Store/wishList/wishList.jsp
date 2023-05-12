@@ -31,7 +31,7 @@
                 <div class="col-lg-12 text-center mb-5">
                   <h3 class="page-title">
                     <i class="fa-solid fa-cart-shopping"></i>
-                    購物車商品
+                    心願清單商品
                   </h3>
                 </div>
               </div>

@@ -17,4 +17,5 @@ public interface CompanyCounterRepository extends JpaRepository<CompanyCounter, 
 	@Query("SELECT c FROM Counter c WHERE c.counterId NOT IN " + "(SELECT cc.counter.counterId FROM CompanyCounter cc "
 			+ "WHERE cc.offCounterTime >= CURRENT_TIMESTAMP)")
 	List<Counter> findAllEmptyCounters();
+	
 }

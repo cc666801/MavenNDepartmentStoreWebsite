@@ -138,7 +138,7 @@
 									<div class="info">
 										<h5 class="mb-0">心願清單</h5>
 										<form
-											action="${contextRoot}/add-to-wishlist/${commodityInfo.commId}"
+											action="${contextRoot}/addtowishlist/${commodityInfo.commId}"
 											method="POST">
 											<button type="submit" class="btn btn-outline-primary">心願清單</button>
 										</form>
