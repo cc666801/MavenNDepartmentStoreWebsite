@@ -61,6 +61,7 @@ public class MemberController {
 		return "redirect:/memberCentre";
 
 	}
+
 //-----------------------------------------------------------------------------------------------
 	// 更新會員資料
 	@MemberLogin
@@ -93,6 +94,7 @@ public class MemberController {
 		mService.updateMemberById(id, member);
 		return "redirect:/member/logout";
 	}
+
 //-----------------------------------------------------------------------------------------------
 	// 更改會員權限
 	@PostMapping("/updatePermission/{id}")
@@ -132,10 +134,11 @@ public class MemberController {
 		if (existingMember.isPresent()) {
 			model.addAttribute("error", "該帳號已經存在");
 			return "member/addMemberPage";
-		} if (existingMember2.isPresent()) {
+		}
+		if (existingMember2.isPresent()) {
 			model.addAttribute("error", "該信箱已經存在");
 			return "member/addMemberPage";
-		}else {
+		} else {
 			mService.addMember(mem);
 			return "redirect:/member/login";
 		}
@@ -144,35 +147,41 @@ public class MemberController {
 	// 會員登入
 	@GetMapping("/member/login")
 	public String loginMember(Model model, HttpSession session, HttpServletRequest request) {
-	    String previousUrl = request.getHeader("Referer");
-	    if (previousUrl != null && !previousUrl.contains("/member/login")) {
-	        session.setAttribute("previousUrl", previousUrl);
-	    }
-	    model.addAttribute("member", new Member());
-	    return "member/login";
+		String previousUrl = request.getHeader("Referer");
+		if (previousUrl != null && !previousUrl.contains("/member/login")) {
+			session.setAttribute("previousUrl", previousUrl);
+		}
+		model.addAttribute("member", new Member());
+		return "member/login";
 	}
 
 	@PostMapping("/member/login")
-	public String postLoginMember(@ModelAttribute("member") Member mem, Model model, HttpSession session, HttpServletRequest request) {
-	    Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
-	    if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
-	        session.setAttribute("member", memberOpt.get());
+	public String postLoginMember(@ModelAttribute("member") Member mem, Model model, HttpSession session,
+			HttpServletRequest request) {
+		Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
+		if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
+			session.setAttribute("member", memberOpt.get());
 
-	        // 取得上一個頁面的 URL
-	        String previousUrl = (String) session.getAttribute("previousUrl");
-	        if (previousUrl != null && !previousUrl.contains("/member/login")) {
-	            session.removeAttribute("previousUrl");
-	            return "redirect:" + previousUrl;
-	        }
+			
+			String previousUrl = (String) session.getAttribute("previousUrl");
+			// 如果上一個頁面是註冊頁面，則將導向到首頁
+			if (previousUrl != null && previousUrl.contains("/member/register")) {
+				return "redirect:/";
+			}
+			// 取得上一個頁面的 URL
+			if (previousUrl != null && !previousUrl.contains("/member/login")) {
+				session.removeAttribute("previousUrl");
+				return "redirect:" + previousUrl;
+			}
 
-	        return "redirect:/";
-	    } else {
-	        model.addAttribute("error", "帳號或密碼錯誤");
-	        return "member/login";
-	    }
+			return "redirect:/";
+		} else {
+			model.addAttribute("error", "帳號或密碼錯誤");
+			return "member/login";
+		}
 	}
 
-	//會員登出
+	// 會員登出
 	@GetMapping("/member/logout")
 	public String logout(HttpSession session) {
 		// 刪除session中的會員資訊
@@ -217,61 +226,59 @@ public class MemberController {
 			return "member/emailFailJump";
 		}
 	}
+
 //-------------------------------------------------------------------------------------------------------------------------
 	// 忘記密碼驗證信
 	// 顯示忘記密碼頁面
-    @GetMapping("/member/forgotPassword")
-    public String showForgotPassword() {
-        return "member/forgotPasswordPage";
-    }
-    
-    // 發送重設密碼驗證信
-    @PostMapping("/member/sendResetPasswordEmail")
-    public String sendResetPasswordEmail(@RequestParam("email") String email, Model model) {
-        Member member = mRepository.findByEmail(email);
-        if (member == null) {
-            model.addAttribute("error", "該電子郵件地址未被註冊！");
-            return "member/forgotPasswordPage";
-        } else {
-            String token = UUID.randomUUID().toString();
-            member.setToken(token);
-            mRepository.save(member);
-            emailService.sendVerificationPassword(member, token);
-            model.addAttribute("success", "驗證信已發送至您的電子郵件，請查收！");
-            return "member/emailSendSucess";
-        }
-    }
-    
-    // 顯示重設密碼頁面
-    @GetMapping("/member/resetPassword")
-    public String showResetPassword(@RequestParam("token") String token, Model model) {
-        Member member = mRepository.findByToken(token);
-        if (member == null) {
-            model.addAttribute("error", "該驗證鏈接無效或已過期！");
-            return "member/emailFailJump";
-        } else {
-            model.addAttribute("member", member);
-            return "member/resetPasswordPage";
-        }
-    }
-    
-    // 提交重設密碼表單
-    @PostMapping("/member/resetPassword")
-    public String resetPassword(@ModelAttribute("member") Member member, Model model) {
-        Member originalMember = mRepository.findByEmail(member.getEmail());
-        if (originalMember == null) {
-            model.addAttribute("error", "該用戶不存在！");
-            return "member/emailFailJump";
-        } else {
-            originalMember.setPassword(member.getPassword());
-            originalMember.setToken(null);
-            mRepository.save(originalMember);
-            model.addAttribute("success", "密碼已成功重設！");
-            return "redirect:/member/logout";
-        }
-    }
+	@GetMapping("/member/forgotPassword")
+	public String showForgotPassword() {
+		return "member/forgotPasswordPage";
+	}
 
+	// 發送重設密碼驗證信
+	@PostMapping("/member/sendResetPasswordEmail")
+	public String sendResetPasswordEmail(@RequestParam("email") String email, Model model) {
+		Member member = mRepository.findByEmail(email);
+		if (member == null) {
+			model.addAttribute("error", "該電子郵件地址未被註冊！");
+			return "member/forgotPasswordPage";
+		} else {
+			String token = UUID.randomUUID().toString();
+			member.setToken(token);
+			mRepository.save(member);
+			emailService.sendVerificationPassword(member, token);
+			model.addAttribute("success", "驗證信已發送至您的電子郵件，請查收！");
+			return "member/emailSendSucess";
+		}
+	}
 
-	
-	
+	// 顯示重設密碼頁面
+	@GetMapping("/member/resetPassword")
+	public String showResetPassword(@RequestParam("token") String token, Model model) {
+		Member member = mRepository.findByToken(token);
+		if (member == null) {
+			model.addAttribute("error", "該驗證鏈接無效或已過期！");
+			return "member/emailFailJump";
+		} else {
+			model.addAttribute("member", member);
+			return "member/resetPasswordPage";
+		}
+	}
+
+	// 提交重設密碼表單
+	@PostMapping("/member/resetPassword")
+	public String resetPassword(@ModelAttribute("member") Member member, Model model) {
+		Member originalMember = mRepository.findByEmail(member.getEmail());
+		if (originalMember == null) {
+			model.addAttribute("error", "該用戶不存在！");
+			return "member/emailFailJump";
+		} else {
+			originalMember.setPassword(member.getPassword());
+			originalMember.setToken(null);
+			mRepository.save(originalMember);
+			model.addAttribute("success", "密碼已成功重設！");
+			return "redirect:/member/logout";
+		}
+	}
+
 }
