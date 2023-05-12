@@ -35,6 +35,7 @@ public class MemberController {
 	private EmailService emailService;
 
 	// 跳轉會員中心時把新的資料塞入
+	@MemberLogin
 	@GetMapping("/memberCentre")
 	public String jumpPage(HttpSession session) {
 		Member member = (Member) session.getAttribute("member");
