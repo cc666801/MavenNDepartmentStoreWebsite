@@ -45,7 +45,7 @@
 										${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後回覆</option>
 								</select>
 							</form>
-
+<br>
 
 
 							<c:forEach var="art" items="${page.content}">
@@ -230,22 +230,22 @@
 
 	<!-- 排序 -->
 	<script>
-// 		$(function() {
-// 			$("#sortSelect").change(function(event) {
-// 				event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-// 				var selectedValue = $("#sortSelect").val();
+		$(function() {
+			$("#sortSelect").change(function(event) {
+				event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
+				var selectedValue = $("#sortSelect").val();
 
-// 				$.ajax({
-// 					url : $("#sortForm").attr("action"),
-// 					type : "GET",
-// 					data : $("#sortForm").serialize(),
-// 					success : function(data) {
-// 						$("#articleList").html(data);
-// 						$("#sortSelect").val(selectedValue);
-// 					}
-// 				});
-// 			});
-// 		});
+				$.ajax({
+					url : $("#sortForm").attr("action"),
+					type : "GET",
+					data : $("#sortForm").serialize(),
+					success : function(data) {
+						$("#articleList").html(data);
+						$("#sortSelect").val(selectedValue);
+					}
+				});
+			});
+		});
 	
     $(function() {
         $("#searchForm, #sortForm").change(function(event) {
@@ -258,7 +258,7 @@
                 data : $("#searchForm, #sortForm").serialize(),
                 success : function(data) {
                     $("#articleList").html(data);
-                    $("#sortSelect").val(selectedValue);
+//                     $("#sortSelect").val(selectedValue);
                     $("#search").val(searchedValue);
                     
                 }

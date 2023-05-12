@@ -27,7 +27,7 @@ public class BadWordsAspect {
                     String content = (String) arg;
                     for (String word : BadWords.words) {
                         content = content.replaceAll(word, "******");
-                        System.out.println("敏感字过滤");
+                        System.out.println("敏感字過濾");
                     }
                     args[i] = content;
                 }

@@ -93,7 +93,6 @@
 								data-bs-parent="#sidenavAccordion">
 								<nav class="sb-sidenav-menu-nested nav">
 									<a class="nav-link" href="${contextRoot}/articleBack">文章管理</a>
-									<a class="nav-link" href="#">留言管理</a>
 								</nav>
 							</div>
 

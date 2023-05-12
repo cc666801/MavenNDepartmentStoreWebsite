@@ -19,7 +19,7 @@ public interface ArticleRepository extends JpaRepository<Article, Integer>  {
 	 @Query("select a from Article a where lower(a.articleTitle) like %:keyword%")
 	    Page<Article> findByTitleContainingIgnoreCase(@Param("keyword") String keyword, Pageable pageable);
 	
-	 
+	 List<Article> findArticlesBySearchConditions(Integer articleCategoryID, String keyword, String articleCreateTimeSort, String articleLikeCountSort, String commentCountSort, String commentEditTimeSort);
 	 
 	
 }
