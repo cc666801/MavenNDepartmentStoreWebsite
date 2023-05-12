@@ -79,6 +79,11 @@ body {
 	<!-- Bootstrap JavaScript -->
 	<script
 		src="https://cdn.staticfile.org/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function memberNull() {
+			alert("<c:out value='${msg}'/>")
+		}
+	</script>
 </body>
 
 </html>
