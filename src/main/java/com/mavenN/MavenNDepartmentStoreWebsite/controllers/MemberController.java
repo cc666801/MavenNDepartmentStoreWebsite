@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.UUID;
 
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -138,23 +139,36 @@ public class MemberController {
 
 	// 會員登入
 	@GetMapping("/member/login")
-	public String loginMember(Model model) {
-		model.addAttribute("member", new Member());
-		return "member/login";
+	public String loginMember(Model model, HttpSession session, HttpServletRequest request) {
+	    String previousUrl = request.getHeader("Referer");
+	    if (previousUrl != null && !previousUrl.contains("/member/login")) {
+	        session.setAttribute("previousUrl", previousUrl);
+	    }
+	    model.addAttribute("member", new Member());
+	    return "member/login";
 	}
 
 	@PostMapping("/member/login")
-	public String postLoginMember(@ModelAttribute("member") Member mem, Model model, HttpSession session) {
-		Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
-		if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
-			session.setAttribute("member", memberOpt.get());
-			return "redirect:/";
-		} else {
-			model.addAttribute("error", "帳號或密碼錯誤");
-			return "member/login";
-		}
+	public String postLoginMember(@ModelAttribute("member") Member mem, Model model, HttpSession session, HttpServletRequest request) {
+	    Optional<Member> memberOpt = mRepository.findByAccount(mem.getAccount());
+	    if (memberOpt.isPresent() && memberOpt.get().getPassword().equals(mem.getPassword())) {
+	        session.setAttribute("member", memberOpt.get());
+
+	        // 取得上一個頁面的 URL
+	        String previousUrl = (String) session.getAttribute("previousUrl");
+	        if (previousUrl != null && !previousUrl.contains("/member/login")) {
+	            session.removeAttribute("previousUrl");
+	            return "redirect:" + previousUrl;
+	        }
+
+	        return "redirect:/";
+	    } else {
+	        model.addAttribute("error", "帳號或密碼錯誤");
+	        return "member/login";
+	    }
 	}
 
+	//會員登出
 	@GetMapping("/member/logout")
 	public String logout(HttpSession session) {
 		// 刪除session中的會員資訊
