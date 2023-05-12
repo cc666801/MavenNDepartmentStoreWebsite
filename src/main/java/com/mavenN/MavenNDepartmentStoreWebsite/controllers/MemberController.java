@@ -123,10 +123,14 @@ public class MemberController {
 	@PostMapping("/member/post")
 	public String postMember(@ModelAttribute("member") Member mem, Model model) {
 		Optional<Member> existingMember = mRepository.findByAccount(mem.getAccount());
+		Optional<Member> existingMember2 = Optional.ofNullable(mRepository.findByEmail(mem.getEmail()));
 		if (existingMember.isPresent()) {
 			model.addAttribute("error", "該帳號已經存在");
 			return "member/addMemberPage";
-		} else {
+		} if (existingMember2.isPresent()) {
+			model.addAttribute("error", "該信箱已經存在");
+			return "member/addMemberPage";
+		}else {
 			mService.addMember(mem);
 			return "member/jump";
 		}
