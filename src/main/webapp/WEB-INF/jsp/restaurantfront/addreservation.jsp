@@ -60,6 +60,11 @@ fieldset{
 <title>餐廳頁面</title>
 </head>
 <body>
+
+	<!-- ======= Header ======= -->
+	<jsp:include page="../layout/header.jsp"></jsp:include>
+	<!-- End Header -->
+	<main id="main">
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
 		<div class="carousel-indicators">
@@ -99,17 +104,17 @@ fieldset{
 
 	<div class="container">
 		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
-			<div class="col-sm-3 col-12 border border-2 border-secondary me-2">
-				<div class="row mt-2 justify-content-center">
-					<div class="col-12" style="height: 200px;">
+			<div class="col-sm-3 col-12 me-2">
+				<div class="row mt-2 justify-content-left">
+					<div class="col-11">
 						<img src="data:image/png;base64,${findRestaurant.company.base64StringCompanyLogo}"
-							 class="img-fluid mx-auto d-block h-100 rounded"
+							 class="mx-auto img-thumbnail border border-4 rounded" style="width:250px; height: 200px"
 							 alt="${findRestaurant.company.companyName}的logo">
 					</div>
 				</div>
-				<div class="row">
+				<div class="row mt-2">
 					<div class="col-12">
-					<p>餐廳名稱:${findRestaurant.company.companyName}</p>
+					<h3>${findRestaurant.company.companyName}</h3>
 					<p>料理類型:${findRestaurant.cuisineType.cuisineTypeName} </p>
 					</div>
 				</div>
@@ -251,8 +256,9 @@ fieldset{
 						<jstl:if test="${not empty member}">
 			
 							<div class="row justify-content-center">
-								<div class="col-11 mt-4 border border border-secondary rounded-4 md-2">
+								<div class="col-12 px-4 py-2 border border border-secondary rounded-4 mt-4 md-2">
 									<h2>聯絡資訊</h2>
+									<form:input type="hidden" path="member" id="memberId" value="${sessionScope.member.id}" class="w-100"/>
 									<label for="NId">姓名</label>
 									<br>
 									<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}" class="w-100"/>
@@ -318,6 +324,7 @@ fieldset{
 			</div>
 		</div>
 	</div>
+	</main>
 
 	<script src="${contextRoot}/assetsForFrontend/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="${contextRoot}/bootstrap5.0.2/js/jquery.min.js"></script>

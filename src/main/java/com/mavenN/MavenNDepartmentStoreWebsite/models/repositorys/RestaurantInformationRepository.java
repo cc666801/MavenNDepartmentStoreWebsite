@@ -26,6 +26,8 @@ public interface RestaurantInformationRepository extends JpaRepository<Restauran
 			+ "INNER JOIN CuisineType ct ON ri.cuisineType = ct "
 			+ "WHERE c.companyName LIKE %:companyName% OR ct.cuisineTypeName LIKE %:companyName%")
 	public Page<RestaurantInformation> findrestByCompanyname(@Param("companyName") String companyName, Pageable page);
+	
+	
 			
 			
 

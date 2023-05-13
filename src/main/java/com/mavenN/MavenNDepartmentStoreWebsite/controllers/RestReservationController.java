@@ -25,6 +25,9 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	@GetMapping("/restaurantfront/chickReservation")
+	
+	
 	@PostMapping("/restaurantfront/post")
 	public String restfrontReservation(@ModelAttribute("reservation") Reservation res, Model model) {
 		
@@ -32,7 +35,7 @@ public class RestReservationController {
 		
 		reService.addreservation(res);
 		model.addAttribute("reservation",new Reservation());
-		return "restaurantfront/addreservation";
+		return "redirect:/restaurantfront";
 	}
 	
 //	@MemberLogin

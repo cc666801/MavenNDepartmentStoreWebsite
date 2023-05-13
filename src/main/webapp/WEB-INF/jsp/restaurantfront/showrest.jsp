@@ -50,9 +50,15 @@
 								<p class="card-text">
 									位置:${restaurant.company.address.addressName}<br>
 									料理類型:${restaurant.cuisineType.cuisineTypeName}<br>
-									card title and make up the bulk of the card's content.</p>
-								<a href="${contextRoot}/restaurantfront/reservation?restid=${restaurant.resid}"
-									class="btn btn-primary stretched-link">訂位去</a>
+								</p>
+								<jstl:if test="${empty member}">
+									<a href="${contextRoot}/member/login"
+										class="btn btn-primary stretched-link">登入會員,可享線上訂位</a>
+								</jstl:if>
+								<jstl:if test="${not empty member}">
+									<a href="${contextRoot}/restaurantfront/reservation?restid=${restaurant.resid}"
+										class="btn btn-primary stretched-link">訂位去</a>
+								</jstl:if>
 							</div>
 						</div>
 					</div>

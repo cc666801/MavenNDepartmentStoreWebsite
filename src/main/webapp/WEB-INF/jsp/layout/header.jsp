@@ -84,9 +84,16 @@
 						<li><a href="${contextRoot}/orderSystem/shoppingCart">購物車</a></li>
 						<li><a href="${contextRoot}/orderSystem/order">訂單狀態</a></li>
 					</ul></li>
-
-				<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
-
+					
+<!-- 				餐廳系統	 -->
+				<li class="dropdown"><a href="${contextRoot}/restaurantfront"><span>餐廳訂位</span>
+					<i class="bi bi-chevron-down dropdown-indicator"></i></a>
+				<ul>
+					<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
+					<li><a href="${contextRoot}/restaurantfront/chickReservation?memberid=${member.id}">訂位狀態</a></li>
+				</ul></li>
+<!-- 				餐廳系統end	 -->
+				
 				<li class="dropdown"><a href="${contextRoot}/articleList"><span>討論區</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
