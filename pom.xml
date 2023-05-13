@@ -79,6 +79,12 @@
 			<version>1.6.2</version>
 		</dependency>
 		<!--google驗證用-->
+		<dependency>
+			<groupId>org.springframework.security</groupId>
+			<artifactId>spring-security-core</artifactId>
+			<version>5.5.1</version>
+		</dependency>
+<!--		心願清單用-->
 	</dependencies>
 	<build>
 		<plugins>

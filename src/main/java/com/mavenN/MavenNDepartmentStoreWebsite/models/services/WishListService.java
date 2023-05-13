@@ -32,9 +32,9 @@ public class WishListService {
 	
 //	商品新增進入心願清單
 	
-	public void addToWishList(Integer commodityId, Member member) {
+	public void addToWishList(Integer commId, Member member) {
         // 從當前商品的 ID 獲取該商品的實例
-        Commodity commodity = commodityRepository.findById(commodityId).orElse(null);
+        Commodity commodity = commodityRepository.findById(commId).orElse(null);
 
         if (commodity != null) {
             // 創建一個新的心願清單項目
