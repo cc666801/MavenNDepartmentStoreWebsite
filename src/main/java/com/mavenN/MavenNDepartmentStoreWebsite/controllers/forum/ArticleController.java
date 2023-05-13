@@ -47,8 +47,6 @@ public class ArticleController {
 	@Autowired
 	private ArticleCategoryService articleCategoryService;
 	
-	@Autowired
-	private MemberService memberService;
 	
 	@Autowired
 	private CommentService commentService;
