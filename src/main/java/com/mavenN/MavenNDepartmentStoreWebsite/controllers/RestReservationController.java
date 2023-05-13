@@ -14,7 +14,6 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.annotation.MemberLogin;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
@@ -25,7 +24,20 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	
+	@DeleteMapping("restaurantfront/memberReservation/delete")
+	public String memberdeleteReservation(Integer r_id, Integer memberid,Model model) {
+		reService.deletebyid(r_id);
+		return "redirect:/restaurantfront/chickReservation?memberid="+ memberid;
+	}
+	
 	@GetMapping("/restaurantfront/chickReservation")
+	public String chickReservation(@RequestParam("memberid") Integer memberid, Model model) {
+		List<Reservation> findMemberReservation = reService.findMemberReservation(memberid);
+		model.addAttribute("memberReservation", findMemberReservation);
+		
+		return "/restaurantfront/memberReservation";
+	}
 	
 	
 	@PostMapping("/restaurantfront/post")

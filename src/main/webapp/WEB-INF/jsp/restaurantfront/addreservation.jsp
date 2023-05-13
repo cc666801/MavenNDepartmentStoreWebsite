@@ -60,11 +60,23 @@ fieldset{
 <title>餐廳頁面</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="${contextRoot}">回Mavenn百貨公司</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+	   <div class="collapse navbar-collapse" id="navbarScroll">
+	      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="${contextRoot}/restaurantfront">餐廳</a>
+            </li>
+          </ul>
+       </div>
+       
+   </div>   
+</nav>
 
-	<!-- ======= Header ======= -->
-	<jsp:include page="../layout/header.jsp"></jsp:include>
-	<!-- End Header -->
-	<main id="main">
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
 		<div class="carousel-indicators">
@@ -143,7 +155,7 @@ fieldset{
 						<div class="col-5">
 							用餐時間
 							<div class="input-group date" id="datepicker">
-								<form:input type="text" path="date" class="form-control" id="DId" readonly="readonly" />
+								<form:input type="text" path="date" class="form-control" id="DId" readonly="readonly"/>
 								 <span class="input-group-append"> 
 								 	<span class="input-group-text bg-white d-block"> 
 								 		<i class="bi bi-calendar"></i>
@@ -156,7 +168,7 @@ fieldset{
 	
 						<div class="col-12">						
 								<fieldset>
-									<legend class="title">晚上</legend>
+									<legend class="title">中午</legend>
 									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
 										<jstl:forEach var="i" begin="11" end="14">
 											<jstl:choose>
@@ -324,7 +336,6 @@ fieldset{
 			</div>
 		</div>
 	</div>
-	</main>
 
 	<script src="${contextRoot}/assetsForFrontend/vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
 	<script src="${contextRoot}/bootstrap5.0.2/js/jquery.min.js"></script>
@@ -347,7 +358,7 @@ fieldset{
 
 					beforeShowDay : function(date) {
 					// 禁用今天之前和3個月之後的日期
-					return date < now || date.getMonth() > (now.getMonth() + 3) ? false: true;
+					return date < now || date.getMonth() > (now.getMonth() + 2) ? false: true;
 					}
 
 				});

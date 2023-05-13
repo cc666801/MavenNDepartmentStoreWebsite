@@ -29,6 +29,16 @@ public class RestReservationService {
 	@Autowired
 	private RestaurantInformationRepository restInformationRepository;
 	
+	public List<Reservation> findMemberReservation(Integer memberid){
+		List<Reservation> findMemberRes = resRepository.findByMemberIdOrderByDateAsc(memberid);
+		
+		if(findMemberRes.isEmpty()) {
+			return null;
+		}
+		
+		return findMemberRes;
+	}
+	
 	public void addreservation (Reservation res) {
 		resRepository.save(res);
 	}
