@@ -63,7 +63,7 @@ th {
 
 h1 {
 	text-align: center;
-	color: #4CAF50;
+	color: #0a0a0a;
 	margin-bottom: 30px;
 }
 
@@ -85,7 +85,7 @@ h1 {
 <body>
 	<jsp:include page="../layout/header.jsp"></jsp:include>
 	<main id="main" class="container">
-		<h1 style="text-align: center; color: #4CAF50;">驗證信箱</h1>
+		<h1 style="text-align: center;">驗證信箱</h1>
 		<div class="row justify-content-center">
 			<div class="col-md-8 col-lg-6">
 				<div class="card">

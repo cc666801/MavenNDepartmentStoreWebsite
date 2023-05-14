@@ -257,6 +257,3 @@ body {
 </body>
 </html>
 
-</body>
-</html>
-

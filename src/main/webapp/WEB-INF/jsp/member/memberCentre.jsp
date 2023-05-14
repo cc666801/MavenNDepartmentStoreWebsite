@@ -69,7 +69,7 @@ th {
 
 h1 {
 	text-align: center;
-	color: #4CAF50;
+	color: #0a0a0a;
 	margin-bottom: 30px;
 }
 
