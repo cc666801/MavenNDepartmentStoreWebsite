@@ -66,7 +66,7 @@
 						
 						<label for="TimeId">時段：</label><br>
 						
-						<form:select path="time_interval" id="TimeId" class="form-select"
+						<form:select path="timeInterval" id="TimeId" class="form-select"
 							style="width: 200px">
 							<form:option value="中午">中午</form:option>
 							<form:option value="下午">下午</form:option>

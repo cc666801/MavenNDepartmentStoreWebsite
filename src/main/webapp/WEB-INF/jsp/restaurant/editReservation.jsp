@@ -38,6 +38,7 @@
 						action="${contextRoot}/restaurant/edit">
 						<!--訂單id -->
 						<form:input type="hidden" path="r_id" />
+						<form:input type="hidden" path="member" id="memberId" style="background-color:gray" readonly="readonly"/>
 						<label for="CId">餐廳：</label>
 						<form:select path="restaurantInformation" id="CId" class="form-select"
 							style="width: 200px">
@@ -57,9 +58,6 @@
 							</jstl:forEach>
 						</form:select>
 						
-						<form:input type="hidden" path="member" id="memberId" style="background-color:gray" readonly="readonly"></form:input>
-						<br>
-						
 						<label for="NId">姓名：</label>
 						<br>
 						<form:input type="text" path="name" id="NId" />
@@ -70,7 +68,7 @@
 						<br>
 						<label for="EId">email:</label>
 						<br>
-						<form:input type="text" path="email" id="EId" />
+						<form:input type="text" path="email" id="EId" style="width:220px"/>
 						<br>
 						<label for="note">備註：</label>
 						<br>
@@ -82,11 +80,31 @@
 						<br>
 						<label for="TimeId">時段：</label>
 						<br>
-						<form:select path="time_interval" id="TimeId" class="form-select"
-							style="width: 200px">
-							<option value="中午">中午</option>
-							<option value="下午">下午</option>
-							<option value="晚上">晚上</option>
+						<form:select path="timeInterval" id="TimeId" class="form-select"
+							style="width: 200px">	
+							<jstl:choose>
+								<jstl:when test="${reservation.timeInterval == '中午'}">
+									<option value="中午" selected="selected">中午</option>
+									<option value="下午">下午</option>
+									<option value="晚上">晚上</option>
+								</jstl:when>
+								<jstl:when test="${reservation.timeInterval == '下午'}">
+									<option value="下午" selected="selected">下午</option>
+									<option value="中午">中午</option>
+									<option value="晚上">晚上</option>
+								</jstl:when>
+								<jstl:when test="${reservation.timeInterval == '晚上'}">
+									<option value="晚上" selected="selected">晚上</option>
+									 <option value="中午">中午</option>
+									<option value="下午">下午</option>
+								</jstl:when>
+								<jstl:otherwise>
+								    <option value="中午">中午</option>
+									<option value="下午">下午</option>
+									<option value="晚上">晚上</option>
+								</jstl:otherwise>                								
+							</jstl:choose>
+													
 						</form:select>
 
 						<label for="meeting-time">選擇時間：</label>

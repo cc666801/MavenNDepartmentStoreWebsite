@@ -25,7 +25,29 @@ public class RestReservationController {
 	private RestReservationService reService;
 	
 	
-	@DeleteMapping("restaurantfront/memberReservation/delete")
+	@GetMapping("restaurantfront/memberReservation/edit")
+	public String memberEditPage(@RequestParam("r_id") Integer r_id,@RequestParam("restid") Integer restid, Model model) {
+		RestaurantInformation findRestById = reService.findRestaurantById(restid);
+		
+		byte[] restLogo = findRestById.getCompany().getCompanyLogo();
+		if(restLogo != null) {
+			String encodeToString = Base64.getEncoder().encodeToString(restLogo);
+			findRestById.getCompany().setBase64StringCompanyLogo(encodeToString);
+		}
+		
+		model.addAttribute("findRestaurant", findRestById);
+		
+		List<CompanyCounter> restaurantCounter = reService.findCompanyCounter();
+		model.addAttribute("restaurantCounter",restaurantCounter);
+		
+		Reservation findbyid = reService.findreservationbyid(r_id);
+		model.addAttribute("memberReservation",findbyid);
+		
+		return "restaurantfront/editReservation";
+	}
+	
+	
+	@DeleteMapping("/restaurantfront/memberReservation/delete")
 	public String memberdeleteReservation(Integer r_id, Integer memberid,Model model) {
 		reService.deletebyid(r_id);
 		return "redirect:/restaurantfront/chickReservation?memberid="+ memberid;
@@ -152,8 +174,8 @@ public class RestReservationController {
 	public String putEditReservation(@ModelAttribute("reservation") Reservation res) {
 		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(),
 				                        res.getRestaurantInformation(), res.getEmail(), res.getRemark(), 
-				                        res.getDate(), res.getTime_interval(), res.getTime(), 
-										res.getAdult(), res.getChildren());
+				                        res.getDate(), res.getTimeInterval(), res.getTime(), 
+										res.getAdult(), res.getChildren(), res.getMember());
 		return "redirect:/restaurant";			
 	}
 	

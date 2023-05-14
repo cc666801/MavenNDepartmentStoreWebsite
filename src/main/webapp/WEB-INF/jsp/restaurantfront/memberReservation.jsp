@@ -52,12 +52,13 @@
 								<%-- 	<td>${far.id}</td>    --%>
 								<td>${far.date}</td>
 								<td>${far.restaurantInformation.company.companyName}</td>
-								<td>${far.time_interval}:${far.time}</td>
+								<td>${far.timeInterval}:${far.time}</td>
 								<td>${far.adult}大人 &nbsp; ${far.children}小孩 </td>
 								<td>${far.remark}</td>
-								<td><form action="${contextRoot}/restaurant/edit">
-										<input type="hidden" name="r_id" value="${far.r_id}" /> <input
-											type="submit" class="btn btn-warning btn-sm" value="編輯" />
+								<td><form action="${contextRoot}/restaurantfront/memberReservation/edit">
+										<input type="hidden" name="r_id" value="${far.r_id}" />
+										 <input type="hidden" name="restid" value="${far.restaurantInformation.resid}" />
+										<input type="submit" class="btn btn-warning btn-sm" value="編輯" />
 									</form></td>
 								<td><form action="${contextRoot}/restaurantfront/memberReservation/delete"
 										method="post">

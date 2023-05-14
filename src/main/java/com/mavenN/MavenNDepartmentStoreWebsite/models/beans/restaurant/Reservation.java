@@ -48,7 +48,7 @@ public class Reservation {
 	private Date date;
 	
 	@Column(columnDefinition = "nvarchar(50) NOT NULL")
-	private String time_interval;
+	private String timeInterval;
 	
 	@Column(columnDefinition = "nvarchar(50) NOT NULL")
 	private String time;
@@ -69,10 +69,7 @@ public class Reservation {
 	}
 	
 	// getter & setter
-	
-	
-	
-	
+		
 	public RestaurantInformation getRestaurantInformation() {
 		return restaurantInformation;
 	}
@@ -138,12 +135,12 @@ public class Reservation {
 		this.date = date;
 	}
 
-	public String getTime_interval() {
-		return time_interval;
+	public String getTimeInterval() {
+		return timeInterval;
 	}
 
-	public void setTime_interval(String time_interval) {
-		this.time_interval = time_interval;
+	public void setTimeInterval(String timeInterval) {
+		this.timeInterval = timeInterval;
 	}
 
 	public String getTime() {

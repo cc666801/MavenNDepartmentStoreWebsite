@@ -142,19 +142,33 @@ fieldset{
 			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
 
 				<form:form class="row justify-content-center" id="myForm" 
-						method="post" modelAttribute="reservation"
+						method="post" modelAttribute="memberReservation"
 						action="${contextRoot}/restaurantfront/post">
 						<div class="col-5">
 							用餐人數 
-							<form:select path="adult" id="AId" class="form-select">
+							<form:select path="adult" id="AId" value="memberReservation.adult" class="form-select">
 								<jstl:forEach var="i" begin="0" end="10">
-									<option value="${i}">${i}位大人</option>
+									<jstl:choose>
+										<jstl:when test="${memberReservation.adult == i}">
+											<option value="${i}" selected="selected">${i}位大人</option>
+								        </jstl:when>
+								        <jstl:otherwise>
+									        <option value="${i}">${i}位大人</option>
+								        </jstl:otherwise>                								
+									</jstl:choose>
 								</jstl:forEach>
 							</form:select><br> 
 							
 							<form:select path="children" id="CId" class="form-select">
 								<jstl:forEach var="i" begin="0" end="10">
-									<option value="${i}">${i}位小孩</option>
+									<jstl:choose>
+										<jstl:when test="${memberReservation.children == i}">
+											<option value="${i}" selected="selected">${i}位小孩</option>
+								        </jstl:when>
+								        <jstl:otherwise>
+									        <option value="${i}">${i}位小孩</option>
+								        </jstl:otherwise>                								
+									</jstl:choose>
 								</jstl:forEach>
 							</form:select><br>
 	
@@ -275,18 +289,19 @@ fieldset{
 							<div class="row justify-content-center">
 								<div class="col-12 px-4 py-2 border border border-secondary rounded-4 mt-4 md-2">
 									<h2>聯絡資訊</h2>
-									<form:input type="hidden" path="member" id="memberId" value="${sessionScope.member.id}" class="w-100"/>
+									<form:input type="hidden" path="r_id" id="memberId"  class="w-100"/>
+									<form:input type="hidden" path="member" id="memberId" class="w-100"/>
 									<label for="NId">姓名</label>
 									<br>
-									<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}" class="w-100"/>
+									<form:input type="text" path="name" id="NId" value="" class="w-100"/>
 									<br>
 									<label for="TId">電話</label>
 									<br>
-									<form:input type="text" path="telephone" id="TId" value="${sessionScope.member.phone}" class="w-100"/>
+									<form:input type="text" path="telephone" id="TId" value="" class="w-100"/>
 									<br>
 									<label for="EId">email</label>
 									<br>
-									<form:input type="text" path="email" id="EId" value="${sessionScope.member.email}" class="w-100"/>
+									<form:input type="text" path="email" id="EId" value="" class="w-100"/>
 									<br>
 									<label for="note">備註</label>
 									<br>
@@ -351,9 +366,6 @@ fieldset{
 					format : 'yyyy-mm-dd',
 					showOtherMonths : false,
 					language : 'zh-TW',
-					// 		startDate: new Date(now.getFullYear(), now.getMonth(), 1),
-					// 		endDate: new Date(now.getFullYear(), now.getMonth() + 1, 0),
-					//      todayHighlight: true,
 					autoclose : true,
 
 					beforeShowDay : function(date) {
@@ -362,10 +374,6 @@ fieldset{
 					}
 
 				});
-			let year = now.getFullYear()
-	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
-	 		let date = now.getDate().toString().padStart(2, '0');
-			$('#DId').val(year + '-' + mouth + '-' + date);
 		});
 
 		//   ---------以下是按鈕事件
@@ -376,6 +384,14 @@ fieldset{
 			let timetime = $(this).closest('fieldset').find('legend').text();
 			$('#timeintervalcode').val(timetime);
 			
+		});
+		
+		$('.bt').each(function() {
+		    if ($(this).val() === '${memberReservation.time}') {
+		        // 找到值為 "15:00" 的按鈕
+		        $(this).addClass('active');
+		        // 執行其他相關操作
+		    }
 		});
 
 	</script>
