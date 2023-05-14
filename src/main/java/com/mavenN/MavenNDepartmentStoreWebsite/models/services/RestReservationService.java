@@ -12,10 +12,12 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestReservationRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestaurantInformationRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyCounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 
 @Service
@@ -28,6 +30,20 @@ public class RestReservationService {
 	
 	@Autowired
 	private RestaurantInformationRepository restInformationRepository;
+	
+	@Autowired
+	private CompanyCounterRepository compCounterRepository;
+	
+	public List<CompanyCounter> findCompanyCounter(){
+			 List<CompanyCounter> findCounter = compCounterRepository.findByCompany();
+		
+		 if(findCounter.isEmpty()) {
+			 return null;
+		 }
+		 
+		 return findCounter;
+	}
+	
 	
 	public List<Reservation> findMemberReservation(Integer memberid){
 		List<Reservation> findMemberRes = resRepository.findByMemberIdOrderByDateAsc(memberid);

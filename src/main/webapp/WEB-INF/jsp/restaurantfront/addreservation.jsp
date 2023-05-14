@@ -127,7 +127,14 @@ fieldset{
 				<div class="row mt-2">
 					<div class="col-12">
 					<h3>${findRestaurant.company.companyName}</h3>
-					<p>料理類型:${findRestaurant.cuisineType.cuisineTypeName} </p>
+					<p>
+					<jstl:forEach items="${restaurantCounter}" var="Counter">
+						<jstl:if test="${findRestaurant.company.companyId == Counter.company.companyId}">
+						${findRestaurant.company.address.addressName} &nbsp;${Counter.counter.counterFloor}&nbsp;${Counter.counter.counterName} <br>
+						</jstl:if>
+					</jstl:forEach>
+						${findRestaurant.cuisineType.cuisineTypeName} <br>
+					</p>
 					</div>
 				</div>
 			</div>
@@ -327,13 +334,29 @@ fieldset{
 					</form:form>
 					
 				<div class="row mt-5">
-					<div class="justify-content-center">
+					<div class="col-12">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3088.3696025510344!2d120.21466690330259!3d22.99764855243827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e768d1a35d7a9%3A0x1689894ccb6260d4!2z5oiQ5Yqf5aSn5a24IOWFieW-qeagoeWNgOaTjeWgtA!5e0!3m2!1szh-TW!2stw!4v1683616858505!5m2!1szh-TW!2stw" 
 						width="100%" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
+					<div class="col-12 py-auto mt-2 border-bottom-2 border-dark">
+						<h4>餐廳位置</h4>
+						<p>
+						<jstl:forEach items="${restaurantCounter}" var="Counter">
+						<jstl:if test="${findRestaurant.company.companyId == Counter.company.companyId}">
+							${findRestaurant.company.address.addressName} &nbsp;${Counter.counter.counterFloor}&nbsp;${Counter.counter.counterName} <br>
+						</jstl:if>
+						</jstl:forEach>
+						</p>
+					</div>
+					<div class="col-12 border-bottom-2 border-dark">
+						<h4>料理類型</h4>
+						<p>${findRestaurant.cuisineType.cuisineTypeName} <br></p>
+					</div>
+					
 				</div>
+				
 			
-			</div>
+			</div>ss
 		</div>
 	</div>
 

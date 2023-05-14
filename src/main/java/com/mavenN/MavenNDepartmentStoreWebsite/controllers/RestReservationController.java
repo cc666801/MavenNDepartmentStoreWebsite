@@ -14,7 +14,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
@@ -61,8 +61,11 @@ public class RestReservationController {
 		
 		model.addAttribute("findRestaurant", findRestById);
 		
-		model.addAttribute("reservation", new Reservation());
+		List<CompanyCounter> restaurantCounter = reService.findCompanyCounter();
+		model.addAttribute("restaurantCounter",restaurantCounter);
 		
+		model.addAttribute("reservation", new Reservation());
+			
 		return "restaurantfront/addreservation";
 	}
 	
@@ -92,9 +95,14 @@ public class RestReservationController {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
 				restaurant.getCompany().setBase64StringCompanyLogo(encodeToString); 
 			}
+
 		}
-		
+
 		model.addAttribute("page",page);
+		
+		List<CompanyCounter> restaurantCounter = reService.findCompanyCounter();
+		model.addAttribute("restaurantCounter",restaurantCounter);
+		
 		return "restaurantfront/showrest";
 	}
 	

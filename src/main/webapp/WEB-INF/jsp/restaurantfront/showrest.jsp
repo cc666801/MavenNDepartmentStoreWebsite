@@ -48,7 +48,12 @@
 							<div class="card-body">
 								<h5 class="card-title">${restaurant.company.companyName}</h5>
 								<p class="card-text">
-									位置:${restaurant.company.address.addressName}<br>
+									<jstl:forEach items="${restaurantCounter}" var="Counter" varStatus="status">
+										<jstl:if test="${restaurant.company.companyId == Counter.company.companyId}">
+											位置:${restaurant.company.address.addressName} &nbsp;${Counter.counter.counterFloor}&nbsp;${Counter.counter.counterName} <br>
+										</jstl:if>
+									</jstl:forEach>
+									
 									料理類型:${restaurant.cuisineType.cuisineTypeName}<br>
 								</p>
 								<jstl:if test="${empty member}">
@@ -82,6 +87,7 @@
 					</jstl:forEach>
 				</div>
 			</div>
+			
 		</div>
 	</main>
 </body>
