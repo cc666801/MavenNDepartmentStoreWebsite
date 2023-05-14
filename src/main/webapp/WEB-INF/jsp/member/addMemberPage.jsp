@@ -47,9 +47,6 @@ body {
 							<c:if test="${not empty error}">
 								<div class="alert alert-danger" role="alert">${error}</div>
 							</c:if>
-
-
-
 							<div class="form-group">
 								<label for="name">姓名：</label>
 								<form:input path="name" id="name" cssClass="form-control"
@@ -92,9 +89,6 @@ body {
 									<a href="https://www.moi.gov.tw/cp.aspx?n=10953" target="_blank">隱私權政策</a>
 								</label>
 							</div>
-
-
-
 							<input type="submit" class="btn btn-info btn-block" value="註冊">
 						</form:form>
 					</div>
