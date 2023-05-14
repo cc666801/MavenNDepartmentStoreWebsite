@@ -35,6 +35,9 @@
                   </h3>
                 </div>
               </div>
+              <div id="discount-div" class="card" style="width: 20%; "  >
+                <h5 class="card-title" style="margin: 2% 2%;">目前還未使用的優惠卷:</h3>
+                </div>
 
               <div>
                 <table class="table">
@@ -58,10 +61,14 @@
                   </tfoot>
                 </table>
               </div>
-              <button type="button" class="btn btn-primary btn-lg" id="cash-on-delivery" data-toggle="modal"
-                data-target="#checkoutModal"><i class="fa-solid fa-truck fa-2xs"></i><span> 貨到付款</span></button>
-              <button type="button" class="btn btn-primary btn-lg" id="payment-flow" data-toggle="modal"
-                data-target="#checkoutModal"><i class="fa-solid fa-credit-card fa-2xs"></i><span> 信用卡付款</span></button>
+              <div id="button-div" style="display: inline-block; padding-left: 70%;">
+                <button type="button" class="btn btn-primary btn-lg" id="cash-on-delivery" data-toggle="modal"
+                  data-target="#checkoutModal"><i class="fa-solid fa-truck fa-2xs"></i><span> 貨到付款</span></button>
+                <button type="button" class="btn btn-primary btn-lg" id="payment-flow" data-toggle="modal"
+                  data-target="#checkoutModal"><i class="fa-solid fa-credit-card fa-2xs"></i><span>
+                    信用卡付款</span></button>
+              </div>
+
 
             </div>
             <div id="payment-flow-form">
@@ -214,12 +221,12 @@
 
           var memberId = "${member.id}";
           console.log(memberId);
+          var appliedCoupon = null; // 当前已套用的优惠券
 
           // 在一開始抓到該會員購物車的資料
           fetch("${contextRoot}/api/shoppingCart/" + memberId)
             .then(response => response.json())
             .then(data => {
-              console.log(data);
 
               var tbody = document.querySelector("table tbody");
               var htmlString = "";
@@ -248,14 +255,78 @@
             })
             .catch(error => console.error(error));
 
+          fetch("${contextRoot}/api/coupon/unusedCoupon/" + memberId)
+            .then(response => response.json())
+            .then(coupons => {
+              var orderTotal = document.getElementById("total").innerHTML; // 订单总金额
+
+              // 获取 discount-div 容器
+              var discountDiv = document.getElementById('discount-div');
+              // 遍历优惠券数组并创建 HTML 元素
+              coupons.forEach(function (coupon) {
+                // 创建一个 div 元素作为每个优惠券的容器
+                var couponDiv = document.createElement('div');
+                couponDiv.classList.add('card-body');
+
+                // 创建并设置优惠券的文本内容
+                var couponText = document.createTextNode(coupon.couponName);
+                couponDiv.appendChild(couponText);
+
+                // 创建套用按钮
+                var applyButton = document.createElement('button');
+                applyButton.textContent = '套用';
+                applyButton.addEventListener('click', function () {
+                  var total = document.getElementById("total").innerHTML;
+                  orderTotal = total;
+                  if (appliedCoupon === null) {
+                    // 将订单总金额乘以优惠券折扣
+                    orderTotal *= parseFloat(coupon.couponDiscount);
+
+                    // 更新订单总金额显示
+                    // 假设您有一个显示订单总金额的元素，具有 id 为 "total"
+                    var orderTotalElement = document.getElementById('total');
+                    orderTotalElement.textContent = orderTotal;
+
+                    // 将按钮文本更改为 "取消套用"
+                    applyButton.textContent = '取消套用';
+
+                    // 设置已套用的优惠券为当前优惠券
+                    appliedCoupon = coupon;
+                  } else {
+                    // 恢复订单总金额为原始金额
+                    orderTotal /= parseFloat(appliedCoupon.couponDiscount); // 根据实际情况修改为原始订单总金额
+
+                    // 更新订单总金额显示
+                    var orderTotalElement = document.getElementById('total');
+                    orderTotalElement.textContent = orderTotal;
+
+                    // 将按钮文本更改为 "套用"
+                    applyButton.textContent = '套用';
+
+                    // 清除已套用的优惠券
+                    appliedCoupon = null;
+                  }
+                });
+
+                // 将套用按钮添加到优惠券容器
+                couponDiv.appendChild(applyButton);
+
+                // 将优惠券容器添加到 discount-div 中
+                discountDiv.appendChild(couponDiv);
+              });
+            })
+            .catch(error => console.error(error));
+
           // 貨到付款按鈕
           document.getElementById("cash-on-delivery").addEventListener("click", function () {
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
+            let couponId = appliedCoupon ? appliedCoupon.couponId : null;
             let order = {
               'memberId': memberId,
               'orderDetailDtos': [],
-              'total': total
+              'total': total,
+              'couponId': couponId
             };
 
             rows.forEach(function (row) {
@@ -284,10 +355,9 @@
                       var tbody = document.querySelector("table tbody");
                       var htmlString = "";
                       tbody.innerHTML = htmlString;
-                      console.log('加入訂單成功');
                       alert('加入訂單成功');
+                      window.location.href = "${contextRoot}/orderSystem/order";
                     } else {
-                      console.log('加入訂單失敗');
                       alert('加入訂單失敗');
                     }
                   }
@@ -306,10 +376,12 @@
           document.getElementById("payment-flow").addEventListener("click", function () {
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
+            let couponId = appliedCoupon ? appliedCoupon.couponId : null;
             let order = {
               'memberId': memberId,
               'orderDetailDtos': [],
-              'total': total
+              'total': total,
+              'couponId': couponId
             };
 
             rows.forEach(function (row) {

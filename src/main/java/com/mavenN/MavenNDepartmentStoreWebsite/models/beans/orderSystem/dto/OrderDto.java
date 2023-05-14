@@ -4,6 +4,7 @@ import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Coupon;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Order;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetail;
 
@@ -15,26 +16,27 @@ public class OrderDto {
 	
     private List<OrderDetailDto> orderDetailDtos;
 	
-	private String couponCode;
+	private Integer couponId;
 	
 	private Integer total;
 	
 	private Date createOrderTime;
 	
 
-	public OrderDto(Integer orderId, Integer memberId, List<OrderDetailDto> orderDetailDtos, String couponCode, Integer total) {
+	public OrderDto(Integer orderId, Integer memberId, List<OrderDetailDto> orderDetailDtos, Integer couponId, Integer total) {
 		super();
 		this.orderId = orderId;
 		this.memberId = memberId;
 		this.orderDetailDtos = orderDetailDtos;
-		this.couponCode = couponCode;
+		this.couponId = couponId;
 		this.total = total;
 	}
 	
 	public OrderDto(Order order) {
 		this.orderId=order.getOrderId();
 		this.memberId=order.getMember().getId();
-		this.couponCode=order.getCouponCode();
+		Coupon coupon = order.getCoupon();
+	    this.couponId = (coupon != null) ? coupon.getCouponId() : null;
 		List<OrderDetail> orderDetails = order.getOrderDetails();
 		List<OrderDetailDto> orderDetailDtos = orderDetails.stream()
     	        .map(OrderDetailDto::new)
@@ -90,13 +92,13 @@ public class OrderDto {
 	}
 
 
-	public String getCouponCode() {
-		return couponCode;
+	public Integer getCouponId() {
+		return couponId;
 	}
 
 
-	public void setCouponCode(String couponCode) {
-		this.couponCode = couponCode;
+	public void setCouponId(Integer couponId) {
+		this.couponId = couponId;
 	}
 	
 	
@@ -113,10 +115,7 @@ public class OrderDto {
 	@Override
 	public String toString() {
 		return "OrderDto [orderId=" + orderId + ", memberId=" + memberId + ", orderDetailDtos=" + orderDetailDtos
-				+ ", couponCode=" + couponCode + ", total=" + total + "]";
+				+ ", couponId=" + couponId + ", total=" + total + ", createOrderTime=" + createOrderTime + "]";
 	}
 
-	
-
-	
 }

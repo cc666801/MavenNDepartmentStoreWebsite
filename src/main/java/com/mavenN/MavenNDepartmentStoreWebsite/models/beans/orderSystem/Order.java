@@ -48,8 +48,9 @@ public class Order {
     @Column(name = "create_order_time", columnDefinition = "datetime")
     private Date createOrderTime;
 	
-	@Column(name = "coupon_code", columnDefinition = "nvarchar(40)")
-	private String couponCode;
+	@ManyToOne(cascade = CascadeType.PERSIST)
+	@JoinColumn(name = "fk_coupon_id")
+	private Coupon coupon;
 	
 	@Column(name = "total", columnDefinition = "int")
 	private Integer total;
@@ -118,12 +119,12 @@ public class Order {
 		this.member = member;
 	}
 
-	public String getCouponCode() {
-		return couponCode;
+	public Coupon getCoupon() {
+		return coupon;
 	}
 
-	public void setCouponCode(String couponCode) {
-		this.couponCode = couponCode;
+	public void setCoupon(Coupon coupon) {
+		this.coupon = coupon;
 	}
 
 	public List<OrderDetail> getOrderDetails() {
@@ -153,7 +154,7 @@ public class Order {
 	@Override
 	public String toString() {
 		return "Order [orderId=" + orderId + ", member=" + member + ", orderDetails=" + orderDetails
-				+ ", createOrderTime=" + createOrderTime + ", couponCode=" + couponCode + ", total=" + total
+				+ ", createOrderTime=" + createOrderTime + ", coupon=" + coupon + ", total=" + total
 				+ ", orderStatus=" + orderStatus + "]";
 	}
 	

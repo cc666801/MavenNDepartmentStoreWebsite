@@ -34,6 +34,7 @@ public class OrderControllerApi {
 	// CREATE shoppingCart and shoppingCartCommodity
     @PostMapping("")
     public void createOrder(@RequestBody OrderDto orderDto) {
+    	System.out.println(orderDto);
     	orderService.saveCashOnDeliverOrderByDto(orderDto);
     }
     
@@ -55,7 +56,7 @@ public class OrderControllerApi {
     	return orderDtos;
     }
     
-    @GetMapping("/cancelOrder/{memberId}")
+    @GetMapping("/cancelledOrder/{memberId}")
     public List<OrderDto> findAllCancelOrderByMemberId(@PathVariable Integer memberId) {
     	List<Order> orders = orderService.findAllCancelOrderByMemberId(memberId);
     	List<OrderDto> orderDtos = orders.stream()

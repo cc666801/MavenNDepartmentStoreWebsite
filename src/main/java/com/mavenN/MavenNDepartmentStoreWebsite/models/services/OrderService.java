@@ -3,7 +3,6 @@ package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Optional;
-import java.util.UUID;
 
 import javax.transaction.Transactional;
 
@@ -12,6 +11,9 @@ import org.springframework.stereotype.Service;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Coupon;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.CouponMember;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.CouponMemberId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Order;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetail;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetailId;
@@ -21,6 +23,8 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.Orde
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto.OrderDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.CouponMemberRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.CouponRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderDetailRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderStatusRepository;
@@ -50,6 +54,12 @@ public class OrderService {
 	@Autowired
 	private OrderStatusRepository orderStatusRepository;
 
+	@Autowired
+	private CouponRepository couponRepository;
+
+	@Autowired
+	private CouponMemberRepository couponMemberRepository;
+
 	// Api
 	// For saveShoppingCart()
 	@Transactional
@@ -60,6 +70,18 @@ public class OrderService {
 			Order newOrder = new Order(null, member);
 			newOrder.setCreateOrderTimeIfNull();
 			newOrder.setTotal(orderDto.getTotal());
+			if(orderDto.getCouponId() != null) {
+			// 有優惠卷就 set 進 newOrder
+			Optional<Coupon> optionalCoupon = couponRepository.findById(orderDto.getCouponId());
+			if (optionalCoupon.isPresent()) {
+				Coupon coupon = optionalCoupon.get();
+				newOrder.setCoupon(coupon);
+				// 有使用優惠卷就寫入中間表格 CouponMember
+				CouponMemberId id = new CouponMemberId(orderDto.getCouponId(), orderDto.getMemberId());
+				CouponMember couponMember = new CouponMember(id, coupon, member);
+				couponMemberRepository.save(couponMember);
+			}
+			}
 			// 設定為貨到付款訂單
 			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(3);
 			OrderStatus orderStatus = optionalOrderStatus.get();
@@ -76,11 +98,14 @@ public class OrderService {
 					orderDetailRepository.save(newOrderDetail);
 				}
 			}
+
+			// 刪除已經加入訂單的購物車
 			Optional<ShoppingCart> optionalShoppingCart = shoppingCartRepository.findByMemberId(orderDto.getMemberId());
 			if (optionalShoppingCart.isPresent()) {
 				ShoppingCart shoppingCart = optionalShoppingCart.get();
 				shoppingCartRepository.deleteById(shoppingCart.getShoppingCartId());
 			}
+
 			return order;
 		}
 		return null;
@@ -94,6 +119,18 @@ public class OrderService {
 			Order newOrder = new Order(null, member);
 			newOrder.setCreateOrderTimeIfNull();
 			newOrder.setTotal(orderDto.getTotal());
+			if(orderDto.getCouponId() != null) {
+			// 有優惠卷就 set 進 newOrder
+			Optional<Coupon> optionalCoupon = couponRepository.findById(orderDto.getCouponId());
+			if (optionalCoupon.isPresent()) {
+				Coupon coupon = optionalCoupon.get();
+				newOrder.setCoupon(coupon);
+				// 有使用優惠卷就寫入中間表格 CouponMember
+				CouponMemberId id = new CouponMemberId(orderDto.getCouponId(), orderDto.getMemberId());
+				CouponMember couponMember = new CouponMember(id, coupon, member);
+				couponMemberRepository.save(couponMember);
+			}
+			}
 			// 設定為信用卡付款訂單
 			Optional<OrderStatus> optionalOrderStatus = orderStatusRepository.findById(2);
 			OrderStatus orderStatus = optionalOrderStatus.get();

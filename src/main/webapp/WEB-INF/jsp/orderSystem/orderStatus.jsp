@@ -84,13 +84,28 @@
           paymentFlowOrder.innerHTML="";
           cancelledOrder.innerHTML="";
 
-          // 在一開始抓到該會員貨到付款訂單的資料
-          fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-
-              data.forEach(orderDto => {
+          // 更改訂單狀態
+  fetch("${contextRoot}/api/order/" + memberId + "/" + orderId, {
+    method: "PUT"
+  })
+    .then(response => {
+      if (response.ok) {
+        // 订单状态更新成功后获取数据
+        return Promise.all([
+          fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId),
+          fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId),
+          fetch("${contextRoot}/api/order/cancelledOrder/" + memberId)
+        ]);
+      } else {
+        throw new Error("Failed to update order status");
+      }
+    })
+    .then(responses => Promise.all(responses.map(response => response.json())))
+    .then(data => {
+      const cashOnDeliveryData = data[0];
+      const paymentFlowData = data[1];
+      const cancelledData = data[2];
+      cashOnDeliveryData.forEach(orderDto => {
                 // 轉成台灣時間
                 const utcDate = new Date(orderDto.createOrderTime);
                 const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
@@ -162,15 +177,8 @@
 
               });
 
-            })
-            .catch(error => console.error(error));
-
-            // 在一開始抓到該會員信用卡付款訂單的資料
-            fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId)
-            .then(response => response.json())
-            .then(data => {
-
-              data.forEach(orderDto => {
+          
+              paymentFlowData.forEach(orderDto => {
                 // 轉成台灣時間
                 const utcDate = new Date(orderDto.createOrderTime);
                 const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
@@ -242,17 +250,7 @@
 
               });
 
-            })
-            .catch(error => console.error(error));
-
-
-            // 在一開始抓到該會員已取消訂單的資料
-            fetch("${contextRoot}/api/order/cancelOrder/" + memberId)
-            .then(response => response.json())
-            .then(data => {
-              console.log(data);
-
-              data.forEach(orderDto => {
+              cancelledData.forEach(orderDto => {
                 // 轉成台灣時間
                 const utcDate = new Date(orderDto.createOrderTime);
                 const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
@@ -492,7 +490,7 @@
 
 
             // 在一開始抓到該會員已取消訂單的資料
-            fetch("${contextRoot}/api/order/cancelOrder/" + memberId)
+            fetch("${contextRoot}/api/order/cancelledOrder/" + memberId)
             .then(response => response.json())
             .then(data => {
               console.log(data);
