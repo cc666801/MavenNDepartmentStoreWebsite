@@ -26,6 +26,13 @@ body {
 	box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.2);
 }
 </style>
+<!-- 引入 Bootstrap 的 CSS 文件 -->
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+
+<!-- 引入 Bootstrap 的 JavaScript 文件 -->
+<script
+	src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 </head>
 <body>
 	<div class="container">
@@ -47,6 +54,9 @@ body {
 							<c:if test="${not empty error}">
 								<div class="alert alert-danger" role="alert">${error}</div>
 							</c:if>
+
+
+
 							<div class="form-group">
 								<label for="name">姓名：</label>
 								<form:input path="name" id="name" cssClass="form-control"
@@ -86,9 +96,11 @@ body {
 								<input type="checkbox" class="form-check-input"
 									id="privacyCheck" required> <label
 									class="form-check-label" for="privacyCheck"> 我已經詳細閱讀並同意
-									<a href="https://www.moi.gov.tw/cp.aspx?n=10953" target="_blank">隱私權政策</a>
+									<a href="${contextRoot}/privacy"
+									target="_blank">隱私權政策</a>
 								</label>
 							</div>
+
 							<input type="submit" class="btn btn-info btn-block" value="註冊">
 						</form:form>
 					</div>
@@ -166,6 +178,8 @@ body {
 
 		}
 	</script>
+
+	<script>document.getElementById('privacyCheck').addEventListener('click', function(){$('#myModal').modal('show');});</script>
 </body>
 </html>
 

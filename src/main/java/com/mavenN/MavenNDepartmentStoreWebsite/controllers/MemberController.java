@@ -282,19 +282,9 @@ public class MemberController {
 	}
 	
 //----------------------------------------------------------------------------------------------
-	//modle彈出視窗
-	@Controller
-	public class YourController {
-
-	    @GetMapping("/yourRegisterPage")
-	    public String showRegisterPage(Model model) {
-	        // 將隱私權政策連結存入 Model
-	        model.addAttribute("privacyPolicyLink", "https://example.com/privacy-policy");
-
-	        return "registerPage";
-	    }
-
-	    // 其他相關方法...
+	@GetMapping("/privacy")
+	public String privacy() {
+		return "member/privacy";
 	}
 
 }
