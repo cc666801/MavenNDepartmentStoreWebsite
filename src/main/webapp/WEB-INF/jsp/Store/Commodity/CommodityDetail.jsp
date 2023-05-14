@@ -8,6 +8,7 @@
 <html>
 
 <head>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 
 <!-- =======================================================
   * Template Name: ZenBlog
@@ -138,10 +139,11 @@
 
 									<div class="info">
 										<h5 class="mb-0">心願清單</h5>
-										<form id="addToWishlistForm">
-
-											<button type="submit" class="btn btn-outline-warning wishlist-button" data-comm-id="${commodity.commId}">加入心願清單</button>
-
+										<form
+											action="/MavenNDepartmentStoreWebsite/wishlist/addtowishlist"
+											method="post">
+											<input type="hidden" name="commId" value="${comm.commId}">
+											<button type="submit">加入心願清單</button>
 										</form>
 									</div>
 								</div>
@@ -181,88 +183,49 @@
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
 	<!-- 	<script -->
 	<%-- src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script> --%>
-
+	<!-- 心願清單用 -->
+	<script
+		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 	<script>
-// 心願清單用
-<script>
-	document.addEventListener("DOMContentLoaded", function () {
-		var memberId = "${member.id}";
-		var wishlistButtons = document.querySelectorAll('.wishlist-button');
-		wishlistButtons.forEach(function (button) {
+		document.addEventListener("DOMContentLoaded", function () {
+			var memberId = "${member.id}";
+			var wishlistButtons = document.querySelectorAll('.wishlist-button');
+			wishlistButtons.forEach(function (button) {
 			button.addEventListener('click', function () {
-				var commodityId = button.getAttribute('data-comm-id');
-				// 發 fetch 請求將商品添加到心願清單
-				fetch('${contextRoot}/api/wishlist', {
-					method: 'POST',
-					headers: {
-						'Content-Type': 'application/json'
-					},
-					body: JSON.stringify({
-						commodityId: commodityId,
-						memberId: memberId
-					})
-				})
-					.then(response => {
-						if (response.ok) {
-							console.log('加入心願清單成功');
-							alert('加入心願清單成功');
-						} else {
-							console.log('加入心願清單失敗');
-							alert('加入心願清單失敗');
-						}
-					})
-					.catch(error => {
-						console.error('Error:', error);
-					});
+			var quantity = 1;
+			var commodityId = button.getAttribute('data-comm-id');
+			// 發 fetch 請求加入心願清單，預設數量為 1
+			fetch('${contextRoot}/wishlist/addtowishlist', {
+			method: 'POST',
+			headers: {
+			'Content-Type': 'application/json'
+			},
+			body: JSON.stringify({
+			commodityId: commodityId,
+			quantity: quantity,
+			memberId: memberId
+			})
+			})
+			.then(response => {
+			if (response.ok) {
+			console.log('加入心願清單成功');
+			alert('加入心願清單成功');
+			} else {
+			console.log('加入心願清單失敗');
+			alert('加入心願清單失敗');
+			}
+			})
+			.catch(error => {
+			console.error('Error:', error);
 			});
-		});
-	});
-</script>
-	</script>
+			});
+			});
+			});
+		</script>
 
 
 
 	<!-- 	購物車 -->
-	<script>
-							// load on 事件
-							document.addEventListener("DOMContentLoaded", function () {
-								var shoppingCartButton = document.getElementById('shopping-cart-button');
-								var commodityId = document.getElementById('commodityId').innerText;
-								var memberId = "${member.id}";
-
-								shoppingCartButton.addEventListener('click', function (e) {
-									e.preventDefault(); // 防止表单提交
-
-									var quantity = document.getElementById('quantity').value; // 获取数量
-
-									console.log("memberId:" + memberId + "commodityId:" + commodityId + "quantity:" + quantity);
-
-									fetch('${contextRoot}/api/shoppingCart', {
-										method: 'POST',
-										headers: {
-											'Content-Type': 'application/json'
-										},
-										body: JSON.stringify({
-											commodityId: commodityId,
-											quantity: quantity,
-											memberId: memberId
-										})
-									})
-										.then(response => {
-											if (response.ok) {
-												console.log('加入購物車成功');
-												alert('加入購物車成功');
-											} else {
-												console.log('加入購物車失敗');
-												alert('加入購物車失敗');
-											}
-										})
-										.catch(error => {
-											console.error('Error:', error);
-										});
-								});
-							});
-						</script>
 
 
 </body>
