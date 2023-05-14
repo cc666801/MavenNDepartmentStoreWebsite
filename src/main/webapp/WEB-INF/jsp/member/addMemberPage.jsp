@@ -43,12 +43,13 @@ body {
 						<form:form name="myForm" method="post"
 							action="${contextRoot}/member/post" modelAttribute="member"
 							onsubmit="return checkForm();">
-							
+
 							<c:if test="${not empty error}">
-                                <div class="alert alert-danger" role="alert">
-                                    ${error}
-                                </div>
-                            </c:if>
+								<div class="alert alert-danger" role="alert">${error}</div>
+							</c:if>
+
+
+
 							<div class="form-group">
 								<label for="name">姓名：</label>
 								<form:input path="name" id="name" cssClass="form-control"
@@ -84,6 +85,16 @@ body {
 								<form:input type="date" path="birthday" id="birthday"
 									cssClass="form-control" />
 							</div>
+							<div class="form-group form-check text-center">
+								<input type="checkbox" class="form-check-input"
+									id="privacyCheck" required> <label
+									class="form-check-label" for="privacyCheck"> 我已經詳細閱讀並同意
+									<a href="https://www.moi.gov.tw/cp.aspx?n=10953" target="_blank">隱私權政策</a>
+								</label>
+							</div>
+
+
+
 							<input type="submit" class="btn btn-info btn-block" value="註冊">
 						</form:form>
 					</div>
@@ -109,6 +120,12 @@ body {
 			var phone = document.forms["myForm"]["phone"].value;
 			var address = document.forms["myForm"]["address"].value;
 			var birthday = document.forms["myForm"]["birthday"].value;
+			var privacyCheck = document.getElementById("privacyCheck").checked;
+
+			if (!privacyCheck) {
+				alert("請勾選同意隱私權政策");
+				return false;
+			}
 
 			if (name == "" || account == "" || password == "" || email == ""
 					|| address == "" || phone == "" || password == "") {
@@ -136,8 +153,8 @@ body {
 			var addressRegex = /^[\u4E00-\u9FA5]+$/;
 			if (!addressRegex.test(address)) {
 				alert("地址必須為中文，最多 50 個字");
-				return false;
-			}
+			
+
 
 			var phoneRegex = /^[0-9]{10}$/;
 			if (!phoneRegex.test(phone)) {

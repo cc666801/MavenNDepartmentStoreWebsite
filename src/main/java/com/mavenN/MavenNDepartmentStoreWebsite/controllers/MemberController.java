@@ -280,5 +280,21 @@ public class MemberController {
 			return "redirect:/member/logout";
 		}
 	}
+	
+//----------------------------------------------------------------------------------------------
+	//modle彈出視窗
+	@Controller
+	public class YourController {
+
+	    @GetMapping("/yourRegisterPage")
+	    public String showRegisterPage(Model model) {
+	        // 將隱私權政策連結存入 Model
+	        model.addAttribute("privacyPolicyLink", "https://example.com/privacy-policy");
+
+	        return "registerPage";
+	    }
+
+	    // 其他相關方法...
+	}
 
 }
