@@ -30,7 +30,7 @@
 	<main id="main">
 	<div class="card mb-4" style="margin: 0 auto;">
 		<div class="card-header">
-				<i class="fas fa-table me-1"></i>文章管理列表
+				<i class="fas fa-table me-1"></i>餐廳預訂資訊
 		</div>	
 		<div class="card-body">
 				<table id="datatablesSimple" class="table table-success table-striped" >
@@ -51,7 +51,7 @@
 							<tr>
 								<%-- 	<td>${far.id}</td>    --%>
 								<td>${far.date}</td>
-								<td>${far.company.companyName}</td>
+								<td>${far.restaurantInformation.company.companyName}</td>
 								<td>${far.time_interval}:${far.time}</td>
 								<td>${far.adult}大人 &nbsp; ${far.children}小孩 </td>
 								<td>${far.remark}</td>

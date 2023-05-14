@@ -59,7 +59,7 @@
 						<jstl:forEach items="${findAllReservation}" var="far">
 							<tr>
 								<%-- 	<td>${far.id}</td>    --%>
-								<td>${far.company.companyName}</td>
+								<td>${far.restaurantInformation.company.companyName}</td>
 								<td>${far.name}</td>
 								<td>${far.telephone}</td>
 								<td>${far.email}</td>

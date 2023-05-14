@@ -39,23 +39,27 @@
 						<!--訂單id -->
 						<form:input type="hidden" path="r_id" />
 						<label for="CId">餐廳：</label>
-						<form:select path="company" id="CId" class="form-select"
+						<form:select path="restaurantInformation" id="CId" class="form-select"
 							style="width: 200px">
-							<jstl:forEach items="${findAllCompany}" var="comp">
+							<jstl:forEach items="${findAllRestInfor}" var="findAllRestInfor">
 								<jstl:choose>
-									<jstl:when test="${comp.companyId == reservation.company.companyId}">
-										<form:option value="${comp.companyId}" selected="selected">
-											${comp.companyName}
+									<jstl:when test="${findAllRestInfor.company.companyId == reservation.restaurantInformation.company.companyId}">
+										<form:option value="${findAllRestInfor.company.companyId}" selected="selected">
+											${findAllRestInfor.company.companyName}
 										</form:option>
 									</jstl:when>
 									<jstl:otherwise>
-										<form:option value="${comp.companyId}">
-												${comp.companyName}
+										<form:option value="${findAllRestInfor.company.companyId}">
+												${findAllRestInfor.company.companyName}
 										</form:option>
 									</jstl:otherwise>
 								</jstl:choose>
 							</jstl:forEach>
 						</form:select>
+						
+						<form:input type="hidden" path="member" id="memberId" style="background-color:gray" readonly="readonly"></form:input>
+						<br>
+						
 						<label for="NId">姓名：</label>
 						<br>
 						<form:input type="text" path="name" id="NId" />
@@ -85,7 +89,7 @@
 							<option value="晚上">晚上</option>
 						</form:select>
 
-						<label for="meeting-time">選擇時間：${fn:substring(reservation.time, 3, 5)}</label>
+						<label for="meeting-time">選擇時間：</label>
 						<br>
 						<jstl:set var="hour" value="${fn:substring(reservation.time, 0, 2)}" />
 						<jstl:set var="minutes" value="${fn:substring(reservation.time, 3, 5)}" />

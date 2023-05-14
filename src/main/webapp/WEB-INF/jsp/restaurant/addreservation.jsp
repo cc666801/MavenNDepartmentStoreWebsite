@@ -36,11 +36,11 @@
 						modelAttribute="reservation"
 						action="${contextRoot}/reservation/post">
 						<label for="CId">餐廳：</label>
-						<form:select path="company" id="CId" class="form-select"
+						<form:select path="restaurantInformation" id="CId" class="form-select"
 							style="width: 200px">
-							<jstl:forEach items="${findAllCompany}" var="comp">
+							<jstl:forEach items="${findAllRestInfor}" var="restinfor">
 							
-								<form:option value="${comp.companyId}">${comp.companyName}</form:option>
+								<form:option value="${restinfor.company.companyId}">${restinfor.company.companyName}</form:option>
 							</jstl:forEach>
 						</form:select>
 

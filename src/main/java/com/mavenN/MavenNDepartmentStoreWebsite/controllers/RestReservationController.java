@@ -42,9 +42,7 @@ public class RestReservationController {
 	
 	@PostMapping("/restaurantfront/post")
 	public String restfrontReservation(@ModelAttribute("reservation") Reservation res, Model model) {
-		
-		model.addAttribute("findRestaurant", res.getR_id());
-		
+			
 		reService.addreservation(res);
 		model.addAttribute("reservation",new Reservation());
 		return "redirect:/restaurantfront";
@@ -106,8 +104,8 @@ public class RestReservationController {
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
 		
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+		List<RestaurantInformation> findAllRestInformation = reService.findAllRestInformation();
+		model.addAttribute("findAllRestInfor",findAllRestInformation);
 		
 		model.addAttribute("reservation", new Reservation());
 		return "restaurant/addreservation";
@@ -117,8 +115,8 @@ public class RestReservationController {
 	@PostMapping("/reservation/post")
 	public String postReservation(@ModelAttribute("reservation") Reservation res, Model model) {
 		
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+		List<RestaurantInformation> findAllRestInformation = reService.findAllRestInformation();
+		model.addAttribute("findAllRestInfor",findAllRestInformation);
 		
 		reService.addreservation(res);
 		model.addAttribute("reservation",new Reservation());
@@ -134,8 +132,8 @@ public class RestReservationController {
 	
 	@GetMapping("/restaurant/edit")
 	public String editPage(@RequestParam("r_id") Integer r_id, Model model) {
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+		List<RestaurantInformation> findAllRestInformation = reService.findAllRestInformation();
+		model.addAttribute("findAllRestInfor",findAllRestInformation);
 		
 		Reservation findbyid = reService.findreservationbyid(r_id);
 		model.addAttribute("reservation",findbyid);
@@ -145,7 +143,7 @@ public class RestReservationController {
 	@PutMapping("/restaurant/edit")
 	public String putEditReservation(@ModelAttribute("reservation") Reservation res) {
 		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(),
-				                        res.getCompany(), res.getEmail(), res.getRemark(), 
+				                        res.getRestaurantInformation(), res.getEmail(), res.getRemark(), 
 				                        res.getDate(), res.getTime_interval(), res.getTime(), 
 										res.getAdult(), res.getChildren());
 		return "redirect:/restaurant";			

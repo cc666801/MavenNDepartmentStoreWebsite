@@ -15,7 +15,6 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 
 @Entity
@@ -38,9 +37,10 @@ public class Reservation {
 	@Column(columnDefinition = "nvarchar(100)")
 	private String remark;
 	
+	
 	@ManyToOne
-	@JoinColumn(name="company_id")
-	private Company company;
+	@JoinColumn(name="restaurantInformation_id", nullable = false)
+	private RestaurantInformation restaurantInformation;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
@@ -70,6 +70,17 @@ public class Reservation {
 	
 	// getter & setter
 	
+	
+	
+	
+	public RestaurantInformation getRestaurantInformation() {
+		return restaurantInformation;
+	}
+	
+	public void setRestaurantInformation(RestaurantInformation restaurantInformation) {
+		this.restaurantInformation = restaurantInformation;
+	}
+	
 	public Member getMember() {
 		return member;
 	}
@@ -77,15 +88,7 @@ public class Reservation {
 	public void setMember(Member member) {
 		this.member = member;
 	}
-	
-	public Company getCompany() {
-		return company;
-	}
-	
 
-	public void setCompany(Company company) {
-		this.company = company;
-	}
 	
 	public Integer getR_id() {
 		return r_id;

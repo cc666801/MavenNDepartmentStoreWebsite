@@ -90,7 +90,14 @@
 					<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 				<ul>
 					<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
-					<li><a href="${contextRoot}/restaurantfront/chickReservation?memberid=${member.id}">訂位狀態</a></li>
+					
+					<jstl:if test="${empty member}">
+					</jstl:if>
+					
+					<jstl:if test="${not empty member}">
+						<li><a href="${contextRoot}/restaurantfront/chickReservation?memberid=${member.id}">訂位狀態</a></li>
+					</jstl:if>
+					
 				</ul></li>
 <!-- 				餐廳系統end	 -->
 				

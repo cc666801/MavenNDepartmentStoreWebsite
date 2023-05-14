@@ -162,7 +162,7 @@ fieldset{
 									</span>
 								</span>
 							</div><br>
-							<form:input type="hidden" path="company" value="${findRestaurant.company.companyId}" readonly="readonly" />
+							<form:input type="hidden" path="restaurantInformation" value="${findRestaurant.resid}" readonly="readonly" />
 						</div>
 					
 	

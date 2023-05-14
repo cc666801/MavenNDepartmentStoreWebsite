@@ -55,15 +55,20 @@ public class RestReservationService {
 	}
 	
 	public Page<RestaurantInformation> findByUserQueryCompany(String companyname, Integer pageNumber){
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "resid");
 		Page<RestaurantInformation> findByCompanyNameContaining = restInformationRepository.findrestByCompanyname(companyname, pg);
 		return findByCompanyNameContaining;
 	}
 	
 	public Page<RestaurantInformation> findAllrestInformationPage(Integer pageNumber) {
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "resid");
 		Page<RestaurantInformation> page = restInformationRepository.findAll(pg);
 		return page;
+	}
+	
+	public List<RestaurantInformation> findAllRestInformation() {
+		List<RestaurantInformation> findAllRestaurantInformation = restInformationRepository.findAll();
+		return findAllRestaurantInformation;
 	}
 	
 	public List<Reservation> findAllReservation() {
@@ -88,7 +93,7 @@ public class RestReservationService {
 	
 	@Transactional
 	public Reservation upDateReservationbyid(Integer r_id, String name, String telephone, 
-											 Company company,String email, String remark, 
+											 RestaurantInformation rest,String email, String remark, 
 											 Date date,String time_interval, String time,
 											 Integer adult, Integer children) {
 		Optional<Reservation> option = resRepository.findById(r_id);
@@ -97,7 +102,7 @@ public class RestReservationService {
 			System.out.println(res);
 			res.setName(name);
 			res.setTelephone(telephone);
-			res.setCompany(company);
+			res.setRestaurantInformation(rest);
 			res.setEmail(email);
 			res.setRemark(remark);
 			res.setDate(date);
