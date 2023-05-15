@@ -59,8 +59,11 @@ public class WishListService {
 		}
 	
 	
-	
-	
+//  查找心願清單後 刪除部分商品
+		
+	public void findByMemberAndDeleteByCommId(Member member , Integer CommId) {
+		
+	}
 	
 	
 	

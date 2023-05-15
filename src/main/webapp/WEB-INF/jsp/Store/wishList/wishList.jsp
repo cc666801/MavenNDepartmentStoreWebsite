@@ -38,11 +38,10 @@
 					<table class="table">
 						<thead>
 							<tr>
-								
+
 								<th scope="col">商品名稱</th>
 								<th scope="col" style="width: 30%;">商品價格</th>
-								<th scope="col" style="width: 30%;">商品數量</th>
-								<th scope="col">小計</th>
+
 							</tr>
 						</thead>
 						<tbody>
@@ -51,13 +50,13 @@
 
 									<td>${commodity.commodity.commName}</td>
 									<td>${commodity.commodity.commPrice}</td>
-
+									<td>刪除</td>
 								</tr>
 							</jstl:forEach>
 						</tbody>
 						<tfoot>
 							<tr>
-								<td colspan="5" style="padding-left: 82%;">總計: <span
+								<td colspan="5" style="padding-left: 82%;">加入購物車 <span
 									id="total" style="display: inline-block;"></span></td>
 							</tr>
 						</tfoot>
