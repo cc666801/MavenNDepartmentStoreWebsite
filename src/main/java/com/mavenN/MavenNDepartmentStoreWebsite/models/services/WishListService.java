@@ -43,6 +43,7 @@ public class WishListService {
             WishList wishListItem = new WishList();
             wishListItem.setMember(member);
             wishListItem.setCommodity(commodity);
+            wishListItem.setQuantity(1);
             wishListItem.setWishlistCDay(new Date());
             wishListItem.setWishlistMDay(new Date());
             
