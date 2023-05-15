@@ -13,6 +13,20 @@
 <title>文章列表</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    .aside-block button {
+        background-color: #f5f5f5;
+        border: none;
+        padding: 8px 16px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .aside-block button.active {
+        background-color: #ebebeb;
+    }
+</style>
+
 </head>
 <body>
 	<jsp:include page="../../layout/header.jsp"></jsp:include>
@@ -86,12 +100,12 @@
 								<div class="custom-pagination">
 
 									<c:if test="${not page.first}">
-										<a href="?p=${page.previousPageable().pageNumber+1}"
+										<a href="?p=${page.previousPageable().pageNumber}"
 											class="prev">Prevous</a>
 									</c:if>
-									<c:forEach var="i" begin="1" end="${page.totalPages}">
+									<c:forEach var="i" begin="1" end="${page.totalPages-1}">
 										<c:choose>
-											<c:when test="${i == page.number + 1}">
+											<c:when test="${i == page.number}">
 												<a href="#" class="active">${i}</a>
 											</c:when>
 											<c:otherwise>
@@ -100,7 +114,7 @@
 										</c:choose>
 									</c:forEach>
 									<c:if test="${not page.last}">
-										<a href="?p=${page.nextPageable().pageNumber+1}" class="next">Next</a>
+										<a href="?p=${page.nextPageable().pageNumber}" class="next">Next</a>
 									</c:if>
 								</div>
 							</div>
@@ -111,9 +125,11 @@
 						<div class="col-md-3">
 							<div class="aside-block">
 								<form id="searchForm" method="get" action="#">
-									<input type="text" name="search" id="searchInput"
-										placeholder="搜尋文章標題">
-									<button type="submit">搜索</button>
+									<div class="input-group">
+										<input type="text" class="form-control" name="search"
+											id="searchInput" placeholder="搜尋文章標題">
+										<button type="submit" class="btn btn-primary">搜索</button>
+									</div>
 								</form>
 							</div>
 							<div class="aside-block">
@@ -233,113 +249,82 @@
 
 	<!-- 排序 -->
 	<script>
-		// 				$(function() {
-		// 					$("#sortSelect").change(function(event) {
-		// 						event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-		// 						var selectedValue = $("#sortSelect").val();
+		$(document).ready(
+				function() {
+					var currentSortBy = localStorage.getItem('sortBy') || ''; // 当前的sortBy值
+					var currentKeyword = localStorage.getItem('keyword') || ''; // 当前的keyword值
+					var currentCategoryId = localStorage.getItem('categoryId')
+							|| null; // 当前的categoryId值
 
-		// 						$.ajax({
-		// 							url : $("#sortForm").attr("action"),
-		// 							type : "GET",
-		// 							data : $("#sortForm").serialize(),
-		// 							success : function(data) {
-		// 								$("#articleList").html(data);
-		// 								$("#sortSelect").val(selectedValue);
-		// 							}
-		// 						});
-		// 					});
-		// 				});
+					// 设置选择框的初始值
+					$("#sortBySelect").val(currentSortBy);
+					$("#searchInput").val(currentKeyword);
 
-		// 		    $(function() {
-		// 		        $("#searchForm, #sortForm").change(function(event) {
-		// 		            event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-		// 		            var selectedValue = $("#sortSelect").val();
-		// 		            var searchedValue = $("#search").val();
-		// 		            $.ajax({
-		// 		                url : $("#searchForm").attr("action"),
-		// 		                type : "GET",
-		// 		                data : $("#searchForm, #sortForm").serialize(),
-		// 		                success : function(data) {
-		// 		                    $("#articleList").html(data);
-		// 		//                     $("#sortSelect").val(selectedValue);
-		// 		                    $("#search").val(searchedValue);
+					// 如果存在当前的categoryId值，则高亮相应的分类按钮
+					if (currentCategoryId) {
+						$(
+								'#category button[data-category-id="'
+										+ currentCategoryId + '"]').addClass(
+								'active');
+					}
 
-		// 		                }
-		// 		            });
-		// 		        });
-		// 		    });
+					// 监听排序方式选择改变事件
+					$('#sortBySelect').on('change', function() {
+						currentSortBy = $(this).val(); // 保存当前的sortBy值
+						localStorage.setItem('sortBy', currentSortBy); // 将当前的sortBy值存储到localStorage中
+						updateArticleList();
+					});
 
-		// function refreshPage() {
-		//     var sortBy = $('#sortSelect').val();
-		//     var category = $('#categoryForm a.active').data('category');
-		//     var search = $('#search').val();
-		//     $.ajax({
-		//         url: '${pageContext.request.contextPath}/articleList',
-		//         data: {
-		//             sortBy: sortBy,
-		//             category: category,
-		//             search: search
-		//         },
-		//         success: function(data) {
-		//             $('#page').html(data);
-		//         }
-		//     });
-		// }
+					// 监听搜索表单提交事件
+					$('#searchForm').on('submit', function(event) {
+						event.preventDefault(); // 阻止表单默认提交行为
+						currentKeyword = $('#searchInput').val(); // 保存当前的keyword值
+						localStorage.setItem('keyword', currentKeyword); // 将当前的keyword值存储到localStorage中
+						updateArticleList();
+					});
 
-		// // 排序的select
-		// $('#sortSelect').on('change', function() {
-		//     refreshPage();
-		// });
+					// 监听分类按钮点击事件
+					$('#category button').on('click', function() {
+						currentCategoryId = $(this).data('category-id'); // 保存当前的categoryId值
+						localStorage.setItem('categoryId', currentCategoryId); // 将当前的categoryId值存储到localStorage中
+						updateArticleList(currentCategoryId);
+						 
+					});
 
-		// // 類別的選項
-		// $('#categoryForm a').on('click', function(event) {
-		//     event.preventDefault();
-		//     $('#categoryForm a').removeClass('active');
-		//     $(this).addClass('active');
-		//     refreshPage();
-		// });
+					// 更新文章列表的函数
+					function updateArticleList(categoryId) {
+						var requestData = {}; // 创建空对象
 
-		// // 關鍵字的input
-		// $('#searchForm').on('submit', function(event) {
-		//     event.preventDefault();
-		//     refreshPage();
-		// });
+						requestData.sortBy = currentSortBy; // 使用保存的当前sortBy值
+						requestData.keyword = currentKeyword; // 使用保存的当前keyword值
 
-		function updateArticleList() {
-			var sortBy = $('#sortBySelect').val();
-			var search = $('#searchInput').val();
-			var categoryId = $('ul.aside-tags button.active').data('category-id');
+						// 如果存在分类ID，则将其添加到requestData对象中
+						if (categoryId) {
+							requestData.categoryId = categoryId;
+						} else {
+							currentCategoryId = null; // 如果categoryId为空，则重置保存的当前categoryId值
+						}
 
-			$.ajax({
-				type : 'GET',
-				url : '${contextRoot}/articleList',
-				data : {
-					sortBy : sortBy,
-					search : search,
-					articleCategoryID : categoryId
-				},
-				success : function(data) {
-					$("#articleList").html(data);
-				},
-				error : function() {
-					alert('錯誤發生');
-				}
-			});
-		}
+						// 构造AJAX请求的URL
+						var url = '${contextRoot}/articleList';
 
-		$('#sortBySelect').on('change', function() {
-			updateArticleList();
-		});
-
-		$('#searchForm').on('submit', function(event) {
-			event.preventDefault();
-			updateArticleList();
-		});
-
-		$('ul.aside-tags button').on('click', function() {
-			$(this).addClass('active').siblings().removeClass('active');
-			updateArticleList();
-		});
+						// 发送AJAX请求
+						$.ajax({
+							url : url,
+							type : 'GET',
+							data : requestData, // 将requestData对象作为data参数传递给后端
+							success : function(data) {
+								// 更新文章列表的内容
+								$('#articleList').html(data);
+								$("#sortSelect").val(currentSortBy); // 设置当前的sortBy值
+								$("#search").val(currentKeyword); // 设置当前的keyword值
+							},
+							error : function(xhr, status, error) {
+								console.error(error);
+							}
+						});
+					}
+				});
 	</script>
 
 </body>

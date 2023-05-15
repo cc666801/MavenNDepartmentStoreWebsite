@@ -200,9 +200,10 @@ public class ArticleController {
 	// 前台文章列表
 	
 	@GetMapping("/articleList")
-	public String showPageFront(@RequestParam(required = false) String articleTitle,
-            @RequestParam(required = false) Integer articleCategoryID, @RequestParam(required = false) String sortBy,
-            @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable,
+	public String showPageFront(@RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(name = "p",defaultValue = "0") int pageNumber,
  Model model) {
 		
 //		 Page<Article> page;
@@ -218,32 +219,15 @@ public class ArticleController {
 //		    } else {
 //		        page = articleService.findArticleByPage(pageNumber, sortBy);
 //		    }
-		Pageable modifiedPageable = pageable;
-		int pageSize = 5; // 設定每頁顯示的文章數量
-		if (sortBy != null) {
-	        switch (sortBy) {
-	            case "articleCreateTime":
-	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
-	                        Sort.by("articleEditTime").descending());
-	                break;
-	            case "articleLikeCount":
-	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
-	                        Sort.by("articleLikeCount").descending());
-	                break;
-	            case "commentCount":
-	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
-	                        Sort.by("commentCount").descending());
-	                break;
-	            case "comments.commentEditTime":
-	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
-	                        Sort.by("comments.commentEditTime").descending());
-	                break;
-	            default:
-	                break;
-	        }
-	    }
-
-	    Page<Article> page = articleService.search(articleTitle, articleCategoryID, modifiedPageable);
+		System.out.println("keyword: " + keyword);
+	    System.out.println("categoryId: " + categoryId);
+	    System.out.println("sortBy: " + sortBy);
+	    System.out.println("pageNumber: " + pageNumber);
+	    sortBy = (sortBy != null) ? sortBy : "articleEditTime";
+	    
+	    Pageable pageable = PageRequest.of(pageNumber, 5);
+	    
+	    Page<Article> page = articleService.searchByKeywordAndCategory(keyword, categoryId, sortBy, pageable);
     
 		// 縮圖
 		for (Article art : page) {

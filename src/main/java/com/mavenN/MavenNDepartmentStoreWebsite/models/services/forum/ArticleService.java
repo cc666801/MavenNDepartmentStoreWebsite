@@ -299,19 +299,56 @@ public class ArticleService {
 //		    return typedQuery.getSingleResult();
 //		}
 			 
-			 public Page<Article> search(String articleTitle, Integer articleCategoryID, Pageable pageable) {
-			        if (StringUtils.isNotBlank(articleTitle) && articleCategoryID != null) {
-			            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
-			                    articleTitle, articleCategoryID, pageable);
-			        } else if (StringUtils.isNotBlank(articleTitle)) {
-			            return articleRepository.findByArticleTitleContainingOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
-			                    articleTitle, pageable);
-			        } else if (articleCategoryID != null) {
-			            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
-			                    articleCategoryID, pageable);
-			        } else {
-			            return articleRepository.findAll(pageable);
-			        }
+			 public Page<Article> searchByKeywordAndCategory(String keyword, Integer categoryId, String sortBy, Pageable pageable) {
+				  
+				 
+				 if (keyword != null && categoryId != null) {
+				        if (sortBy.equals("articleEditTime")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleEditTimeDesc(keyword, categoryId, pageable);
+				        } else if (sortBy.equals("articleLikeCount")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleLikeCountDesc(keyword, categoryId, pageable);
+				        } else if (sortBy.equals("commentCount")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByCommentCountDesc(keyword, categoryId, pageable);
+				        } else if (sortBy.equals("comments.commentEditTime")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByComments_CommentEditTimeDesc(keyword, categoryId, pageable);
+				        }
+				        } else if (keyword != null) {
+				        if (sortBy.equals("articleEditTime")) {
+				            return articleRepository.findByArticleTitleContainingOrderByArticleEditTimeDesc(keyword, pageable);
+				        } else if (sortBy.equals("articleLikeCount")) {
+				            return articleRepository.findByArticleTitleContainingOrderByArticleLikeCountDesc(keyword, pageable);
+				        } else if (sortBy.equals("commentCount")) {
+				            return articleRepository.findByArticleTitleContainingOrderByCommentCountDesc(keyword, pageable);
+				        } else if (sortBy.equals("comments.commentEditTime")) {
+				            return articleRepository.findByArticleTitleContainingOrderByComments_CommentEditTimeDesc(keyword, pageable);
+				        }
+				    } else if (categoryId != null) {
+				        if (sortBy.equals("articleEditTime")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByArticleEditTimeDesc(categoryId, pageable);
+				        } else if (sortBy.equals("articleLikeCount")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByArticleLikeCountDesc(categoryId, pageable);
+				        } else if (sortBy.equals("commentCount")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByComments_CommentEditTimeDesc(categoryId, pageable);
+				        } else if (sortBy.equals("comments.commentEditTime")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByComments_CommentEditTimeDesc(categoryId, pageable);
+				        }
+				    }
+				    
+				    if (sortBy.equals("articleEditTime")) {
+				        return articleRepository.findAllByOrderByArticleEditTimeDesc(pageable);
+				    } else if (sortBy.equals("articleLikeCount")) {
+				        return articleRepository.findAllByOrderByArticleLikeCountDesc(pageable);
+				    } else if (sortBy.equals("commentCount")) {
+				        return articleRepository.findAllByOrderByCommentCountDesc(pageable);
+				    } else if (sortBy.equals("comments.commentEditTime")) {
+				        return articleRepository.findAllByOrderByComments_CommentEditTimeDesc(pageable);
+				    }
+				// 如果没有满足条件的情况，则返回一个空的Page对象
+				 
+//				    return articleRepository.findAll(pageable);
+//				 return null;
+				 return Page.empty();
 			    }
+			
 			 
 }
