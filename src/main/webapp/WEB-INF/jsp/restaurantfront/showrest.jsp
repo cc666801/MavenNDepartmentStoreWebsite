@@ -26,7 +26,7 @@
 				<div class="col-12 col-md-4 gx-5">
 				<form action="${contextRoot}/restaurantfront/UserQueryCompany">
 					<div class="input-group mb-3 mt-2">
-						<input type="text" class="form-control" placeholder="請輸入餐廳"
+						<input type="text" class="form-control" placeholder="請輸入餐廳or料理類型"
 							aria-label="請輸入餐廳" aria-describedby="basic-addon2"
 							name="companyname" />
 						<button class="btn btn-outline-secondary" type="submit"

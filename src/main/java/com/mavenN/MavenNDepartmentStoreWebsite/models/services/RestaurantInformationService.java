@@ -8,13 +8,16 @@ import org.springframework.stereotype.Service;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestaurantInformationRepository;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 
 @Service
 public class RestaurantInformationService {
 
 	@Autowired
 	private RestaurantInformationRepository resInformationRepository;
+	
+	public void deleterestaurantbyid(Integer id) {
+		resInformationRepository.deleteById(id);
+	}
 	
 	public String addRestaurantInformation(RestaurantInformation rest) {
 //		System.out.println("***************");

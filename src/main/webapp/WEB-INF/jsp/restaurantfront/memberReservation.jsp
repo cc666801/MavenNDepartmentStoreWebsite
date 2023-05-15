@@ -61,11 +61,11 @@
 										<input type="submit" class="btn btn-warning btn-sm" value="編輯" />
 									</form></td>
 								<td><form action="${contextRoot}/restaurantfront/memberReservation/delete"
-										method="post">
+										method="post" id="deleteForm">
 										<input type="hidden" name="_method" value="delete" /> 
 										<input type="hidden" name="r_id" value="${far.r_id}" />
 										<input type="hidden" name="memberid" value="${far.member.id}" />  
-										<input type="submit" class="btn btn-danger btn-sm" value="刪除" />
+										<input type="submit" class="btn btn-danger btn-sm" value="刪除" onclick="confirmDelete(event)"/>
 									</form></td>
 								<%-- 			<td><a href="DeleteBookById.do?Id=${m.id}"><button>刪除</button></a></td> --%>
 							</tr>
@@ -74,6 +74,7 @@
 				</table>
 			</div>
 		</div>
+		
 	</main>
 	
 	<script
@@ -85,5 +86,16 @@
 		crossorigin="anonymous"></script>
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+		
+	<script>
+		  function confirmDelete(event) {
+		    event.preventDefault(); // 阻止表單提交
+		
+		    if (confirm("確定要刪除嗎訂位？")) {
+		      // 使用者點擊了確認，繼續提交表單
+		      document.getElementById("deleteForm").submit();
+		    }
+		  }
+	</script>
 </body>
 </html>

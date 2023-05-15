@@ -46,6 +46,16 @@ public class RestReservationController {
 		return "restaurantfront/editReservation";
 	}
 	
+	@PutMapping("restaurantfront/memberReservation/edit")
+	public String memberEditReservation(@ModelAttribute("memberReservation") Reservation res) {
+		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(),
+				                        res.getRestaurantInformation(), res.getEmail(), res.getRemark(), 
+				                        res.getDate(), res.getTimeInterval(), res.getTime(), 
+										res.getAdult(), res.getChildren(), res.getMember());
+		return "redirect:/restaurantfront";			
+	}
+	
+	
 	
 	@DeleteMapping("/restaurantfront/memberReservation/delete")
 	public String memberdeleteReservation(Integer r_id, Integer memberid,Model model) {

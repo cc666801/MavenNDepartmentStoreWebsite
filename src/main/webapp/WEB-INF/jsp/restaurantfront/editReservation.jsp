@@ -142,8 +142,8 @@ fieldset{
 			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
 
 				<form:form class="row justify-content-center" id="myForm" 
-						method="post" modelAttribute="memberReservation"
-						action="${contextRoot}/restaurantfront/post">
+						method="put" modelAttribute="memberReservation"
+						action="${contextRoot}/restaurantfront/memberReservation/edit">
 						<div class="col-5">
 							用餐人數 
 							<form:select path="adult" id="AId" value="memberReservation.adult" class="form-select">

@@ -90,17 +90,15 @@ fieldset{
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="https://picsum.photos/1000/200?random=10"
-					class="d-block w-100" alt="...">
+				<img src="${contextRoot}/assetsForFrontend/img/${findRestaurant.company.companyName}1.jpg"
+					class="d-block w-100" style="height:300px" alt="${findRestaurant.company.companyName}餐廳的圖片">
 			</div>
+			<jstl:forEach var="i" begin="2" end="3">
 			<div class="carousel-item">
-				<img src="https://picsum.photos/1000/200?random=9"
-					class="d-block w-100" alt="...">
+				<img src="${contextRoot}/assetsForFrontend/img/${findRestaurant.company.companyName}${i}.jpg"
+					class="d-block w-100" style="height:300px" alt="${findRestaurant.company.companyName}餐廳的圖片">
 			</div>
-			<div class="carousel-item">
-				<img src="https://picsum.photos/1000/200?random=8"
-					class="d-block w-100" alt="...">
-			</div>
+			</jstl:forEach>
 		</div>
 		<button class="carousel-control-prev" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
