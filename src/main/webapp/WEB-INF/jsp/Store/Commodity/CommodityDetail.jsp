@@ -142,7 +142,8 @@
 										<form
 											action="/MavenNDepartmentStoreWebsite/wishlist/addtowishlist"
 											method="post">
-											<input type="hidden" name="commId" value="${comm.commId}">
+											<input type="hidden" name="commId" value="${commodityInfo.commId}">
+											console.log(${commodityInfo.commId});
 											<button type="submit">加入心願清單</button>
 										</form>
 									</div>

@@ -1,6 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.util.Date;
+import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -49,6 +51,14 @@ public class WishListService {
         }
     }
 
+	
+//	透過 會員id 去找心願清單
+	
+		public List<WishList> findWishListByMember(Member member){
+			return wishListRepository.findWishListByMember(member);
+		}
+	
+	
 	
 	
 	
