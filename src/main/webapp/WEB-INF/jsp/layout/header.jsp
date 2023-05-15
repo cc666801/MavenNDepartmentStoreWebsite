@@ -61,11 +61,11 @@
 	<div
 		class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-		<a href="${contextRoot}/" class="logo d-flex align-items-center">
-			<!-- Uncomment the line below if you also wish to use an image logo -->
-			<!-- <img src="assetsForFrontend/img/logo.png" alt=""> -->
-			<h1>Mavenn百貨</h1>
-		</a>
+		<a href="${contextRoot}/" class="logo d-flex align-items-center" style="position: relative; z-index: 9999;">
+  <img src="${contextRoot}/assetsForFrontend/img/Mavenn.png" style="max-width: 250px; max-height: 250px;">
+</a>
+
+
 
 
 
