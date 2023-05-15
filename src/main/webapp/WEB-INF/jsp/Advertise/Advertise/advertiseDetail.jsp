@@ -48,58 +48,19 @@
 								<div class="col-lg-6">
 									<div class="info">
 										<h5 class="mb-0">廣告名稱</h5>
-										<p id="advertiseName">${advertiseDetail.advertiseName}</p>
-									</div>
-
-									<!-- <div class="info">
-										<h5 class="mb-0">商品原價</h5>
-										<p>${commodityInfo.commPrice}</p>
+										<p id="advertiseName" style="font-family: '微軟正黑體', sans-serif; font-size: 60px; color: #1217 ;">${advertiseDetail.advertiseName}</p>
 									</div>
 
 									<div class="info">
-										<h5 class="mb-0">商品特價價格</h5>
-										<p>${commodityInfo.commPrice*commodityInfo.commDiscount}</p>
+										<h5 class="mb-0"></h5>
+										<p id="advertiseDesc"
+											style="font-family: '微軟正黑體', sans-serif; font-size: 30px; color: #9527 ;">${advertiseDetail.advertiseDesc}</p>
 									</div>
 
-									<div class="info">
-										<h5 class="mb-0">數量</h5>
-										<input type="number" name="quantity" id="quantity" min="1"
-											max="10" value="1">
-									</div>
-									<br>
-									<div class="info">
-										<h5 class="mb-0">商品敘述</h5>
-										<p>${commodityInfo.commDesc}</p>
-									</div> -->
 
 								</div>
 							</div>
-							<div class="col-lg-6">
-								<!-- <div class="info">
-										<h5 class="mb-0">商品分類</h5>
-										<p>
-											<a
-												href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodityInfo.commCate.cateId}">${commodityInfo.commCate.cateName}</a>
-										</p>
-									</div> -->
-
-								<!-- <div class="info">
-										<h5 class="mb-0">加入購物車</h5>
-										
-										<button class="btn btn-primary"  id="shopping-cart-button">加入購物車</button>
-										
-									</div>
-
-									<div class="info">
-										<h5 class="mb-0">心願清單</h5>
-										<form
-											action="${contextRoot}/add-to-wishlist/${commodityInfo.commId}"
-											method="POST">
-											<button type="submit" class="btn btn-outline-primary">心願清單</button>
-										</form>
-									</div>
-								</div> -->
-							</div>
+							<div class="col-lg-6"></div>
 
 						</div>
 					</div>
@@ -116,8 +77,7 @@
 			<div class="col-lg-12">
 				<div class="pagination">
 					<ul class="list-inline d-block mx-auto">
-						<li class="list-inline-item"><a
-							href="${contextRoot}/"
+						<li class="list-inline-item"><a href="${contextRoot}/"
 							class="btn btn-primary">返回百貨公司首頁</a></li>
 					</ul>
 				</div>
@@ -125,9 +85,6 @@
 
 
 			<!-- 		5/3 常識判斷上下一筆資料  失敗-->
-
-
-	
 	</main>
 
 

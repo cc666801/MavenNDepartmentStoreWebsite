@@ -188,6 +188,23 @@ public class CommodityService {
 		}
 	}
 
+	
+	
+//	5/11顯示上下架關係
+	
+	
+	public List<Commodity> findByCommShelveIsTrue(){
+		 List<Commodity> Comm  =commodityRepository.findByCommShelveIsTrue();
+		return  Comm;
+	}
+	
+//	5/11 顯示商品狀態 並顯示上下架狀態。
+	
+	
+	
+	
+	
+	
 	public CommodityService() {
 		// TODO Auto-generated constructor stub
 	}

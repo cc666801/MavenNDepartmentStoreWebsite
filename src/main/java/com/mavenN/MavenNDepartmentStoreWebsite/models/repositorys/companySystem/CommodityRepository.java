@@ -33,6 +33,9 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 //		邪教
 	Page<Commodity> findByCommNameContaining(String commName,Pageable pageable);
     
+//	顯示產品是否上下架
+	List<Commodity> findByCommShelveIsTrue();
+	
 	
 //	5/3 嘗試開始判斷 是否有下一筆 或者上一筆資料 失敗
 	
@@ -56,7 +59,7 @@ public interface CommodityRepository extends JpaRepository<Commodity, Integer> {
 //	點類別 顯示上架產品
 	Page<Commodity> findByCommCateAndCommShelveIsTrue(CommCate commCate, Pageable pageable);
 	
-	
+	List<Commodity>findByCommShelveIsTrueOrderByCommClickDesc();
 	
 //	重寫分類與分頁器
 //	Page<Commodity>findCommodityByCommCate(Pageable pageable);
