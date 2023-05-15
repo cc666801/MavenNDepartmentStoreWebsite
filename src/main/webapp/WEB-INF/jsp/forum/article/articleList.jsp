@@ -3,6 +3,8 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions"%>
+
 <c:set var="contextRoot" value="${pageContext.request.contextPath}" />
 <!DOCTYPE html>
 <html>
@@ -26,6 +28,8 @@
 								<a href="${contextRoot}/articleFront/add"><button
 										class="btn btn-primary">發文</button></a>
 							</div>
+
+
 							<h3 class="category-title">討論區文章列表</h3>
 
 							<form id="sortForm" method="get"
@@ -41,7 +45,7 @@
 										${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後回覆</option>
 								</select>
 							</form>
-							<br>
+
 
 
 							<c:forEach var="art" items="${page.content}">
@@ -77,6 +81,7 @@
 							</c:forEach>
 
 
+
 							<!-- Paging -->
 							<div class="text-start py-4">
 								<div class="custom-pagination">
@@ -105,7 +110,13 @@
 						</div>
 
 						<div class="col-md-3">
-
+							<div class="aside-block">
+								<form id="searchForm" method="get"
+									action="${pageContext.request.contextPath}/articleList">
+									<input type="text" name="search" id="search" placeholder="搜尋文章標題">
+									<button type="submit">搜索</button>
+								</form>
+							</div>
 							<div class="aside-block">
 								<h3 class="aside-title">類別選單</h3>
 								<ul class="aside-tags list-unstyled">
@@ -165,8 +176,8 @@
 									<!-- End Popular -->
 
 									<!-- Trending -->
-										<div class="tab-pane fade show active" id="pills-trending" role="tabpanel"
-										aria-labelledby="pills-trending-tab">
+									<div class="tab-pane fade show active" id="pills-trending"
+										role="tabpanel" aria-labelledby="pills-trending-tab">
 										<c:forEach var="art" items="${commentsArticles.content}">
 											<div class="post-entry-1 border-bottom">
 												<div class="post-meta">
@@ -219,23 +230,42 @@
 
 	<!-- 排序 -->
 	<script>
-		$(function() {
-			$("#sortSelect").change(function(event) {
-				event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-				var selectedValue = $("#sortSelect").val();
-				$.ajax({
-					url : $("#sortForm").attr("action"),
-					type : "GET",
-					data : $("#sortForm").serialize(),
-					success : function(data) {
-						$("#articleList").html(data);
-						$("#sortSelect").val(selectedValue);
-					}
-				});
-			});
-		});
-	</script>
+// 		$(function() {
+// 			$("#sortSelect").change(function(event) {
+// 				event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
+// 				var selectedValue = $("#sortSelect").val();
 
+// 				$.ajax({
+// 					url : $("#sortForm").attr("action"),
+// 					type : "GET",
+// 					data : $("#sortForm").serialize(),
+// 					success : function(data) {
+// 						$("#articleList").html(data);
+// 						$("#sortSelect").val(selectedValue);
+// 					}
+// 				});
+// 			});
+// 		});
+	
+    $(function() {
+        $("#searchForm, #sortForm").change(function(event) {
+            event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
+            var selectedValue = $("#sortSelect").val();
+            var searchedValue = $("#search").val();
+            $.ajax({
+                url : $("#searchForm").attr("action"),
+                type : "GET",
+                data : $("#searchForm, #sortForm").serialize(),
+                success : function(data) {
+                    $("#articleList").html(data);
+                    $("#sortSelect").val(selectedValue);
+                    $("#search").val(searchedValue);
+                    
+                }
+            });
+        });
+    });
+</script>
 
 </body>
 </html>

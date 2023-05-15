@@ -63,6 +63,18 @@ public class Member {
 
 	@Column(name = "token")
 	private String token;
+	
+	//權限
+	@Column(name = "permissions")
+	private String permissions="會員";
+
+	public String getPermissions() {
+		return permissions;
+	}
+
+	public void setPermissions(String permissions) {
+		this.permissions = permissions;
+	}
 
 	public String getToken() {
 		return token;

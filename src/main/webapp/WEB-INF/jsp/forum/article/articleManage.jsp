@@ -28,7 +28,7 @@ img {
 <body>
 	<jsp:include page="../../layout/header.jsp"></jsp:include>
 	<main id="main">
-		<div class="card mb-4">
+		<div class="card mb-4" style="max-width: 85%; margin: 0 auto;">
 			<div class="card-header">
 				<i class="fas fa-table me-1"></i>文章管理列表
 			</div>

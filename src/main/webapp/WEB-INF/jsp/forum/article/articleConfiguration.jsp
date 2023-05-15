@@ -11,22 +11,107 @@
 <title>其他文章設定</title>
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+}
+
+h1 {
+  margin-top: 0;
+}
+
+button {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #0062cc;
+}
+
+form {
+  margin: 20px 0;
+}
+
+label {
+  display: block;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+input[type="text"],
+select {
+  padding: 10px;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  width: 100%;
+}
+
+input[type="text"]:focus,
+select:focus {
+  outline: none;
+  border-color: #007bff;
+}
+.table-container {
+  height: 400px; /* 設置容器高度 */
+  overflow: auto; /* 設置卷軸 */
+}
+table {
+
+  width: 80%;
+  margin: 0 auto;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+th,
+td {
+  padding: 10px;
+  text-align: left;
+}
+
+th {
+  border-bottom: 2px solid #007bff;
+}
+
+td {
+  border-bottom: 1px solid #ccc;
+}
+
+.delete-category {
+  background-color: #dc3545;
+  color: #fff;
+  border: none;
+  padding: 5px 10px;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background-color 0.3s;
+}
+
+.delete-category:hover {
+  background-color: #c82333;
+}
+input[type="text"], select {
+  width: 30%;
+}
+</style>
+
+
 </head>
 <body class="sb-nav-fixed">
-	<!-- ======= Header ======= -->
-	<jsp:include page="../../layout/headerForBackend.jsp"></jsp:include>
-	<!-- End Header -->
-
-	<div id="layoutSidenav">
-
-		<!-- ======= SiderNav ======= -->
-		<jsp:include page="../../layout/sideNavForBackend.jsp"></jsp:include>
-		<!-- End SiderNav -->
-
-		<div id="layoutSidenav_content">
+	
 			<main>
-				<div class="card">
-					<h1>文章其他設定</h1>
+				
+					<h1>文章類別設定</h1>
 					<button id="insert-category">類別設定</button>
 					<div id="category-div" style="display: none;">
 						<form:form id="category-add" method="POST"
@@ -41,13 +126,14 @@
 							</select>
 							<button type="submit">提交</button>
 						</form:form>
-
+<div class="table-container">
 						<table>
 							<thead>
 								<tr>
 									<th>類別編號</th>
 									<th>類別名稱</th>
 									<th>類別權限</th>
+									<th>移除類別</th>
 								</tr>
 							</thead>
 							<tbody>
@@ -82,30 +168,13 @@
 								</c:forEach>
 							</tbody>
 						</table>
-
+</div>
 
 					</div>
-				</div>
-
 			</main>
 			<!-- End #main -->
 
-			<!-- ======= Footer ======= -->
-			<jsp:include page="../../layout/footerForBackend.jsp"></jsp:include>
-			<!-- End Footer -->
-		</div>
-	</div>
-	<!-- =============================== bootstrap ============================ -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
-	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
-	<script
-		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-		crossorigin="anonymous"></script>
-	<script
-		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-	<!-- =================================== bootstrap ============================================= -->
+	
 
 	<script>
 		$(document)
@@ -131,7 +200,8 @@
 															success : function(
 																	response) {
 																alert("新增成功");
-																window.location.href = "${contextRoot}/articleConfiguration";
+																location.reload();
+																$('#config').html(response);
 															},
 															error : function(
 																	xhr,
@@ -157,6 +227,7 @@
 												success : function() {
 													alert("刪除成功");
 													location.reload();
+													$('#config').html(response);
 												},
 												error : function(xhr, status,
 														error) {
@@ -179,7 +250,8 @@
 							            },
 							            success: function(data) {
 							            	alert("變更成功");
-											location.reload();
+							            	
+											$('#config').html(response);
 							            },
 							            error: function(xhr, status, error) {
 							                // 錯誤處理

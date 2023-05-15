@@ -1,6 +1,5 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem;
 
-import java.util.Arrays;
 import java.util.List;
 
 import javax.persistence.CascadeType;
@@ -16,6 +15,8 @@ import javax.persistence.Table;
 import javax.persistence.Transient;
 
 import org.springframework.web.multipart.MultipartFile;
+
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
 
 @Entity
 @Table(name="company")
@@ -58,6 +59,13 @@ public class Company {
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_cooperation_status_id")
 	private CooperationStatus cooperationStatus;
+	
+	
+//	@ManyToOne(cascade = CascadeType.PERSIST)
+//	@JoinColumn(name = "fk_advertise_Id")
+//	private  Advertise advertise;
+//	
+	
 	
 //	@ManyToMany
 //    @JoinTable(name = "company_counter",

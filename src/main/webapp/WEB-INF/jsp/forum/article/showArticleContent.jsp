@@ -26,6 +26,22 @@
     float: right;
     
   }
+  
+  .card {
+   min-height: 200px;
+  display: flex;
+  flex-direction: column;
+/*   justify-content: center; */
+  
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.card p {
+  font-size: 16px;
+  line-height: 1.5;
+}
 </style>
 
 

@@ -14,9 +14,9 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
 
 @Controller
@@ -24,49 +24,128 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
-	@GetMapping("/restaurantfront/reservation")
-	public String addreservations() {
-		return "restaurantfront/addreservation";
+	
+	@GetMapping("restaurantfront/memberReservation/edit")
+	public String memberEditPage(@RequestParam("r_id") Integer r_id,@RequestParam("restid") Integer restid, Model model) {
+		RestaurantInformation findRestById = reService.findRestaurantById(restid);
+		
+		byte[] restLogo = findRestById.getCompany().getCompanyLogo();
+		if(restLogo != null) {
+			String encodeToString = Base64.getEncoder().encodeToString(restLogo);
+			findRestById.getCompany().setBase64StringCompanyLogo(encodeToString);
+		}
+		
+		model.addAttribute("findRestaurant", findRestById);
+		
+		List<CompanyCounter> restaurantCounter = reService.findCompanyCounter();
+		model.addAttribute("restaurantCounter",restaurantCounter);
+		
+		Reservation findbyid = reService.findreservationbyid(r_id);
+		model.addAttribute("memberReservation",findbyid);
+		
+		return "restaurantfront/editReservation";
 	}
 	
+	@PutMapping("restaurantfront/memberReservation/edit")
+	public String memberEditReservation(@ModelAttribute("memberReservation") Reservation res) {
+		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(),
+				                        res.getRestaurantInformation(), res.getEmail(), res.getRemark(), 
+				                        res.getDate(), res.getTimeInterval(), res.getTime(), 
+										res.getAdult(), res.getChildren(), res.getMember());
+		return "redirect:/restaurantfront";			
+	}
+	
+	
+	
+	@DeleteMapping("/restaurantfront/memberReservation/delete")
+	public String memberdeleteReservation(Integer r_id, Integer memberid,Model model) {
+		reService.deletebyid(r_id);
+		return "redirect:/restaurantfront/chickReservation?memberid="+ memberid;
+	}
+	
+	@GetMapping("/restaurantfront/chickReservation")
+	public String chickReservation(@RequestParam("memberid") Integer memberid, Model model) {
+		List<Reservation> findMemberReservation = reService.findMemberReservation(memberid);
+		model.addAttribute("memberReservation", findMemberReservation);
+		
+		return "/restaurantfront/memberReservation";
+	}
+	
+	
+	@PostMapping("/restaurantfront/post")
+	public String restfrontReservation(@ModelAttribute("reservation") Reservation res, Model model) {
+			
+		reService.addreservation(res);
+		model.addAttribute("reservation",new Reservation());
+		return "redirect:/restaurantfront";
+	}
+	
+//	@MemberLogin
+	@GetMapping("/restaurantfront/reservation")
+	public String addreservations(@RequestParam("restid") Integer restid,Model model) {
+		RestaurantInformation findRestById = reService.findRestaurantById(restid);
+		
+		byte[] restLogo = findRestById.getCompany().getCompanyLogo();
+		if(restLogo != null) {
+			String encodeToString = Base64.getEncoder().encodeToString(restLogo);
+			findRestById.getCompany().setBase64StringCompanyLogo(encodeToString);
+		}
+		
+		model.addAttribute("findRestaurant", findRestById);
+		
+		List<CompanyCounter> restaurantCounter = reService.findCompanyCounter();
+		model.addAttribute("restaurantCounter",restaurantCounter);
+		
+		model.addAttribute("reservation", new Reservation());
+			
+		return "restaurantfront/addreservation";
+	}
 	
 	@GetMapping("/restaurantfront/UserQueryCompany")
 	public String showUserQueryCompany(@RequestParam("companyname") String companyname,
 			@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Company> userQueryCompany = reService.findByUserQueryCompany(companyname, pageNumber);
-		for(Company company: userQueryCompany.getContent()) {
-			byte[] companyLogo = company.getCompanyLogo();
+		Page<RestaurantInformation> userQueryRestaurant = reService.findByUserQueryCompany(companyname, pageNumber);
+		for(RestaurantInformation restaurant: userQueryRestaurant.getContent()) {
+			byte[] companyLogo = restaurant.getCompany().getCompanyLogo();
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
-				company.setBase64StringCompanyLogo(encodeToString); 
+				restaurant.getCompany().setBase64StringCompanyLogo(encodeToString); 
 			}
 		}
 		
-		model.addAttribute("page",userQueryCompany);
+		model.addAttribute("page",userQueryRestaurant);
 		return "restaurantfront/showrest";
 	}
 	
 	
 	@GetMapping("/restaurantfront")
 	public String ShowAllReservationByPage(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Company> page = reService.findAllReservationByPage(pageNumber);
-		for(Company company: page.getContent() ) {
-			byte[] companyLogo = company.getCompanyLogo();
+		Page<RestaurantInformation> page = reService.findAllrestInformationPage(pageNumber);
+		for(RestaurantInformation restaurant : page.getContent() ) {
+			byte[] companyLogo = restaurant.getCompany().getCompanyLogo();
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
-				company.setBase64StringCompanyLogo(encodeToString); 
+				restaurant.getCompany().setBase64StringCompanyLogo(encodeToString); 
 			}
+
 		}
-		
+
 		model.addAttribute("page",page);
+		
+		List<CompanyCounter> restaurantCounter = reService.findCompanyCounter();
+		model.addAttribute("restaurantCounter",restaurantCounter);
+		
 		return "restaurantfront/showrest";
-	}	
+	}
 	
+	
+	
+//	以下為後台系統 ------------------
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
 		
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+		List<RestaurantInformation> findAllRestInformation = reService.findAllRestInformation();
+		model.addAttribute("findAllRestInfor",findAllRestInformation);
 		
 		model.addAttribute("reservation", new Reservation());
 		return "restaurant/addreservation";
@@ -76,8 +155,8 @@ public class RestReservationController {
 	@PostMapping("/reservation/post")
 	public String postReservation(@ModelAttribute("reservation") Reservation res, Model model) {
 		
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+		List<RestaurantInformation> findAllRestInformation = reService.findAllRestInformation();
+		model.addAttribute("findAllRestInfor",findAllRestInformation);
 		
 		reService.addreservation(res);
 		model.addAttribute("reservation",new Reservation());
@@ -93,8 +172,8 @@ public class RestReservationController {
 	
 	@GetMapping("/restaurant/edit")
 	public String editPage(@RequestParam("r_id") Integer r_id, Model model) {
-		List<Company> findAllCompany = reService.findAllCompany();
-		model.addAttribute("findAllCompany",findAllCompany);
+		List<RestaurantInformation> findAllRestInformation = reService.findAllRestInformation();
+		model.addAttribute("findAllRestInfor",findAllRestInformation);
 		
 		Reservation findbyid = reService.findreservationbyid(r_id);
 		model.addAttribute("reservation",findbyid);
@@ -104,9 +183,9 @@ public class RestReservationController {
 	@PutMapping("/restaurant/edit")
 	public String putEditReservation(@ModelAttribute("reservation") Reservation res) {
 		reService.upDateReservationbyid(res.getR_id(), res.getName(), res.getTelephone(),
-				                        res.getCompany(), res.getEmail(), res.getRemark(), 
-				                        res.getDate(), res.getTime_interval(), res.getTime(), 
-										res.getAdult(), res.getChildren());
+				                        res.getRestaurantInformation(), res.getEmail(), res.getRemark(), 
+				                        res.getDate(), res.getTimeInterval(), res.getTime(), 
+										res.getAdult(), res.getChildren(), res.getMember());
 		return "redirect:/restaurant";			
 	}
 	

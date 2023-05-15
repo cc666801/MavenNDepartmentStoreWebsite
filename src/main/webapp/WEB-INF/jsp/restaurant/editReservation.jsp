@@ -38,24 +38,26 @@
 						action="${contextRoot}/restaurant/edit">
 						<!--訂單id -->
 						<form:input type="hidden" path="r_id" />
+						<form:input type="hidden" path="member" id="memberId" style="background-color:gray" readonly="readonly"/>
 						<label for="CId">餐廳：</label>
-						<form:select path="company" id="CId" class="form-select"
+						<form:select path="restaurantInformation" id="CId" class="form-select"
 							style="width: 200px">
-							<jstl:forEach items="${findAllCompany}" var="comp">
+							<jstl:forEach items="${findAllRestInfor}" var="findAllRestInfor">
 								<jstl:choose>
-									<jstl:when test="${comp.companyId == reservation.company.companyId}">
-										<form:option value="${comp.companyId}" selected="selected">
-											${comp.companyName}
+									<jstl:when test="${findAllRestInfor.company.companyId == reservation.restaurantInformation.company.companyId}">
+										<form:option value="${findAllRestInfor.company.companyId}" selected="selected">
+											${findAllRestInfor.company.companyName}
 										</form:option>
 									</jstl:when>
 									<jstl:otherwise>
-										<form:option value="${comp.companyId}">
-												${comp.companyName}
+										<form:option value="${findAllRestInfor.company.companyId}">
+												${findAllRestInfor.company.companyName}
 										</form:option>
 									</jstl:otherwise>
 								</jstl:choose>
 							</jstl:forEach>
 						</form:select>
+						
 						<label for="NId">姓名：</label>
 						<br>
 						<form:input type="text" path="name" id="NId" />
@@ -66,7 +68,7 @@
 						<br>
 						<label for="EId">email:</label>
 						<br>
-						<form:input type="text" path="email" id="EId" />
+						<form:input type="text" path="email" id="EId" style="width:220px"/>
 						<br>
 						<label for="note">備註：</label>
 						<br>
@@ -78,19 +80,38 @@
 						<br>
 						<label for="TimeId">時段：</label>
 						<br>
-						<form:select path="time_interval" id="TimeId" class="form-select"
-							style="width: 200px">
-							<option value="中午">中午</option>
-							<option value="下午">下午</option>
-							<option value="晚上">晚上</option>
+						<form:select path="timeInterval" id="TimeId" class="form-select"
+							style="width: 200px">	
+							<jstl:choose>
+								<jstl:when test="${reservation.timeInterval == '中午'}">
+									<option value="中午" selected="selected">中午</option>
+									<option value="下午">下午</option>
+									<option value="晚上">晚上</option>
+								</jstl:when>
+								<jstl:when test="${reservation.timeInterval == '下午'}">
+									<option value="下午" selected="selected">下午</option>
+									<option value="中午">中午</option>
+									<option value="晚上">晚上</option>
+								</jstl:when>
+								<jstl:when test="${reservation.timeInterval == '晚上'}">
+									<option value="晚上" selected="selected">晚上</option>
+									 <option value="中午">中午</option>
+									<option value="下午">下午</option>
+								</jstl:when>
+								<jstl:otherwise>
+								    <option value="中午">中午</option>
+									<option value="下午">下午</option>
+									<option value="晚上">晚上</option>
+								</jstl:otherwise>                								
+							</jstl:choose>
+													
 						</form:select>
 
-						<label for="meeting-time">選擇時間：${fn:substring(reservation.time, 3, 5)}</label>
+						<label for="meeting-time">選擇時間：</label>
 						<br>
 						<jstl:set var="hour" value="${fn:substring(reservation.time, 0, 2)}" />
 						<jstl:set var="minutes" value="${fn:substring(reservation.time, 3, 5)}" />
-						<form:select path="time" id="meeting-time" class="form-select"
-							style="width: 200px">
+						<form:select path="time" id="meeting-time" class="form-select" style="width: 200px">
 							<jstl:forEach var="i" begin="10" end="20">
 								<jstl:forEach var="j" begin="00" end="30" step="30">
 								<fmt:formatNumber var="jj" value="${j}" pattern="00"/>

@@ -51,6 +51,7 @@
 						<th scope="col">商品照片</th>
 						<th scope="col">類別序號</th>
 						<th scope="col">商品敘述</th>
+						<th scope="col">商品點擊次數</th>
 						<th scope="col">商品價格</th>
 						<th scope="col">商品折扣</th>
 						<th scope="col">商品上下架</th>
@@ -74,6 +75,7 @@
 
 							<td>${commodity.commCate.cateName}</td>
 							<td>${commodity.commDesc}</td>
+							<td>${commodity.commClick}</td>
 							<td>${commodity.commPrice}</td>
 							<td>${commodity.commDiscount}</td>
 							<td>${commodity.commShelve}</td>

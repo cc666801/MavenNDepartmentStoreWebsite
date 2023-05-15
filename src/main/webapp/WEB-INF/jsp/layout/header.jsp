@@ -10,7 +10,7 @@
 <meta content="width=device-width, initial-scale=1.0" name="viewport">
 
 
-<title>MavenN百貨</title>
+<title>Mavenn百貨</title>
 <meta content="" name="description">
 <meta content="" name="keywords">
 
@@ -64,8 +64,9 @@
 		<a href="${contextRoot}/" class="logo d-flex align-items-center">
 			<!-- Uncomment the line below if you also wish to use an image logo -->
 			<!-- <img src="assetsForFrontend/img/logo.png" alt=""> -->
-			<h1>ZenBlog</h1>
+			<h1>Mavenn百貨</h1>
 		</a>
+
 
 
 
@@ -83,23 +84,41 @@
 						<li><a href="${contextRoot}/orderSystem/shoppingCart">購物車</a></li>
 						<li><a href="${contextRoot}/orderSystem/order">訂單狀態</a></li>
 					</ul></li>
-
-				<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
-
+					
+<!-- 				餐廳系統	 -->
+				<li class="dropdown"><a href="${contextRoot}/restaurantfront"><span>餐廳訂位</span>
+					<i class="bi bi-chevron-down dropdown-indicator"></i></a>
+				<ul>
+					<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
+					
+					<jstl:if test="${empty member}">
+					</jstl:if>
+					
+					<jstl:if test="${not empty member}">
+						<li><a href="${contextRoot}/restaurantfront/chickReservation?memberid=${member.id}">訂位狀態</a></li>
+					</jstl:if>
+					
+				</ul></li>
+<!-- 				餐廳系統end	 -->
+				
 				<li class="dropdown"><a href="${contextRoot}/articleList"><span>討論區</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
 						<li><a href="${contextRoot}/articleList">文章列表</a></li>
+						<li><a href="${contextRoot}/articleCollect">收藏文章</a></li>
 						<li><a href="${contextRoot}/articleManage">會員個人文章管理</a></li>
+						
 					</ul></li>
 				<li class="dropdown"><a href="${contextRoot}/LostAndFound"><span>顧客服務</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
 						<li><a href="${contextRoot}/LostAndFound">失物招領</a></li>
-						<li><a href="#">客服中心</a></li>
+						<li><a href="${contextRoot}/chat">客服中心</a></li>
 						<li><a href="#">關於我們</a></li>
 					</ul></li>
-				<li><a href="${contextRoot}/backend">後台系統</a></li>
+				<jstl:if test="${sessionScope.member.permissions eq '管理員'}">
+					<li><a href="${contextRoot}/backend">後台系統</a></li>
+				</jstl:if>
 			</ul>
 		</nav>
 
@@ -118,7 +137,7 @@
 
 				<a href="${contextRoot}/memberCentre" class="mx-2"> <span
 					class="bi-person-circle"> ${member.name}</span></a>
-				
+
 				<a href="${contextRoot}/member/logout" class="mx-2"> <span
 					class="bi bi-box-arrow-right"></span></a>
 
