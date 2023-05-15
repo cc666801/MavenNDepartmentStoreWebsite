@@ -13,7 +13,9 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestReservationRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestaurantInformationRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 
 @Service
@@ -24,19 +26,33 @@ public class RestReservationService {
 	@Autowired
 	private CompanyRepository companyRepository;
 	
+	@Autowired
+	private RestaurantInformationRepository restInformationRepository;
+	
 	public void addreservation (Reservation res) {
 		resRepository.save(res);
 	}
 	
-	public Page<Company> findByUserQueryCompany(String companyname, Integer pageNumber){
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "companyId");
-		Page<Company> findByCompanyNameContaining = companyRepository.findByCompanyNameContaining(companyname, pg);
+	
+	public RestaurantInformation findRestaurantById(Integer restid) {
+		Optional<RestaurantInformation> option = restInformationRepository.findById(restid);
+		
+		if(option.isEmpty()) {
+			return null;
+		}
+		
+		return option.get();
+	}
+	
+	public Page<RestaurantInformation> findByUserQueryCompany(String companyname, Integer pageNumber){
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		Page<RestaurantInformation> findByCompanyNameContaining = restInformationRepository.findrestByCompanyname(companyname, pg);
 		return findByCompanyNameContaining;
 	}
 	
-	public Page<Company> findAllReservationByPage(Integer pageNumber) {
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "companyId");
-		Page<Company> page = companyRepository.findAll(pg);
+	public Page<RestaurantInformation> findAllrestInformationPage(Integer pageNumber) {
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		Page<RestaurantInformation> page = restInformationRepository.findAll(pg);
 		return page;
 	}
 	

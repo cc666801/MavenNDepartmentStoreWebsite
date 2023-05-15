@@ -17,4 +17,6 @@ public interface ArticleLikeRepository  extends JpaRepository<ArticleLike, Artic
     // 透過文章id查詢該文章的所有點讚紀錄
 	List<ArticleLike> findById_Article(Article article);
 	
+	List<ArticleLike> findById_Member(Member member);
+	
 }

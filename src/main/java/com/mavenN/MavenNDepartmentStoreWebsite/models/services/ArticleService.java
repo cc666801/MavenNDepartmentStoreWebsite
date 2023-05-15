@@ -166,7 +166,21 @@ public class ArticleService {
 	    }
 	    return likedMembers;
 	}
-	
+	public List<Article> getLikedArticlesByMemberId(Integer memberId) {
+	    // 首先查找指定的Member
+		Optional<Member> optionalMember = memberRepository.findById(memberId);
+		Member member = optionalMember.get();
+	    // 使用ArticleLike Repository查找指定Member點讚的所有文章
+	    List<ArticleLike> articleLikes = articleLikeRepository.findById_Member(member);
+	    
+	    // 從ArticleLike中獲取所有文章
+	    List<Article> likedArticles = new ArrayList<>();
+	    for (ArticleLike articleLike : articleLikes) {
+	        likedArticles.add(articleLike.getId().getArticle());
+	    }
+	    
+	    return likedArticles;
+	}
 	
 	//排序
 	public Page<Article> findArticleByCategoryAndPage(
@@ -192,5 +206,10 @@ public class ArticleService {
 			    Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.by(Sort.Direction.DESC, "articleLikeCount"));
 			    return articleRepository.findAll(pageable);
 			}
+			//關鍵字
+			 public Page<Article> findArticleByKeywordAndPage(String keyword, int pageNumber, int pageSize) {
+			        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.Direction.DESC, "articleCreateTime");
+			        return articleRepository.findByTitleContainingIgnoreCase(keyword, pageable);
+			    }
 	
 }

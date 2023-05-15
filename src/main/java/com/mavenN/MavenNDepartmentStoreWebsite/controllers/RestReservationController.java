@@ -14,9 +14,10 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import com.fasterxml.jackson.databind.deser.Deserializers.Base;
+import com.mavenN.MavenNDepartmentStoreWebsite.annotation.MemberLogin;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.RestReservationService;
 
 @Controller
@@ -24,44 +25,69 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
-	@GetMapping("/restaurantfront/reservation")
-	public String addreservations() {
+	@PostMapping("/restaurantfront/post")
+	public String restfrontReservation(@ModelAttribute("reservation") Reservation res, Model model) {
+		
+		model.addAttribute("findRestaurant", res.getR_id());
+		
+		reService.addreservation(res);
+		model.addAttribute("reservation",new Reservation());
 		return "restaurantfront/addreservation";
 	}
 	
+//	@MemberLogin
+	@GetMapping("/restaurantfront/reservation")
+	public String addreservations(@RequestParam("restid") Integer restid,Model model) {
+		RestaurantInformation findRestById = reService.findRestaurantById(restid);
+		
+		byte[] restLogo = findRestById.getCompany().getCompanyLogo();
+		if(restLogo != null) {
+			String encodeToString = Base64.getEncoder().encodeToString(restLogo);
+			findRestById.getCompany().setBase64StringCompanyLogo(encodeToString);
+		}
+		
+		model.addAttribute("findRestaurant", findRestById);
+		
+		model.addAttribute("reservation", new Reservation());
+		
+		return "restaurantfront/addreservation";
+	}
 	
 	@GetMapping("/restaurantfront/UserQueryCompany")
 	public String showUserQueryCompany(@RequestParam("companyname") String companyname,
 			@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Company> userQueryCompany = reService.findByUserQueryCompany(companyname, pageNumber);
-		for(Company company: userQueryCompany.getContent()) {
-			byte[] companyLogo = company.getCompanyLogo();
+		Page<RestaurantInformation> userQueryRestaurant = reService.findByUserQueryCompany(companyname, pageNumber);
+		for(RestaurantInformation restaurant: userQueryRestaurant.getContent()) {
+			byte[] companyLogo = restaurant.getCompany().getCompanyLogo();
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
-				company.setBase64StringCompanyLogo(encodeToString); 
+				restaurant.getCompany().setBase64StringCompanyLogo(encodeToString); 
 			}
 		}
 		
-		model.addAttribute("page",userQueryCompany);
+		model.addAttribute("page",userQueryRestaurant);
 		return "restaurantfront/showrest";
 	}
 	
 	
 	@GetMapping("/restaurantfront")
 	public String ShowAllReservationByPage(@RequestParam(name="p",defaultValue = "1") Integer pageNumber,Model model) {
-		Page<Company> page = reService.findAllReservationByPage(pageNumber);
-		for(Company company: page.getContent() ) {
-			byte[] companyLogo = company.getCompanyLogo();
+		Page<RestaurantInformation> page = reService.findAllrestInformationPage(pageNumber);
+		for(RestaurantInformation restaurant : page.getContent() ) {
+			byte[] companyLogo = restaurant.getCompany().getCompanyLogo();
 			if(companyLogo != null) {
 				String encodeToString = Base64.getEncoder().encodeToString(companyLogo);
-				company.setBase64StringCompanyLogo(encodeToString); 
+				restaurant.getCompany().setBase64StringCompanyLogo(encodeToString); 
 			}
 		}
 		
 		model.addAttribute("page",page);
 		return "restaurantfront/showrest";
-	}	
+	}
 	
+	
+	
+//	以下為後台系統 ------------------
 	@GetMapping("/restaurant/add")
 	public String addReservation(Model model) {
 		

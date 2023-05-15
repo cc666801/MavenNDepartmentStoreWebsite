@@ -16,6 +16,65 @@
   * Author: BootstrapMade.com
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
+
+					<link rel="stylesheet"
+						href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+
+					<style>
+						/*   客服 */
+						#chatbot-icon {
+							position: fixed;
+							bottom: 150px;
+							right: 20px;
+							width: 50px;
+							height: 50px;
+							z-index: 999;
+							border-radius: 50%;
+							background-color: #ccc;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							transition: background-color 0.5s ease-in-out;
+						}
+
+						#chatbot-icon i {
+							font-size: 40px;
+						}
+
+						#chatbot-icon:hover {
+							background-color: #999;
+						}
+
+						.visible {
+							display: block !important;
+						}
+
+						#chatbot-container {
+							position: fixed;
+							bottom: 20px;
+							right: 60px;
+							width: 450px;
+							height: 550px;
+							z-index: 999;
+							display: flex;
+							justify-content: center;
+							align-items: center;
+							display: none;
+							opacity: 0;
+							transition: opacity 3s ease-in-out;
+						}
+
+						#chatbot-container iframe {
+							width: 100%;
+							height: 100%;
+							border: none;
+
+						}
+
+						#chatbot-container.visible {
+							opacity: 1;
+						}
+					</style>
 				</head>
 
 				<body>
@@ -36,7 +95,8 @@
 													varStatus="status" begin="0" end="2">
 													<div class="swiper-slide">
 
-														<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}" class="img-bg d-flex align-items-end"
+														<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"
+															class="img-bg d-flex align-items-end"
 															style="background-image: url(data:image/png;base64,${advertise.base64StringadvertisePicture});">
 															<div class="img-bg-inner">
 																<h2>${advertise.advertiseName}</h2>
@@ -464,5 +524,64 @@
 
 
 
+
+				<div class="post-entry-1 border-bottom">
+					<div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
+						<span>Jul 5th '22</span></div>
+					<h2 class="mb-2"><a href="single-post.html">The Best Homemade Masks for Face (keep the Pimples
+							Away)</a></h2>
+					<span class="author mb-3 d-block">Jenny Wilson</span>
+				</div>
+
+				<div class="post-entry-1 border-bottom">
+					<div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span>
+						<span>Jul 5th '22</span></div>
+					<h2 class="mb-2"><a href="single-post.html">10 Life-Changing Hacks Every Working Mom Should Know</a>
+					</h2>
+					<span class="author mb-3 d-block">Jenny Wilson</span>
+				</div>
+
+				</div>
+				</div>
+				</div>
+
+				</div> <!-- End .row -->
+				</div>
+				</section><!-- End Lifestyle Category Section -->
+
+				</main><!-- End #main -->
+				<!--===============  客服  ===========================-->
+				<a href="#" id="chatbot-icon">
+					<i class="fa-solid fa-headset"></i>
+				</a>
+
+				<div id="chatbot-container">
+					<iframe src="${contextRoot}/chat#chatBot"></iframe>
+				</div>
+
+
+				<script>
+
+					var chatIcon = document.getElementById('chatbot-icon');
+					var chatContainer = document.getElementById('chatbot-container');
+
+
+					chatIcon.addEventListener('click', function () {
+						chatContainer.classList.toggle('visible');
+					});
+
+				</script>
+				<!--===============  客服  ===========================-->
+
+
+
+
+				<!-- ======= Footer ======= -->
+				<jsp:include page="../layout/footer.jsp"></jsp:include>
+				<!-- End Footer -->
+
+
+
+				</body>
 
 				</html>

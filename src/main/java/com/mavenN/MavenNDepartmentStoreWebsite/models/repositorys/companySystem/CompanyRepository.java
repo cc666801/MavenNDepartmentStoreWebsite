@@ -36,5 +36,7 @@ public interface CompanyRepository extends JpaRepository<Company, Integer> {
 	);
 	
 	public Page<Company> findByCompanyNameContaining(String companyname, Pageable page);
+	
+	
 
 }

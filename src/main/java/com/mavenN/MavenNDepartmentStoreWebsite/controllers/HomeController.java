@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.AdvertiseCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseCateService;
@@ -22,10 +23,6 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 
 @Controller
 public class HomeController {
-	
-	@Autowired
-	private MemberService mService;
-	
 	@Autowired
 	private AdvertiseService advertiseService;
 
@@ -42,6 +39,11 @@ public class HomeController {
 
 	@Autowired
 	private CompanyRepository companyRepository;
+	
+	
+	@Autowired
+	private MemberService mService;
+	
 	
 //	@GetMapping(value = { "/" })
 //	public String getHomePage(HttpSession session) {
@@ -63,8 +65,8 @@ public class HomeController {
 //	嘗試顯示 廣告上下架
 	@GetMapping(value = { "/" })
 	public String showAdPicture(Model model,HttpSession session) {
-//		顯示廣告
-		List<Advertise> findAllAdvertise = advertiseService.findAllAdvertise();
+////		顯示廣告
+	List<Advertise> findAllAdvertise = advertiseService.findAllAdvertise();
 		for (Advertise advertise : findAllAdvertise) {
 			byte[] imageData = advertise.getAdvertisePicture();
 			if (imageData != null) {
@@ -87,7 +89,7 @@ public class HomeController {
 		        }
 		    }
 		
-		  
+  
 		  model.addAttribute("findAllCommodities",findAllCommodities);
 		
 //		  商品按照點擊次數排序 且檢查上下架狀態。
@@ -99,11 +101,11 @@ public class HomeController {
 		    
 		    
 		
-//		    廣告上下架
+////		    廣告上下架
 		List<Advertise> shelvesIsTrue = advertiseService.findByAdvertiseShelveIsTrue();
 		    model.addAttribute("shelvesIsTrue",shelvesIsTrue);
 		
-//		    會員的
+////		    會員的
 		    Member member = (Member) session.getAttribute("member");
 		    if(member != null) {
 		        Member updatedMember = mService.findMemberById(member.getId());

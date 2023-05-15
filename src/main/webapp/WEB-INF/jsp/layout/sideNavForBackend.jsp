@@ -75,6 +75,8 @@
 								data-bs-parent="#sidenavAccordion">
 								<nav class="sb-sidenav-menu-nested nav">
 									<a class="nav-link" href="${contextRoot}/restaurant">查詢訂位</a>
+									<a class="nav-link" href="${contextRoot}/cuisiontype">查詢餐廳分類</a>
+									<a class="nav-link" href="${contextRoot}/restaurantInformation">查詢餐廳詳細資訊</a>
 								</nav>
 							</div>
 							<!-- 							======= 餐廳後台end ======= -->

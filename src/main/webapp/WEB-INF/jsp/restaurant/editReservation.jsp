@@ -89,8 +89,7 @@
 						<br>
 						<jstl:set var="hour" value="${fn:substring(reservation.time, 0, 2)}" />
 						<jstl:set var="minutes" value="${fn:substring(reservation.time, 3, 5)}" />
-						<form:select path="time" id="meeting-time" class="form-select"
-							style="width: 200px">
+						<form:select path="time" id="meeting-time" class="form-select" style="width: 200px">
 							<jstl:forEach var="i" begin="10" end="20">
 								<jstl:forEach var="j" begin="00" end="30" step="30">
 								<fmt:formatNumber var="jj" value="${j}" pattern="00"/>

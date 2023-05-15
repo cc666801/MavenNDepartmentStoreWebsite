@@ -6,7 +6,7 @@
 <html>
 <head>
 	<meta charset="UTF-8">
-	<title>驗證失敗！哭阿...</title>
+	<title>失敗！哭阿...</title>
 	<script>
 		setTimeout(function() {
 			window.location.href = "${pageContext.request.contextPath}/";
@@ -15,8 +15,8 @@
 </head>
 <body>
 	<div style="text-align:center;">
-		<h1>驗證失敗！哭阿...</h1>
-		<h2>拍薩啦...請再驗證一次</h2>
+		<h1>失敗！哭阿...</h1>
+		<h2>拍薩啦...請再試一次</h2>
 		<p>若未跳轉，請點擊<a href="${pageContext.request.contextPath}/">這裡</a></p>
 	</div>
 </body>

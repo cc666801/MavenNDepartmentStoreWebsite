@@ -67,6 +67,9 @@ body {
 				<p class="text-center">
 					還沒有帳號？<a href="${contextRoot}/member/register">立即註冊</a>
 				</p>
+				<p class="text-center">
+					<a href="${contextRoot}/member/forgotPassword">忘記密碼?</a>
+				</p>
 			</div>
 		</div>
 	</div>
@@ -76,6 +79,11 @@ body {
 	<!-- Bootstrap JavaScript -->
 	<script
 		src="https://cdn.staticfile.org/twitter-bootstrap/4.6.0/js/bootstrap.min.js"></script>
+	<script type="text/javascript">
+		function memberNull() {
+			alert("<c:out value='${msg}'/>")
+		}
+	</script>
 </body>
 
 </html>
