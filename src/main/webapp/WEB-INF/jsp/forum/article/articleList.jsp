@@ -32,11 +32,10 @@
 
 							<h3 class="category-title">討論區文章列表</h3>
 
-							<form id="sortForm" method="get"
-								action="${pageContext.request.contextPath}/articleList">
-								<select name="sortBy" id="sortSelect">
-									<option value="articleCreateTime"
-										${sortBy == 'articleCreateTime' ? 'selected' : ''}>最後發表</option>
+							<form id="sortForm" method="get" action="#">
+								<select name="sortBy" id="sortBySelect">
+									<option value="articleEditTime"
+										${sortBy == 'articleEditTime' ? 'selected' : ''}>最後發表</option>
 									<option value="articleLikeCount"
 										${sortBy == 'likesCount' ? 'selected' : ''}>熱門</option>
 									<option value="commentCount"
@@ -45,7 +44,7 @@
 										${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後回覆</option>
 								</select>
 							</form>
-<br>
+							<br>
 
 
 							<c:forEach var="art" items="${page.content}">
@@ -111,20 +110,23 @@
 
 						<div class="col-md-3">
 							<div class="aside-block">
-								<form id="searchForm" method="get"
-									action="${pageContext.request.contextPath}/articleList">
-									<input type="text" name="search" id="search" placeholder="搜尋文章標題">
+								<form id="searchForm" method="get" action="#">
+									<input type="text" name="search" id="searchInput"
+										placeholder="搜尋文章標題">
 									<button type="submit">搜索</button>
 								</form>
 							</div>
 							<div class="aside-block">
 								<h3 class="aside-title">類別選單</h3>
-								<ul class="aside-tags list-unstyled">
-									<li><a href="?category=">所有類別</a></li>
-									<c:forEach var="category" items="${categoryList}">
-										<li><a href="?category=${category.articleCategoryID}">${category.articleCategoryName}</a></li>
-									</c:forEach>
-								</ul>
+								<div id="category">
+									<ul class="aside-tags list-unstyled">
+										<li><button data-category-id="">所有類別</button></li>
+										<c:forEach var="category" items="${categoryList}">
+											<li><button
+													data-category-id="${category.articleCategoryID}">${category.articleCategoryName}</button></li>
+										</c:forEach>
+									</ul>
+								</div>
 							</div>
 							<!-- End Tags -->
 
@@ -169,7 +171,7 @@
 												<h2 class="mb-2">
 													<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
 												</h2>
-												<span class="author mb-3 d-block">發文者名稱</span>
+												<span class="author mb-3 d-block">${art.member.name}</span>
 											</div>
 										</c:forEach>
 									</div>
@@ -187,7 +189,7 @@
 												<h2 class="mb-2">
 													<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
 												</h2>
-												<span class="author mb-3 d-block">發文者名稱</span>
+												<span class="author mb-3 d-block">${art.member.name}</span>
 											</div>
 										</c:forEach>
 									</div>
@@ -206,7 +208,7 @@
 												<h2 class="mb-2">
 													<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
 												</h2>
-												<span class="author mb-3 d-block">發文者名稱</span>
+												<span class="author mb-3 d-block">${art.member.name}</span>
 											</div>
 										</c:forEach>
 									</div>
@@ -224,48 +226,121 @@
 			<!-- End Search Result -->
 		</div>
 	</main>
+
 	<!-- End #main -->
 
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 
 	<!-- 排序 -->
 	<script>
-		$(function() {
-			$("#sortSelect").change(function(event) {
-				event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-				var selectedValue = $("#sortSelect").val();
+		// 				$(function() {
+		// 					$("#sortSelect").change(function(event) {
+		// 						event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
+		// 						var selectedValue = $("#sortSelect").val();
 
-				$.ajax({
-					url : $("#sortForm").attr("action"),
-					type : "GET",
-					data : $("#sortForm").serialize(),
-					success : function(data) {
-						$("#articleList").html(data);
-						$("#sortSelect").val(selectedValue);
-					}
-				});
+		// 						$.ajax({
+		// 							url : $("#sortForm").attr("action"),
+		// 							type : "GET",
+		// 							data : $("#sortForm").serialize(),
+		// 							success : function(data) {
+		// 								$("#articleList").html(data);
+		// 								$("#sortSelect").val(selectedValue);
+		// 							}
+		// 						});
+		// 					});
+		// 				});
+
+		// 		    $(function() {
+		// 		        $("#searchForm, #sortForm").change(function(event) {
+		// 		            event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
+		// 		            var selectedValue = $("#sortSelect").val();
+		// 		            var searchedValue = $("#search").val();
+		// 		            $.ajax({
+		// 		                url : $("#searchForm").attr("action"),
+		// 		                type : "GET",
+		// 		                data : $("#searchForm, #sortForm").serialize(),
+		// 		                success : function(data) {
+		// 		                    $("#articleList").html(data);
+		// 		//                     $("#sortSelect").val(selectedValue);
+		// 		                    $("#search").val(searchedValue);
+
+		// 		                }
+		// 		            });
+		// 		        });
+		// 		    });
+
+		// function refreshPage() {
+		//     var sortBy = $('#sortSelect').val();
+		//     var category = $('#categoryForm a.active').data('category');
+		//     var search = $('#search').val();
+		//     $.ajax({
+		//         url: '${pageContext.request.contextPath}/articleList',
+		//         data: {
+		//             sortBy: sortBy,
+		//             category: category,
+		//             search: search
+		//         },
+		//         success: function(data) {
+		//             $('#page').html(data);
+		//         }
+		//     });
+		// }
+
+		// // 排序的select
+		// $('#sortSelect').on('change', function() {
+		//     refreshPage();
+		// });
+
+		// // 類別的選項
+		// $('#categoryForm a').on('click', function(event) {
+		//     event.preventDefault();
+		//     $('#categoryForm a').removeClass('active');
+		//     $(this).addClass('active');
+		//     refreshPage();
+		// });
+
+		// // 關鍵字的input
+		// $('#searchForm').on('submit', function(event) {
+		//     event.preventDefault();
+		//     refreshPage();
+		// });
+
+		function updateArticleList() {
+			var sortBy = $('#sortBySelect').val();
+			var search = $('#searchInput').val();
+			var categoryId = $('ul.aside-tags button.active').data('category-id');
+
+			$.ajax({
+				type : 'GET',
+				url : '${contextRoot}/articleList',
+				data : {
+					sortBy : sortBy,
+					search : search,
+					articleCategoryID : categoryId
+				},
+				success : function(data) {
+					$("#articleList").html(data);
+				},
+				error : function() {
+					alert('錯誤發生');
+				}
 			});
+		}
+
+		$('#sortBySelect').on('change', function() {
+			updateArticleList();
 		});
-	
-    $(function() {
-        $("#searchForm, #sortForm").change(function(event) {
-            event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-            var selectedValue = $("#sortSelect").val();
-            var searchedValue = $("#search").val();
-            $.ajax({
-                url : $("#searchForm").attr("action"),
-                type : "GET",
-                data : $("#searchForm, #sortForm").serialize(),
-                success : function(data) {
-                    $("#articleList").html(data);
-//                     $("#sortSelect").val(selectedValue);
-                    $("#search").val(searchedValue);
-                    
-                }
-            });
-        });
-    });
-</script>
+
+		$('#searchForm').on('submit', function(event) {
+			event.preventDefault();
+			updateArticleList();
+		});
+
+		$('ul.aside-tags button').on('click', function() {
+			$(this).addClass('active').siblings().removeClass('active');
+			updateArticleList();
+		});
+	</script>
 
 </body>
 </html>

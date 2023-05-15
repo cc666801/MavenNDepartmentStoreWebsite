@@ -88,6 +88,10 @@
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-aop</artifactId>
 		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 		<!--討論區用的,不要以為是BUG-->
 		<!--google驗證用-->
 		<dependency>

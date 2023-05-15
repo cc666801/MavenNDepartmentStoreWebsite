@@ -6,6 +6,10 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -22,6 +26,8 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleL
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
 
+
+
 @Service
 public class ArticleService {
  
@@ -33,6 +39,9 @@ public class ArticleService {
 	  
 	@Autowired
     private MemberRepository memberRepository;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 	
 	public void addArticle(Article article) {
 		articleRepository.save(article);
@@ -210,5 +219,99 @@ public class ArticleService {
 			        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.Direction.DESC, "articleCreateTime");
 			        return articleRepository.findByTitleContainingIgnoreCase(keyword, pageable);
 			    }
-	
+			 
+	//複雜搜尋
+//			public Page<Article> filterArticles(String search, Integer category, String sortBy, int page, int size) {
+//			    CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//			    CriteriaQuery<Article> query = builder.createQuery(Article.class);
+//			    Root<Article> article = query.from(Article.class);
+//			    List<Predicate> predicates = new ArrayList<>();
+//			    
+//			    // 添加搜索条件
+//			    if (search != null && !search.trim().isEmpty()) {
+//			        predicates.add(builder.like(builder.lower(article.get("articleTitle")), "%" + search.toLowerCase() + "%"));
+//			    }
+//			    
+//			    // 添加分类条件
+//			    if (category != null) {
+//			        Join<Article, ArticleCategory> categoryJoin = article.join("articleCategory");
+//			        predicates.add(builder.equal(categoryJoin.get("articleCategoryID"), category));
+//			    }
+//			    
+//			    // 添加排序条件
+//			    if (sortBy != null && !sortBy.trim().isEmpty()) {
+//			        Path<Object> sortByPath = null;
+//			        if ("articleCreateTime".equals(sortBy)) {
+//			            sortByPath = article.get("articleCreateTime");
+//			        } else if ("articleLikeCount".equals(sortBy)) {
+//			            sortByPath = article.get("likesCount");
+//			        } else if ("commentCount".equals(sortBy)) {
+//			            sortByPath = article.get("commentCount");
+//			        } else if ("comments.commentEditTime".equals(sortBy)) {
+//			            Join<Article, Comment> commentJoin = article.join("comments");
+//			            sortByPath = commentJoin.get("commentEditTime");
+//			        }
+//			        if (sortByPath != null) {
+//			            query.orderBy(builder.desc(sortByPath));
+//			        }
+//			    }
+//			
+//			 // 添加所有条件
+//		    if (!predicates.isEmpty()) {
+//		        query.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+//		    }
+//		    
+//		    // 查询结果并分页
+//		    TypedQuery<Article> typedQuery = entityManager.createQuery(query);
+//		    typedQuery.setFirstResult((page - 1) * size);
+//		    typedQuery.setMaxResults(size);
+//		    
+//		    List<Article> articles = typedQuery.getResultList();
+//		    long totalCount = countArticles(search, category);
+//		    return new PageImpl<>(articles, PageRequest.of(page - 1, size), totalCount);
+//		}
+//
+//		private long countArticles(String search, Integer category) {
+//		    CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//		    CriteriaQuery<Long> query = builder.createQuery(Long.class);
+//		    Root<Article> article = query.from(Article.class);
+//		    List<Predicate> predicates = new ArrayList<>();
+//		    
+//		    // 添加搜索条件
+//		    if (search != null && !search.trim().isEmpty()) {
+//		        predicates.add(builder.like(builder.lower(article.get("articleTitle")), "%" + search.toLowerCase() + "%"));
+//		    }
+//		    
+//		    // 添加分类条件
+//		    if (category != null) {
+//		        Join<Article, ArticleCategory> categoryJoin = article.join("articleCategory");
+//		        predicates.add(builder.equal(categoryJoin.get("articleCategoryID"), category));
+//		    }
+//		    
+//		    // 添加所有条件
+//		    if (!predicates.isEmpty()) {
+//		        query.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+//		    }
+//		    
+//		    // 查询结果数量
+//		    query.select(builder.count(article));
+//		    TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+//		    return typedQuery.getSingleResult();
+//		}
+			 
+			 public Page<Article> search(String articleTitle, Integer articleCategoryID, Pageable pageable) {
+			        if (StringUtils.isNotBlank(articleTitle) && articleCategoryID != null) {
+			            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
+			                    articleTitle, articleCategoryID, pageable);
+			        } else if (StringUtils.isNotBlank(articleTitle)) {
+			            return articleRepository.findByArticleTitleContainingOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
+			                    articleTitle, pageable);
+			        } else if (articleCategoryID != null) {
+			            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
+			                    articleCategoryID, pageable);
+			        } else {
+			            return articleRepository.findAll(pageable);
+			        }
+			    }
+			 
 }

@@ -12,14 +12,26 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 
 public interface ArticleRepository extends JpaRepository<Article, Integer>  {
 	List<Article> findAllByMemberId(Integer memberId);
-		
-	
-	 Page<Article> findByArticleCategory_articleCategoryID(Integer categoryId, Pageable pageable);
+	 
+	Page<Article> findByArticleCategory_articleCategoryID(Integer categoryId, Pageable pageable);
 	
 	 @Query("select a from Article a where lower(a.articleTitle) like %:keyword%")
 	    Page<Article> findByTitleContainingIgnoreCase(@Param("keyword") String keyword, Pageable pageable);
 	
-//	 List<Article> findArticlesBySearchConditions(Integer articleCategoryID, String keyword, String articleCreateTimeSort, String articleLikeCountSort, String commentCountSort, String commentEditTimeSort);
-	 
 	
+	// 以 articleTitle 搜尋，並以 articleEditTime, articleLikeCount, commentCount, commentEditTime 排序
+	 Page<Article> findByArticleTitleContainingOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
+			    String articleTitle,
+			    Pageable pageable);
+
+	    // 以 articleCategoryID 搜尋，並以 articleEditTime, articleLikeCount, commentCount, commentEditTime 排序
+	 Page<Article> findByArticleCategoryArticleCategoryIDOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
+			    Integer articleCategoryID,
+			    Pageable pageable);
+
+	    // 以 articleTitle 和 articleCategoryID 同時篩選，並以 articleEditTime, articleLikeCount, commentCount, commentEditTime 排序
+	 Page<Article> findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleEditTimeDescArticleLikeCountDescComments_CommentEditTimeDesc(
+			    String articleTitle,
+			    Integer articleCategoryID,
+			    Pageable pageable);
 }

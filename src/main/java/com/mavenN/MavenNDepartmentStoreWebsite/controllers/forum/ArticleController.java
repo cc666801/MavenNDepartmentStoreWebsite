@@ -16,6 +16,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,10 +37,11 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Comment;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleCategoryService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.CommentService;
+
+
 
 @Controller
 public class ArticleController {
@@ -195,25 +200,51 @@ public class ArticleController {
 	// 前台文章列表
 	
 	@GetMapping("/articleList")
-	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId,@RequestParam(name = "sortBy", defaultValue = "articleCreateTime") String sortBy,@RequestParam(name = "search", required = false) String search,
+	public String showPageFront(@RequestParam(required = false) String articleTitle,
+            @RequestParam(required = false) Integer articleCategoryID, @RequestParam(required = false) String sortBy,
+            @PageableDefault(direction = Sort.Direction.DESC) Pageable pageable,
  Model model) {
 		
-
-		 Page<Article> page;
+//		 Page<Article> page;
 		
-		 if (categoryId != null) {
-			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
-		    } else if ("articleLikeCount".equals(sortBy)) {
-		        page = articleService.findArticleByArticleLikeCountAndPage(pageNumber, 5);
-		    } else if ("commentCount".equals(sortBy)) {
-		        page = articleService.findArticleByCommentCountAndPage(pageNumber,5);
-		    }else if (search != null && !search.isBlank()) { 
-		        page = articleService.findArticleByKeywordAndPage(search,pageNumber, 5);
-		    } else {
-		        page = articleService.findArticleByPage(pageNumber, sortBy);
-		    }
-		    
+//		 if (categoryId != null) {
+//			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
+//		    } else if ("articleLikeCount".equals(sortBy)) {
+//		        page = articleService.findArticleByArticleLikeCountAndPage(pageNumber, 5);
+//		    } else if ("commentCount".equals(sortBy)) {
+//		        page = articleService.findArticleByCommentCountAndPage(pageNumber,5);
+//		    }else if (search != null && !search.isBlank()) { 
+//		        page = articleService.findArticleByKeywordAndPage(search,pageNumber, 5);
+//		    } else {
+//		        page = articleService.findArticleByPage(pageNumber, sortBy);
+//		    }
+		Pageable modifiedPageable = pageable;
+		int pageSize = 5; // 設定每頁顯示的文章數量
+		if (sortBy != null) {
+	        switch (sortBy) {
+	            case "articleCreateTime":
+	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
+	                        Sort.by("articleEditTime").descending());
+	                break;
+	            case "articleLikeCount":
+	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
+	                        Sort.by("articleLikeCount").descending());
+	                break;
+	            case "commentCount":
+	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
+	                        Sort.by("commentCount").descending());
+	                break;
+	            case "comments.commentEditTime":
+	                modifiedPageable = PageRequest.of(pageable.getPageNumber(),pageSize,
+	                        Sort.by("comments.commentEditTime").descending());
+	                break;
+	            default:
+	                break;
+	        }
+	    }
 
+	    Page<Article> page = articleService.search(articleTitle, articleCategoryID, modifiedPageable);
+    
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
@@ -251,14 +282,7 @@ public class ArticleController {
 		
 		return "/forum/article/articleList";
 	}
-
-//	@GetMapping("/articleList")
-//	public String findAllArtFront(Model model){
-//		List<Article> findAllArt=articleService.findAllArticle();
-//		model.addAttribute("artList", findAllArt);
-//		
-//		return "/forum/article/articleList";
-//	}
+	
 	// 前台發文
 	@GetMapping("/articleFront/add")
 	public String addArticleFront(Model model,HttpSession session, HttpServletRequest request) {
