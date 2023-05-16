@@ -36,7 +36,7 @@
 			<!-- (上面為置中效果) -->
 			<!-- 			<main id="main" class="container my-5"> -->
 			<!-- (上面若不放 為滿版效果) -->
-			<h1 class="mb-3">新增產品詳細資訊後台(新增後顯示畫面)</h1>
+			<h1 class="mb-3">產品詳細資訊後台</h1>
 
 			<form action="${contextRoot}/Store/Commodity/add">
 				<button type="submit" class="btn btn-primary mb-3">新增</button>
