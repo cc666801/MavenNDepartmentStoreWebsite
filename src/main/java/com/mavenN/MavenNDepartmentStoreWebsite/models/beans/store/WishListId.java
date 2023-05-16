@@ -10,6 +10,22 @@ public class WishListId implements Serializable {
     private Integer member;
 
     private Integer commodity;
+    
+    
+
+	public WishListId(Integer member, Integer commodity) {
+		super();
+		this.member = member;
+		this.commodity = commodity;
+	}
+	
+	
+
+	public WishListId() {
+		super();
+	}
+
+
 
 	public Integer getMember() {
 		return member;
