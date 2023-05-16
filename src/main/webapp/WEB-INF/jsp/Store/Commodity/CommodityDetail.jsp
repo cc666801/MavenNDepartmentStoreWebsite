@@ -93,6 +93,13 @@
 
 							<div class="row mt-4">
 								<div class="col-lg-6">
+
+									<div class="info" style="display: none;">
+										<h5 class="mb-0">商品編號</h5>
+										<p id="commodityId">${commodityInfo.commId}</p>
+									</div>
+
+
 									<div class="info">
 										<h5 class="mb-0">商品名稱</h5>
 										<p id="commodityName">${commodityInfo.commName}</p>
@@ -227,7 +234,46 @@
 
 
 	<!-- 	購物車 -->
+	<script>
+		// load on 事件
+		document.addEventListener("DOMContentLoaded", function () {
+			var shoppingCartButton = document.getElementById('shopping-cart-button');
+			var commodityId = document.getElementById('commodityId').innerText;
+			var memberId = "${member.id}";
 
+			shoppingCartButton.addEventListener('click', function (e) {
+				e.preventDefault(); // 防止表单提交
+
+				var quantity = document.getElementById('quantity').value; // 获取数量
+
+				console.log("memberId:" + memberId + "commodityId:" + commodityId + "quantity:" + quantity);
+
+				fetch('${contextRoot}/api/shoppingCart', {
+					method: 'POST',
+					headers: {
+						'Content-Type': 'application/json'
+					},
+					body: JSON.stringify({
+						commodityId: commodityId,
+						quantity: quantity,
+						memberId: memberId
+					})
+				})
+					.then(response => {
+						if (response.ok) {
+							console.log('加入購物車成功');
+							alert('加入購物車成功');
+						} else {
+							console.log('加入購物車失敗');
+							alert('加入購物車失敗');
+						}
+					})
+					.catch(error => {
+						console.error('Error:', error);
+					});
+			});
+		});
+	</script>
 
 </body>
 

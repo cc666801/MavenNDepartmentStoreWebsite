@@ -15,7 +15,7 @@ import javax.persistence.TemporalType;
 
 import org.springframework.format.annotation.DateTimeFormat;
 
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 
 @Entity
 @Table(name="restaurant_Reservation")
@@ -37,9 +37,10 @@ public class Reservation {
 	@Column(columnDefinition = "nvarchar(100)")
 	private String remark;
 	
+	
 	@ManyToOne
-	@JoinColumn(name="company_id")
-	private Company company;
+	@JoinColumn(name="restaurantInformation_id", nullable = false)
+	private RestaurantInformation restaurantInformation;
 
 	@DateTimeFormat(pattern = "yyyy-MM-dd")
 	@Temporal(TemporalType.DATE)
@@ -47,7 +48,7 @@ public class Reservation {
 	private Date date;
 	
 	@Column(columnDefinition = "nvarchar(50) NOT NULL")
-	private String time_interval;
+	private String timeInterval;
 	
 	@Column(columnDefinition = "nvarchar(50) NOT NULL")
 	private String time;
@@ -57,6 +58,10 @@ public class Reservation {
 	
 	@Column(columnDefinition = "int NOT NULL")
 	private Integer children;
+	
+	@ManyToOne
+	@JoinColumn(name="member_id")
+	private Member member;
 
 	// Constructor
 	public Reservation() {
@@ -64,14 +69,23 @@ public class Reservation {
 	}
 	
 	// getter & setter
-	
-	public Company getCompany() {
-		return company;
+		
+	public RestaurantInformation getRestaurantInformation() {
+		return restaurantInformation;
 	}
 	
-	public void setCompany(Company company) {
-		this.company = company;
+	public void setRestaurantInformation(RestaurantInformation restaurantInformation) {
+		this.restaurantInformation = restaurantInformation;
 	}
+	
+	public Member getMember() {
+		return member;
+	}
+	
+	public void setMember(Member member) {
+		this.member = member;
+	}
+
 	
 	public Integer getR_id() {
 		return r_id;
@@ -121,12 +135,12 @@ public class Reservation {
 		this.date = date;
 	}
 
-	public String getTime_interval() {
-		return time_interval;
+	public String getTimeInterval() {
+		return timeInterval;
 	}
 
-	public void setTime_interval(String time_interval) {
-		this.time_interval = time_interval;
+	public void setTimeInterval(String timeInterval) {
+		this.timeInterval = timeInterval;
 	}
 
 	public String getTime() {

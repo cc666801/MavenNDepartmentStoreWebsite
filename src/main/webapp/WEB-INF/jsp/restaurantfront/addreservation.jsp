@@ -60,6 +60,23 @@ fieldset{
 <title>餐廳頁面</title>
 </head>
 <body>
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+  <div class="container-fluid">
+    <a class="navbar-brand" href="${contextRoot}">回Mavenn百貨公司</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarScroll" aria-controls="navbarScroll" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+	   <div class="collapse navbar-collapse" id="navbarScroll">
+	      <ul class="navbar-nav me-auto my-2 my-lg-0 navbar-nav-scroll" style="--bs-scroll-height: 100px;">
+	        <li class="nav-item">
+	          <a class="nav-link active" aria-current="page" href="${contextRoot}/restaurantfront">餐廳</a>
+            </li>
+          </ul>
+       </div>
+       
+   </div>   
+</nav>
+
 	<div id="carouselExampleIndicators" class="carousel slide"
 		data-bs-ride="carousel">
 		<div class="carousel-indicators">
@@ -73,17 +90,15 @@ fieldset{
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="https://picsum.photos/1000/200?random=10"
-					class="d-block w-100" alt="...">
+				<img src="${contextRoot}/assetsForFrontend/img/${findRestaurant.company.companyName}1.jpg"
+					class="d-block w-100" style="height:300px" alt="${findRestaurant.company.companyName}餐廳的圖片">
 			</div>
+			<jstl:forEach var="i" begin="2" end="3">
 			<div class="carousel-item">
-				<img src="https://picsum.photos/1000/200?random=9"
-					class="d-block w-100" alt="...">
+				<img src="${contextRoot}/assetsForFrontend/img/${findRestaurant.company.companyName}${i}.jpg"
+					class="d-block w-100" style="height:300px" alt="${findRestaurant.company.companyName}餐廳的圖片">
 			</div>
-			<div class="carousel-item">
-				<img src="https://picsum.photos/1000/200?random=8"
-					class="d-block w-100" alt="...">
-			</div>
+			</jstl:forEach>
 		</div>
 		<button class="carousel-control-prev" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -99,11 +114,26 @@ fieldset{
 
 	<div class="container">
 		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
-			<div class="col-sm-3 col-12 border border-2 border-secondary me-2">
-				<div class="mt-2" style="height: 200px;">
-					<img src="data:image/png;base64,${findRestaurant.company.base64StringCompanyLogo}"
-						 class="img-fluid mx-auto d-block h-100 rounded"
-						 alt="${findRestaurant.company.companyName}的logo">
+			<div class="col-sm-3 col-12 me-2">
+				<div class="row mt-2 justify-content-left">
+					<div class="col-11">
+						<img src="data:image/png;base64,${findRestaurant.company.base64StringCompanyLogo}"
+							 class="mx-auto img-thumbnail border border-4 rounded" style="width:250px; height: 200px"
+							 alt="${findRestaurant.company.companyName}的logo">
+					</div>
+				</div>
+				<div class="row mt-2">
+					<div class="col-12">
+					<h3>${findRestaurant.company.companyName}</h3>
+					<p>
+					<jstl:forEach items="${restaurantCounter}" var="Counter">
+						<jstl:if test="${findRestaurant.company.companyId == Counter.company.companyId}">
+						${findRestaurant.company.address.addressName} &nbsp;${Counter.counter.counterFloor}&nbsp;${Counter.counter.counterName} <br>
+						</jstl:if>
+					</jstl:forEach>
+						${findRestaurant.cuisineType.cuisineTypeName} <br>
+					</p>
+					</div>
 				</div>
 			</div>
 
@@ -114,36 +144,40 @@ fieldset{
 						action="${contextRoot}/restaurantfront/post">
 						<div class="col-5">
 							用餐人數 
-							<form:select path="adult" id="AId" class="form-select">
+							<form:select path="adult" id="AId" class="form-select" onchange="updateChildrenOptions()">
 								<jstl:forEach var="i" begin="0" end="10">
 									<option value="${i}">${i}位大人</option>
 								</jstl:forEach>
 							</form:select><br> 
 							
-							<form:select path="children" id="CId" class="form-select">
+							<form:select path="children" id="CId" class="form-select" onchange="updateAdultOptions()">
 								<jstl:forEach var="i" begin="0" end="10">
 									<option value="${i}">${i}位小孩</option>
 								</jstl:forEach>
-							</form:select><br>
+							</form:select>
 	
 						</div>
 						<div class="col-5">
-							用餐時間
+							用餐日期
 							<div class="input-group date" id="datepicker">
-								<form:input type="text" path="date" class="form-control" id="DId" readonly="readonly" />
+								<form:input type="text" path="date" class="form-control" id="DId" readonly="readonly"/>
 								 <span class="input-group-append"> 
 								 	<span class="input-group-text bg-white d-block"> 
 								 		<i class="bi bi-calendar"></i>
 									</span>
 								</span>
 							</div><br>
-							<form:input type="hidden" path="company" value="${findRestaurant.company.companyId}" readonly="readonly" />
+							<form:input type="hidden" path="restaurantInformation" value="${findRestaurant.resid}" readonly="readonly" />
 						</div>
-					
-	
-						<div class="col-12">						
+						
+						<div class="col-10 mb-3">
+							<p style="color:#706363; margin:0px">線上訂位最多可至10人(含大人與小孩),如需團體訂位請撥打餐廳電話</p>
+						</div>
+						
+						<div class="col-12">
+						<h5>用餐時段</h5>					
 								<fieldset>
-									<legend class="title">晚上</legend>
+									<legend class="title">中午</legend>
 									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
 										<jstl:forEach var="i" begin="11" end="14">
 											<jstl:choose>
@@ -219,82 +253,87 @@ fieldset{
 									</div>
 								</fieldset>
 								<div>
-								<form:input type="hidden" path="time_interval" id="timeintervalcode" readonly="readonly" />
+								<form:input type="hidden" path="timeInterval" id="timeintervalcode" readonly="readonly" />
 								<form:input type="hidden" path="time" id="timecode" readonly="readonly" />
 								</div>						
 						</div>
 						<br>
 					
-						
-<!--           有按鈕會員登入 
+<!--           有按鈕會員登入  -->	
 						<jstl:if test="${empty member}">
-			
-							
-							<a href="${contextRoot}/member/login" class="mx-2">
-								<button type="button" class="btn btn-primary" id="memberlogin">送出</button>
-							</a>
-					
+										
+							<div class="row justify-content-center mt-4">
+								<div class="d-grid gap-2 col-6 mx-auto">
+								  <a href="${contextRoot}/member/login">
+									<button type="button" class="btn btn-secondary btn-lg w-100" style="hight:80px"> 登入會員,可享線上訂位</button>
+								  </a>
+								</div>
+							</div>
+											
 						</jstl:if>
 			
 						<jstl:if test="${not empty member}">
 			
-							<div class="col-6" >
-							<label for="NId">姓名：</label>
-							<br>
-							<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}"/>
-							<br>
-							<label for="TId">電話：</label>
-							<br>
-							<form:input type="text" path="telephone" id="TId" />
-							<br>
-							<label for="EId">email:</label>
-							<br>
-							<form:input type="text" path="email" id="EId" />
-							<br>
-							<label for="note">備註：</label>
-							<br>
-							<form:textarea id="note" path="remark" cols="30" rows="10"></form:textarea>
+							<div class="row justify-content-center">
+								<div class="col-12 px-4 py-2 border border border-secondary rounded-4 mt-4 md-2">
+									<h2>聯絡資訊</h2>
+									<form:input type="hidden" path="member" id="memberId" value="${sessionScope.member.id}" class="w-100"/>
+									<label for="NId">姓名</label>
+									<br>
+									<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}" class="w-100"/>
+									<br>
+									<label for="TId">電話</label>
+									<br>
+									<form:input type="text" path="telephone" id="TId" value="${sessionScope.member.phone}" class="w-100"/>
+									<br>
+									<label for="EId">email</label>
+									<br>
+									<form:input type="text" path="email" id="EId" value="${sessionScope.member.email}" class="w-100"/>
+									<br>
+									<label for="note">備註</label>
+									<br>
+									<form:textarea id="note" path="remark" rows="8" class="w-100" placeholder="可以填入您的需求,如:小孩需要兒童座椅、吃全素....."></form:textarea>
+								</div>
 							</div>
-							<div class="col-9">
-								<button type="submit" class="btn btn-primary">送出</button>
+							<div class="row justify-content-center mt-2" style="height: 40px">
+								<div class="d-grid gap-2 col-6 mx-auto">
+								  <button type="submit" class="btn btn-primary btn-block">送出</button>
+								</div>
 							</div>
 			
 						</jstl:if>
-	-->					
-
-<!-- 			-----------------以下為會員登入-->
-						<div class="col-11" >
-							<label for="NId">姓名：</label>
-							<br>
-							<form:input type="text" path="name" id="NId" value="${sessionScope.member.name}"/>
-							<br>
-							<label for="TId">電話：</label>
-							<br>
-							<form:input type="text" path="telephone" id="TId" value="${sessionScope.member.phone}"/>
-							<br>
-							<label for="EId">email:</label>
-							<br>
-							<form:input type="text" path="email" id="EId" value="${sessionScope.member.email}"/>
-							<br>
-							<label for="note">備註：</label>
-							<br>
-							<form:textarea id="note" path="remark" cols="30" rows="10"></form:textarea>
-							</div>
-							<div class="col-9">
-								<button type="submit" class="btn btn-primary btn-block">送出</button>
-						</div>
-					
-
-
-
 					</form:form>
 					
-				<div class="row">
-					<div class="justify-content-center">
+				<div class="row mt-5 justify-content-center">
+					<div class="col-12">
 						<iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3088.3696025510344!2d120.21466690330259!3d22.99764855243827!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x346e768d1a35d7a9%3A0x1689894ccb6260d4!2z5oiQ5Yqf5aSn5a24IOWFieW-qeagoeWNgOaTjeWgtA!5e0!3m2!1szh-TW!2stw!4v1683616858505!5m2!1szh-TW!2stw" 
 						width="100%" height="450" style="border:0;" allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
 					</div>
+					<div class="col-11 py-auto  mt-2 border-bottom border-2 border-light">
+						<h5>餐廳位置</h5>
+						<p style="mergin:0px">
+						<jstl:forEach items="${restaurantCounter}" var="Counter">
+						<jstl:if test="${findRestaurant.company.companyId == Counter.company.companyId}">
+							${findRestaurant.company.address.addressName} &nbsp;${Counter.counter.counterFloor}&nbsp;${Counter.counter.counterName}
+						</jstl:if>
+						</jstl:forEach>
+						</p>
+					</div>
+					<div class="col-11 py-auto border-bottom border-2 border-light">
+						<h5>料理類型</h5>
+						<p>${findRestaurant.cuisineType.cuisineTypeName} </p>
+					</div>
+					<div class="col-11 py-auto border-bottom border-2 border-light">
+						<h5>餐廳電話</h5>
+						<p>${findRestaurant.company.companyPhone} </p>
+					</div>
+					<div class="col-11 py-auto border-bottom border-2 border-light">
+						<h5>營業時間</h5>
+						<p>${findRestaurant.company.openingHours.openingHoursName} </p>
+					</div>
+					
 				</div>
+				
 			
 			</div>
 		</div>
@@ -307,7 +346,62 @@ fieldset{
 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
 
 
-	<script type="text/javascript">		
+	<script type="text/javascript">	
+// 	以下為人數事件
+		function updateChildrenOptions() {
+		    let adultSelect = document.getElementById("AId");
+		    let childrenSelect = document.getElementById("CId");
+		    let adultValue = adultSelect.value;
+		    let oldChildrenValue = childrenSelect.value;
+		   
+		    console.log(oldChildrenValue);
+		    
+		    childrenSelect.innerHTML = ""; // 清空小孩選項
+		    
+		    for (let i = 0; i <= 10-adultValue; i++) {
+		    	if(i == oldChildrenValue){
+			    	let defaultOption = document.createElement("option");
+			    	defaultOption.value = i;
+			    	defaultOption.text = i + "位小孩";
+			    	defaultOption.selected = true;
+			        childrenSelect.appendChild(defaultOption);	// 預設小孩選項	    	
+		    	}else{	    		
+		    	let option = document.createElement("option");
+		        option.value = i;
+		        option.text = i + "位小孩";
+		        childrenSelect.appendChild(option); // 新增小孩選項
+		    	}
+		    }
+		}
+		
+		function updateAdultOptions(){
+			let adultSelect = document.getElementById("AId");
+			let childrenSelect = document.getElementById("CId");
+			let childrenValue = childrenSelect.value;
+			let oldAdultValue = adultSelect.value;
+		    
+		    console.log(childrenValue);
+		    
+		    adultSelect.innerHTML = ""; // 清空大人選項
+		    
+		    for (let i = 0; i <= 10-childrenValue; i++) {
+		    	if(i == oldAdultValue){
+		    		let defaultOption = document.createElement("option");
+			    	defaultOption.value = i;
+			    	defaultOption.text = i + "位大人";
+			    	defaultOption.selected = true;
+			    	adultSelect.appendChild(defaultOption);	// 預設大人選項
+		    	}else{
+			    	let option = document.createElement("option");
+			        option.value = i;
+			        option.text = i + "位大人";
+			        adultSelect.appendChild(option); // 新增大人選項		    		
+		    	}
+		    	
+		    }
+		}
+	//end
+		
 		$(document).ready(function() {
 			let now = new Date();
 			$('#datepicker').datepicker({
@@ -321,7 +415,7 @@ fieldset{
 
 					beforeShowDay : function(date) {
 					// 禁用今天之前和3個月之後的日期
-					return date < now || date.getMonth() > (now.getMonth() + 3) ? false: true;
+					return date < now || date.getMonth() > (now.getMonth() + 2) ? false: true;
 					}
 
 				});
@@ -329,6 +423,8 @@ fieldset{
 	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
 	 		let date = now.getDate().toString().padStart(2, '0');
 			$('#DId').val(year + '-' + mouth + '-' + date);
+			
+			
 		});
 
 		//   ---------以下是按鈕事件
@@ -340,6 +436,8 @@ fieldset{
 			$('#timeintervalcode').val(timetime);
 			
 		});
+		
+//	 	以下為人數事件		
 
 	</script>
 

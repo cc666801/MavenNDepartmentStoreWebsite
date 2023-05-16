@@ -30,7 +30,7 @@
 
 		<div id="layoutSidenav_content">
 			<main>
-				<h1>料理分類查詢</h1>
+				<h1>餐廳詳細表查詢</h1>
 				<div>
 					<a href="${contextRoot}/restaurantInformation/add"><button
 							class="btn btn-dark">新增</button></a>
@@ -57,15 +57,14 @@
 								<td>${restInformation.company.companyName}</td>
 								<td>${restInformation.cuisineType.cuisineTypeName}</td>
 
-								<td><form action="#">
-										<input type="hidden" name="r_id" value="" /> <input
+								<td><form action="${contextRoot}/restInformarion/editPage">
+										<input type="hidden" name="resid" value="${restInformation.resid}" /> <input
 											type="submit" class="btn btn-warning btn-sm" value="編輯" />
 									</form></td>
-								<td><form action="#"
-										method="post">
-										<input type="hidden" name="_method" value="delete" /> <input
-											type="hidden" name="r_id" value="" /> <input
-											type="submit" class="btn btn-danger btn-sm" value="刪除" />
+								<td><form action="${contextRoot}/restInformarion/delete" method="post">
+										<input type="hidden" name="_method" value="delete" /> 
+										<input type="hidden" name="resid" value="${restInformation.resid}" /> 
+										<input type="submit" class="btn btn-danger btn-sm" value="刪除" />
 									</form></td>
 								<%-- 			<td><a href="DeleteBookById.do?Id=${m.id}"><button>刪除</button></a></td> --%>
 							</tr>

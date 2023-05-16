@@ -12,10 +12,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestReservationRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestaurantInformationRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyCounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 
 @Service
@@ -28,6 +31,30 @@ public class RestReservationService {
 	
 	@Autowired
 	private RestaurantInformationRepository restInformationRepository;
+	
+	@Autowired
+	private CompanyCounterRepository compCounterRepository;
+	
+	public List<CompanyCounter> findCompanyCounter(){
+			 List<CompanyCounter> findCounter = compCounterRepository.findByCompany();
+		
+		 if(findCounter.isEmpty()) {
+			 return null;
+		 }
+		 
+		 return findCounter;
+	}
+	
+	
+	public List<Reservation> findMemberReservation(Integer memberid){
+		List<Reservation> findMemberRes = resRepository.findByMemberIdOrderByDateAsc(memberid);
+		
+		if(findMemberRes.isEmpty()) {
+			return null;
+		}
+		
+		return findMemberRes;
+	}
 	
 	public void addreservation (Reservation res) {
 		resRepository.save(res);
@@ -45,15 +72,20 @@ public class RestReservationService {
 	}
 	
 	public Page<RestaurantInformation> findByUserQueryCompany(String companyname, Integer pageNumber){
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "resid");
 		Page<RestaurantInformation> findByCompanyNameContaining = restInformationRepository.findrestByCompanyname(companyname, pg);
 		return findByCompanyNameContaining;
 	}
 	
 	public Page<RestaurantInformation> findAllrestInformationPage(Integer pageNumber) {
-		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "company");
+		PageRequest pg = PageRequest.of(pageNumber-1, 9, Sort.Direction.DESC, "resid");
 		Page<RestaurantInformation> page = restInformationRepository.findAll(pg);
 		return page;
+	}
+	
+	public List<RestaurantInformation> findAllRestInformation() {
+		List<RestaurantInformation> findAllRestaurantInformation = restInformationRepository.findAll();
+		return findAllRestaurantInformation;
 	}
 	
 	public List<Reservation> findAllReservation() {
@@ -78,23 +110,23 @@ public class RestReservationService {
 	
 	@Transactional
 	public Reservation upDateReservationbyid(Integer r_id, String name, String telephone, 
-											 Company company,String email, String remark, 
-											 Date date,String time_interval, String time,
-											 Integer adult, Integer children) {
+											 RestaurantInformation rest,String email, String remark, 
+											 Date date,String timeinterval, String time,
+											 Integer adult, Integer children, Member member) {
 		Optional<Reservation> option = resRepository.findById(r_id);
 		if(option.isPresent()) {
 			Reservation res = option.get();
-			System.out.println(res);
 			res.setName(name);
 			res.setTelephone(telephone);
-			res.setCompany(company);
+			res.setRestaurantInformation(rest);
 			res.setEmail(email);
 			res.setRemark(remark);
 			res.setDate(date);
-			res.setTime_interval(time_interval);
+			res.setTimeInterval(timeinterval);
 			res.setTime(time);
 			res.setAdult(adult);
-			res.setChildren(children);		
+			res.setChildren(children);	
+			res.setMember(member);
 			return res;
 			
 		}		

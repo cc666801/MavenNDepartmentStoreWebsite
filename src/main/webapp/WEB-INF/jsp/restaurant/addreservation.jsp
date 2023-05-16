@@ -36,11 +36,11 @@
 						modelAttribute="reservation"
 						action="${contextRoot}/reservation/post">
 						<label for="CId">餐廳：</label>
-						<form:select path="company" id="CId" class="form-select"
+						<form:select path="restaurantInformation" id="CId" class="form-select"
 							style="width: 200px">
-							<jstl:forEach items="${findAllCompany}" var="comp">
+							<jstl:forEach items="${findAllRestInfor}" var="restinfor">
 							
-								<form:option value="${comp.companyId}">${comp.companyName}</form:option>
+								<form:option value="${restinfor.company.companyId}">${restinfor.company.companyName}</form:option>
 							</jstl:forEach>
 						</form:select>
 
@@ -66,7 +66,7 @@
 						
 						<label for="TimeId">時段：</label><br>
 						
-						<form:select path="time_interval" id="TimeId" class="form-select"
+						<form:select path="timeInterval" id="TimeId" class="form-select"
 							style="width: 200px">
 							<form:option value="中午">中午</form:option>
 							<form:option value="下午">下午</form:option>
@@ -102,6 +102,8 @@
 						</form:select><br>
 
 						<button type="submit" class="btn btn-primary">送出</button>
+						<a href="${contextRoot}/restaurant">
+						<button type="button" class="btn btn-primary ms-2">回查詢頁面</button></a>
 					</form:form>
 				</div>
 			</main>
@@ -114,20 +116,17 @@
 		</div>
 	</div>
 	<!-- 	<script> -->
-	<script
-		src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
-		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js"
+		    crossorigin="anonymous"></script>
 	<script src="${contextRoot}/assetsForBackend/js/scripts.js"></script>
 	<!-- 	<script -->
 	<!-- 		src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js" -->
 	<!-- 		crossorigin="anonymous"></script> -->
 	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-area-demo.js"></script> --%>
 	<%-- 	<script src="${contextRoot}/assetsForBackend/demo/chart-bar-demo.js"></script> --%>
-	<script
-		src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
-		crossorigin="anonymous"></script>
-	<script
-		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/simple-datatables@7.1.2/dist/umd/simple-datatables.min.js"
+		    crossorigin="anonymous"></script>
+	<script src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 
 	<!-- 	</script> -->
 

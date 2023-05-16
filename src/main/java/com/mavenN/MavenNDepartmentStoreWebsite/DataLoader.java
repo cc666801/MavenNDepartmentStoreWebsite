@@ -12,12 +12,15 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Cooper
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Counter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.IndustryCategory;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.OpeningHours;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.Coupon;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderStatus;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.AddressRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CooperationStatusRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CounterRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.IndustryCategoryRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.OpeningHoursRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.CouponMemberRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.CouponRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.orderSystem.OrderStatusRepository;
 
 @Component
@@ -35,6 +38,10 @@ public class DataLoader implements CommandLineRunner {
 	private CounterRepository counterRepository;
 	@Autowired
 	private OrderStatusRepository orderStatusRepository;
+	@Autowired
+	private CouponRepository couponRepository;
+	@Autowired
+	private CouponMemberRepository couponMemberRepository;
 	
 
 	@Override
@@ -87,10 +94,16 @@ public class DataLoader implements CommandLineRunner {
 		
 		// OrderStatus
 		OrderStatus orderStatus1 = new OrderStatus(1, "已取消訂單");
-		OrderStatus orderStatus2 = new OrderStatus(2, "已付款訂單");
+		OrderStatus orderStatus2 = new OrderStatus(2, "信用卡付款訂單");
 		OrderStatus orderStatus3 = new OrderStatus(3, "貨到付款訂單");
 		List<OrderStatus> orderStatusList = Arrays.asList(orderStatus1, orderStatus2, orderStatus3);
 		orderStatusRepository.saveAll(orderStatusList);
+		
+		// Coupon
+		Coupon coupon1 = new Coupon(1,"折扣10%",Double.toString(0.9));
+		Coupon coupon2 = new Coupon(2,"折扣20%",Double.toString(0.8));
+		List<Coupon> couponList = Arrays.asList(coupon1, coupon2);
+		couponRepository.saveAll(couponList);
 	}
 
 }

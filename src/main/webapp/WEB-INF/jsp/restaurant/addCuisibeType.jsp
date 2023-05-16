@@ -30,7 +30,7 @@
 
 		<div id="layoutSidenav_content" style="background-color: #fdf5e6">
 			<main>
-				<h1>新增訂位</h1>
+				<h1>新增料理類型</h1>
 				<div>
 					<form:form class="form-control" method="post"
 						modelAttribute="cuisinetype"
@@ -39,8 +39,11 @@
 						<label for="typename">料理類型：</label>
 						<br>
 						<form:input type="text" path="cuisineTypeName" id="typename" autofocus="autofocus"/>
-						<br>
+						<div class="mt-2">
 						<button type="submit" class="btn btn-primary">送出</button>
+						<a href="${contextRoot}/cuisiontype">
+						<button type="button" class="btn btn-primary ms-2">回查詢頁面</button></a>
+						</div>
 					</form:form>
 				</div>
 			</main>

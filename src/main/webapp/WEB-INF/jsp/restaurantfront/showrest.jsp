@@ -26,7 +26,7 @@
 				<div class="col-12 col-md-4 gx-5">
 				<form action="${contextRoot}/restaurantfront/UserQueryCompany">
 					<div class="input-group mb-3 mt-2">
-						<input type="text" class="form-control" placeholder="請輸入餐廳"
+						<input type="text" class="form-control" placeholder="請輸入餐廳or料理類型"
 							aria-label="請輸入餐廳" aria-describedby="basic-addon2"
 							name="companyname" />
 						<button class="btn btn-outline-secondary" type="submit"
@@ -48,11 +48,22 @@
 							<div class="card-body">
 								<h5 class="card-title">${restaurant.company.companyName}</h5>
 								<p class="card-text">
-									位置:${restaurant.company.address.addressName}<br>
+									<jstl:forEach items="${restaurantCounter}" var="Counter" varStatus="status">
+										<jstl:if test="${restaurant.company.companyId == Counter.company.companyId}">
+											位置:${restaurant.company.address.addressName} &nbsp;${Counter.counter.counterFloor}&nbsp;${Counter.counter.counterName} <br>
+										</jstl:if>
+									</jstl:forEach>
+									
 									料理類型:${restaurant.cuisineType.cuisineTypeName}<br>
-									card title and make up the bulk of the card's content.</p>
-								<a href="${contextRoot}/restaurantfront/reservation?restid=${restaurant.resid}"
-									class="btn btn-primary stretched-link">訂位去</a>
+								</p>
+								<jstl:if test="${empty member}">
+									<a href="${contextRoot}/member/login"
+										class="btn btn-primary stretched-link">登入會員,可享線上訂位</a>
+								</jstl:if>
+								<jstl:if test="${not empty member}">
+									<a href="${contextRoot}/restaurantfront/reservation?restid=${restaurant.resid}"
+										class="btn btn-primary stretched-link">訂位去</a>
+								</jstl:if>
 							</div>
 						</div>
 					</div>
@@ -76,6 +87,7 @@
 					</jstl:forEach>
 				</div>
 			</div>
+			
 		</div>
 	</main>
 </body>
