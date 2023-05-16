@@ -33,14 +33,17 @@
                     <i class="fa-solid fa-cart-shopping"></i>
                     購物車商品
                   </h3>
+                  <hr style="width: 50%; margin: 0 auto;">
                 </div>
               </div>
-              <div id="discount-div" class="card" style="width: 20%; "  >
-                <h5 class="card-title" style="margin: 2% 2%;">目前還未使用的優惠卷:</h3>
+              <div id="discount-div" class="card-header border border-secondary" style="width: 20%;height: auto;
+              min-height: 100px;margin-left: 3%;">
+                <h5 class="card-title border-bottom border-info" style="margin: 2% 2%;">目前還未使用的優惠卷:</h3>
+               
                 </div>
 
               <div>
-                <table class="table">
+                <table class="table" style="min-height: 200px; height: auto;">
                   <thead>
                     <tr>
                       <th scope="col"></th>
@@ -267,6 +270,7 @@
                 // 创建一个 div 元素作为每个优惠券的容器
                 var couponDiv = document.createElement('div');
                 couponDiv.classList.add('card-body');
+                couponDiv.style = 'margin:0 3% 3% 3%;';
 
                 // 创建并设置优惠券的文本内容
                 var couponText = document.createTextNode(coupon.couponName);
@@ -275,6 +279,9 @@
                 // 创建套用按钮
                 var applyButton = document.createElement('button');
                 applyButton.textContent = '套用';
+                applyButton.className = 'btn btn-info'
+                applyButton.style='margin-left:3%';
+                
                 applyButton.addEventListener('click', function () {
                   var total = document.getElementById("total").innerHTML;
                   orderTotal = total;

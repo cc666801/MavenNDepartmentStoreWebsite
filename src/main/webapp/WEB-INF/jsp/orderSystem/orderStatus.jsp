@@ -33,16 +33,33 @@
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     訂單狀態
                   </h3>
+                  <hr style="width: 50%; margin: 0 auto;">
                 </div>
               </div>
-              <div id="cash-on-delivery-order-div">
+              <div class="border border-secondary" style="width: 20%;">
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="cashOnDelivery" name="paymentMethod" value="cashOnDelivery">
+                <label class="form-check-label" for="cashOnDelivery">貨到付款訂單</label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="creditCard" name="paymentMethod" value="creditCard">
+                <label class="form-check-label" for="creditCard">信用卡付款訂單</label>
+              </div>
+              
+              <div class="form-check">
+                <input class="form-check-input" type="checkbox" id="cancelledOrder" name="orderStatus" value="cancelledOrder">
+                <label class="form-check-label" for="cancelledOrder">已取消訂單</label>
+              </div>
+            </div>
+              <div id="cash-on-delivery-order-div" style="min-height: 100px; height: auto;padding-top: 1%;">
                 <h4>貨到付款訂單</h4>
                 <ul class="list-group" id="cash-on-delivery-order">
                   
                 </ul>
               </div>
               
-              <div id="payment-flow-order-div">
+              <div id="payment-flow-order-div" style="min-height: 100px; height: auto;padding-top: 1%;">
                 <h4>信用卡付款訂單</h4>
                 <ul class="list-group" id="payment-flow-order">
                   
@@ -51,7 +68,7 @@
               
               <!-- style="display: none;" -->
               <div 
-               id="cancelled-order-div">
+               id="cancelled-order-div" style="min-height: 100px; height: auto;padding-top: 1%;">
                 <h4>已取消訂單</h4>
                 <ul class="list-group" id="cancelled-order" >
 
