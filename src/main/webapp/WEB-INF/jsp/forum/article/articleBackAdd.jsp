@@ -267,8 +267,8 @@ button[type="submit"]:hover, .previewArticle:hover {
 						$('#articlePreview').html(contents);
 					}
 				},
-				codeviewFilter : true,
-				codeviewIframeFilter : true,
+// 				codeviewFilter : true,
+// 				codeviewIframeFilter : true,
 				lang : 'zh-TW'
 
 			});

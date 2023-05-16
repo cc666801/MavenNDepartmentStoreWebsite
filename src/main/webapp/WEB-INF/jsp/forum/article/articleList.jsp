@@ -67,7 +67,7 @@
 									<a href="${contextRoot}/articleContent/${art.articleID}"
 										class="me-4 thumbnail"> <img
 										src="data:image/jpeg;base64,${art.articleBase64}" alt=""
-										class="img-fluid" style="max-width: 80%; max-height: 80%;">
+										class="img-fluid" style="max-width: 200px; max-height: 200px;">
 									</a>
 									<div>
 										<div class="post-meta">

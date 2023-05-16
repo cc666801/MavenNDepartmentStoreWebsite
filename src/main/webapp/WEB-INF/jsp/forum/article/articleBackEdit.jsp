@@ -291,8 +291,8 @@ button[type="submit"]:hover,
 						$('#articlePreview').html(contents);
 					}
 				},
-				codeviewFilter : true,
-				codeviewIframeFilter : true,
+// 				codeviewFilter : true,
+// 				codeviewIframeFilter : true,
 				lang : 'zh-TW'
 
 			});

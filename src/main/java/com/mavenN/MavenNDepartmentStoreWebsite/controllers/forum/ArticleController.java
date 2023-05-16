@@ -206,19 +206,7 @@ public class ArticleController {
             @RequestParam(name = "p",defaultValue = "0") int pageNumber,
  Model model) {
 		
-//		 Page<Article> page;
-		
-//		 if (categoryId != null) {
-//			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
-//		    } else if ("articleLikeCount".equals(sortBy)) {
-//		        page = articleService.findArticleByArticleLikeCountAndPage(pageNumber, 5);
-//		    } else if ("commentCount".equals(sortBy)) {
-//		        page = articleService.findArticleByCommentCountAndPage(pageNumber,5);
-//		    }else if (search != null && !search.isBlank()) { 
-//		        page = articleService.findArticleByKeywordAndPage(search,pageNumber, 5);
-//		    } else {
-//		        page = articleService.findArticleByPage(pageNumber, sortBy);
-//		    }
+
 		System.out.println("keyword: " + keyword);
 	    System.out.println("categoryId: " + categoryId);
 	    System.out.println("sortBy: " + sortBy);
@@ -279,7 +267,7 @@ public class ArticleController {
 	        model.addAttribute("errorMsg", "請先登入會員");
 //	        return "redirect:/member/login";  // 先顯示訊息再跳轉至登入頁面
 	    }
-
+	
 	    model.addAttribute("article", new Article());
 	    List<ArticleCategory> categoryList = articleCategoryService.findCategoriesPermissions();
 	    model.addAttribute("categoryList", categoryList);
@@ -305,7 +293,7 @@ public class ArticleController {
 		// XSS
 		String escapedHtml = HtmlUtils.htmlEscape(content);
 		art.setArticleContent(escapedHtml);
-
+//	    art.setArticleContent(content);
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
@@ -363,6 +351,7 @@ public class ArticleController {
 		//XSS
 				String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
 				model.addAttribute("articleContent", unescapedHtml);
+//	    model.addAttribute("articleContent",art.getArticleContent());
 		return "/forum/article/articleFrontEdit";
 	}
 
@@ -373,6 +362,8 @@ public class ArticleController {
 		// XSS
 				String escapedHtml = HtmlUtils.htmlEscape(content);
 				art.setArticleContent(escapedHtml);
+//				art.setArticleContent(content);
+		 art.setArticleContent(content);
 				// 處理圖片上傳
 				if (!file.isEmpty()) {
 					art.setArticleImage(file.getBytes());
