@@ -1,11 +1,14 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.CuisineType;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.RestaurantInformation;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.RestaurantInformationRepository;
 
@@ -14,6 +17,28 @@ public class RestaurantInformationService {
 
 	@Autowired
 	private RestaurantInformationRepository resInformationRepository;
+	
+	@Transactional
+	public RestaurantInformation updateRestInformationById(Integer resid,  Company company, CuisineType cusinetype) {
+		Optional<RestaurantInformation> option = resInformationRepository.findById(resid);
+		if(option.isPresent()) {
+			RestaurantInformation rest = option.get();
+			rest.setCompany(company);
+			rest.setCuisineType(cusinetype);
+			return rest;
+		}
+		
+		return null;
+	}
+	
+	public RestaurantInformation findRsetInformationById(Integer resid) {
+		Optional<RestaurantInformation> option = resInformationRepository.findById(resid);
+		if(option.isEmpty()) {
+			return null;
+		}
+		
+		return option.get();
+	}
 	
 	public void deleterestaurantbyid(Integer id) {
 		resInformationRepository.deleteById(id);

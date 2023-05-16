@@ -241,9 +241,10 @@
 									<div class="info">
 										
 										<form
-											action="${contextRoot}/add-to-wishlist/${commodityInfo.commId}"
-											method="POST">
-											<button type="submit" class="btn btn-outline-primary">心願清單</button>
+											action="${contextRoot}/wishlist/addtowishlist"
+											method="POST"><input type="hidden" name="commId"
+												value="${commodity.commId}">
+											<button type="submit" class="btn btn-outline-primary">加入心願清單</button>
 										</form>
 									</div>
 							

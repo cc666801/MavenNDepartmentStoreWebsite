@@ -44,6 +44,8 @@ public class WishList implements Serializable {
     @Column(name = "wishlist_MDay", columnDefinition = "datetime")
     private Date wishlistMDay;
 
+    
+    
     @Id
     @ManyToOne
     @JoinColumn(name = "fk_member_id")

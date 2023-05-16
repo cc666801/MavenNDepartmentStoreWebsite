@@ -144,21 +144,21 @@ fieldset{
 						action="${contextRoot}/restaurantfront/post">
 						<div class="col-5">
 							用餐人數 
-							<form:select path="adult" id="AId" class="form-select">
+							<form:select path="adult" id="AId" class="form-select" onchange="updateChildrenOptions()">
 								<jstl:forEach var="i" begin="0" end="10">
 									<option value="${i}">${i}位大人</option>
 								</jstl:forEach>
 							</form:select><br> 
 							
-							<form:select path="children" id="CId" class="form-select">
+							<form:select path="children" id="CId" class="form-select" onchange="updateAdultOptions()">
 								<jstl:forEach var="i" begin="0" end="10">
 									<option value="${i}">${i}位小孩</option>
 								</jstl:forEach>
-							</form:select><br>
+							</form:select>
 	
 						</div>
 						<div class="col-5">
-							用餐時間
+							用餐日期
 							<div class="input-group date" id="datepicker">
 								<form:input type="text" path="date" class="form-control" id="DId" readonly="readonly"/>
 								 <span class="input-group-append"> 
@@ -169,9 +169,13 @@ fieldset{
 							</div><br>
 							<form:input type="hidden" path="restaurantInformation" value="${findRestaurant.resid}" readonly="readonly" />
 						</div>
-					
-	
-						<div class="col-12">						
+						
+						<div class="col-10 mb-3">
+							<p style="color:#706363; margin:0px">線上訂位最多可至10人(含大人與小孩),如需團體訂位請撥打餐廳電話</p>
+						</div>
+						
+						<div class="col-12">
+						<h5>用餐時段</h5>					
 								<fieldset>
 									<legend class="title">中午</legend>
 									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
@@ -342,7 +346,62 @@ fieldset{
 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
 
 
-	<script type="text/javascript">		
+	<script type="text/javascript">	
+// 	以下為人數事件
+		function updateChildrenOptions() {
+		    let adultSelect = document.getElementById("AId");
+		    let childrenSelect = document.getElementById("CId");
+		    let adultValue = adultSelect.value;
+		    let oldChildrenValue = childrenSelect.value;
+		   
+		    console.log(oldChildrenValue);
+		    
+		    childrenSelect.innerHTML = ""; // 清空小孩選項
+		    
+		    for (let i = 0; i <= 10-adultValue; i++) {
+		    	if(i == oldChildrenValue){
+			    	let defaultOption = document.createElement("option");
+			    	defaultOption.value = i;
+			    	defaultOption.text = i + "位小孩";
+			    	defaultOption.selected = true;
+			        childrenSelect.appendChild(defaultOption);	// 預設小孩選項	    	
+		    	}else{	    		
+		    	let option = document.createElement("option");
+		        option.value = i;
+		        option.text = i + "位小孩";
+		        childrenSelect.appendChild(option); // 新增小孩選項
+		    	}
+		    }
+		}
+		
+		function updateAdultOptions(){
+			let adultSelect = document.getElementById("AId");
+			let childrenSelect = document.getElementById("CId");
+			let childrenValue = childrenSelect.value;
+			let oldAdultValue = adultSelect.value;
+		    
+		    console.log(childrenValue);
+		    
+		    adultSelect.innerHTML = ""; // 清空大人選項
+		    
+		    for (let i = 0; i <= 10-childrenValue; i++) {
+		    	if(i == oldAdultValue){
+		    		let defaultOption = document.createElement("option");
+			    	defaultOption.value = i;
+			    	defaultOption.text = i + "位大人";
+			    	defaultOption.selected = true;
+			    	adultSelect.appendChild(defaultOption);	// 預設大人選項
+		    	}else{
+			    	let option = document.createElement("option");
+			        option.value = i;
+			        option.text = i + "位大人";
+			        adultSelect.appendChild(option); // 新增大人選項		    		
+		    	}
+		    	
+		    }
+		}
+	//end
+		
 		$(document).ready(function() {
 			let now = new Date();
 			$('#datepicker').datepicker({
@@ -364,6 +423,8 @@ fieldset{
 	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
 	 		let date = now.getDate().toString().padStart(2, '0');
 			$('#DId').val(year + '-' + mouth + '-' + date);
+			
+			
 		});
 
 		//   ---------以下是按鈕事件
@@ -375,6 +436,8 @@ fieldset{
 			$('#timeintervalcode').val(timetime);
 			
 		});
+		
+//	 	以下為人數事件		
 
 	</script>
 

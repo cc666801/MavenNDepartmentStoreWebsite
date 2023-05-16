@@ -37,7 +37,7 @@
 
 			<main id="main">
 
-				<h1 class="mb-3">新增廣告資料後台(新增後顯示畫面)</h1>
+				<h1 class="mb-3">廣告資料後台</h1>
 				<form action="${contextRoot}/Advertise/Advertise/add">
 					<button type="submit" class="btn btn-primary mb-3">新增</button>
 				</form>

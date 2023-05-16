@@ -74,9 +74,19 @@
 			<ul>
 				<li><a href="${contextRoot}/">首頁</a></li>
 				<li><a href="${contextRoot}/company/floor">樓層簡介</a></li>
-				<li class="Store"><a
+
+				<li class="dropdown"><a
 					href="${contextRoot}/Store/Commodity/findAllComm"><span>線上商城</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
+					<ul>
+						<jstl:if test="${empty member}">
+						</jstl:if>
+						<jstl:if test="${not empty member}">
+							<li><a href="${contextRoot}/Store/wishList/readwishlist">心願清單</a></li>
+						</jstl:if>
+					</ul></li>
+
+
 				<li class="dropdown"><a
 					href="${contextRoot}/orderSystem/shoppingCart"><span>訂單專區</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
@@ -107,7 +117,7 @@
 						<li><a href="${contextRoot}/articleList">文章列表</a></li>
 						<li><a href="${contextRoot}/articleCollect">收藏文章</a></li>
 						<li><a href="${contextRoot}/articleManage">會員個人文章管理</a></li>
-						
+
 					</ul></li>
 				<li class="dropdown"><a href="${contextRoot}/LostAndFound"><span>顧客服務</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
