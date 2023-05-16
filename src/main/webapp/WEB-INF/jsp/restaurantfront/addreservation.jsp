@@ -144,13 +144,13 @@ fieldset{
 						action="${contextRoot}/restaurantfront/post">
 						<div class="col-5">
 							用餐人數 
-							<form:select path="adult" id="AId" class="form-select">
+							<form:select path="adult" id="AId" class="form-select" onchange="updateChildrenOptions()">
 								<jstl:forEach var="i" begin="0" end="10">
 									<option value="${i}">${i}位大人</option>
 								</jstl:forEach>
 							</form:select><br> 
 							
-							<form:select path="children" id="CId" class="form-select">
+							<form:select path="children" id="CId" class="form-select" onchange="updateAdultOptions()">
 								<jstl:forEach var="i" begin="0" end="10">
 									<option value="${i}">${i}位小孩</option>
 								</jstl:forEach>
@@ -342,7 +342,41 @@ fieldset{
 	<script src="${contextRoot}/bootstrap5.0.2/js/bootstrap-datepicker.zh-TW.min.js"></script>
 
 
-	<script type="text/javascript">		
+	<script type="text/javascript">	
+// 	以下為人數事件
+		function updateChildrenOptions() {
+		    var adultSelect = document.getElementById("AId");
+		    var childrenSelect = document.getElementById("CId");
+		    var adultValue = adultSelect.value;
+		    
+		    childrenSelect.innerHTML = ""; // 清空小孩選項
+		    
+		    for (var i = 0; i <= 10-adultValue; i++) {
+		        var option = document.createElement("option");
+		        option.value = i;
+		        option.text = i + "位小孩";
+		        childrenSelect.appendChild(option); // 新增小孩選項
+		    }
+		}
+		
+		function updateAdultOptions(){
+			var adultSelect = document.getElementById("AId");
+		    var childrenSelect = document.getElementById("CId");
+		    var childrenValue = childrenSelect.value;
+		    
+		    console.log(childrenValue);
+		    
+		    adultSelect.innerHTML = ""; // 清空大人選項
+		    
+		    for (var i = 0; i <= 10-childrenValue; i++) {
+		        var option = document.createElement("option");
+		        option.value = i;
+		        option.text = i + "位大人";
+		        adultSelect.appendChild(option); // 新增大人選項
+		    }
+		}
+	
+		
 		$(document).ready(function() {
 			let now = new Date();
 			$('#datepicker').datepicker({
@@ -364,6 +398,8 @@ fieldset{
 	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
 	 		let date = now.getDate().toString().padStart(2, '0');
 			$('#DId').val(year + '-' + mouth + '-' + date);
+			
+			
 		});
 
 		//   ---------以下是按鈕事件
@@ -375,6 +411,8 @@ fieldset{
 			$('#timeintervalcode').val(timetime);
 			
 		});
+		
+//	 	以下為人數事件		
 
 	</script>
 

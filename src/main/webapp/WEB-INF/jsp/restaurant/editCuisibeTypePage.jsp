@@ -30,12 +30,13 @@
 
 		<div id="layoutSidenav_content" style="background-color: #fdf5e6">
 			<main>
-				<h1>新增料理類型</h1>
+				<h1>修改料理類型</h1>
 				<div>
-					<form:form class="form-control" method="post"
-						modelAttribute="cuisinetype"
-						action="${contextRoot}/cuisiontype/post">
+					<form:form class="form-control" method="put"
+						modelAttribute="thisCuisinetype"
+						action="${contextRoot}/editCuisibeTypePage/edit">
 
+						<form:input type="hidden" path="cuisineTypeId"/>
 						<label for="typename">料理類型：</label>
 						<br>
 						<form:input type="text" path="cuisineTypeName" id="typename" autofocus="autofocus"/>

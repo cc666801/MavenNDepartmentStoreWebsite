@@ -9,6 +9,8 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.CuisineType;
@@ -23,6 +25,23 @@ public class RestaurantInformationController {
 	
 	@Autowired
 	private CuisineTypeService cuisineTypeService;
+	
+	@GetMapping("/restInformarion/editPage")
+	public String restInformarionEditPage(@RequestParam("resid") Integer resid, Model model) {
+		List<CuisineType> findAllCuisineType = cuisineTypeService.findAllCuisineType();
+		model.addAttribute("CuisineType", findAllCuisineType);
+		
+		RestaurantInformation findRsetInformationById = restInformationService.findRsetInformationById(resid);
+		model.addAttribute("thisRestInformation", findRsetInformationById);
+		return "/restaurant/editRestInformationPage";
+	}
+	
+	@PutMapping("/editRestInformationPage/edit")
+	public String editRestInformarionEdit(@ModelAttribute("thisRestInformation") RestaurantInformation restEdit, Model model) {
+		restInformationService.updateRestInformationById(restEdit.getResid(), restEdit.getCompany(), restEdit.getCuisineType());
+		return "redirect:/restaurantInformation";
+	}
+	
 	
 	@DeleteMapping("/restInformarion/delete")
 	public String deleteReservationbyRid(Integer resid,Model model) {
