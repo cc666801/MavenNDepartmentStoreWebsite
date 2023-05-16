@@ -93,10 +93,7 @@
 			<artifactId>commons-lang3</artifactId>
 		</dependency>
 		<!--討論區用的,不要以為是BUG-->
-<<<<<<< HEAD
 
-=======
->>>>>>> Forum
 		<!--google驗證用-->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
@@ -108,7 +105,7 @@
 			<version>1.6.2</version>
 		</dependency>
 		<!--google驗證用-->
-<<<<<<< HEAD
+
 		<!--		金流用-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -129,8 +126,7 @@
 		</dependency>
 <!--		心願清單用-->
 
-=======
->>>>>>> Forum
+
 	</dependencies>
 	<build>
 		<plugins>

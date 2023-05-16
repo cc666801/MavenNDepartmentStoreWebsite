@@ -205,94 +205,76 @@ input[type="text"], select {
 
 
 	<script>
-		$(document).ready(function() {
+    var contextRoot = "${contextRoot}";
 
-			$('#category-div').slideToggle();
-		});
-		//新增Category-Ajax	
-		$('#category-add')
-				.submit(
-						function(event) {
-							event.preventDefault()
-							var url = $(this).attr('action');
-							var data = $(this).serialize();
-							$
-									.ajax({
-										type : "POST",
-										url : url,
-										data : data,
-										success : function(response) {
+    $(document).ready(function() {
+        $('#category-div').slideToggle();
 
-											alert("新增成功");
+        // 新增Category-Ajax	
+        $('#category-add').submit(function(event) {
+            event.preventDefault();
+            var url = $(this).attr('action');
+            var data = $(this).serialize();
 
-											window.location.href = "${contextRoot}/articleConfiguration";
-										},
-										error : function(xhr, status, error) {
-											alert(xhr.responseText);
-										}
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: data,
+                success: function(response) {
+                    alert("新增成功");
+                    window.location.href = contextRoot + "/articleConfiguration";
+                },
+                error: function(xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        });
 
-									});
+        // 刪除確認			
+        $("form[id^='delete-category-']").submit(function(event) {
+            event.preventDefault();
+            var form = $(this);
+            var categoryId = form.find("input[name='id']").val();
 
-							//刪除確認			
-							$("form[id^='delete-category-']").submit(
-									function(event) {
-										event.preventDefault();
-										var form = $(this);
-										var categoryId = form.find(
-												"input[name='id']").val();
-										if (confirm("確定要刪除此類別嗎？")) {
-											$.ajax({
-												type : form.attr('method'),
-												url : form.attr('action'),
-												data : form.serialize(),
-												success : function() {
+            if (confirm("確定要刪除此類別嗎？")) {
+                $.ajax({
+                    type: form.attr('method'),
+                    url: form.attr('action'),
+                    data: form.serialize(),
+                    success: function() {
+                        alert("刪除成功");
+                        location.reload();
+                    },
+                    error: function(xhr, status, error) {
+                        alert("刪除失敗");
+                    }
+                });
+            }
+        });
 
-													alert("刪除成功");
+        // 類別權限變更
+        $('select[name="permission"]').change(function() {
+            var categoryId = $(this).data('category-id');
+            var permission = $(this).val();
 
-													location.reload();
-
-												},
-												error : function(xhr, status,
-														error) {
-													alert("刪除失敗");
-												}
-											});
-										}
-									});
-
-							//類別權限變更
-							$('select[name="permission"]')
-									.change(
-											function() {
-												var categoryId = $(this).data(
-														'category-id');
-												var permission = $(this).val();
-												$
-														.ajax({
-															url : '${contextRoot}/articleConfiguration/editCategory',
-															method : 'POST',
-															data : {
-																id : categoryId,
-																permission : permission
-															},
-															success : function(
-																	data) {
-																alert("變更成功");
-
-																window.location.href = "${contextRoot}/articleConfiguration";
-
-															},
-															error : function(
-																	xhr,
-																	status,
-																	error) {
-																// 錯誤處理
-															}
-														});
-											});
-
-						});
-	</script>
+            $.ajax({
+                url: contextRoot + "/articleConfiguration/editCategory",
+                method: 'POST',
+                data: {
+                    id: categoryId,
+                    permission: permission
+                },
+                success: function(data) {
+                    alert("變更成功");
+                    window.location.href = contextRoot + "/articleConfiguration";
+                },
+                error: function(xhr, status, error) {
+                    // 錯誤處理
+                }
+            });
+        });
+    });
+</script>
 
 
 </body>

@@ -125,7 +125,7 @@
 						<li><a href="${contextRoot}/LostAndFound">失物招領</a></li>						
 						<li><a href="${contextRoot}/parking">停車資訊</a></li>
 						<li><a href="${contextRoot}/chat">智能客服</a></li>
-						<li><a href="#">關於我們</a></li>
+					
 					</ul></li>
 				<jstl:if test="${sessionScope.member.permissions eq '管理員'}">
 					<li><a href="${contextRoot}/backend">後台系統</a></li>

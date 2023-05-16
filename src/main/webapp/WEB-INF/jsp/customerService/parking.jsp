@@ -81,6 +81,7 @@
     
     
      <script>
+  
      var currentInfoWindow;
      var directionsService = new google.maps.DirectionsService();
      var directionsDisplay = new google.maps.DirectionsRenderer();
@@ -92,6 +93,16 @@
             center: location
         });
         directionsDisplay.setMap(map); // 讓路線顯示在地圖上
+        
+     // 添加主要位置的标记
+        var mainMarker = new google.maps.Marker({
+            position: location,
+            map: map,
+            icon: {
+                url: "https://maps.google.com/mapfiles/ms/micons/blue-dot.png",
+                scaledSize: new google.maps.Size(30, 30),
+            }
+        });
         var request = {
             location: location,
             radius: '1000',
@@ -151,6 +162,7 @@
      function showDistance(distance) {
     	    document.getElementById('distance').innerHTML = '路線距離: ' + distance;
     	}
+    
 </script>
 
     
