@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
+package com.mavenN.MavenNDepartmentStoreWebsite.controllers.forum;
 
 import java.util.List;
 
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleCategoryService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleCategoryService;
 
 @Controller
 public class ArticleCategoryController {

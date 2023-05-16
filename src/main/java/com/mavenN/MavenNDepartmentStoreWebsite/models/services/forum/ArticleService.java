@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.services;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum;
 
 
 import java.util.ArrayList;
@@ -6,9 +6,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Optional;
 
+import javax.persistence.EntityManager;
+import javax.persistence.PersistenceContext;
+
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
-import org.springframework.data.domain.PageImpl;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
@@ -19,9 +22,11 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleLike;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleLikeId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleLikeRepository;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.ArticleRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleLikeRepository;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum.ArticleRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.memberSystem.MemberRepository;
+
+
 
 @Service
 public class ArticleService {
@@ -34,6 +39,9 @@ public class ArticleService {
 	  
 	@Autowired
     private MemberRepository memberRepository;
+	
+	@PersistenceContext
+    private EntityManager entityManager;
 	
 	public void addArticle(Article article) {
 		articleRepository.save(article);
@@ -211,5 +219,136 @@ public class ArticleService {
 			        Pageable pageable = PageRequest.of(pageNumber - 1, pageSize, Sort.Direction.DESC, "articleCreateTime");
 			        return articleRepository.findByTitleContainingIgnoreCase(keyword, pageable);
 			    }
-	
+			 
+	//複雜搜尋
+//			public Page<Article> filterArticles(String search, Integer category, String sortBy, int page, int size) {
+//			    CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//			    CriteriaQuery<Article> query = builder.createQuery(Article.class);
+//			    Root<Article> article = query.from(Article.class);
+//			    List<Predicate> predicates = new ArrayList<>();
+//			    
+//			    // 添加搜索条件
+//			    if (search != null && !search.trim().isEmpty()) {
+//			        predicates.add(builder.like(builder.lower(article.get("articleTitle")), "%" + search.toLowerCase() + "%"));
+//			    }
+//			    
+//			    // 添加分类条件
+//			    if (category != null) {
+//			        Join<Article, ArticleCategory> categoryJoin = article.join("articleCategory");
+//			        predicates.add(builder.equal(categoryJoin.get("articleCategoryID"), category));
+//			    }
+//			    
+//			    // 添加排序条件
+//			    if (sortBy != null && !sortBy.trim().isEmpty()) {
+//			        Path<Object> sortByPath = null;
+//			        if ("articleCreateTime".equals(sortBy)) {
+//			            sortByPath = article.get("articleCreateTime");
+//			        } else if ("articleLikeCount".equals(sortBy)) {
+//			            sortByPath = article.get("likesCount");
+//			        } else if ("commentCount".equals(sortBy)) {
+//			            sortByPath = article.get("commentCount");
+//			        } else if ("comments.commentEditTime".equals(sortBy)) {
+//			            Join<Article, Comment> commentJoin = article.join("comments");
+//			            sortByPath = commentJoin.get("commentEditTime");
+//			        }
+//			        if (sortByPath != null) {
+//			            query.orderBy(builder.desc(sortByPath));
+//			        }
+//			    }
+//			
+//			 // 添加所有条件
+//		    if (!predicates.isEmpty()) {
+//		        query.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+//		    }
+//		    
+//		    // 查询结果并分页
+//		    TypedQuery<Article> typedQuery = entityManager.createQuery(query);
+//		    typedQuery.setFirstResult((page - 1) * size);
+//		    typedQuery.setMaxResults(size);
+//		    
+//		    List<Article> articles = typedQuery.getResultList();
+//		    long totalCount = countArticles(search, category);
+//		    return new PageImpl<>(articles, PageRequest.of(page - 1, size), totalCount);
+//		}
+//
+//		private long countArticles(String search, Integer category) {
+//		    CriteriaBuilder builder = entityManager.getCriteriaBuilder();
+//		    CriteriaQuery<Long> query = builder.createQuery(Long.class);
+//		    Root<Article> article = query.from(Article.class);
+//		    List<Predicate> predicates = new ArrayList<>();
+//		    
+//		    // 添加搜索条件
+//		    if (search != null && !search.trim().isEmpty()) {
+//		        predicates.add(builder.like(builder.lower(article.get("articleTitle")), "%" + search.toLowerCase() + "%"));
+//		    }
+//		    
+//		    // 添加分类条件
+//		    if (category != null) {
+//		        Join<Article, ArticleCategory> categoryJoin = article.join("articleCategory");
+//		        predicates.add(builder.equal(categoryJoin.get("articleCategoryID"), category));
+//		    }
+//		    
+//		    // 添加所有条件
+//		    if (!predicates.isEmpty()) {
+//		        query.where(builder.and(predicates.toArray(new Predicate[predicates.size()])));
+//		    }
+//		    
+//		    // 查询结果数量
+//		    query.select(builder.count(article));
+//		    TypedQuery<Long> typedQuery = entityManager.createQuery(query);
+//		    return typedQuery.getSingleResult();
+//		}
+			 
+			 public Page<Article> searchByKeywordAndCategory(String keyword, Integer categoryId, String sortBy, Pageable pageable) {
+				  
+				 
+				 if (keyword != null && categoryId != null) {
+				        if (sortBy.equals("articleEditTime")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleEditTimeDesc(keyword, categoryId, pageable);
+				        } else if (sortBy.equals("articleLikeCount")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByArticleLikeCountDesc(keyword, categoryId, pageable);
+				        } else if (sortBy.equals("commentCount")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByCommentCountDesc(keyword, categoryId, pageable);
+				        } else if (sortBy.equals("comments.commentEditTime")) {
+				            return articleRepository.findByArticleTitleContainingAndArticleCategoryArticleCategoryIDOrderByComments_CommentEditTimeDesc(keyword, categoryId, pageable);
+				        }
+				        } else if (keyword != null) {
+				        if (sortBy.equals("articleEditTime")) {
+				            return articleRepository.findByArticleTitleContainingOrderByArticleEditTimeDesc(keyword, pageable);
+				        } else if (sortBy.equals("articleLikeCount")) {
+				            return articleRepository.findByArticleTitleContainingOrderByArticleLikeCountDesc(keyword, pageable);
+				        } else if (sortBy.equals("commentCount")) {
+				            return articleRepository.findByArticleTitleContainingOrderByCommentCountDesc(keyword, pageable);
+				        } else if (sortBy.equals("comments.commentEditTime")) {
+				            return articleRepository.findByArticleTitleContainingOrderByComments_CommentEditTimeDesc(keyword, pageable);
+				        }
+				    } else if (categoryId != null) {
+				        if (sortBy.equals("articleEditTime")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByArticleEditTimeDesc(categoryId, pageable);
+				        } else if (sortBy.equals("articleLikeCount")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByArticleLikeCountDesc(categoryId, pageable);
+				        } else if (sortBy.equals("commentCount")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByComments_CommentEditTimeDesc(categoryId, pageable);
+				        } else if (sortBy.equals("comments.commentEditTime")) {
+				            return articleRepository.findByArticleCategoryArticleCategoryIDOrderByComments_CommentEditTimeDesc(categoryId, pageable);
+				        }
+				    }
+				    
+				    if (sortBy.equals("articleEditTime")) {
+				        return articleRepository.findAllByOrderByArticleEditTimeDesc(pageable);
+				    } else if (sortBy.equals("articleLikeCount")) {
+				        return articleRepository.findAllByOrderByArticleLikeCountDesc(pageable);
+				    } else if (sortBy.equals("commentCount")) {
+				        return articleRepository.findAllByOrderByCommentCountDesc(pageable);
+				    } else if (sortBy.equals("comments.commentEditTime")) {
+				        return articleRepository.findAllByOrderByComments_CommentEditTimeDesc(pageable);
+				    }
+				// 如果没有满足条件的情况，则返回一个空的Page对象
+				 
+//				    return articleRepository.findAll(pageable);
+//				 return null;
+				 return Page.empty();
+			    }
+			
+			 
 }

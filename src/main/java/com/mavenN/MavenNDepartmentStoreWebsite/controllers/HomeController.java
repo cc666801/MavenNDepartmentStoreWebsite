@@ -6,20 +6,22 @@ import java.util.List;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.Advertise;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.store.AdvertiseCate;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CommodityRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.companySystem.CompanyRepository;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseCateService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.AdvertiseService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommodityService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleService;
 
 @Controller
 public class HomeController {
@@ -43,7 +45,8 @@ public class HomeController {
 	
 	@Autowired
 	private MemberService mService;
-	
+	@Autowired
+	private ArticleService articleService;
 	
 //	@GetMapping(value = { "/" })
 //	public String getHomePage(HttpSession session) {
@@ -111,8 +114,9 @@ public class HomeController {
 		        Member updatedMember = mService.findMemberById(member.getId());
 		        session.setAttribute("member", updatedMember);
 		    }
-
-		    
+		  //熱門文章
+			Page<Article> hotsArticles = articleService.findArticleByArticleLikeCountAndPage(1, 5);
+			model.addAttribute("hotsArticles", hotsArticles);   
 		    return "frontend/index";
 		}
 	
