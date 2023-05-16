@@ -63,7 +63,7 @@
 							method="post">
 							<input type="hidden" name="_method" value="delete" /> <input
 								type="hidden" name="id" value="${lost.id}" /> <input
-								type="submit" value="刪除" />
+								type="submit" value="刪除" onclick="return confirm('確定要刪除嗎?')"/>
 						</form></td>
 				</tr>
 			</c:forEach>
