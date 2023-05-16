@@ -93,7 +93,7 @@
                 <hr>
                 <!-- <span ><a href=https://www.qsquare.com.tw/floor.php>連結為https://www.qsquare.com.tw/floor.php</a></span> -->
                 <div class="floor-plan-wrapper">
-                  <img class="floor-plan-img" src="${contextRoot}/assetsForFrontend/img/樓層圖.png" alt="樓層平面圖">
+                  <img class="floor-plan-img" id="floor-image" src="${contextRoot}/assetsForFrontend/img/樓層圖.png" alt="樓層平面圖">
                 </div>
                 <br>
               </div>
@@ -119,6 +119,9 @@
               data.forEach(company => {
                 companySpace.innerHTML += '<span class="floor-company-name">' + '<img src="data:image/jpeg;base64,' + company.base64StringCompanyLogo + '" style="width: 30px;height: 20px;padding-right:5px;"></img>' + company.companyName + '</span>';
               });
+              // 更改圖片為對應樓層的圖片
+              let floorImage = document.getElementById('floor-image');
+              floorImage.src = '${contextRoot}/assetsForFrontend/img/樓層平面圖' + floorValue + '.jpg';
               // 更改h3的內容為li的value
               document.querySelector('.floor-info-title').textContent = floorValue + ' 的所有廠商';
             })

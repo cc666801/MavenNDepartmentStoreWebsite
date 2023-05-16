@@ -39,8 +39,8 @@
               <div id="discount-div" class="card-header border border-secondary" style="width: 20%;height: auto;
               min-height: 100px;margin-left: 3%;">
                 <h5 class="card-title border-bottom border-info" style="margin: 2% 2%;">目前還未使用的優惠卷:</h3>
-               
-                </div>
+
+              </div>
 
               <div>
                 <table class="table" style="min-height: 200px; height: auto;">
@@ -280,8 +280,8 @@
                 var applyButton = document.createElement('button');
                 applyButton.textContent = '套用';
                 applyButton.className = 'btn btn-info'
-                applyButton.style='margin-left:3%';
-                
+                applyButton.style = 'margin-left:3%';
+
                 applyButton.addEventListener('click', function () {
                   var total = document.getElementById("total").innerHTML;
                   orderTotal = total;
@@ -329,11 +329,32 @@
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
             let couponId = appliedCoupon ? appliedCoupon.couponId : null;
+            var memberAddress = "${member.address}"; // 获取会员原本的地址
+            var address = prompt('请输入您的地址:', memberAddress); // 将会员地址作为参数传递给 prompt 函数
+            if (address === null) {
+              // 用户点击了取消按钮
+              alert('已取消填寫地址');
+              return; // 结束函数执行
+            }
+
+            var confirmMessage = '您输入的地址是: ' + address + '\n请確認是否正確？';
+            var confirmed = confirm(confirmMessage);
+            if (confirmed) {
+              // 用户确认地址无误
+              alert('地址輸入成功');
+              // 可以在这里对输入的地址进行处理
+            } else {
+              // 用户确认地址有误
+              alert('請重新輸入地址');
+              return;
+            }
+            let orderAddress;
             let order = {
               'memberId': memberId,
               'orderDetailDtos': [],
               'total': total,
-              'couponId': couponId
+              'couponId': couponId,
+              'orderAddress': address
             };
 
             rows.forEach(function (row) {
@@ -384,11 +405,31 @@
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
             let couponId = appliedCoupon ? appliedCoupon.couponId : null;
+            var memberAddress = "${member.address}"; // 获取会员原本的地址
+            var address = prompt('请输入您的地址:', memberAddress); // 将会员地址作为参数传递给 prompt 函数
+            if (address === null) {
+              // 用户点击了取消按钮
+              alert('已取消填寫地址');
+              return; // 结束函数执行
+            }
+
+            var confirmMessage = '您输入的地址是: ' + address + '\n请確認是否正確？';
+            var confirmed = confirm(confirmMessage);
+            if (confirmed) {
+              // 用户确认地址无误
+              alert('地址輸入成功');
+              // 可以在这里对输入的地址进行处理
+            } else {
+              // 用户确认地址有误
+              alert('請重新輸入地址');
+              return;
+            }
             let order = {
               'memberId': memberId,
               'orderDetailDtos': [],
               'total': total,
-              'couponId': couponId
+              'couponId': couponId,
+              'orderAddress': address
             };
 
             rows.forEach(function (row) {
