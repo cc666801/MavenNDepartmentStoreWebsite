@@ -362,37 +362,58 @@ fieldset{
 	<script type="text/javascript">	
 	
 // 		以下為人數事件
-	    function updateChildrenOptions() {
-		    var adultSelect = document.getElementById("AId");
-		    var childrenSelect = document.getElementById("CId");
-		    var adultValue = adultSelect.value;
+	 function updateChildrenOptions() {
+		    let adultSelect = document.getElementById("AId");
+		    let childrenSelect = document.getElementById("CId");
+		    let adultValue = adultSelect.value;
+		    let oldChildrenValue = childrenSelect.value;
+		   
+		    console.log(oldChildrenValue);
 		    
 		    childrenSelect.innerHTML = ""; // 清空小孩選項
 		    
-		    for (var i = 0; i <= 10-adultValue; i++) {
-		        var option = document.createElement("option");
+		    for (let i = 0; i <= 10-adultValue; i++) {
+		    	if(i == oldChildrenValue){
+			    	let defaultOption = document.createElement("option");
+			    	defaultOption.value = i;
+			    	defaultOption.text = i + "位小孩";
+			    	defaultOption.selected = true;
+			        childrenSelect.appendChild(defaultOption);	// 預設小孩選項	    	
+		    	}else{	    		
+		    	let option = document.createElement("option");
 		        option.value = i;
 		        option.text = i + "位小孩";
 		        childrenSelect.appendChild(option); // 新增小孩選項
+		    	}
 		    }
-		 }
+		}
 		
-		 function updateAdultOptions(){
-			var adultSelect = document.getElementById("AId");
-		    var childrenSelect = document.getElementById("CId");
-		    var childrenValue = childrenSelect.value;
+		function updateAdultOptions(){
+			let adultSelect = document.getElementById("AId");
+			let childrenSelect = document.getElementById("CId");
+			let childrenValue = childrenSelect.value;
+			let oldAdultValue = adultSelect.value;
 		    
 		    console.log(childrenValue);
 		    
 		    adultSelect.innerHTML = ""; // 清空大人選項
 		    
-		    for (var i = 0; i <= 10-childrenValue; i++) {
-		        var option = document.createElement("option");
-		        option.value = i;
-		        option.text = i + "位大人";
-		        adultSelect.appendChild(option); // 新增大人選項
+		    for (let i = 0; i <= 10-childrenValue; i++) {
+		    	if(i == oldAdultValue){
+		    		let defaultOption = document.createElement("option");
+			    	defaultOption.value = i;
+			    	defaultOption.text = i + "位大人";
+			    	defaultOption.selected = true;
+			    	adultSelect.appendChild(defaultOption);	// 預設大人選項
+		    	}else{
+			    	let option = document.createElement("option");
+			        option.value = i;
+			        option.text = i + "位大人";
+			        adultSelect.appendChild(option); // 新增大人選項		    		
+		    	}
+		    	
 		    }
-		 }
+		}
 // 		end
 	
 		$(document).ready(function() {
