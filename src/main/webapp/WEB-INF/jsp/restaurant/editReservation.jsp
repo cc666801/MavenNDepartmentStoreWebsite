@@ -143,9 +143,11 @@
 							<jstl:forEach var="i" begin="0" end="10">
 								<form:option value="${i}">${i}</form:option>
 							</jstl:forEach>
-						</form:select>
+						</form:select><br>
 
 						<button type="submit" class="btn btn-primary">送出</button>
+						<a href="${contextRoot}/restaurant">
+						<button type="button" class="btn btn-primary ms-2">回查詢頁面</button></a>
 					</form:form>
 				</div>
 			</main>

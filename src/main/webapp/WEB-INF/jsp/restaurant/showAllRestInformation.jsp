@@ -57,8 +57,8 @@
 								<td>${restInformation.company.companyName}</td>
 								<td>${restInformation.cuisineType.cuisineTypeName}</td>
 
-								<td><form action="#">
-										<input type="hidden" name="r_id" value="" /> <input
+								<td><form action="${contextRoot}/restInformarion/editPage">
+										<input type="hidden" name="resid" value="${restInformation.resid}" /> <input
 											type="submit" class="btn btn-warning btn-sm" value="編輯" />
 									</form></td>
 								<td><form action="${contextRoot}/restInformarion/delete" method="post">

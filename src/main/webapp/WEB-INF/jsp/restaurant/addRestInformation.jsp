@@ -49,8 +49,11 @@
 								<option value="${ctype.cuisineTypeId}">${ctype.cuisineTypeName}</option>
 							</jstl:forEach>
 						</form:select>
-
+						<div class="mt-2">
 						<button type="submit" class="btn btn-primary">送出</button>
+						<a href="${contextRoot}/restaurantInformation">
+						<button type="button" class="btn btn-primary ms-2">回查詢頁面</button></a>
+						</div>
 					</form:form>
 				</div>
 			</main>

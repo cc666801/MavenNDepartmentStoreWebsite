@@ -30,18 +30,37 @@
 
 		<div id="layoutSidenav_content" style="background-color: #fdf5e6">
 			<main>
-				<h1>新增料理類型</h1>
+				<h1>新增餐廳料理類型</h1>
 				<div>
-					<form:form class="form-control" method="post"
-						modelAttribute="cuisinetype"
-						action="${contextRoot}/cuisiontype/post">
-
-						<label for="typename">料理類型：</label>
+					<div><p style="color:red">${companyexist}</p></div>
+					<form:form class="form-control" method="put"
+						modelAttribute="thisRestInformation"
+						action="${contextRoot}/editRestInformationPage/edit">
+						<form:input type="hidden" path="resid"/>
+						<form:input type="hidden" path="company"/>
+						<label for="companyId">餐廳名稱：</label><br>
+						<input type="text" value="${thisRestInformation.company.companyName}" style="font-size:18px" disabled/>
+						
 						<br>
-						<form:input type="text" path="cuisineTypeName" id="typename" autofocus="autofocus"/>
+						<label for="CId">料理類型：</label>
+						<form:select path="cuisineType" id="CId" class="form-select" style="width: 200px">
+							<jstl:forEach items="${CuisineType}" var="ctype">
+								<jstl:choose>
+									<jstl:when test="${thisRestInformation.cuisineType.cuisineTypeId == ctype.cuisineTypeId}">
+										<form:option value="${ctype.cuisineTypeId}" selected="selected">
+											${ctype.cuisineTypeName}
+										</form:option>
+									</jstl:when>
+									<jstl:otherwise>
+										<option value="${ctype.cuisineTypeId}">${ctype.cuisineTypeName}</option>						
+									</jstl:otherwise>
+								</jstl:choose>	
+								
+							</jstl:forEach>
+						</form:select>
 						<div class="mt-2">
 						<button type="submit" class="btn btn-primary">送出</button>
-						<a href="${contextRoot}/cuisiontype">
+						<a href="${contextRoot}/restaurantInformation">
 						<button type="button" class="btn btn-primary ms-2">回查詢頁面</button></a>
 						</div>
 					</form:form>
