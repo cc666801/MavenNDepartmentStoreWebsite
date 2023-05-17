@@ -95,7 +95,7 @@
                                     <td colspan="2">
                                         <h1>幸運抽獎</h1>
                                         <h2 id="points">目前擁有: ${member.points}點</h2>
-                                        <div id="result"></div>
+                                        <div id="result"><H3>恭喜抽中:?點</H3></div>
                                         <button type="submit" id="playButton" class="btn btn-primary btn-block">抽取點數</button>
                                     </td>
                                 </tr>
@@ -109,40 +109,31 @@
     
         <!-- 添加所需的JavaScript -->
     <script>
-    document.addEventListener("DOMContentLoaded", function() {
-        const playButton = document.getElementById("playButton");
-        playButton.addEventListener("click", function() {
-            const lastClickedDate = localStorage.getItem("lastClickedDate");
-            const currentDate = new Date().toISOString().split("T")[0];
-
-            if (lastClickedDate === currentDate) {
-                alert("今天已經抽過了！");
-                return;
-            }
-
-            fetch("${contextRoot}/game/play", { method: "POST" })
-                .then(response => response.json())
-                .then(data => {
-                    showResult(data.point, data.totalPoints);
-                    updatePoints(data.totalPoints);
-                    localStorage.setItem("lastClickedDate", currentDate);
-                })
-                .catch(error => console.log(error));
-        });
-
-        function showResult(point, totalPoints) {
-            const resultElement = document.getElementById("result");
-            resultElement.innerText = "恭喜抽中: " + point + "點";
-            resultElement.style.display = "block";
-        }
-
-        function updatePoints(totalPoints) {
-            const pointsElement = document.getElementById("points");
-            pointsElement.innerText = "目前擁有: " + totalPoints + "點";
-        }
+    document.getElementById("playButton").addEventListener("click", function() {
+        fetch("${contextRoot}/game/play", { method: "POST" })
+            .then(response => response.json())
+            .then(data => {
+                simulateDrawing(data.point, data.totalPoints);
+            })
+            .catch(error => console.log(error));
     });
 
+    function simulateDrawing(point, totalPoints) {
+        const resultElement = document.getElementById("result");
+        const pointsElement = document.getElementById("points");
+
+        let currentPoint = 1;
+        let interval = setInterval(() => {
+            resultElement.innerHTML = "<h3>抽取中: " + currentPoint + "點</h3>";
+            currentPoint = currentPoint % 8 + 1;
+        }, 30);
+
+        setTimeout(() => {
+            clearInterval(interval);
+            resultElement.innerHTML = "<h3>恭喜抽中: " + point + "點</h3>";
+            pointsElement.innerText = "目前擁有: " + totalPoints + "點";
+        }, 3000);
+    }
     </script>
 </body>
 </html>
-
