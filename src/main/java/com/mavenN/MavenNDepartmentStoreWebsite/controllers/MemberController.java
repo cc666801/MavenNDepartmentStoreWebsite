@@ -101,10 +101,10 @@ public class MemberController {
 	public String updatePermission(@PathVariable Integer id) {
 		Member member = mRepository.findById(id).orElse(null);
 		if (member != null) {
-			if (member.getPermissions().equals("會員")) {
+			if (member.getPermissions().equals("一般會員")) {
 				member.setPermissions("管理員");
 			} else if (member.getPermissions().equals("管理員")) {
-				member.setPermissions("會員");
+				member.setPermissions("一般會員");
 			}
 			mRepository.save(member);
 		}
