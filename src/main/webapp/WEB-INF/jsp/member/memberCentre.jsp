@@ -151,7 +151,13 @@ h1 {
 						method="GET">
 						<button type="submit" class="btn btn-primary btn-block">修改資料</button>
 					</form:form></td>
+					<td colspan="2"><form:form
+						action="${contextRoot}/member/logout"
+						method="GET">
+						<button type="submit" class="btn btn-primary btn-block">登出</button>
+					</form:form></td>
 			</tr>
+			
 		</table>
           </div>
         </div>

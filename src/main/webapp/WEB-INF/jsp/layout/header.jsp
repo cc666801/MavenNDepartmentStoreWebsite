@@ -61,9 +61,11 @@
 	<div
 		class="container-fluid container-xl d-flex align-items-center justify-content-between">
 
-		<a href="${contextRoot}/" class="logo d-flex align-items-center" style="position: relative; z-index: 9999;">
-  <img src="${contextRoot}/assetsForFrontend/img/Mavenn.png" style="max-width: 250px; max-height: 250px;">
-</a>
+		<a href="${contextRoot}/" class="logo d-flex align-items-center"
+			style="position: relative; z-index: 9999;"> <img
+			src="${contextRoot}/assetsForFrontend/img/Mavenn.png"
+			style="max-width: 250px; max-height: 250px;">
+		</a>
 
 
 
@@ -94,23 +96,24 @@
 						<li><a href="${contextRoot}/orderSystem/shoppingCart">購物車</a></li>
 						<li><a href="${contextRoot}/orderSystem/order">訂單狀態</a></li>
 					</ul></li>
-					
-<!-- 				餐廳系統	 -->
+
+				<!-- 				餐廳系統	 -->
 				<li class="dropdown"><a href="${contextRoot}/restaurantfront"><span>餐廳訂位</span>
-					<i class="bi bi-chevron-down dropdown-indicator"></i></a>
-				<ul>
-					<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
-					
-					<jstl:if test="${empty member}">
-					</jstl:if>
-					
-					<jstl:if test="${not empty member}">
-						<li><a href="${contextRoot}/restaurantfront/chickReservation?memberid=${member.id}">訂位狀態</a></li>
-					</jstl:if>
-					
-				</ul></li>
-<!-- 				餐廳系統end	 -->
-				
+						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
+					<ul>
+						<li><a href="${contextRoot}/restaurantfront">餐廳訂位</a></li>
+
+						<jstl:if test="${empty member}">
+						</jstl:if>
+
+						<jstl:if test="${not empty member}">
+							<li><a
+								href="${contextRoot}/restaurantfront/chickReservation?memberid=${member.id}">訂位狀態</a></li>
+						</jstl:if>
+
+					</ul></li>
+				<!-- 				餐廳系統end	 -->
+
 				<li class="dropdown"><a href="${contextRoot}/articleList"><span>討論區</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
@@ -122,10 +125,10 @@
 				<li class="dropdown"><a href="${contextRoot}/LostAndFound"><span>顧客服務</span>
 						<i class="bi bi-chevron-down dropdown-indicator"></i></a>
 					<ul>
-						<li><a href="${contextRoot}/LostAndFound">失物招領</a></li>						
+						<li><a href="${contextRoot}/LostAndFound">失物招領</a></li>
 						<li><a href="${contextRoot}/parking">停車資訊</a></li>
 						<li><a href="${contextRoot}/chat">智能客服</a></li>
-					
+
 					</ul></li>
 				<jstl:if test="${sessionScope.member.permissions eq '管理員'}">
 					<li><a href="${contextRoot}/backend">後台系統</a></li>
@@ -148,9 +151,9 @@
 
 				<a href="${contextRoot}/memberCentre" class="mx-2"> <span
 					class="bi-person-circle"> ${member.name}</span></a>
-
-				<a href="${contextRoot}/member/logout" class="mx-2"> <span
-					class="bi bi-box-arrow-right"></span></a>
+					
+				<a href="${contextRoot}/game" class="mx-2"> <span
+					class="bi bi-coin"> ${member.points}</span></a>
 
 			</jstl:if>
 			<a href="#" class="mx-2 js-search-open"> <span class="bi-search"></span></a>

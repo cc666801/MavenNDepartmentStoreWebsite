@@ -92,7 +92,7 @@
 										<div class="swiper sliderFeaturedPosts">
 											<div class="swiper-wrapper">
 												<jstl:forEach var="advertise" items="${shelvesIsTrue}"
-													varStatus="status" begin="0" end="2">
+													varStatus="status" begin="0" end="8">
 													<div class="swiper-slide">
 
 														<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"
