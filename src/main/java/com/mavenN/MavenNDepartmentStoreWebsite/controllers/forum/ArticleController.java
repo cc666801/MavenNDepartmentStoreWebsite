@@ -78,10 +78,9 @@ public class ArticleController {
 			@RequestParam("imgToByte") MultipartFile file) throws IOException {
 
 		// XSS
-		String escapedHtml = HtmlUtils.htmlEscape(content);
-
-		art.setArticleContent(escapedHtml);
-		
+//		String escapedHtml = HtmlUtils.htmlEscape(content);
+//		art.setArticleContent(escapedHtml);
+		art.setArticleContent(content);
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
@@ -121,6 +120,8 @@ public class ArticleController {
 		Article art = articleService.findArticleById(id);
 		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
 		model.addAttribute("categoryList", categoryList);
+		
+		
 		model.addAttribute("art", art);
 		
 		// 取得圖片資訊
@@ -131,8 +132,9 @@ public class ArticleController {
 	    }
 		
 		//XSS
-		String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
-		model.addAttribute("articleContent", unescapedHtml);
+//		String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
+//		model.addAttribute("articleContent", unescapedHtml);
+		model.addAttribute("articleContent",art.getArticleContent());
 		return "/forum/article/articleBackEdit";
 	}
 
@@ -140,8 +142,9 @@ public class ArticleController {
 	public String putEditArticle(@ModelAttribute("art") Article art, @RequestParam("articleContent") String content,
 			@RequestParam("imgToByte") MultipartFile file)throws IOException {
 		// XSS
-		String escapedHtml = HtmlUtils.htmlEscape(content);
-		art.setArticleContent(escapedHtml);
+//		String escapedHtml = HtmlUtils.htmlEscape(content);
+//		art.setArticleContent(escapedHtml);
+//		art.setArticleContent(content);
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());

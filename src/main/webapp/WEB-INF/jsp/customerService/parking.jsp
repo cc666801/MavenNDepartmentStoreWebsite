@@ -6,7 +6,9 @@
     <title>停車資訊</title>
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyChKsAbFPVA7QU-k5fM13sUIZk_gHRRwjE&libraries=geometry,places,marker,core,maps,routes,drawing"></script>
-    
+    <link
+	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
+	rel="stylesheet">
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -71,7 +73,7 @@
 <jsp:include page="../layout/header.jsp"></jsp:include>
 <main id="main">
 
-<h1>鄰近停車資訊</h1>
+<h1><i class="fa-solid fa-map-location-dot"></i> 鄰近停車資訊</h1>
 <div id="map-container">
             <div id="distance" style="display:none;"></div>
             <div id="map"></div>
