@@ -109,12 +109,23 @@
     
         <!-- 添加所需的JavaScript -->
     <script>
-        document.getElementById("playButton").addEventListener("click", function() {
+    document.addEventListener("DOMContentLoaded", function() {
+        const playButton = document.getElementById("playButton");
+        playButton.addEventListener("click", function() {
+            const lastClickedDate = localStorage.getItem("lastClickedDate");
+            const currentDate = new Date().toISOString().split("T")[0];
+
+            if (lastClickedDate === currentDate) {
+                alert("今天已經抽過了！");
+                return;
+            }
+
             fetch("${contextRoot}/game/play", { method: "POST" })
                 .then(response => response.json())
                 .then(data => {
                     showResult(data.point, data.totalPoints);
                     updatePoints(data.totalPoints);
+                    localStorage.setItem("lastClickedDate", currentDate);
                 })
                 .catch(error => console.log(error));
         });
@@ -129,6 +140,8 @@
             const pointsElement = document.getElementById("points");
             pointsElement.innerText = "目前擁有: " + totalPoints + "點";
         }
+    });
+
     </script>
 </body>
 </html>
