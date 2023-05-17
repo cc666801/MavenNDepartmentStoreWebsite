@@ -85,7 +85,7 @@
 					<br>
 
 					<form:label path="advertiseFrequency">設置廣告點級次數</form:label>
-					<form:input path="advertiseFrequency" />
+					<form:input path="advertiseFrequency" required="true" />
 					<br>
 
 					<form:label path="advertiseStartDay">廣告上架日期</form:label>

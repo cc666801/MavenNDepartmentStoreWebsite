@@ -37,7 +37,7 @@
 
 
 			<form:label path="commName">商品名稱</form:label>
-			<form:input path="commName" type="text" />
+			<form:input path="commName" type="text" required="true"/>
 			<br>
 			<form:label path="commDesc">商品敘述</form:label>
 			<form:input path="commDesc" />

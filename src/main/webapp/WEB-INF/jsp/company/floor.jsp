@@ -89,7 +89,7 @@
                 <div class="floor-company" id="floor-company"></div>
               </div>
               <div id="company-image-box">
-                <h3 class="floor-info-title">樓層圖</h3>
+                <h3 class="floor-info-title" id="floor-picture-h3">樓層平面圖</h3>
                 <hr>
                 <!-- <span ><a href=https://www.qsquare.com.tw/floor.php>連結為https://www.qsquare.com.tw/floor.php</a></span> -->
                 <div class="floor-plan-wrapper">
@@ -122,8 +122,9 @@
               // 更改圖片為對應樓層的圖片
               let floorImage = document.getElementById('floor-image');
               floorImage.src = '${contextRoot}/assetsForFrontend/img/樓層平面圖' + floorValue + '.jpg';
-              // 更改h3的內容為li的value
+              // 更改 company-box 的 h3 的內容為 li 的 value
               document.querySelector('.floor-info-title').textContent = floorValue + ' 的所有廠商';
+              document.getElementById('floor-picture-h3').textContent = floorValue + ' 樓層圖'
             })
             .catch(error => {
               console.error('Error:', error);
@@ -209,7 +210,7 @@
                 const phoneCell = row.insertCell();
 
                 // 設定格子的內容
-                brandNameCell.textContent = item.companyName;
+                brandNameCell.innerHTML ='<img src="data:image/jpeg;base64,' + item.base64StringCompanyLogo + '" style="width: 30px;height: 20px;padding-right:5px;"></img>' + item.companyName;
                 categoryCell.textContent = item.industryCategoryName;
                 phoneCell.textContent = item.companyPhone;
                 let floor = "";
@@ -269,6 +270,11 @@
           // 按下樓層簡介
           myFloorInfo.addEventListener('click', function () {
             let myList = document.getElementById('floor-info-ul');
+            // 更改圖片為對應樓層的圖片
+            let floorImage = document.getElementById('floor-image');
+              floorImage.src = '${contextRoot}/assetsForFrontend/img/樓層圖.png';
+              document.getElementById('floor-picture-h3').textContent ='樓層平面圖'
+
             var lis = myList.getElementsByTagName('li');
             if (companyBox.style.display != 'none') {
               for (var i = 0; i < lis.length; i++) {
