@@ -165,7 +165,7 @@
 												<div class="post-entry-1">
 													<P style="font-size :32px">近期活動</P>
 													<jstl:forEach var="advertise" items="${shelvesIsTrue}"
-														varStatus="status" begin="1">
+														varStatus="status" begin="3">
 														<!--放上面才可以顯示 begin="3" end="5" -->
 														<a
 															href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img
