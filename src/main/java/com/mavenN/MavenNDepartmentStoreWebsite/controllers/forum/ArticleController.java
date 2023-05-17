@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
+package com.mavenN.MavenNDepartmentStoreWebsite.controllers.forum;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -16,6 +16,10 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -33,10 +37,11 @@ import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.ArticleCategory;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Comment;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleCategoryService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommentService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleCategoryService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.CommentService;
+
+
 
 @Controller
 public class ArticleController {
@@ -47,8 +52,6 @@ public class ArticleController {
 	@Autowired
 	private ArticleCategoryService articleCategoryService;
 	
-	@Autowired
-	private MemberService memberService;
 	
 	@Autowired
 	private CommentService commentService;
@@ -197,25 +200,23 @@ public class ArticleController {
 	// 前台文章列表
 	
 	@GetMapping("/articleList")
-	public String showPageFront(@RequestParam(name = "p", defaultValue = "1") Integer pageNumber,@RequestParam(name = "category", required = false) Integer categoryId,@RequestParam(name = "sortBy", defaultValue = "articleCreateTime") String sortBy,@RequestParam(name = "search", required = false) String search,
+	public String showPageFront(@RequestParam(required = false) String keyword,
+            @RequestParam(required = false) Integer categoryId,
+            @RequestParam(required = false) String sortBy,
+            @RequestParam(name = "p",defaultValue = "0") int pageNumber,
  Model model) {
 		
 
-		 Page<Article> page;
-		
-		 if (categoryId != null) {
-			 page = articleService.findArticleByCategoryAndPage(categoryId, pageNumber, sortBy);
-		    } else if ("articleLikeCount".equals(sortBy)) {
-		        page = articleService.findArticleByArticleLikeCountAndPage(pageNumber, 5);
-		    } else if ("commentCount".equals(sortBy)) {
-		        page = articleService.findArticleByCommentCountAndPage(pageNumber,5);
-		    }else if (search != null && !search.isBlank()) { 
-		        page = articleService.findArticleByKeywordAndPage(search,pageNumber, 5);
-		    } else {
-		        page = articleService.findArticleByPage(pageNumber, sortBy);
-		    }
-		    
-
+		System.out.println("keyword: " + keyword);
+	    System.out.println("categoryId: " + categoryId);
+	    System.out.println("sortBy: " + sortBy);
+	    System.out.println("pageNumber: " + pageNumber);
+	    sortBy = (sortBy != null) ? sortBy : "articleEditTime";
+	    
+	    Pageable pageable = PageRequest.of(pageNumber, 5);
+	    
+	    Page<Article> page = articleService.searchByKeywordAndCategory(keyword, categoryId, sortBy, pageable);
+    
 		// 縮圖
 		for (Article art : page) {
 			if (art.getArticleImage() != null) {
@@ -253,14 +254,7 @@ public class ArticleController {
 		
 		return "/forum/article/articleList";
 	}
-
-//	@GetMapping("/articleList")
-//	public String findAllArtFront(Model model){
-//		List<Article> findAllArt=articleService.findAllArticle();
-//		model.addAttribute("artList", findAllArt);
-//		
-//		return "/forum/article/articleList";
-//	}
+	
 	// 前台發文
 	@GetMapping("/articleFront/add")
 	public String addArticleFront(Model model,HttpSession session, HttpServletRequest request) {
@@ -273,7 +267,7 @@ public class ArticleController {
 	        model.addAttribute("errorMsg", "請先登入會員");
 //	        return "redirect:/member/login";  // 先顯示訊息再跳轉至登入頁面
 	    }
-
+	
 	    model.addAttribute("article", new Article());
 	    List<ArticleCategory> categoryList = articleCategoryService.findCategoriesPermissions();
 	    model.addAttribute("categoryList", categoryList);
@@ -299,7 +293,7 @@ public class ArticleController {
 		// XSS
 		String escapedHtml = HtmlUtils.htmlEscape(content);
 		art.setArticleContent(escapedHtml);
-
+//	    art.setArticleContent(content);
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
@@ -357,6 +351,7 @@ public class ArticleController {
 		//XSS
 				String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
 				model.addAttribute("articleContent", unescapedHtml);
+//	    model.addAttribute("articleContent",art.getArticleContent());
 		return "/forum/article/articleFrontEdit";
 	}
 
@@ -367,6 +362,8 @@ public class ArticleController {
 		// XSS
 				String escapedHtml = HtmlUtils.htmlEscape(content);
 				art.setArticleContent(escapedHtml);
+//				art.setArticleContent(content);
+		 art.setArticleContent(content);
 				// 處理圖片上傳
 				if (!file.isEmpty()) {
 					art.setArticleImage(file.getBytes());

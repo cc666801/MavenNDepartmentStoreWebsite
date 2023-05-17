@@ -22,6 +22,10 @@ public class OrderDto {
 	
 	private Date createOrderTime;
 	
+	private String orderAddress;
+	
+	
+	
 
 	public OrderDto(Integer orderId, Integer memberId, List<OrderDetailDto> orderDetailDtos, Integer couponId, Integer total) {
 		super();
@@ -44,6 +48,13 @@ public class OrderDto {
 		this.orderDetailDtos = orderDetailDtos;
 		this.total = order.getTotal();
 		this.createOrderTime = order.getCreateOrderTime();
+		String orderAddress = order.getOrderAddress();
+		if (orderAddress != null) {
+		  this.orderAddress = orderAddress;
+		} else {
+		  this.orderAddress = ""; // 或者您可以将其设置为其他默认值
+		}
+		
 	}
 
 
@@ -57,6 +68,14 @@ public class OrderDto {
 	}
 
 
+	public String getOrderAddress() {
+		return orderAddress;
+	}
+
+	public void setOrderAddress(String orderAddress) {
+		this.orderAddress = orderAddress;
+	}
+
 	public void setOrderId(Integer orderId) {
 		this.orderId = orderId;
 	}
@@ -67,8 +86,6 @@ public class OrderDto {
 	}
 	
 	
-
-
 	public Date getCreateOrderTime() {
 		return createOrderTime;
 	}
@@ -101,9 +118,6 @@ public class OrderDto {
 		this.couponId = couponId;
 	}
 	
-	
-
-
 	public Integer getTotal() {
 		return total;
 	}
@@ -112,10 +126,5 @@ public class OrderDto {
 		this.total = total;
 	}
 
-	@Override
-	public String toString() {
-		return "OrderDto [orderId=" + orderId + ", memberId=" + memberId + ", orderDetailDtos=" + orderDetailDtos
-				+ ", couponId=" + couponId + ", total=" + total + ", createOrderTime=" + createOrderTime + "]";
-	}
 
 }

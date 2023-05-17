@@ -80,6 +80,18 @@
 			<artifactId>json</artifactId>
 			<version>20201115</version>
 		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-context</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-aop</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.apache.commons</groupId>
+			<artifactId>commons-lang3</artifactId>
+		</dependency>
 		<!--討論區用的,不要以為是BUG-->
 
 		<!--google驗證用-->
@@ -93,6 +105,7 @@
 			<version>1.6.2</version>
 		</dependency>
 		<!--google驗證用-->
+
 		<!--		金流用-->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -112,6 +125,7 @@
 			<version>5.5.1</version>
 		</dependency>
 <!--		心願清單用-->
+
 
 	</dependencies>
 	<build>

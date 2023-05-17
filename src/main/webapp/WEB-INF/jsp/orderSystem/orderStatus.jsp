@@ -33,35 +33,57 @@
                     <i class="fa-solid fa-file-invoice-dollar"></i>
                     訂單狀態
                   </h3>
+                  <hr style="width: 50%; margin: 0 auto;">
                 </div>
               </div>
-              <div id="cash-on-delivery-order-div">
-                <h4>貨到付款訂單</h4>
+              <div class="border border-secondary" style="width: 20%;margin-left: 15%;">
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cashOnDelivery" name="paymentMethod"
+                    value="cashOnDelivery" checked>
+                  <label class="form-check-label" for="cashOnDelivery">貨到付款訂單</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="creditCard" name="paymentMethod"
+                    value="creditCard" checked>
+                  <label class="form-check-label" for="creditCard">信用卡付款訂單</label>
+                </div>
+
+                <div class="form-check">
+                  <input class="form-check-input" type="checkbox" id="cancelledOrder" name="orderStatus"
+                    value="cancelledOrder">
+                  <label class="form-check-label" for="cancelledOrder">已取消訂單</label>
+                </div>
+              </div>
+              <!-- style="padding-left: 20%;" -->
+              <div id="cash-on-delivery-order-div" class="border-bottom"
+                style="min-height: 100px; height: auto;padding-top: 1%;margin-left: 15%;">
+                <h4 class="border-bottom" style="width: 20%;">貨到付款訂單</h4>
                 <ul class="list-group" id="cash-on-delivery-order">
-                  
+
                 </ul>
               </div>
-              
-              <div id="payment-flow-order-div">
-                <h4>信用卡付款訂單</h4>
+
+              <div id="payment-flow-order-div"
+                style="min-height: 100px; height: auto;padding-top: 1%;margin-left: 15%;">
+                <h4 class="border-bottom" style="width: 20%;">信用卡付款訂單</h4>
                 <ul class="list-group" id="payment-flow-order">
-                  
-                </ul>
-              </div>
-              
-              <!-- style="display: none;" -->
-              <div 
-               id="cancelled-order-div">
-                <h4>已取消訂單</h4>
-                <ul class="list-group" id="cancelled-order" >
 
                 </ul>
               </div>
 
+              <div id="cancelled-order-div"
+                style="min-height: 100px; height: auto;display: none;padding-top: 1%;margin-left: 15%;">
+                <h4 class="border-bottom" style="width: 20%;">已取消訂單</h4>
+                <ul class="list-group" id="cancelled-order">
 
-
-
+                </ul>
               </div>
+
+
+
+
+            </div>
             </div>
           </section>
         </main>
@@ -75,48 +97,52 @@
       <script>
         function fetchOrderDetails(orderId) {
           var memberId = "${member.id}";
-          
+
           const cashOnDeliveryOrder = document.querySelector("#cash-on-delivery-order");
           const paymentFlowOrder = document.querySelector("#payment-flow-order");
           const cancelledOrder = document.querySelector("#cancelled-order");
 
-          cashOnDeliveryOrder.innerHTML="";
-          paymentFlowOrder.innerHTML="";
-          cancelledOrder.innerHTML="";
+          cashOnDeliveryOrder.innerHTML = "";
+          paymentFlowOrder.innerHTML = "";
+          cancelledOrder.innerHTML = "";
 
           // 更改訂單狀態
-  fetch("${contextRoot}/api/order/" + memberId + "/" + orderId, {
-    method: "PUT"
-  })
-    .then(response => {
-      if (response.ok) {
-        // 订单状态更新成功后获取数据
-        return Promise.all([
-          fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId),
-          fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId),
-          fetch("${contextRoot}/api/order/cancelledOrder/" + memberId)
-        ]);
-      } else {
-        throw new Error("Failed to update order status");
-      }
-    })
-    .then(responses => Promise.all(responses.map(response => response.json())))
-    .then(data => {
-      const cashOnDeliveryData = data[0];
-      const paymentFlowData = data[1];
-      const cancelledData = data[2];
-      cashOnDeliveryData.forEach(orderDto => {
+          fetch("${contextRoot}/api/order/" + memberId + "/" + orderId, {
+            method: "PUT"
+          })
+            .then(response => {
+              if (response.ok) {
+                // 订单状态更新成功后获取数据
+                return Promise.all([
+                  fetch("${contextRoot}/api/order/cashOnDeliverOrder/" + memberId),
+                  fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId),
+                  fetch("${contextRoot}/api/order/cancelledOrder/" + memberId)
+                ]);
+              } else {
+                throw new Error("Failed to update order status");
+              }
+            })
+            .then(responses => Promise.all(responses.map(response => response.json())))
+            .then(data => {
+              const cashOnDeliveryData = data[0];
+              const paymentFlowData = data[1];
+              const cancelledData = data[2];
+              cashOnDeliveryData.forEach(orderDto => {
                 // 轉成台灣時間
                 const utcDate = new Date(orderDto.createOrderTime);
                 const twDate = utcDate.toLocaleString('zh-TW', { timeZone: 'Asia/Taipei' });
 
                 // 訂單資訊 list item
                 const li = document.createElement('li');
+                li.style = 'width:80%'
                 li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
+                const orderDtoCreateDateSpan = document.createElement('span');
+                orderDtoCreateDateSpan.textContent = "訂單創立時間:" + twDate;
+                li.appendChild(orderDtoCreateDateSpan);
+                const orderDtoTotalSpan = document.createElement('span');
+                orderDtoTotalSpan.textContent = '訂單總金額:' + orderDto.total;
+                li.appendChild(orderDtoTotalSpan);
 
                 // 按鈕區域
                 const buttonContainer = document.createElement('div');
@@ -149,6 +175,7 @@
                 // Details 區域
                 const div = document.createElement('div');
                 div.classList.add('collapse');
+                div.style = 'width:80%'
                 div.id = 'order' + orderDto.orderId;
                 cashOnDeliveryOrder.appendChild(div);
 
@@ -161,23 +188,31 @@
                   detailsLi.classList.add('list-group-item');
 
                   const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  commodityNameSpan.style = 'margin-right:2%'
+                  commodityNameSpan.innerHTML = "商品名稱:" + '<img src="data:image/jpeg;base64,' + orderDetailDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;padding-left:5px;"></img>'+orderDetailDto.commodityName;
                   detailsLi.appendChild(commodityNameSpan);
 
                   const quantitySpan = document.createElement('span');
+                  quantitySpan.style = 'margin-right:2%'
                   quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
                   detailsLi.appendChild(quantitySpan);
 
                   const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.style = 'margin-right:2%'
                   commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
                   detailsLi.appendChild(commodityPriceSpan);
+
+                  const subTotalSpan = document.createElement('span');
+                  subTotalSpan.style = 'margin-right:2%'
+                  subTotalSpan.textContent = "小計:" + orderDetailDto.commodityPrice * orderDetailDto.quantity;
+                  detailsLi.appendChild(subTotalSpan);
 
                   detailsUl.appendChild(detailsLi);
                 });
 
               });
 
-          
+
               paymentFlowData.forEach(orderDto => {
                 // 轉成台灣時間
                 const utcDate = new Date(orderDto.createOrderTime);
@@ -185,11 +220,15 @@
 
                 // 訂單資訊 list item
                 const li = document.createElement('li');
+                li.style = 'width:80%'
                 li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
+                const orderDtoCreateDateSpan = document.createElement('span');
+                orderDtoCreateDateSpan.textContent = "訂單創立時間:" + twDate;
+                li.appendChild(orderDtoCreateDateSpan);
+                const orderDtoTotalSpan = document.createElement('span');
+                orderDtoTotalSpan.textContent = '訂單總金額:' + orderDto.total;
+                li.appendChild(orderDtoTotalSpan);
 
                 // 按鈕區域
                 const buttonContainer = document.createElement('div');
@@ -222,6 +261,7 @@
                 // Details 區域
                 const div = document.createElement('div');
                 div.classList.add('collapse');
+                div.style = 'width:80%'
                 div.id = 'order' + orderDto.orderId;
                 paymentFlowOrder.appendChild(div);
 
@@ -234,16 +274,24 @@
                   detailsLi.classList.add('list-group-item');
 
                   const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  commodityNameSpan.style = 'margin-right:2%'
+                  commodityNameSpan.innerHTML = "商品名稱:" + '<img src="data:image/jpeg;base64,' + orderDetailDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;padding-left:5px;"></img>'+orderDetailDto.commodityName;
                   detailsLi.appendChild(commodityNameSpan);
 
                   const quantitySpan = document.createElement('span');
+                  quantitySpan.style = 'margin-right:2%'
                   quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
                   detailsLi.appendChild(quantitySpan);
 
                   const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.style = 'margin-right:2%'
                   commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
                   detailsLi.appendChild(commodityPriceSpan);
+
+                  const subTotalSpan = document.createElement('span');
+                  subTotalSpan.style = 'margin-right:2%'
+                  subTotalSpan.textContent = "小計:" + orderDetailDto.commodityPrice * orderDetailDto.quantity;
+                  detailsLi.appendChild(subTotalSpan);
 
                   detailsUl.appendChild(detailsLi);
                 });
@@ -257,11 +305,15 @@
 
                 // 訂單資訊 list item
                 const li = document.createElement('li');
+                li.style = 'width:80%'
                 li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
+                const orderDtoCreateDateSpan = document.createElement('span');
+                orderDtoCreateDateSpan.textContent = "訂單創立時間:" + twDate;
+                li.appendChild(orderDtoCreateDateSpan);
+                const orderDtoTotalSpan = document.createElement('span');
+                orderDtoTotalSpan.textContent = '訂單總金額:' + orderDto.total;
+                li.appendChild(orderDtoTotalSpan);
 
                 // 按鈕區域
                 const buttonContainer = document.createElement('div');
@@ -283,6 +335,7 @@
 
                 // Details 區域
                 const div = document.createElement('div');
+                div.style = 'width:80%'
                 div.classList.add('collapse');
                 div.id = 'order' + orderDto.orderId;
                 cancelledOrder.appendChild(div);
@@ -296,16 +349,24 @@
                   detailsLi.classList.add('list-group-item');
 
                   const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  commodityNameSpan.style = 'margin-right:2%'
+                  commodityNameSpan.innerHTML = "商品名稱:" + '<img src="data:image/jpeg;base64,' + orderDetailDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;padding-left:5px;"></img>'+orderDetailDto.commodityName;
                   detailsLi.appendChild(commodityNameSpan);
 
                   const quantitySpan = document.createElement('span');
+                  quantitySpan.style = 'margin-right:2%'
                   quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
                   detailsLi.appendChild(quantitySpan);
 
                   const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.style = 'margin-right:2%'
                   commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
                   detailsLi.appendChild(commodityPriceSpan);
+
+                  const subTotalSpan = document.createElement('span');
+                  subTotalSpan.style = 'margin-right:2%'
+                  subTotalSpan.textContent = "小計:" + orderDetailDto.commodityPrice * orderDetailDto.quantity;
+                  detailsLi.appendChild(subTotalSpan);
 
                   detailsUl.appendChild(detailsLi);
                 });
@@ -315,6 +376,7 @@
             })
             .catch(error => console.error(error));
         }
+
 
 
 
@@ -340,11 +402,15 @@
 
                 // 訂單資訊 list item
                 const li = document.createElement('li');
+                li.style = 'width:80%'
                 li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
+                const orderDtoCreateDateSpan = document.createElement('span');
+                orderDtoCreateDateSpan.textContent = "訂單創立時間:" + twDate;
+                li.appendChild(orderDtoCreateDateSpan);
+                const orderDtoTotalSpan = document.createElement('span');
+                orderDtoTotalSpan.textContent = '訂單總金額:' + orderDto.total;
+                li.appendChild(orderDtoTotalSpan);
 
                 // 按鈕區域
                 const buttonContainer = document.createElement('div');
@@ -377,6 +443,7 @@
                 // Details 區域
                 const div = document.createElement('div');
                 div.classList.add('collapse');
+                div.style = 'width:80%'
                 div.id = 'order' + orderDto.orderId;
                 cashOnDeliveryOrder.appendChild(div);
 
@@ -389,16 +456,24 @@
                   detailsLi.classList.add('list-group-item');
 
                   const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  commodityNameSpan.style = 'margin-right:2%'
+                  commodityNameSpan.innerHTML = "商品名稱:" + '<img src="data:image/jpeg;base64,' + orderDetailDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;padding-left:5px;"></img>'+orderDetailDto.commodityName;
                   detailsLi.appendChild(commodityNameSpan);
 
                   const quantitySpan = document.createElement('span');
+                  quantitySpan.style = 'margin-right:2%'
                   quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
                   detailsLi.appendChild(quantitySpan);
 
                   const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.style = 'margin-right:2%'
                   commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
                   detailsLi.appendChild(commodityPriceSpan);
+
+                  const subTotalSpan = document.createElement('span');
+                  subTotalSpan.style = 'margin-right:2%'
+                  subTotalSpan.textContent = "小計:" + orderDetailDto.commodityPrice * orderDetailDto.quantity;
+                  detailsLi.appendChild(subTotalSpan);
 
                   detailsUl.appendChild(detailsLi);
                 });
@@ -408,8 +483,8 @@
             })
             .catch(error => console.error(error));
 
-            // 在一開始抓到該會員信用卡付款訂單的資料
-            fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId)
+          // 在一開始抓到該會員信用卡付款訂單的資料
+          fetch("${contextRoot}/api/order/paymentFlowOrder/" + memberId)
             .then(response => response.json())
             .then(data => {
 
@@ -420,11 +495,15 @@
 
                 // 訂單資訊 list item
                 const li = document.createElement('li');
+                li.style = 'width:80%'
                 li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
+                const orderDtoCreateDateSpan = document.createElement('span');
+                orderDtoCreateDateSpan.textContent = "訂單創立時間:" + twDate;
+                li.appendChild(orderDtoCreateDateSpan);
+                const orderDtoTotalSpan = document.createElement('span');
+                orderDtoTotalSpan.textContent = '訂單總金額:' + orderDto.total;
+                li.appendChild(orderDtoTotalSpan);
 
                 // 按鈕區域
                 const buttonContainer = document.createElement('div');
@@ -457,6 +536,7 @@
                 // Details 區域
                 const div = document.createElement('div');
                 div.classList.add('collapse');
+                div.style = 'width:80%'
                 div.id = 'order' + orderDto.orderId;
                 paymentFlowOrder.appendChild(div);
 
@@ -469,16 +549,24 @@
                   detailsLi.classList.add('list-group-item');
 
                   const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  commodityNameSpan.style = 'margin-right:2%'
+                  commodityNameSpan.innerHTML = "商品名稱:" + '<img src="data:image/jpeg;base64,' + orderDetailDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;padding-left:5px;"></img>'+orderDetailDto.commodityName;
                   detailsLi.appendChild(commodityNameSpan);
 
                   const quantitySpan = document.createElement('span');
+                  quantitySpan.style = 'margin-right:2%'
                   quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
                   detailsLi.appendChild(quantitySpan);
 
                   const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.style = 'margin-right:2%'
                   commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
                   detailsLi.appendChild(commodityPriceSpan);
+
+                  const subTotalSpan = document.createElement('span');
+                  subTotalSpan.style = 'margin-right:2%'
+                  subTotalSpan.textContent = "小計:" + orderDetailDto.commodityPrice * orderDetailDto.quantity;
+                  detailsLi.appendChild(subTotalSpan);
 
                   detailsUl.appendChild(detailsLi);
                 });
@@ -489,8 +577,8 @@
             .catch(error => console.error(error));
 
 
-            // 在一開始抓到該會員已取消訂單的資料
-            fetch("${contextRoot}/api/order/cancelledOrder/" + memberId)
+          // 在一開始抓到該會員已取消訂單的資料
+          fetch("${contextRoot}/api/order/cancelledOrder/" + memberId)
             .then(response => response.json())
             .then(data => {
               console.log(data);
@@ -502,11 +590,15 @@
 
                 // 訂單資訊 list item
                 const li = document.createElement('li');
+                li.style = 'width:80%'
                 li.classList.add('list-group-item', 'd-flex', 'justify-content-between', 'align-items-center');
 
-                const span = document.createElement('span');
-                span.textContent = "訂單創立時間:" + twDate + ' 訂單總金額:' + orderDto.total;
-                li.appendChild(span);
+                const orderDtoCreateDateSpan = document.createElement('span');
+                orderDtoCreateDateSpan.textContent = "訂單創立時間:" + twDate;
+                li.appendChild(orderDtoCreateDateSpan);
+                const orderDtoTotalSpan = document.createElement('span');
+                orderDtoTotalSpan.textContent = '訂單總金額:' + orderDto.total;
+                li.appendChild(orderDtoTotalSpan);
 
                 // 按鈕區域
                 const buttonContainer = document.createElement('div');
@@ -529,6 +621,7 @@
                 // Details 區域
                 const div = document.createElement('div');
                 div.classList.add('collapse');
+                div.style = 'width:80%'
                 div.id = 'order' + orderDto.orderId;
                 cancelledOrder.appendChild(div);
 
@@ -541,16 +634,24 @@
                   detailsLi.classList.add('list-group-item');
 
                   const commodityNameSpan = document.createElement('span');
-                  commodityNameSpan.textContent = "商品名稱:" + orderDetailDto.commodityName;
+                  commodityNameSpan.style = 'margin-right:2%'
+                  commodityNameSpan.innerHTML = "商品名稱:" + '<img src="data:image/jpeg;base64,' + orderDetailDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;padding-left:5px;"></img>'+orderDetailDto.commodityName;
                   detailsLi.appendChild(commodityNameSpan);
 
                   const quantitySpan = document.createElement('span');
+                  quantitySpan.style = 'margin-right:2%'
                   quantitySpan.textContent = "商品數量:" + orderDetailDto.quantity;
                   detailsLi.appendChild(quantitySpan);
 
                   const commodityPriceSpan = document.createElement('span');
+                  commodityPriceSpan.style = 'margin-right:2%'
                   commodityPriceSpan.textContent = "商品價格:" + orderDetailDto.commodityPrice;
                   detailsLi.appendChild(commodityPriceSpan);
+
+                  const subTotalSpan = document.createElement('span');
+                  subTotalSpan.style = 'margin-right:2%'
+                  subTotalSpan.textContent = "小計:" + orderDetailDto.commodityPrice * orderDetailDto.quantity;
+                  detailsLi.appendChild(subTotalSpan);
 
                   detailsUl.appendChild(detailsLi);
                 });
@@ -560,7 +661,41 @@
             })
             .catch(error => console.error(error));
         });
+        // 获取复选框元素
+        var cashOnDeliveryCheckbox = document.getElementById('cashOnDelivery');
+        var creditCardCheckbox = document.getElementById('creditCard');
+        var cancelledOrderCheckbox = document.getElementById('cancelledOrder');
 
+        // 监听复选框变化事件
+        cashOnDeliveryCheckbox.addEventListener('change', function () {
+          if (cashOnDeliveryCheckbox.checked) {
+            // 货到付款订单复选框被选中
+            document.getElementById('cash-on-delivery-order-div').style.display = 'block';
+          } else {
+            // 货到付款订单复选框未选中
+            document.getElementById('cash-on-delivery-order-div').style.display = 'none';
+          }
+        });
+
+        creditCardCheckbox.addEventListener('change', function () {
+          if (creditCardCheckbox.checked) {
+            // 信用卡付款订单复选框被选中
+            document.getElementById('payment-flow-order-div').style.display = 'block';
+          } else {
+            // 信用卡付款订单复选框未选中
+            document.getElementById('payment-flow-order-div').style.display = 'none';
+          }
+        });
+
+        cancelledOrderCheckbox.addEventListener('change', function () {
+          if (cancelledOrderCheckbox.checked) {
+            // 已取消订单复选框被选中
+            document.getElementById('cancelled-order-div').style.display = 'block';
+          } else {
+            // 已取消订单复选框未选中
+            document.getElementById('cancelled-order-div').style.display = 'none';
+          }
+        });
       </script>
 
       </html>

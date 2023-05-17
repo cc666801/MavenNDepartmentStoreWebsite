@@ -55,6 +55,9 @@ public class Order {
 	@Column(name = "total", columnDefinition = "int")
 	private Integer total;
 	
+	@Column(name = "order_address", columnDefinition = "nvarchar(50)")
+	private String orderAddress;
+	
 	@ManyToOne(cascade = CascadeType.PERSIST)
 	@JoinColumn(name = "fk_order_status_id")
 	private OrderStatus orderStatus;
@@ -151,12 +154,14 @@ public class Order {
 		this.orderStatus = orderStatus;
 	}
 
-	@Override
-	public String toString() {
-		return "Order [orderId=" + orderId + ", member=" + member + ", orderDetails=" + orderDetails
-				+ ", createOrderTime=" + createOrderTime + ", coupon=" + coupon + ", total=" + total
-				+ ", orderStatus=" + orderStatus + "]";
+	public String getOrderAddress() {
+		return orderAddress;
+	}
+
+	public void setOrderAddress(String orderAddress) {
+		this.orderAddress = orderAddress;
 	}
 	
 	
+
 }

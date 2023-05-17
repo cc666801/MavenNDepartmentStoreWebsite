@@ -1,6 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
-
-import java.io.IOException;
+package com.mavenN.MavenNDepartmentStoreWebsite.controllers.forum;
 
 import javax.servlet.http.HttpSession;
 
@@ -10,17 +8,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.multipart.MultipartFile;
-import org.springframework.web.util.HtmlUtils;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Article;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.forum.Comment;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.ArticleService;
-import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CommentService;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.MemberService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.ArticleService;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.services.forum.CommentService;
 
 @Controller
 public class CommentController {

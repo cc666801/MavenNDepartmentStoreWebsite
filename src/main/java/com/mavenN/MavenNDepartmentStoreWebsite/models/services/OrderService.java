@@ -69,6 +69,7 @@ public class OrderService {
 			Member member = optionalMember.get();
 			Order newOrder = new Order(null, member);
 			newOrder.setCreateOrderTimeIfNull();
+			newOrder.setOrderAddress(orderDto.getOrderAddress());
 			newOrder.setTotal(orderDto.getTotal());
 			if(orderDto.getCouponId() != null) {
 			// 有優惠卷就 set 進 newOrder
@@ -118,6 +119,7 @@ public class OrderService {
 			Member member = optionalMember.get();
 			Order newOrder = new Order(null, member);
 			newOrder.setCreateOrderTimeIfNull();
+			newOrder.setOrderAddress(orderDto.getOrderAddress());
 			newOrder.setTotal(orderDto.getTotal());
 			if(orderDto.getCouponId() != null) {
 			// 有優惠卷就 set 進 newOrder

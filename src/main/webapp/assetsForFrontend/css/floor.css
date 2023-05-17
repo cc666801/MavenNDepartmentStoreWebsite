@@ -18,7 +18,7 @@
   
 }
 .floor-plans-section {
-  margin: 4rem auto;
+  margin: 6rem auto;
   width: 60%;
   height: 1000px;
   background-color:#dee2d1;
@@ -99,11 +99,13 @@
 
 
 #company-box {
-  height: 400px;
+  min-height: 300px;
   border: 1px solid #ca5f0e;
   border-radius: 5px;
   padding: 10px;
   background-color: #d3d3d3;
+  width: 100%;
+  height: auto;
 }
 
 .floor-company-name {
@@ -121,9 +123,11 @@
   padding: 10px;
   margin-top: 3%;
   margin-bottom: 10%;
-  height: 400px;
+  min-height: 420px;
   background-color: #d3d3d3;
-  display: inline-block
+  display: inline-block;
+  width: 100%;
+  height: auto;
   
 }
 

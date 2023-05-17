@@ -13,6 +13,20 @@
 <title>文章列表</title>
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<style>
+    .aside-block button {
+        background-color: #f5f5f5;
+        border: none;
+        padding: 8px 16px;
+        margin-bottom: 10px;
+        cursor: pointer;
+    }
+
+    .aside-block button.active {
+        background-color: #ebebeb;
+    }
+</style>
+
 </head>
 <body>
 	<jsp:include page="../../layout/header.jsp"></jsp:include>
@@ -32,11 +46,10 @@
 
 							<h3 class="category-title">討論區文章列表</h3>
 
-							<form id="sortForm" method="get"
-								action="${pageContext.request.contextPath}/articleList">
-								<select name="sortBy" id="sortSelect">
-									<option value="articleCreateTime"
-										${sortBy == 'articleCreateTime' ? 'selected' : ''}>最後發表</option>
+							<form id="sortForm" method="get" action="#">
+								<select name="sortBy" id="sortBySelect">
+									<option value="articleEditTime"
+										${sortBy == 'articleEditTime' ? 'selected' : ''}>最後發表</option>
 									<option value="articleLikeCount"
 										${sortBy == 'likesCount' ? 'selected' : ''}>熱門</option>
 									<option value="commentCount"
@@ -45,7 +58,7 @@
 										${sortBy == 'comments.commentEditTime' ? 'selected' : ''}>最後回覆</option>
 								</select>
 							</form>
-
+							<br>
 
 
 							<c:forEach var="art" items="${page.content}">
@@ -54,7 +67,7 @@
 									<a href="${contextRoot}/articleContent/${art.articleID}"
 										class="me-4 thumbnail"> <img
 										src="data:image/jpeg;base64,${art.articleBase64}" alt=""
-										class="img-fluid" style="max-width: 80%; max-height: 80%;">
+										class="img-fluid" style="max-width: 200px; max-height: 200px;">
 									</a>
 									<div>
 										<div class="post-meta">
@@ -87,12 +100,12 @@
 								<div class="custom-pagination">
 
 									<c:if test="${not page.first}">
-										<a href="?p=${page.previousPageable().pageNumber+1}"
+										<a href="?p=${page.previousPageable().pageNumber}"
 											class="prev">Prevous</a>
 									</c:if>
-									<c:forEach var="i" begin="1" end="${page.totalPages}">
+									<c:forEach var="i" begin="1" end="${page.totalPages-1}">
 										<c:choose>
-											<c:when test="${i == page.number + 1}">
+											<c:when test="${i == page.number}">
 												<a href="#" class="active">${i}</a>
 											</c:when>
 											<c:otherwise>
@@ -101,7 +114,7 @@
 										</c:choose>
 									</c:forEach>
 									<c:if test="${not page.last}">
-										<a href="?p=${page.nextPageable().pageNumber+1}" class="next">Next</a>
+										<a href="?p=${page.nextPageable().pageNumber}" class="next">Next</a>
 									</c:if>
 								</div>
 							</div>
@@ -111,20 +124,25 @@
 
 						<div class="col-md-3">
 							<div class="aside-block">
-								<form id="searchForm" method="get"
-									action="${pageContext.request.contextPath}/articleList">
-									<input type="text" name="search" id="search" placeholder="搜尋文章標題">
-									<button type="submit">搜索</button>
+								<form id="searchForm" method="get" action="#">
+									<div class="input-group">
+										<input type="text" class="form-control" name="search"
+											id="searchInput" placeholder="搜尋文章標題">
+										<button type="submit" class="btn btn-primary">搜索</button>
+									</div>
 								</form>
 							</div>
 							<div class="aside-block">
 								<h3 class="aside-title">類別選單</h3>
-								<ul class="aside-tags list-unstyled">
-									<li><a href="?category=">所有類別</a></li>
-									<c:forEach var="category" items="${categoryList}">
-										<li><a href="?category=${category.articleCategoryID}">${category.articleCategoryName}</a></li>
-									</c:forEach>
-								</ul>
+								<div id="category">
+									<ul class="aside-tags list-unstyled">
+										<li><button data-category-id="">所有類別</button></li>
+										<c:forEach var="category" items="${categoryList}">
+											<li><button
+													data-category-id="${category.articleCategoryID}">${category.articleCategoryName}</button></li>
+										</c:forEach>
+									</ul>
+								</div>
 							</div>
 							<!-- End Tags -->
 
@@ -169,7 +187,7 @@
 												<h2 class="mb-2">
 													<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
 												</h2>
-												<span class="author mb-3 d-block">發文者名稱</span>
+												<span class="author mb-3 d-block">${art.member.name}</span>
 											</div>
 										</c:forEach>
 									</div>
@@ -187,7 +205,7 @@
 												<h2 class="mb-2">
 													<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
 												</h2>
-												<span class="author mb-3 d-block">發文者名稱</span>
+												<span class="author mb-3 d-block">${art.member.name}</span>
 											</div>
 										</c:forEach>
 									</div>
@@ -206,7 +224,7 @@
 												<h2 class="mb-2">
 													<a href="${contextRoot}/articleContent/${art.articleID}">${art.articleTitle}</a>
 												</h2>
-												<span class="author mb-3 d-block">發文者名稱</span>
+												<span class="author mb-3 d-block">${art.member.name}</span>
 											</div>
 										</c:forEach>
 									</div>
@@ -224,48 +242,90 @@
 			<!-- End Search Result -->
 		</div>
 	</main>
+
 	<!-- End #main -->
 
 	<jsp:include page="../../layout/footer.jsp"></jsp:include>
 
 	<!-- 排序 -->
 	<script>
-// 		$(function() {
-// 			$("#sortSelect").change(function(event) {
-// 				event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-// 				var selectedValue = $("#sortSelect").val();
+		$(document).ready(
+				function() {
+					var currentSortBy = localStorage.getItem('sortBy') || ''; // 当前的sortBy值
+					var currentKeyword = localStorage.getItem('keyword') || ''; // 当前的keyword值
+					var currentCategoryId = localStorage.getItem('categoryId')
+							|| null; // 当前的categoryId值
 
-// 				$.ajax({
-// 					url : $("#sortForm").attr("action"),
-// 					type : "GET",
-// 					data : $("#sortForm").serialize(),
-// 					success : function(data) {
-// 						$("#articleList").html(data);
-// 						$("#sortSelect").val(selectedValue);
-// 					}
-// 				});
-// 			});
-// 		});
-	
-    $(function() {
-        $("#searchForm, #sortForm").change(function(event) {
-            event.preventDefault(); // 阻止表單提交後跳轉頁面的預設行為
-            var selectedValue = $("#sortSelect").val();
-            var searchedValue = $("#search").val();
-            $.ajax({
-                url : $("#searchForm").attr("action"),
-                type : "GET",
-                data : $("#searchForm, #sortForm").serialize(),
-                success : function(data) {
-                    $("#articleList").html(data);
-                    $("#sortSelect").val(selectedValue);
-                    $("#search").val(searchedValue);
-                    
-                }
-            });
-        });
-    });
-</script>
+					// 设置选择框的初始值
+					$("#sortBySelect").val(currentSortBy);
+					$("#searchInput").val(currentKeyword);
+
+					// 如果存在当前的categoryId值，则高亮相应的分类按钮
+					if (currentCategoryId) {
+						$(
+								'#category button[data-category-id="'
+										+ currentCategoryId + '"]').addClass(
+								'active');
+					}
+
+					// 监听排序方式选择改变事件
+					$('#sortBySelect').on('change', function() {
+						currentSortBy = $(this).val(); // 保存当前的sortBy值
+						localStorage.setItem('sortBy', currentSortBy); // 将当前的sortBy值存储到localStorage中
+						updateArticleList();
+					});
+
+					// 监听搜索表单提交事件
+					$('#searchForm').on('submit', function(event) {
+						event.preventDefault(); // 阻止表单默认提交行为
+						currentKeyword = $('#searchInput').val(); // 保存当前的keyword值
+						localStorage.setItem('keyword', currentKeyword); // 将当前的keyword值存储到localStorage中
+						updateArticleList();
+					});
+
+					// 监听分类按钮点击事件
+					$('#category button').on('click', function() {
+						currentCategoryId = $(this).data('category-id'); // 保存当前的categoryId值
+						localStorage.setItem('categoryId', currentCategoryId); // 将当前的categoryId值存储到localStorage中
+						updateArticleList(currentCategoryId);
+						 
+					});
+
+					// 更新文章列表的函数
+					function updateArticleList(categoryId) {
+						var requestData = {}; // 创建空对象
+
+						requestData.sortBy = currentSortBy; // 使用保存的当前sortBy值
+						requestData.keyword = currentKeyword; // 使用保存的当前keyword值
+
+						// 如果存在分类ID，则将其添加到requestData对象中
+						if (categoryId) {
+							requestData.categoryId = categoryId;
+						} else {
+							currentCategoryId = null; // 如果categoryId为空，则重置保存的当前categoryId值
+						}
+
+						// 构造AJAX请求的URL
+						var url = '${contextRoot}/articleList';
+
+						// 发送AJAX请求
+						$.ajax({
+							url : url,
+							type : 'GET',
+							data : requestData, // 将requestData对象作为data参数传递给后端
+							success : function(data) {
+								// 更新文章列表的内容
+								$('#articleList').html(data);
+								$("#sortSelect").val(currentSortBy); // 设置当前的sortBy值
+								$("#search").val(currentKeyword); // 设置当前的keyword值
+							},
+							error : function(xhr, status, error) {
+								console.error(error);
+							}
+						});
+					}
+				});
+	</script>
 
 </body>
 </html>

@@ -170,7 +170,7 @@ fieldset{
 								        </jstl:otherwise>                								
 									</jstl:choose>
 								</jstl:forEach>
-							</form:select><br>
+							</form:select>
 	
 						</div>
 						<div class="col-5">
@@ -185,9 +185,13 @@ fieldset{
 							</div><br>
 							<form:input type="hidden" path="restaurantInformation" value="${findRestaurant.resid}" readonly="readonly" />
 						</div>
-					
+						
+						<div class="col-10 mb-3">
+							<p style="color:#706363; margin:0px">線上訂位最多可至10人(含大人與小孩),如需團體訂位請撥打餐廳電話</p>
+						</div>
 	
-						<div class="col-12">						
+						<div class="col-12">
+						<h5>用餐時段</h5>						
 								<fieldset>
 									<legend class="title">中午</legend>
 									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">

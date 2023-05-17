@@ -33,14 +33,17 @@
                     <i class="fa-solid fa-cart-shopping"></i>
                     購物車商品
                   </h3>
+                  <hr style="width: 50%; margin: 0 auto;">
                 </div>
               </div>
-              <div id="discount-div" class="card" style="width: 20%; "  >
-                <h5 class="card-title" style="margin: 2% 2%;">目前還未使用的優惠卷:</h3>
-                </div>
+              <div id="discount-div" class="card-header border border-secondary" style="width: 20%;height: auto;
+              min-height: 100px;margin-left: 3%;">
+                <h5 class="card-title border-bottom border-info" style="margin: 2% 2%;">目前還未使用的優惠卷:</h3>
+
+              </div>
 
               <div>
-                <table class="table">
+                <table class="table" style="min-height: 200px; height: auto;">
                   <thead>
                     <tr>
                       <th scope="col"></th>
@@ -84,6 +87,48 @@
 
       </body>
       <script>
+        // Event For 刪除 button
+        function deleteCommodity(memberId, commodityId){
+fetch("${contextRoot}/api/shoppingCart/" + encodeURIComponent(memberId) + "/" + encodeURIComponent(commodityId), {
+              method: "DELETE"
+            })
+              .then(response => response.json())
+              .then(data => {
+                console.log(data);
+                // 把新資料放進表格
+                var tbody = document.querySelector("table tbody");
+                var htmlString = "";
+                var total = 0;
+
+
+                data.forEach(function (shoppingCartCommodityDto, index) {
+                  var commodityId = shoppingCartCommodityDto.commodityId;
+                  var commodityName = shoppingCartCommodityDto.commodityName;
+                  var quantity = shoppingCartCommodityDto.quantity;
+                  var commodityPrice = shoppingCartCommodityDto.commodityPrice * shoppingCartCommodityDto.commodityDiscount;
+                  var subTotal = quantity * commodityPrice;
+                  total += subTotal;
+
+                  var rowHtml = "<tr>";
+                  rowHtml += "<td>" + (index + 1) + "</td>";
+                  rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
+                  rowHtml += "<td>" +'<img src="data:image/jpeg;base64,' + shoppingCartCommodityDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;"></img>'+ commodityName + "</td>";
+                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button><button class='btn btn-sm btn-danger' style='margin-left:2%;' onclick='deleteCommodity(" + memberId + ", " + commodityId + ")'>刪除</button></td>";
+                  rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
+                  rowHtml += "<td>" + subTotal + "</td>";
+                  rowHtml += "</tr>";
+
+                  htmlString += rowHtml;
+                });
+
+                tbody.innerHTML = htmlString;
+                document.getElementById("total").innerHTML = total;
+              })
+              .catch(error => console.error(error));
+        }
+
+
+
         // Event for - button update quantityInput
         function decreaseQuantity(memberId, commodityId) {
           let quantityInput = document.getElementById("quantity-input-" + commodityId);
@@ -113,8 +158,8 @@
                   var rowHtml = "<tr>";
                   rowHtml += "<td>" + (index + 1) + "</td>";
                   rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                  rowHtml += "<td>" + commodityName + "</td>";
-                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                  rowHtml += "<td>" +'<img src="data:image/jpeg;base64,' + shoppingCartCommodityDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;"></img>'+ commodityName + "</td>";
+                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button><button class='btn btn-sm btn-danger' style='margin-left:2%;' onclick='deleteCommodity(" + memberId + ", " + commodityId + ")'>刪除</button></td>";
                   rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                   rowHtml += "<td>" + subTotal + "</td>";
                   rowHtml += "</tr>";
@@ -152,8 +197,8 @@
                   var rowHtml = "<tr>";
                   rowHtml += "<td>" + (index + 1) + "</td>";
                   rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                  rowHtml += "<td>" + commodityName + "</td>";
-                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                  rowHtml += "<td>" +'<img src="data:image/jpeg;base64,' + shoppingCartCommodityDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;"></img>'+ commodityName + "</td>";
+                  rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button><button class='btn btn-sm btn-danger' style='margin-left:2%;' onclick='deleteCommodity(" + memberId + ", " + commodityId + ")'>刪除</button></td>";
                   rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                   rowHtml += "<td>" + subTotal + "</td>";
                   rowHtml += "</tr>";
@@ -201,8 +246,8 @@
                 var rowHtml = "<tr>";
                 rowHtml += "<td>" + (index + 1) + "</td>";
                 rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                rowHtml += "<td>" + commodityName + "</td>";
-                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                rowHtml += "<td>" +'<img src="data:image/jpeg;base64,' + shoppingCartCommodityDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;"></img>'+ commodityName + "</td>";
+                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button><button class='btn btn-sm btn-danger' style='margin-left:2%;' onclick='deleteCommodity(" + memberId + ", " + commodityId + ")'>刪除</button></td>";
                 rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                 rowHtml += "<td>" + subTotal + "</td>";
                 rowHtml += "</tr>";
@@ -242,8 +287,8 @@
                 var rowHtml = "<tr>";
                 rowHtml += "<td>" + (index + 1) + "</td>";
                 rowHtml += "<td id='commodity-id' style='display:none'>" + commodityId + "</td>";
-                rowHtml += "<td>" + commodityName + "</td>";
-                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button></td>";
+                rowHtml += "<td>" +'<img src="data:image/jpeg;base64,' + shoppingCartCommodityDto.base64CommodityPictureString + '" style="width: 30px;height: 20px;padding-right:5px;"></img>'+ commodityName + "</td>";
+                rowHtml += "<td style='width: auto;'><button class='btn btn-sm btn-danger' onclick='decreaseQuantity(" + memberId + ", " + commodityId + ")'>-</button><input type='text' id='quantity-input-" + commodityId + "' style='width: 12%; display:inline-block;' class='form-control quantity-input' value='" + quantity + "'><button class='btn btn-sm btn-primary' style='display:inline-block;' onclick='increaseQuantity(" + memberId + ", " + commodityId + ")'>+</button><button class='btn btn-sm btn-danger' style='margin-left:2%;' onclick='deleteCommodity(" + memberId + ", " + commodityId + ")'>刪除</button></td>";
                 rowHtml += "<td id='commodity-price'>" + commodityPrice + "</td>";
                 rowHtml += "<td>" + subTotal + "</td>";
                 rowHtml += "</tr>";
@@ -267,6 +312,7 @@
                 // 创建一个 div 元素作为每个优惠券的容器
                 var couponDiv = document.createElement('div');
                 couponDiv.classList.add('card-body');
+                couponDiv.style = 'margin:0 3% 3% 3%;';
 
                 // 创建并设置优惠券的文本内容
                 var couponText = document.createTextNode(coupon.couponName);
@@ -275,6 +321,9 @@
                 // 创建套用按钮
                 var applyButton = document.createElement('button');
                 applyButton.textContent = '套用';
+                applyButton.className = 'btn btn-info'
+                applyButton.style = 'margin-left:3%';
+
                 applyButton.addEventListener('click', function () {
                   var total = document.getElementById("total").innerHTML;
                   orderTotal = total;
@@ -322,11 +371,32 @@
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
             let couponId = appliedCoupon ? appliedCoupon.couponId : null;
+            var memberAddress = "${member.address}"; // 获取会员原本的地址
+            var address = prompt('請输入您的地址:', memberAddress); // 将会员地址作为参数传递给 prompt 函数
+            if (address === null) {
+              // 用户点击了取消按钮
+              alert('已取消填寫地址');
+              return; // 结束函数执行
+            }
+
+            var confirmMessage = '您输入的地址是: ' + address + '\n請確認是否正確？';
+            var confirmed = confirm(confirmMessage);
+            if (confirmed) {
+              // 用户确认地址无误
+              alert('地址輸入成功');
+              // 可以在这里对输入的地址进行处理
+            } else {
+              // 用户确认地址有误
+              alert('請重新輸入地址');
+              return;
+            }
+            let orderAddress;
             let order = {
               'memberId': memberId,
               'orderDetailDtos': [],
               'total': total,
-              'couponId': couponId
+              'couponId': couponId,
+              'orderAddress': address
             };
 
             rows.forEach(function (row) {
@@ -377,11 +447,31 @@
             let total = document.getElementById("total").innerHTML
             var rows = document.querySelectorAll('.table tbody tr');
             let couponId = appliedCoupon ? appliedCoupon.couponId : null;
+            var memberAddress = "${member.address}"; // 获取会员原本的地址
+            var address = prompt('請输入您的地址:', memberAddress); // 将会员地址作为参数传递给 prompt 函数
+            if (address === null) {
+              // 用户点击了取消按钮
+              alert('已取消填寫地址');
+              return; // 结束函数执行
+            }
+
+            var confirmMessage = '您输入的地址是: ' + address + '\n請確認是否正確？';
+            var confirmed = confirm(confirmMessage);
+            if (confirmed) {
+              // 用户确认地址无误
+              alert('地址輸入成功');
+              // 可以在这里对输入的地址进行处理
+            } else {
+              // 用户确认地址有误
+              alert('請重新輸入地址');
+              return;
+            }
             let order = {
               'memberId': memberId,
               'orderDetailDtos': [],
               'total': total,
-              'couponId': couponId
+              'couponId': couponId,
+              'orderAddress': address
             };
 
             rows.forEach(function (row) {
