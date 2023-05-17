@@ -47,6 +47,7 @@ img {
 										<th>會員信箱</th>
 										<th>會員手機</th>
 										<th>會員地址</th>
+										<th>點數</th>
 										<th>權限</th>
 										<th>刪除</th>
 									</tr>
@@ -60,6 +61,7 @@ img {
 											<td>${member.email}</td>
 											<td>${member.phone}</td>
 											<td>${member.address}</td>
+											<td>${member.points}</td>
 											<td>
 												<form method="post"
 													action="${contextRoot}/updatePermission/${member.id}"
