@@ -199,9 +199,25 @@ button[type="submit"]:hover,
 
 							<form:label path="articleCategory">類別:</form:label>
 							<form:select path="articleCategory" required="required">
-								<c:forEach items="${categoryList}" var="category">
-									<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
-								</c:forEach>
+								<option value="" disabled selected>請選擇類別</option>
+								<optgroup label="<管理員>">
+									<c:forEach items="${categoryList}" var="category">
+										<c:if test="${category.articleCategoryPermissions == 0}">
+											<form:option value="${category.articleCategoryID}">
+          ${category.articleCategoryName}
+        </form:option>
+										</c:if>
+									</c:forEach>
+								</optgroup>
+								<optgroup label="<公開>">
+									<c:forEach items="${categoryList}" var="category">
+										<c:if test="${category.articleCategoryPermissions == 1}">
+											<form:option value="${category.articleCategoryID}">
+          ${category.articleCategoryName}
+        </form:option>
+										</c:if>
+									</c:forEach>
+								</optgroup>
 							</form:select>
 							<br>
 							<form:label path="articleImage">文章縮圖:</form:label>
@@ -275,8 +291,8 @@ button[type="submit"]:hover,
 						$('#articlePreview').html(contents);
 					}
 				},
-				codeviewFilter : true,
-				codeviewIframeFilter : true,
+// 				codeviewFilter : true,
+// 				codeviewIframeFilter : true,
 				lang : 'zh-TW'
 
 			});

@@ -128,6 +128,10 @@ h1 {
 				<td>${sessionScope.member.address}</td>
 			</tr>
 			<tr>
+				<th>身分:</th>
+				<td>${sessionScope.member.permissions}</td>
+			</tr>
+			<tr>
 				<th>點數:</th>
 				<td>${sessionScope.member.points}</td>
 			</tr>

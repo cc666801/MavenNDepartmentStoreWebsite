@@ -13,64 +13,21 @@
 img {
 	max-width: 100px;
 	max-height: 100px;
+	
+button {
+  background-color: #007bff !important;
+  color: #fff !important;
+  padding: 10px 20px !important;
+  border: none !important;
+  border-radius: 5px !important;
+  font-size: 16px !important;
+  cursor: pointer !important;
+  transition: background-color 0.3s ease !important;
 }
 
-.popup-wrap {
-	width: 100%;
-	height: 100%;
-	display: none;
-	position: fixed;
-	top: 0px;
-	left: 0px;
-	content: '';
-	background: rgba(0, 0, 0, 0.85);
-	z-index: 9999;
-}
-
-.popup-box {
-	width: 100%;
-	height: 100%;	
-	transform: translate(-50%, -50%) scale(2);
-	position: absolute;
-	top: 50%;
-	left: 50%;
-	box-shadow: 0px 2px 16px rgba(0, 0, 0, 0.5);
-	border-radius: 3px;
-	background: #fff;
-	text-align: center;
-	z-index: 10000;
-}
-
-.close-btn {
-	width: 50px;
-	height: 50px;
-	display: inline-block;
-	position: absolute;
-	top: 10px;
-	right: 10px;
-	border-radius: 100%;
-	background: #d75f70;
-	font-weight: bold;
-	text-decoration: none;
-	color: #fff;
-	line-height: 40px;
-	font-size: 32px;
-}
-
-.transform-in, .transform-out {
-	display: block;
-	-webkit-transition: all ease 0.5s;
-	transition: all ease 0.5s;
-}
-
-.transform-in {
-	-webkit-transform: translate(-50%, -50%) scale(2);
-	transform: translate(-50%, -50%) scale(2);
-}
-
-.transform-out {
-	-webkit-transform: translate(-50%, -50%) scale(0.9);
-	transform: translate(-50%, -50%) scale(0.9);
+button:hover {
+  background-color: #0069d9 !important;
+}	
 }
 </style>
 <link rel="stylesheet"
@@ -99,16 +56,10 @@ img {
 							<button type="submit">新增文章</button>
 						</form>
 
-						<button class="popup-btn" id="popup-btn" type="submit">文章類別設定</button>
-						
-
-						<div class="popup-wrap" id="letmeopen">
-							<div class="popup-box transform-out">
-							<div id="config"></div>
-								<a class="close-btn popup-close" href="#">x</a>
-							</div>
-						</div>
-					</div>
+						<form
+							onsubmit="openWindow('${contextRoot}/articleConfiguration'); return false;" style="display: inline-block;">
+							<button type="submit">設定</button>
+						</form>
 					<br>
 					<div class="card mb-4">
 						<div class="card-header">
@@ -160,6 +111,7 @@ img {
 						</div>
 					</div>
 				</div>
+				</div>
 			</main>
 			<!-- End #main -->
 
@@ -181,43 +133,9 @@ img {
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
 	<!-- =================================== bootstrap ============================================= -->
 	<script>
-	$(document).ready(function() {
-		// 當按下設定按鈕時顯示彈出視窗
-		$("#popup-btn").click(function() {
-			$("#letmeopen").fadeIn(250);
-			$("#letmeopen").children("popup-box").removeClass("transform-out").addClass("transform-in");
-			event.preventDefault();
-		});
-
-		// 當按下關閉按鈕時關閉彈出視窗
-		$(".popup-close").click(function() {
-			closeWindow();
-		});
-
-		// 關閉彈出視窗
-		function closeWindow() {
-			$("#letmeopen").fadeOut(200);
-			$("#letmeopen").children(".popup-box").removeClass("transform-in").addClass("transform-out");
-			event.preventDefault();
-		}
-
-		// 使用AJAX載入要彈出的內容
-		$.ajax({
-			url : '${contextRoot}/articleConfiguration',
-			type : 'GET',
-			dataType : 'html',
-			success : function(response) {
-				// 將載入的內容插入到彈出框中
-				$('#config').html(response);
-			},
-			error : function(xhr, status, error) {
-				// 處理錯誤
-				console.log('AJAX錯誤：' + error);
-			}
-		});
-	});
+	function openWindow(url) {
+	    window.open(url, 'myWindow', 'width=800,height=600');
+	  }
 	</script>
-
-
 </body>
 </html>

@@ -66,7 +66,7 @@ public class Member {
 	
 	//權限
 	@Column(name = "permissions")
-	private String permissions="會員";
+	private String permissions="一般會員";
 
 	public String getPermissions() {
 		return permissions;

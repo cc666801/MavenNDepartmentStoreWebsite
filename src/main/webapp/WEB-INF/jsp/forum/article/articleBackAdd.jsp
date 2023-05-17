@@ -96,31 +96,29 @@ img {
 	height: 300px;
 }
 
- button[type="submit"],
-.previewArticle {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  border-radius: 0.25rem;
-  padding: 0.5rem 1rem;
-  font-size: 1rem;
-  cursor: pointer;
-  transition: all 0.2s ease-in-out;
- margin-right: 20px;
-  margin-left: 20px;
+button[type="submit"], .previewArticle {
+	background-color: #007bff;
+	color: #fff;
+	border: none;
+	border-radius: 0.25rem;
+	padding: 0.5rem 1rem;
+	font-size: 1rem;
+	cursor: pointer;
+	transition: all 0.2s ease-in-out;
+	margin-right: 20px;
+	margin-left: 20px;
 }
 
-button[type="submit"]:hover,
-.previewArticle:hover {
-  background-color: #0069d9;
+button[type="submit"]:hover, .previewArticle:hover {
+	background-color: #0069d9;
 }
+
 .form-button {
-  display: flex;
-  justify-content: center;
-  margin-top: 1rem;
+	display: flex;
+	justify-content: center;
+	margin-top: 1rem;
 }
 /* 預覽文章 */
-
 .popup {
 	display: none;
 	position: fixed;
@@ -146,7 +144,7 @@ button[type="submit"]:hover,
 	box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
 	text-align: center;
 	overflow: auto;
-	 margin-left: 250px;/* 左側navbar寬度 */
+	margin-left: 250px; /* 左側navbar寬度 */
 }
 
 .close {
@@ -194,9 +192,24 @@ button[type="submit"]:hover,
 							<form:label path="articleCategory">類別:</form:label>
 							<form:select path="articleCategory" required="required">
 								<option value="" disabled selected>請選擇類別</option>
-								<c:forEach items="${categoryList}" var="category">
-									<form:option value="${category.articleCategoryID}">${category.articleCategoryName}</form:option>
-								</c:forEach>
+								<optgroup label="<管理員>">
+									<c:forEach items="${categoryList}" var="category">
+										<c:if test="${category.articleCategoryPermissions == 0}">
+											<form:option value="${category.articleCategoryID}">
+          ${category.articleCategoryName}
+        </form:option>
+										</c:if>
+									</c:forEach>
+								</optgroup>
+								<optgroup label="<公開>">
+									<c:forEach items="${categoryList}" var="category">
+										<c:if test="${category.articleCategoryPermissions == 1}">
+											<form:option value="${category.articleCategoryID}">
+          ${category.articleCategoryName}
+        </form:option>
+										</c:if>
+									</c:forEach>
+								</optgroup>
 							</form:select>
 							<br>
 							<form:label path="articleImage">文章縮圖:</form:label>
@@ -213,17 +226,17 @@ button[type="submit"]:hover,
 								<button type="button" class="previewArticle">預覽文章</button>
 							</div>
 						</form:form>
-							
+
 					</div>
 				</div>
-				
+
 				<div id="popup-preview" class="popup">
 					<div class="popup-content">
 						<span class="close">&times;</span>
 						<div id="articlePreview"></div>
 					</div>
-					
-				</div>				
+
+				</div>
 			</main>
 			<!-- End #main -->
 
@@ -254,8 +267,8 @@ button[type="submit"]:hover,
 						$('#articlePreview').html(contents);
 					}
 				},
-				codeviewFilter : true,
-				codeviewIframeFilter : true,
+// 				codeviewFilter : true,
+// 				codeviewIframeFilter : true,
 				lang : 'zh-TW'
 
 			});
@@ -277,12 +290,12 @@ button[type="submit"]:hover,
 		});
 	</script>
 	<!-- 	預覽文章 -->
-	<script>	
+	<script>
 		$(document).ready(function() {
 			// 綁定每個 button 的 click 事件
 			$('.previewArticle').click(function() {
 				// 判斷該按鈕是否有對應的類別，以開啟對應的 popup				 
-					$('#popup-preview').fadeIn();				
+				$('#popup-preview').fadeIn();
 			});
 
 			// 綁定關閉彈出視窗的事件

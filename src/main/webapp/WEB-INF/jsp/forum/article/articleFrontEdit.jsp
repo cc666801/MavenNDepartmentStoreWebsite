@@ -239,8 +239,8 @@ color: #3e3e3e;
 						$('#articlePreview').html(contents);
 					}
 				},
-				codeviewFilter : true,
-				codeviewIframeFilter : true,
+// 				codeviewFilter : true,
+// 				codeviewIframeFilter : true,
 				lang : 'zh-TW'
 
 			});
@@ -270,5 +270,6 @@ color: #3e3e3e;
 			});
 		});
 	</script>
+
 </body>
 </html>

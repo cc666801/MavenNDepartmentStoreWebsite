@@ -1,4 +1,4 @@
-package com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys;
+package com.mavenN.MavenNDepartmentStoreWebsite.models.repositorys.forum;
 
 import java.util.List;
 import java.util.Optional;
