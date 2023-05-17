@@ -146,13 +146,18 @@
 
 									<div class="info">
 										<h5 class="mb-0">心願清單</h5>
-										<form
-											action="${contextRoot}/wishlist/addtowishlist"
-											method="post">
-											<input type="hidden" name="commId"
-												value="${commodityInfo.commId}">
-											<button  class="btn btn-primary" type="submit">加入心願清單</button>
-										</form>
+										<c:if test="${empty member}">
+											<a href="${contextRoot}/member/login"
+												class="btn btn-outline-primary">登入會員加入心願清單~</a>
+										</c:if>
+										<c:if test="${not empty member}">
+											<form action="${contextRoot}/wishlist/addtowishlist"
+												method="post">
+												<input type="hidden" name="commId"
+													value="${commodityInfo.commId}">
+												<button class="btn btn-primary" type="submit">加入心願清單</button>
+											</form>
+										</c:if>
 									</div>
 								</div>
 							</div>

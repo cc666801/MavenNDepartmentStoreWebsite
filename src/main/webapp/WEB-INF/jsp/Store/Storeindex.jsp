@@ -240,12 +240,18 @@
 
 									<div class="info">
 										
+										<c:if test="${empty member}">
+										<a href="${contextRoot}/member/login"
+											class="btn btn-outline-primary">登入會員加入心願清單~</a>
+										</c:if>
+										<c:if test="${not empty member}">
 										<form
 											action="${contextRoot}/wishlist/addtowishlist"
 											method="POST"><input type="hidden" name="commId"
 												value="${commodity.commId}">
 											<button type="submit" class="btn btn-outline-primary">加入心願清單</button>
 										</form>
+ 										</c:if> 
 									</div>
 							
 <!-- 							<div class="info"> -->
