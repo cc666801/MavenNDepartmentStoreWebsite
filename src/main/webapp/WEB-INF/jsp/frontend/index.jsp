@@ -92,7 +92,11 @@
 										<div class="swiper sliderFeaturedPosts">
 											<div class="swiper-wrapper">
 												<jstl:forEach var="advertise" items="${shelvesIsTrue}"
+<<<<<<< Updated upstream
 													varStatus="status" begin="0" end="8">
+=======
+													varStatus="status" begin="0" end="3">
+>>>>>>> Stashed changes
 													<div class="swiper-slide">
 
 														<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"
@@ -165,7 +169,7 @@
 												<div class="post-entry-1">
 													<P style="font-size :32px">近期活動</P>
 													<jstl:forEach var="advertise" items="${shelvesIsTrue}"
-														varStatus="status" begin="1">
+														varStatus="status" begin="4">
 														<!--放上面才可以顯示 begin="3" end="5" -->
 														<a
 															href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img
