@@ -1,5 +1,8 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.dto;
 
+import java.util.Base64;
+
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Commodity;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.orderSystem.OrderDetail;
 
 public class OrderDetailDto {
@@ -13,6 +16,8 @@ public class OrderDetailDto {
     private Integer commodityPrice;
     
     private String commodityName;
+    
+    private String base64CommodityPictureString;
     
 	public OrderDetailDto(Integer commodityId, Integer orderId, Integer quantity) {
 		super();
@@ -29,6 +34,7 @@ public class OrderDetailDto {
 		this.commodityId = orderDetail.getCommodity().getCommId();
 		this.orderId = orderDetail.getOrder().getOrderId();
 		this.quantity = orderDetail.getQuantity();
+		this.base64CommodityPictureString = Base64.getEncoder().encodeToString(orderDetail.getCommodity().getCommPicture());
 		this.commodityPrice = orderDetail.getCommodityPrice();
 		this.commodityName = orderDetail.getCommodity().getCommName();
 	}
@@ -74,6 +80,16 @@ public class OrderDetailDto {
 
 	public void setCommodityPrice(Integer commodityPrice) {
 		this.commodityPrice = commodityPrice;
+	}
+	
+	
+
+	public String getBase64CommodityPictureString() {
+		return base64CommodityPictureString;
+	}
+
+	public void setBase64CommodityPictureString(String base64CommodityPictureString) {
+		this.base64CommodityPictureString = base64CommodityPictureString;
 	}
 
 	@Override

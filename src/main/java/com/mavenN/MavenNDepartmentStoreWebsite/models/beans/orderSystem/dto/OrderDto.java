@@ -24,6 +24,8 @@ public class OrderDto {
 	
 	private String orderAddress;
 	
+	
+	
 
 	public OrderDto(Integer orderId, Integer memberId, List<OrderDetailDto> orderDetailDtos, Integer couponId, Integer total) {
 		super();
