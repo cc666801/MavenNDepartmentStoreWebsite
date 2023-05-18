@@ -167,7 +167,7 @@ fieldset{
 									</span>
 								</span>
 							</div><br>
-							<form:input type="hidden" path="restaurantInformation" value="${findRestaurant.resid}" readonly="readonly" />
+							<form:input type="hidden" path="restaurantInformation" id="restId" value="${findRestaurant.resid}" readonly="readonly" />
 						</div>
 						
 						<div class="col-10 mb-3">
@@ -175,7 +175,8 @@ fieldset{
 						</div>
 						
 						<div class="col-12">
-						<h5>用餐時段</h5>					
+						<h5>用餐時段</h5>
+							<p class="mb-3" style="color:#706363; margin:0px">*灰色表示該時間已客滿，請選則其他日期</p>					
 								<fieldset>
 									<legend class="title">中午</legend>
 									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
@@ -421,37 +422,59 @@ fieldset{
 				});
 			let year = now.getFullYear()
 	 		let mouth = (now.getMonth() + 1).toString().padStart(2, '0');
-	 		let date = now.getDate().toString().padStart(2, '0');
-			$('#DId').val(year + '-' + mouth + '-' + date);
+	 		let dates = now.getDate().toString().padStart(2, '0');
+			$('#DId').val(year + '-' + mouth + '-' + dates);
 			
 			
-            //以下為訂單人數>7回傳
-            sendDateToBackend(date);			
+            //以下為訂單人數>6回傳
+            sendDateToBackend();			
 		});
 		
-		//以下為訂單人數>7回傳
-		function sendDateToBackend(date) {
-			let date = $("#DId").val();
-			let restaurantId = ${findRestaurant.resid};
-			let dtoObject = {"date":date, "restaurantId":restaurantId}
-			let dtoJsonString = JSON.stringify(dtoObject);
-			
-			
+		//以下為訂單人數>6回傳
+		function sendDateToBackend() {
+			let date = $("#DId").val();			
+			let restaurantId = $("#restId").val();
+				
 		    $.ajax({
-		        type: "GET",
 		        url: "${contextRoot}/peopleoverten",
 		        contentType:"application/json;charset=UTF-8",
                 dataType: 'json',
                 method:'get',
-                data:dtoJsonString,
-		        success: function (response) {
-		            // 在成功處理回應後執行的操作
+                data:{"date":date,
+                	  "restaurantId":restaurantId},
+		        success: function (result) {
+		        	console.log(result.length)
+		        	console.log(result)
+		        	
+		       		let buttons = document.querySelectorAll(".bt");
+
+					// 尋找值為 的按鈕並禁止選取
+					for (let i = 0; i < buttons.length; i++) {
+					  let button = buttons[i];
+					  let buttonValue = button.value; // 獲取按鈕的值
+					  for(let j = 0; j < result.length; j++){				
+						  if (buttonValue === result[j]) {
+						    button.disabled = true; // 禁止按鈕選取
+						    button.style.backgroundColor = "#C2C2C2"
+						    break;
+						  }
+					  }
+					}
 		        },
 		        error: function (error) {
-		            // 在處理錯誤時執行的操作
+		        	console.log('沒訂單')		    
+		        	let buttons = document.querySelectorAll(".bt");
+		        	for (let i = 0; i < buttons.length; i++) {
+						  let button = buttons[i];
+					       button.disabled = false;
+					}
 		        }
 		    });
 		}
+		
+		$("#DId").on("change", function() {
+		    sendDateToBackend();
+		});
 		
 		
 		

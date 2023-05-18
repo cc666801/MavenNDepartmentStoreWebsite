@@ -35,9 +35,8 @@ public class RestReservationService {
 	@Autowired
 	private CompanyCounterRepository compCounterRepository;
 	
-	public List<String> findTimeByPeopleCountOverTen(String date, Integer restaurantId){
+	public List<String> findTimeByPeopleCountOverTen(Date date, Integer restaurantId){
 		List<String> findTimesByPeopleCountOverTen = resRepository.findTimesByPeopleCountOverTen(date, restaurantId);
-		System.out.println("findTimesByPeopleCountOverTen");
 		if(findTimesByPeopleCountOverTen.isEmpty()) {
 			return null;
 		}
