@@ -310,8 +310,8 @@ public class MemberController {
     @ResponseBody
     public Map<String, Object> playGame(HttpSession session) {
         Member member = (Member) session.getAttribute("member");
-        int[] probabilities = {20, 30, 15, 10, 5, 5, 5, 5, 5};
-        int[] points = {0, 1, 2, 3, 4, 5, 6, 7, 8};
+        int[] probabilities = {1, 36, 25, 10, 7, 6, 5, 5, 5};
+        int[] points = {100, 1, 2, 3, 4, 5, 6, 7, 8};
         Random random = new Random();
         int index = getRandomIndex(probabilities, random);
         int point = points[index];

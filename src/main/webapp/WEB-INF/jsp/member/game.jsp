@@ -108,14 +108,24 @@
     </main>
     
         <!-- 添加所需的JavaScript -->
-    <script>
-    document.getElementById("playButton").addEventListener("click", function() {
-        fetch("${contextRoot}/game/play", { method: "POST" })
-            .then(response => response.json())
-            .then(data => {
-                simulateDrawing(data.point, data.totalPoints);
-            })
-            .catch(error => console.log(error));
+   <script>
+    var playButton = document.getElementById("playButton");
+    var isButtonClickable = true;
+
+    playButton.addEventListener("click", function() {
+        if (isButtonClickable) {
+            isButtonClickable = false;
+            fetch("${contextRoot}/game/play", { method: "POST" })
+                .then(response => response.json())
+                .then(data => {
+                    simulateDrawing(data.point, data.totalPoints);
+                })
+                .catch(error => console.log(error));
+            
+            setTimeout(function() {
+                isButtonClickable = true;
+            }, 3000);
+        }
     });
 
     function simulateDrawing(point, totalPoints) {
@@ -134,6 +144,7 @@
             pointsElement.innerText = "目前擁有: " + totalPoints + "點";
         }, 3000);
     }
-    </script>
+</script>
+
 </body>
 </html>
