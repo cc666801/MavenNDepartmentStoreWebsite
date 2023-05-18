@@ -139,9 +139,13 @@
 
 									<div class="info">
 										<h5 class="mb-0">加入購物車</h5>
-
-										<button class="btn btn-primary" id="shopping-cart-button">加入購物車</button>
-
+										<c:if test="${empty member}">
+											<a href="${contextRoot}/member/login"
+												class="btn btn-primary">登入會員加入購物車~</a>
+										</c:if>
+										<c:if test="${not empty member}">
+											<button class="btn btn-primary" id="shopping-cart-button">加入購物車</button>
+										</c:if>
 									</div>
 
 									<div class="info">
