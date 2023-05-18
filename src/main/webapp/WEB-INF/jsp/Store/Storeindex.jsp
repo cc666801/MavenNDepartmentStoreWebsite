@@ -200,7 +200,7 @@
 			<div class="row">
 				<c:forEach var="commodity" items="${page.content}"
 					varStatus="status">
-<!-- 					page.content 會接到所有資料 然後這邊命名為 commodity　　所以下面運用該名稱. 去取得所需資料 -->
+					<!-- 					page.content 會接到所有資料 然後這邊命名為 commodity　　所以下面運用該名稱. 去取得所需資料 -->
 
 					<div class="col-lg-4 col-6 mb-4 shuffle-item"
 						data-groups='["${category}"]'>
@@ -230,36 +230,43 @@
 							商品分類:<a
 								href="${contextRoot}/Store/Commodity/findAllCommByCate?cateId=${commodity.commCate.cateId}">${commodity.commCate.cateName}</a>
 							<p class="card-text">商品特價:${commodity.commPrice*commodity.commDiscount}</p>
-								<div class="info">
-			
-									<button
-									type="submit"
-									class="btn btn-outline-warning shopping-cart-button"
-									data-comm-id="${commodity.commId}">加入購物車</button>
-									</div>
+							<div class="info">
 
-									<div class="info">
-										
-										<c:if test="${empty member}">
-										<a href="${contextRoot}/member/login"
-											class="btn btn-outline-primary">登入會員加入心願清單~</a>
-										</c:if>
-										<c:if test="${not empty member}">
-										<form
-											action="${contextRoot}/wishlist/addtowishlist"
-											method="POST"><input type="hidden" name="commId"
-												value="${commodity.commId}">
-											<button type="submit" class="btn btn-outline-primary">加入心願清單</button>
-										</form>
- 										</c:if> 
-									</div>
-							
-<!-- 							<div class="info"> -->
-<!-- 										<h5 class="mb-0">數量</h5> -->
-<!-- 										<input type="number" name="quantity" id="quantity" min="1" -->
-<!-- 											max="10" value="1"> -->
-<!-- 									</div> -->
-							
+								<c:if test="${empty member}">
+									<a href="${contextRoot}/member/login"
+										class="btn btn-outline-warning shopping-cart-button">登入會員加入購物車~</a>
+								</c:if>
+								
+								
+								
+								<c:if test="${not empty member}">
+									<button type="submit"
+										class="btn btn-outline-warning shopping-cart-button"
+										data-comm-id="${commodity.commId}">加入購物車</button>
+								</c:if>
+							</div>
+
+							<div class="info">
+
+								<c:if test="${empty member}">
+									<a href="${contextRoot}/member/login"
+										class="btn btn-outline-primary">登入會員加入心願清單~</a>
+								</c:if>
+								<c:if test="${not empty member}">
+									<form action="${contextRoot}/wishlist/addtowishlist"
+										method="POST">
+										<input type="hidden" name="commId" value="${commodity.commId}">
+										<button type="submit" class="btn btn-outline-primary">加入心願清單</button>
+									</form>
+								</c:if>
+							</div>
+
+							<!-- 							<div class="info"> -->
+							<!-- 										<h5 class="mb-0">數量</h5> -->
+							<!-- 										<input type="number" name="quantity" id="quantity" min="1" -->
+							<!-- 											max="10" value="1"> -->
+							<!-- 									</div> -->
+
 						</div>
 					</div>
 				</c:forEach>
@@ -285,8 +292,8 @@
 
 								<c:forEach var="pageNumber" begin="1" end="${page.totalPages}">
 									<li class="list-inline-item"><a
-										href="${contextRoot}/Store/Commodity/findAllComm?p=${pageNumber}"
-										> <span>${pageNumber}</span>
+										href="${contextRoot}/Store/Commodity/findAllComm?p=${pageNumber}">
+											<span>${pageNumber}</span>
 									</a></li>
 								</c:forEach>
 
@@ -310,7 +317,7 @@
 	<!-- 引入 Bootstrap 的 JavaScript 文件 -->
 	<script
 		src="${contextRoot}/assetsForBackend/js/datatables-simple-demo.js"></script>
-		<script>
+	<script>
 			document.addEventListener("DOMContentLoaded", function () {
 				var memberId = "${member.id}";
 				var shoppingCartButtons = document.querySelectorAll('.shopping-cart-button');
