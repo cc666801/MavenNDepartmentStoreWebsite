@@ -400,7 +400,7 @@ fieldset{
 		    	
 		    }
 		}
-	//end
+		//end
 		
 		$(document).ready(function() {
 			let now = new Date();
@@ -425,7 +425,36 @@ fieldset{
 			$('#DId').val(year + '-' + mouth + '-' + date);
 			
 			
+            //以下為訂單人數>7回傳
+            sendDateToBackend(date);			
 		});
+		
+		//以下為訂單人數>7回傳
+		function sendDateToBackend(date) {
+			let date = $("#DId").val();
+			let restaurantId = ${findRestaurant.resid};
+			let dtoObject = {"date":date, "restaurantId":restaurantId}
+			let dtoJsonString = JSON.stringify(dtoObject);
+			
+			
+		    $.ajax({
+		        type: "GET",
+		        url: "${contextRoot}/peopleoverten",
+		        contentType:"application/json;charset=UTF-8",
+                dataType: 'json',
+                method:'post',
+                data:dtoJsonString,
+		        success: function (response) {
+		            // 在成功處理回應後執行的操作
+		        },
+		        error: function (error) {
+		            // 在處理錯誤時執行的操作
+		        }
+		    });
+		}
+		
+		
+		
 
 		//   ---------以下是按鈕事件
 		$('.bt').on('click', function() {

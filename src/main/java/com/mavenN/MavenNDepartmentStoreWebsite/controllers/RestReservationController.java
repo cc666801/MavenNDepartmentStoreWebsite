@@ -24,6 +24,11 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+//	@ResponseBody
+//	@PostMapping("/peopleoverten")
+//	public List<String> postMessageApi(@RequestParam("date") String date, @RequestParam("restaurantId") Integer restaurantId){
+//
+//	}
 	
 	@GetMapping("restaurantfront/memberReservation/edit")
 	public String memberEditPage(@RequestParam("r_id") Integer r_id,@RequestParam("restid") Integer restid, Model model) {
