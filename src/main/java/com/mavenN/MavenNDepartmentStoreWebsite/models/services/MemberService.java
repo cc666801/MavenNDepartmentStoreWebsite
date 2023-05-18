@@ -80,7 +80,9 @@ public class MemberService {
 		return findAllMember;
 	}
 
-	
+	public void updateMember(Member member) {
+        memberRepository.save(member);
+    }
 	
 	
 	

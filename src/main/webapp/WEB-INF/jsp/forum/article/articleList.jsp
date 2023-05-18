@@ -14,17 +14,17 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
-    .aside-block button {
-        background-color: #f5f5f5;
-        border: none;
-        padding: 8px 16px;
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
+.aside-block button {
+	background-color: #f5f5f5;
+	border: none;
+	padding: 8px 16px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
 
-    .aside-block button.active {
-        background-color: #ebebeb;
-    }
+.aside-block button.active {
+	background-color: #ebebeb;
+}
 </style>
 
 </head>
@@ -96,29 +96,29 @@
 
 
 							<!-- Paging -->
-							<div class="text-start py-4">
-								<div class="custom-pagination">
+<div class="text-start py-4">
+    <div class="custom-pagination">
 
-									<c:if test="${not page.first}">
-										<a href="?p=${page.previousPageable().pageNumber}"
-											class="prev">Prevous</a>
-									</c:if>
-									<c:forEach var="i" begin="1" end="${page.totalPages-1}">
-										<c:choose>
-											<c:when test="${i == page.number}">
-												<a href="#" class="active">${i}</a>
-											</c:when>
-											<c:otherwise>
-												<a href="?p=${i}" class="page-link">${i}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-									<c:if test="${not page.last}">
-										<a href="?p=${page.nextPageable().pageNumber}" class="next">Next</a>
-									</c:if>
-								</div>
-							</div>
-							<!-- End Paging -->
+        <c:if test="${not page.first}">
+            <a href="?p=${page.previousPageable().pageNumber+1}" class="prev">Previous</a>
+        </c:if>
+        <c:forEach var="i" begin="1" end="${page.totalPages}">
+            <c:choose>
+                <c:when test="${i == page.number+1}">
+                    <a href="?p=${i}" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="?p=${i}" class="page-link">${i}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:if test="${not page.last}">
+            <a href="?p=${page.nextPageable().pageNumber+1}" class="next">Next</a>
+        </c:if>
+    </div>
+</div>
+<!-- End Paging -->
+
 
 						</div>
 
@@ -288,7 +288,7 @@
 						currentCategoryId = $(this).data('category-id'); // 保存当前的categoryId值
 						localStorage.setItem('categoryId', currentCategoryId); // 将当前的categoryId值存储到localStorage中
 						updateArticleList(currentCategoryId);
-						 
+
 					});
 
 					// 更新文章列表的函数

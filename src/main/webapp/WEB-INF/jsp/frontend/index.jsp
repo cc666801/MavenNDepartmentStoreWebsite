@@ -215,12 +215,16 @@
 												<div class="trending">
 													<h3>熱門文章</h3>
 													<ul class="trending-post">
-													<jstl:set var="counter" value="1" scope="request" />
-													<jstl:forEach var="art" items="${hotsArticles.content}">
-														<li><a href="${contextRoot}/articleContent/${art.articleID}"> <span class="number"> ${counter}</span>
-																<h3>${art.articleTitle}</h3> <span class="author">${art.member.name}</span>
-															</a></li>
-															<jstl:set var="counter" value="${counter + 1}" scope="request" />
+														<jstl:set var="counter" value="1" scope="request" />
+														<jstl:forEach var="art" items="${hotsArticles.content}">
+															<li><a
+																	href="${contextRoot}/articleContent/${art.articleID}">
+																	<span class="number"> ${counter}</span>
+																	<h3>${art.articleTitle}</h3> <span
+																		class="author">${art.member.name}</span>
+																</a></li>
+															<jstl:set var="counter" value="${counter + 1}"
+																scope="request" />
 														</jstl:forEach>
 													</ul>
 												</div>

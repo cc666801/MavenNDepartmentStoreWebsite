@@ -35,7 +35,7 @@ public class ChatGptService {
         requestBody.put("model", model);
         requestBody.put("messages", new JSONArray().put(new JSONObject().put("role", "user").put("content", content)));
 //        requestBody.put("prompt", content);
-        requestBody.put("max_tokens", 50);
+        requestBody.put("max_tokens", 80);
         requestBody.put("temperature", 0.5);
         String requestBodyString = requestBody.toString();
         HttpPost request = new HttpPost(API_URL);
