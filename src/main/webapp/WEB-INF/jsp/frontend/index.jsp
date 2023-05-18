@@ -131,16 +131,19 @@
 								<div class="row g-5">
 									<div class="col-lg-4">
 										<div class="post-entry-1 lg">
-											<a href="single-post.html"><img
-													src="assetsForFrontend/img/post-landscape-1.jpg" alt=""
+											<jstl:forEach var="advertise" items="${shelvesIsTrue}"
+														varStatus="status" begin="6" end="6">
+											<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img
+													src="data:image/png;base64,${advertise.base64StringadvertisePicture}" alt=""
 													class="img-fluid"></a>
+													</jstl:forEach>
 											<div class="post-meta">
 												<span class="date">本月主打活動</span> <span class="mx-1">&bullet;</span>
 												<span>5/5 ~ 5/14 母親節活動</span>
 											</div>
 											<h2>
-												<a href="single-post.html">母親節專區
-												</a>
+												母親節專區
+												
 											</h2>
 											<p class="mb-4 d-block">歡慶母親節，一同感謝母親 <br> 活動日期 5/5 ~ 5/14 <br>
 												全館8折起，滿千折百活動實施中
@@ -148,7 +151,7 @@
 
 											<div class="d-flex align-items-center author">
 												<div class="photo">
-													<img src="assetsForFrontend/img/person-1.jpg" alt=""
+													<img src="assetsForFrontend/img/person-3.jpg" alt=""
 														class="img-fluid">
 												</div>
 												<div class="name">
@@ -167,6 +170,7 @@
 													<jstl:forEach var="advertise" items="${shelvesIsTrue}"
 														varStatus="status" begin="3">
 														<!--放上面才可以顯示 begin="3" end="5" -->
+														  <jstl:if test="${status.index != 6}">
 														<a
 															href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img
 																src="data:image/png;base64,${advertise.base64StringadvertisePicture} "
@@ -180,6 +184,7 @@
 															<a
 																href="single-post.html">${advertise.company.companyName}</a>
 														</h2>
+														</jstl:if>
 													</jstl:forEach>
 												</div>
 
