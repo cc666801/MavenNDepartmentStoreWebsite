@@ -81,8 +81,9 @@
 										<p>${art.articlePreview}</p>
 										<div class="d-flex align-items-center author">
 											<div class="photo">
-												<img src="${contextRoot}/assetsForFrontend/img/person-2.jpg"
-													alt="" class="img-fluid">
+											 <img id="randomImage-${art.articleID}" src="" alt="隨機圖片" class="img-fluid">
+<%-- 												<img src="${contextRoot}/assetsForFrontend/img/person-2.jpg" --%>
+<!-- 													alt="" class="img-fluid"> -->
 											</div>
 											<div class="name">
 												<h3 class="m-0 p-0">${art.member.name}</h3>
@@ -326,6 +327,40 @@
 					}
 				});
 	</script>
+<!-- 	亂數頭像 -->
+<script>
+  // JavaScript
+  function getRandomImage(articleID) {
+    // Image paths array
+    var imagePaths = [
+      "${contextRoot}/assetsForFrontend/img/person-1.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-2.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-3.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-4.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-5.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-6.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-7.jpg",
+      // Add more image paths here
+    ];
 
+    // Randomly select an image path
+    var randomIndex = Math.floor(Math.random() * imagePaths.length);
+    var randomImagePath = imagePaths[randomIndex];
+
+    // Set the src attribute of the image element
+    var imgElement = document.getElementById("randomImage-" + articleID);
+    imgElement.src = randomImagePath;
+  }
+
+  // Get the article IDs and call getRandomImage for each ID
+  var articleIDs = [];
+  <c:forEach var="art" items="${page.content}">
+    articleIDs.push(${art.articleID});
+  </c:forEach>
+
+  articleIDs.forEach(function(articleID) {
+    getRandomImage(articleID);
+  });
+</script>
 </body>
 </html>

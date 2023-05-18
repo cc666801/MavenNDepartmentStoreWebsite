@@ -4,22 +4,27 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,7 +65,9 @@ public class ArticleController {
 //	public String article() {
 //		return "/forum/article/articleBack";
 //	}
-
+	 
+	
+	
 ////////////////後台///////////////////////////////
 
 	// 後台發文
@@ -261,6 +268,8 @@ public class ArticleController {
 				Page<Article> commentsArticles = articleService.findArticleByCommentCountAndPage(1, 5);
 				model.addAttribute("commentsArticles", commentsArticles);
 		
+				
+				
 		return "/forum/article/articleList";
 	}
 	
