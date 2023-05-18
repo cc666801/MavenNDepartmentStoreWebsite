@@ -442,7 +442,7 @@ fieldset{
 		        url: "${contextRoot}/peopleoverten",
 		        contentType:"application/json;charset=UTF-8",
                 dataType: 'json',
-                method:'post',
+                method:'get',
                 data:dtoJsonString,
 		        success: function (response) {
 		            // 在成功處理回應後執行的操作
