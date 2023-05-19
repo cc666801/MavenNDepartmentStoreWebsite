@@ -132,7 +132,7 @@
 									<div class="col-lg-4">
 										<div class="post-entry-1 lg">
 											<jstl:forEach var="advertise" items="${shelvesIsTrue}"
-														varStatus="status" begin="6" end="6">
+														varStatus="status" begin="5" >
 											<a href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img
 													src="data:image/png;base64,${advertise.base64StringadvertisePicture}" alt=""
 													class="img-fluid"></a>
@@ -170,7 +170,7 @@
 													<jstl:forEach var="advertise" items="${shelvesIsTrue}"
 														varStatus="status" begin="3">
 														<!--放上面才可以顯示 begin="3" end="5" -->
-														  <jstl:if test="${status.index != 6}">
+														  <jstl:if test="${status.index != 5}">
 														<a
 															href="${contextRoot}/Advertise/Advertise/findAdvertise?advertiseId=${advertise.advertiseId}"><img
 																src="data:image/png;base64,${advertise.base64StringadvertisePicture} "

@@ -26,7 +26,16 @@ public class ChatGptController {
     @PostMapping
     public ResponseEntity<Map<String, String>> getChatResponse(@RequestBody Map<String, String> requestBody) {
         try {
-            String prompt = requestBody.get("prompt");
+        	
+        	
+        	 String userInput = requestBody.get("prompt");
+             String websiteContent = "使用繁體中文，你現在是一個叫做\"MavenN百貨\"的百貨公司網站裡的智能客服，<br>"
+                     + "如果有人詢問你關於\"美食\"的問題，請引導他到<a href=\"http://localhost:8080/MavenNDepartmentStoreWebsite/restaurantfront\">http://localhost:8080/MavenNDepartmentStoreWebsite/restaurantfront</a><br>"
+                     + "如果有人詢問你關於\"商品\"的問題，請引導他到<a href=\"http://localhost:8080/MavenNDepartmentStoreWebsite/Store/Commodity/findAllComm\">http://localhost:8080/MavenNDepartmentStoreWebsite/Store/Commodity/findAllComm</a><br>"
+                     + "如果有人詢問你關於\"廠商\"或\"樓層\"的問題，請引導他到<a href=\"http://localhost:8080/MavenNDepartmentStoreWebsite/company/floor\">http://localhost:8080/MavenNDepartmentStoreWebsite/company/floor</a>";
+             String prompt = websiteContent + " " + userInput; // 將使用者輸入和網站相關的內容結合在一起
+            
+//            String prompt = requestBody.get("prompt");
             String response = chatGptService.sendGPTRequest(prompt);
             Map<String, String> responseBody = new HashMap<>();
             responseBody.put("response", response);
