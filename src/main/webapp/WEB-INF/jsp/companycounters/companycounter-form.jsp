@@ -11,7 +11,7 @@
 <head>
 
 </head>
-<body class="sb-nav-fixed">
+<body>
 	<!-- ======= Header ======= -->
 	<jsp:include page="../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
@@ -25,86 +25,55 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-
-					<div class="card mb-4">
-						<!-- 						<div class="card-header"> -->
-						<!-- 							<i class="fas fa-table me-1"></i> DataTable Example -->
-						<!-- 						</div> -->
-						<div class="card-body">
-						<h1>廠商上櫃登記</h1>
+					
+					<div class="row">
+						<div class="col-md-6 offset-md-3">
+							<div class="card"  style="background-color:rgb(231, 240, 240);margin-top: 2%;">
+								<div class="card-body">
+									<h1 class="text-center border-bottom"><i class="fa-solid fa-rectangle-list fa-xs"></i> 廠商上櫃登記</h1>
 							<form:form method="POST" modelAttribute="companyCounter" action="${contextRoot}/companycounters/save">
 								<form:hidden path="companyCounterId.companyId" />
 								<form:hidden path="companyCounterId.counterId" />
 								<div class="form-group">
-									<label for="companyName">Company Name:</label>
+									<label for="companyName">廠商名稱:</label>
 									<form:select path="company" class="form-control"
 										id="companyName">
-										<form:option value="">--Select Company--</form:option>
+										<form:option value="">-- 選擇公司 --</form:option>
 										<form:options items="${companies}" itemValue="companyId"
 											itemLabel="companyName" />
 									</form:select>
 								</div>
 
 								<div class="form-group">
-									<label for="counterName">Counter Name:</label>
+									<label for="counterName">櫃位名稱:</label>
 									<form:select path="counter" class="form-control"
 										id="counterName">
-										<form:option value="">--Select Counter--</form:option>
+										<form:option value="">-- 選擇櫃位 --</form:option>
 										<form:options items="${counters}" itemValue="counterId"
 											itemLabel="counterName" />
 									</form:select>
 								</div>
 
 								<div class="form-group">
-									<label for="contractTime">Contract Time: </label>
+									<label for="contractTime">合約時間: </label>
 									<form:select path="contractTime" class="form-control"
 										id="contractTime">
-										<form:option value="">--Select Contract Time--  (Year)</form:option>
+										<form:option value="">-- 選擇合約時間 --  (年)</form:option>
 										<jstl:forEach var="i" begin="1" end="5">
 											<form:option value="${i}">${i}</form:option>
 										</jstl:forEach>
 									</form:select>
 								</div>
-
-								<button type="submit" class="btn btn-primary">Submit</button>
+							
+								<button type="submit" class="btn btn-primary" style="margin-top: 2%;">送出</button>
 
 							</form:form>
 
 
-							<!-- 							<table id="datatablesSimple"> -->
-							<!-- 								<thead> -->
-							<!-- 									<tr> -->
-							<!-- 										<th>Name</th> -->
-							<!-- 										<th>Position</th> -->
-							<!-- 										<th>Office</th> -->
-							<!-- 										<th>Age</th> -->
-							<!-- 										<th>Start date</th> -->
-							<!-- 										<th>Salary</th> -->
-							<!-- 									</tr> -->
-							<!-- 								</thead> -->
-							<!-- 								<tfoot> -->
-							<!-- 									<tr> -->
-							<!-- 										<th>Name</th> -->
-							<!-- 										<th>Position</th> -->
-							<!-- 										<th>Office</th> -->
-							<!-- 										<th>Age</th> -->
-							<!-- 										<th>Start date</th> -->
-							<!-- 										<th>Salary</th> -->
-							<!-- 									</tr> -->
-							<!-- 								</tfoot> -->
-							<!-- 								<tbody> -->
-							<!-- 									<tr> -->
-							<!-- 										<td>Tiger Nixon</td> -->
-							<!-- 										<td>System Architect</td> -->
-							<!-- 										<td>Edinburgh</td> -->
-							<!-- 										<td>61</td> -->
-							<!-- 										<td>2011/04/25</td> -->
-							<!-- 										<td>$320,800</td> -->
-							<!-- 									</tr> -->
-
-
-							<!-- 								</tbody> -->
-							<!-- 							</table> -->
+							
+						
+						</div>
+					</div>
 						</div>
 					</div>
 				</div>

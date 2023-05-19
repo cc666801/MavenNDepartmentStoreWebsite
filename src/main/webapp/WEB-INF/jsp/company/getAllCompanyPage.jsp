@@ -30,22 +30,22 @@
 			<main>
 				<div class="container-fluid px-4">
 
-					<div class="card mb-4">
+					<div class="card mb-4"  style="margin-top: 2%;">
 						<div class="card-header">
-							<i class="fas fa-table me-1"></i> DataTable Example
+							<i class="fas fa-table me-1"></i> 所有廠商資料
 						</div>
 						<div class="card-body">
 							<table id="datatablesSimple">
 								<thead>
 									<tr>
-										<th>ID</th>
-										<th>Name</th>
-										<th>Phone</th>
-										<th>Address</th>
-										<th>industryCategory</th>
-										<th>OpeningHours</th>
-										<th>CooperationStatus</th>
-										<th>Company Logo</th>
+										<th>編號</th>
+										<th>廠商名稱</th>
+										<th>廠商電話</th>
+										<th>廠商地址</th>
+										<th>產業類別</th>
+										<th>營業時間</th>
+										<th>合作狀態</th>
+										<th>廠商商標</th>
 										<th>更新按鈕</th>
 										<th>刪除按鈕</th>
 										
@@ -132,8 +132,8 @@
 	  			tableData += '<td>' + value.openingHoursName + '</td>';
 	  			tableData += '<td>' + value.cooperationStatusName + '</td>';
 	  			tableData += '<td><img src="data:image/jpeg;base64,' + value.base64StringCompanyLogo + '" style="width: 60px;height: 60px;"></img>'+'</td>';
-	  			tableData += '<td><button id="updateButton" onclick="location.href=\'${contextRoot}/company/showEditedCompany/' + value.companyId + '\'">更新</button></td>';
-	  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
+	  			tableData += '<td><button id="updateButton" class="btn btn-info" onclick="location.href=\'${contextRoot}/company/showEditedCompany/' + value.companyId + '\'">更新</button></td>';
+	  			tableData += '<td><button id="deleteButton" class="btn btn-danger" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
 	  			tableData += '</tr>';  			
             });
 // 	  		myTableBody.innerHTML = "";
@@ -164,8 +164,8 @@
 		  			tableData += '<td>' + value.openingHoursName + '</td>';
 		  			tableData += '<td>' + value.cooperationStatusName + '</td>';
 		  			tableData += '<td><img src="data:image/jpeg;base64,' + value.base64StringCompanyLogo + '" style="width: 60px;height: 60px;"></img>'+'</td>';
-		  			tableData += '<td><button id="updateButton" onclick="location.href=\'${contextRoot}/company/showEditedCompany/' + value.companyId + '\'">更新</button></td>';
-		  			tableData += '<td><button id="deleteButton" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
+		  			tableData += '<td><button id="updateButton" class="btn btn-info" onclick="location.href=\'${contextRoot}/company/showEditedCompany/' + value.companyId + '\'">更新</button></td>';
+		  			tableData += '<td><button id="deleteButton" class="btn btn-danger" onclick="deleteCompany(' + value.companyId + ')">刪除</button></td>';
 		  			tableData += '</tr>';  			
 	            });
 		  		myTableBody.innerHTML = "";

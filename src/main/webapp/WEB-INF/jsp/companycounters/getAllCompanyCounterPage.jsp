@@ -30,20 +30,20 @@
 			<main>
 				<div class="container-fluid px-4">
 
-					<div class="card mb-4">
+					<div class="card mb-4"  style="margin-top: 2%;">
 						<div class="card-header">
-							<i class="fas fa-table me-1"></i> DataTable Example
+							<i class="fas fa-table me-1"></i>所有租用紀錄
 						</div>
 						<div class="card-body">
 							<table id="datatablesSimple">
 								<thead>
 									<tr>
-										<th>companyId</th>
-										<th>companyName</th>
-										<th>counterName</th>
-										<th>contractTime</th>
-										<th>onCounterTime</th>
-										<th>offCounterTime</th>
+										<th>編號</th>
+										<th>廠商名稱</th>
+										<th>櫃位名稱</th>
+										<th>合約時間(年)</th>
+										<th>上櫃時間</th>
+										<th>下櫃時間</th>
 										<th>更新按鈕</th>
 										<th>刪除按鈕</th>
 
@@ -51,22 +51,22 @@
 								</thead>
 								<tfoot>
 									<tr>
-										<th>Name</th>
-										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
+										<td>Name</td>
+										<td>Position</td>
+										<td>Office</td>
+										<td>Age</td>
+										<td>Start date</td>
+										<td>Salary</td>
 									</tr>
 								</tfoot>
 								<tbody id="tableBody">
 									<tr>
-										<th>companyId</th>
-										<th>companyName</th>
-										<th>counterName</th>
-										<th>contractTime</th>
-										<th>onCounterTime</th>
-										<th>offCounterTime</th>
+										<th>編號</th>
+										<th>廠商名稱</th>
+										<th>櫃位名稱</th>
+										<th>合約時間(年)</th>
+										<th>上櫃時間</th>
+										<th>下櫃時間</th>
 										<th>更新按鈕</th>
 										<th>刪除按鈕</th>
 
@@ -127,9 +127,9 @@
 	          tableData += '<td>' + value.contractTime + '</td>';
 	          tableData += '<td>' + value.onCounterTime + '</td>';
 	          tableData += '<td>' + value.offCounterTime + '</td>';
-	          tableData += '<td><button onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
+	          tableData += '<td><button class="btn btn-info" onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
 	          
-	          tableData += '<td><button onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
+	          tableData += '<td><button class="btn btn-danger" onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
 	          tableData += '</tr>'; 
 	          myTableBody.innerHTML = "";
 	          myTableBody.innerHTML = tableData;
@@ -165,9 +165,9 @@
 		  			tableData += '<td>' + value.contractTime + '</td>';
 		  			tableData += '<td>' + value.onCounterTime + '</td>';
 		  			tableData += '<td>' + value.offCounterTime + '</td>';
-		  			tableData += '<td><button onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
+		  			tableData += '<td><button class="btn btn-info" onclick="window.location.href=\'' + '${contextRoot}/companycounters/findCompanyCounterById?companyId=' + encodeURIComponent(value.companyId) + '&counterId=' + encodeURIComponent(value.counterId) + '&onCounterTime=' + encodeURIComponent(value.onCounterTime) + '\'">更新</button></td>';
 		  			
-		  			tableData += '<td><button onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
+		  			tableData += '<td><button class="btn btn-danger" onclick="deleteCompanyCounter(' + value.companyId + ', ' + value.counterId + ', \'' + value.onCounterTime + '\')">刪除</button></td>';
 		  			tableData += '</tr>';  			
 	            });
 		  		myTableBody.innerHTML = "";

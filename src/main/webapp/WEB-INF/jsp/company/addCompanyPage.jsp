@@ -17,7 +17,7 @@
   * License: https:///bootstrapmade.com/license/
   ======================================================== -->
 </head>
-<body class="sb-nav-fixed">
+<body>
 	<!-- ======= Header ======= -->
 	<jsp:include page="../layout/headerForBackend.jsp"></jsp:include>
 	<!-- End Header -->
@@ -31,29 +31,34 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-					<h1>新增資料的頁面</h1>
+					<div class="row">
+						<div class="col-md-6 offset-md-3">
+							<div class="card"  style="background-color:rgb(231, 240, 240);margin-top: 2%;">
+								<div class="card-body">
+							<h1 class="text-center border-bottom"><i class="fa-solid fa-building fa-2xs"></i> 新增廠商</h1>
+							
 					<form:form action="${contextRoot}/company/addCompany" method="POST"
 						modelAttribute="company" enctype="multipart/form-data"
 						id="companyForm">
 						<div class="form-group">
-							<label for="companyName">Company Name:</label>
+							<label for="companyName">廠商名稱:</label>
 							<form:input path="companyName" id="companyName"
 								class="form-control" />
 						</div>
 						<div class="form-group">
-							<label for="companyPhone">Company Phone:</label>
+							<label for="companyPhone">廠商電話:</label>
 							<form:input path="companyPhone" id="companyPhone"
 								class="form-control" />
 						</div>
 						<div class="form-group">
-							<label for="companyLogo">Company Logo:</label>
+							<label for="companyLogo">廠商商標:</label>
 							<form:input type="file" path="transferToByteArray"
 								id="companyLogo" class="form-control"></form:input>
 						</div>
 						<div class="form-group">
-							<label for="address">Address:</label>
+							<label for="address">廠商地址:</label>
 							<form:select path="address" id="address" class="form-control">
-								<form:option value="">--Select an address--</form:option>
+								<form:option value="">-- 選擇地址 --</form:option>
 								<jstl:forEach items="${addresses}" var="address">
 									<form:option value="${address.addressId}"> 
 					${address.addressName}
@@ -62,10 +67,10 @@
 							</form:select>
 						</div>
 						<div class="form-group">
-							<label for="industryCategory">Industry Category:</label>
+							<label for="industryCategory">產業類別:</label>
 							<form:select path="industryCategory" id="industryCategory"
 								class="form-control">
-								<form:option value="">--Select an industry category--</form:option>
+								<form:option value="">-- 選擇產業類別 --</form:option>
 								<jstl:forEach items="${industryCategories}"
 									var="industryCategory">
 									<form:option value="${industryCategory.industryCategoryId}">
@@ -75,10 +80,10 @@
 							</form:select>
 						</div>
 						<div class="form-group">
-							<label for="cooperationStatus">Cooperation Status:</label>
+							<label for="cooperationStatus">合作狀態:</label>
 							<form:select path="cooperationStatus" id="industryCategory"
 								class="form-control">
-								<form:option value="">--Select an cooperation status--</form:option>
+								<form:option value="">-- 選擇合作狀態 --</form:option>
 								<jstl:forEach items="${cooperationStatuses}"
 									var="cooperationStatus">
 									<form:option value="${cooperationStatus.cooperationStatusId}">
@@ -88,10 +93,10 @@
 							</form:select>
 						</div>
 						<div class="form-group">
-							<label for="industryCategory">Opening Hours:</label>
+							<label for="industryCategory">營業時間:</label>
 							<form:select path="openingHours" id="industryCategory"
 								class="form-control">
-								<form:option value="">--Select an opening hours--</form:option>
+								<form:option value="">-- 選擇營業時間 --</form:option>
 								<jstl:forEach items="${openingHourses}" var="openingHours">
 									<form:option value="${openingHours.openingHoursId}">
 					${openingHours.openingHoursName}
@@ -99,8 +104,12 @@
 								</jstl:forEach>
 							</form:select>
 						</div>
-						<button type="submit" class="btn btn-primary">送出</button>
+						<button type="submit" class="btn btn-primary" style="margin-top: 2%;">送出</button>
 					</form:form>
+				</div>
+			</div>
+		</div>
+	</div>
 				</div>
 			</main>
 
