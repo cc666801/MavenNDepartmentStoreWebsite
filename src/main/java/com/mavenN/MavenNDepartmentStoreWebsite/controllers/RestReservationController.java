@@ -1,10 +1,12 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.Base64;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.restaurant.Reservation;
@@ -24,6 +27,14 @@ public class RestReservationController {
 	@Autowired
 	private RestReservationService reService;
 	
+	@ResponseBody
+	@GetMapping("/peopleoverten")
+	public List<String> postMessageApi(@RequestParam("date") @DateTimeFormat(pattern = "yyyy-MM-dd") Date date1, @RequestParam("restaurantId") Integer restaurantId){
+		
+		List<String> findTimeByPeopleCountOverTen = reService.findTimeByPeopleCountOverTen(date1, restaurantId);
+		return findTimeByPeopleCountOverTen;
+		
+	}
 	
 	@GetMapping("restaurantfront/memberReservation/edit")
 	public String memberEditPage(@RequestParam("r_id") Integer r_id,@RequestParam("restid") Integer restid, Model model) {
