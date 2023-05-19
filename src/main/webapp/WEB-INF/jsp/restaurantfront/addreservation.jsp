@@ -254,8 +254,8 @@ fieldset{
 									</div>
 								</fieldset>
 								<div>
-								<form:input type="text" path="timeInterval" id="timeintervalcode" readonly="readonly" />
-								<form:input type="text" path="time" id="timecode" readonly="readonly" />
+								<form:input type="hidden" path="timeInterval" id="timeintervalcode" readonly="readonly" />
+								<form:input type="hidden" path="time" id="timecode" readonly="readonly" />
 								</div>						
 						</div>
 						<br>
