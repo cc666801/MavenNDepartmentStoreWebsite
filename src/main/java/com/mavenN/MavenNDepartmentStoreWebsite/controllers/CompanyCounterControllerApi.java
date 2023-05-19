@@ -1,6 +1,7 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.time.Instant;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -10,11 +11,14 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Company;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounterId;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto.CompanyCounterDto;
+import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto.CompanyDto;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.services.CompanyCounterService;
 
 @RestController
@@ -62,4 +66,29 @@ public class CompanyCounterControllerApi {
             .collect(Collectors.toList());
         return companyCounterDtos;
     }
+    
+    @GetMapping("/findCompaniesByKeywordAndFloorAndIndustryCategory")
+	public List<CompanyCounterDto> search(
+			@RequestParam(name = "industryCategoryIds") String industryCategoryIds,
+	        @RequestParam(name = "keyword") String keyword,
+	        @RequestParam(name = "floor") String floor
+	                     ) {
+		List<CompanyCounter> companies = companyCounterService.findCompaniesByKeywordAndFloorAndIndustryCategory(keyword, floor, industryCategoryIds);
+		List<CompanyCounterDto> companyDtos = companies.stream().map(CompanyCounterDto::new).collect(Collectors.toList());
+
+	    return companyDtos;
+	}
+    
+    @GetMapping("/findAllCompanyOnCounterAndFloor/{counterName}")
+	public List<CompanyCounterDto> findCompaniesOnCounterAndFloor(@PathVariable String counterName) {
+		List<CompanyCounterDto> companyCounterDtos = new ArrayList<>();
+		List<CompanyCounter> companies = companyCounterService.findCompaniesByStatusAndFloor("在櫃中", counterName);
+
+		for (CompanyCounter companyCounter : companies) {
+		    CompanyCounterDto companyDto = new CompanyCounterDto(companyCounter);
+		    companyCounterDtos.add(companyDto);
+		}
+		
+		return companyCounterDtos;
+	}
 }

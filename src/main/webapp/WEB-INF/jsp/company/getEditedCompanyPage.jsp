@@ -31,7 +31,13 @@
 
 		<div id="layoutSidenav_content">
 			<main>
-				<h1>找到被更新的資料頁面</h1>
+				<div class="container-fluid px-4">
+					<div class="row">
+						<div class="col-md-6 offset-md-3">
+							<div class="card"  style="background-color:rgb(231, 240, 240);margin-top: 2%;">
+								<div class="card-body">
+									<h1 class="text-center border-bottom"><i class="fa-solid fa-building fa-2xs"></i>  更新廠商資料</h1>
+			
 				<div>
 					<form:form action="${contextRoot}/company/updateCompany"
 						method="PUT" modelAttribute="company"
@@ -41,23 +47,23 @@
 								type="hidden"></form:input>
 						</div>
 						<div class="form-group">
-							<label for="companyName">Company Name:</label>
+							<label for="companyName">廠商名稱:</label>
 							<form:input path="companyName" id="companyName"
 								class="form-control"></form:input>
 						</div>
 						<div class="form-group">
-							<label for="companyPhone">Company Phone:</label>
+							<label for="companyPhone">廠商電話:</label>
 							<form:input path="companyPhone" id="companyPhone"
 								class="form-control"></form:input>
 						</div>
 						<div class="form-group">
-							<label for="companyLogo">Company Logo:</label> <img
-								src="data:image/jpeg;base64, ${company.base64StringCompanyLogo}" />
+							<label for="companyLogo">廠商商標:</label> <img
+								src="data:image/jpeg;base64, ${company.base64StringCompanyLogo}" style="width: 15%;height: 15%;"/>
 							<form:input type="file" path="transferToByteArray"
 								id="companyLogo" class="form-control"></form:input>
 						</div>
 						<div class="form-group">
-							<label for="address">Address:</label>
+							<label for="address">廠商地址:</label>
 							<form:select path="address" id="address" class="form-control">
 						<jstl:forEach items="${addresses}" var="address">
 									<jstl:choose>
@@ -76,7 +82,7 @@
 							</form:select>
 						</div>
 						<div class="form-group">
-							<label for="industryCategory">Industry Category:</label>
+							<label for="industryCategory">產業類別:</label>
 							<form:select path="industryCategory" id="industryCategory"
 								class="form-control">
 						<jstl:forEach items="${industryCategories}" var="industryCategory">
@@ -96,7 +102,7 @@
 							</form:select>
 						</div>
 						<div class="form-group">
-							<label for="cooperationStatus">Cooperation Status:</label>
+							<label for="cooperationStatus">合作狀態:</label>
 							<form:select path="cooperationStatus" id="cooperationStatus"
 								class="form-control">
 						<jstl:forEach items="${cooperationStatuses}"
@@ -117,7 +123,7 @@
 							</form:select>
 						</div>
 						<div class="form-group">
-							<label for="industryCategory">Opening Hours:</label>
+							<label for="industryCategory">營業時間:</label>
 							<form:select path="openingHours" id="openingHours"
 								class="form-control">
 								<jstl:forEach items="${openingHourses}" var="openingHours">
@@ -149,6 +155,10 @@
 			<!-- ======= Footer ======= -->
 			<jsp:include page="../layout/footerForBackend.jsp"></jsp:include>
 			<!-- End Footer -->
+		</div>
+	</div>
+</div>
+</div>
 		</div>
 	</div>
 	<!-- 	<script> -->

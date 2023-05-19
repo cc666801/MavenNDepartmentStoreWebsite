@@ -1,6 +1,7 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.Dto;
 
 import java.time.LocalDateTime;
+import java.util.Base64;
 import java.util.Date;
 
 import org.springframework.format.annotation.DateTimeFormat;
@@ -14,7 +15,12 @@ public class CompanyCounterDto {
 	
     private String companyName;
     
+    private String companyPhone;
+	private String base64StringCompanyLogo;
+	private String industryCategoryName;
+    
     private Integer counterId;
+    private String counterfloor;
 
     private String counterName;
 
@@ -34,39 +40,20 @@ public class CompanyCounterDto {
     public CompanyCounterDto(CompanyCounter companyCounter) {
         this.companyId = companyCounter.getCompany().getCompanyId();
         this.companyName = companyCounter.getCompany().getCompanyName();
+        this.companyPhone = companyCounter.getCompany().getCompanyPhone();
+        
+        String base64CompanyLogo = Base64.getEncoder().encodeToString(companyCounter.getCompany().getCompanyLogo());
+		this.base64StringCompanyLogo = base64CompanyLogo;
+		
+        this.industryCategoryName = companyCounter.getCompany().getIndustryCategory().getIndustryCategoryName();
         this.counterId = companyCounter.getCounter().getCounterId();
+        this.counterfloor = companyCounter.getCounter().getCounterFloor();
         this.counterName = companyCounter.getCounter().getCounterName();
         this.contractTime = companyCounter.getContractTime();
         this.onCounterTime = companyCounter.getCompanyCounterId().getOnCounterTime();
         this.offCounterTime = companyCounter.getOffCounterTime();
     }
 
-//    public static CompanyCounterDto fromEntity(com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter entity) {
-//        return new CompanyCounterDto(entity.getCompanyCounterId().getCompanyId(), entity.getCompanyCounterId().getCounterId(),
-//                entity.getCompany(), entity.getCounter(), entity.getContractTime(), entity.getCompanyCounterId().getOnCounterTime(),
-//                entity.getOffCounterTime());
-//    }
-//
-//    public com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter toEntity() {
-//        CompanyCounterId companyCounterId = new CompanyCounterId(companyId, counterId, onCounterTime);
-//        com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter entity =
-//                new com.mavenN.MavenNDepartmentStoreWebsite.models.beans.companySystem.CompanyCounter(companyCounterId, company, counter, contractTime, offCounterTime);
-//        return entity;
-//    }
-//
-//    public void setOffCounterTimeIfNull() {
-//        if (offCounterTime == null) {
-//            Calendar cal = Calendar.getInstance();
-//            cal.setTime(onCounterTime);
-//            cal.add(Calendar.YEAR, contractTime);
-//            offCounterTime = cal.getTime();
-//            cal.set(Calendar.MONTH, cal.get(Calendar.MONTH));
-//            cal.set(Calendar.DAY_OF_MONTH, cal.get(Calendar.DAY_OF_MONTH));
-//            cal.set(Calendar.HOUR_OF_DAY, cal.get(Calendar.HOUR_OF_DAY));
-//            cal.set(Calendar.MINUTE, cal.get(Calendar.MINUTE));
-//            cal.set(Calendar.SECOND, cal.get(Calendar.SECOND));
-//        }
-//    }
 
     // Getters and Setters
 
@@ -125,6 +112,38 @@ public class CompanyCounterDto {
 	public Integer getContractTime() {
         return contractTime;
     }
+
+	public String getCompanyPhone() {
+		return companyPhone;
+	}
+
+	public void setCompanyPhone(String companyPhone) {
+		this.companyPhone = companyPhone;
+	}
+
+	public String getBase64StringCompanyLogo() {
+		return base64StringCompanyLogo;
+	}
+
+	public void setBase64StringCompanyLogo(String base64StringCompanyLogo) {
+		this.base64StringCompanyLogo = base64StringCompanyLogo;
+	}
+
+	public String getIndustryCategoryName() {
+		return industryCategoryName;
+	}
+
+	public void setIndustryCategoryName(String industryCategoryName) {
+		this.industryCategoryName = industryCategoryName;
+	}
+
+	public String getCounterfloor() {
+		return counterfloor;
+	}
+
+	public void setCounterfloor(String counterfloor) {
+		this.counterfloor = counterfloor;
+	}
 
 	
 }

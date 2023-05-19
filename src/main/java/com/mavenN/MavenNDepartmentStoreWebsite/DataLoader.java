@@ -88,8 +88,12 @@ public class DataLoader implements CommandLineRunner {
 		Counter counter6 = new Counter(6, "F", 50000, 40.0, "2F");
 		Counter counter7 = new Counter(7, "G", 70000, 62.5, "2F");
 		Counter counter8 = new Counter(8, "H", 40000, 30.0, "2F");
+		Counter counter9 = new Counter(9, "I", 50000, 40.0, "3F");
+		Counter counter10 = new Counter(10, "J", 50000, 40.0, "3F");
+		Counter counter11 = new Counter(11, "K", 70000, 62.5, "3F");
+		Counter counter12 = new Counter(12, "L", 40000, 30.0, "3F");
 		// 裝成 List 存進 Database
-		List<Counter> counterList = Arrays.asList(counter1, counter2, counter3, counter4, counter5, counter6, counter7, counter8);
+		List<Counter> counterList = Arrays.asList(counter1, counter2, counter3, counter4, counter5, counter6, counter7, counter8, counter9, counter10, counter11, counter12);
 		counterRepository.saveAll(counterList);
 		
 		// OrderStatus

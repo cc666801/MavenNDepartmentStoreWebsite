@@ -110,14 +110,15 @@
       <script>
         // 定義一個 fuction() 發 fetch 通過樓層找到該樓層上櫃中的廠商
         function fetchFloorData(floorValue) {
-          fetch('${contextRoot}/api/company/findAllCompanyOnCounterAndFloor/' + floorValue)
+          fetch('${contextRoot}/api/companyCounter/findAllCompanyOnCounterAndFloor/' + floorValue)
             .then(response => response.json())
             .then(data => {
               console.log(data);
               let companySpace = document.getElementById('floor-company');
               companySpace.innerHTML = '';
               data.forEach(company => {
-                companySpace.innerHTML += '<span class="floor-company-name">' + '<img src="data:image/jpeg;base64,' + company.base64StringCompanyLogo + '" style="width: 30px;height: 20px;padding-right:5px;"></img>' + company.companyName + '</span>';
+                companySpace.innerHTML += '<span class="floor-company-name" href="javascript:void(0);" onmouseout="resetFloorPicture(\'' + floorValue + '\')" onmouseover="changeFloorPicture(\'' + company.counterName + '\')">' + '<img src="data:image/jpeg;base64,' + company.base64StringCompanyLogo + '" style="width: 30px;height: 20px;padding-right:5px;"></img>' + company.companyName + '</span>';
+
               });
               // 更改圖片為對應樓層的圖片
               let floorImage = document.getElementById('floor-image');
@@ -129,6 +130,18 @@
             .catch(error => {
               console.error('Error:', error);
             });
+        }
+
+        // 定義一個 fuction() 更改 floor 圖片為指定櫃位圖
+        function changeFloorPicture(counterName){
+          let floorImage = document.getElementById('floor-image');
+              floorImage.src = '${contextRoot}/assetsForFrontend/img/' + counterName + '.jpg';
+        }
+
+        // 定義一個 fuction() 更改 floor 圖片為該樓層的圖
+        function resetFloorPicture(floor){
+          let floorImage = document.getElementById('floor-image');
+              floorImage.src = '${contextRoot}/assetsForFrontend/img/樓層平面圖' + floor + '.jpg';
         }
 
 
@@ -180,7 +193,7 @@
             keyword = "%";
           }
           // 發 fetch 請求
-          const url = `${contextRoot}/api/company/findCompaniesByKeywordAndFloorAndIndustryCategory?`;
+          const url = `${contextRoot}/api/companyCounter/findCompaniesByKeywordAndFloorAndIndustryCategory?`;
           const params = new URLSearchParams({ industryCategoryIds, keyword, floor }).toString();
           fetch(url + params)
             .then(response => {
@@ -211,16 +224,9 @@
 
                 // 設定格子的內容
                 brandNameCell.innerHTML ='<img src="data:image/jpeg;base64,' + item.base64StringCompanyLogo + '" style="width: 30px;height: 20px;padding-right:5px;"></img>' + item.companyName;
+                floorCell.textContent = item.counterfloor;
                 categoryCell.textContent = item.industryCategoryName;
                 phoneCell.textContent = item.companyPhone;
-                let floor = "";
-                item.counterFloors.forEach(f => {
-                  floor += f;
-                  if (f !== item.counterFloors[item.counterFloors.length - 1]) {
-                    floor += ",";
-                  }
-                });
-                floorCell.textContent = floor;
               });
 
 

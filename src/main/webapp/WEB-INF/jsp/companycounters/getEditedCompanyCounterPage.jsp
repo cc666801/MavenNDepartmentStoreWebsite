@@ -31,7 +31,13 @@
 
 		<div id="layoutSidenav_content">
 			<main>
-				<h1>找到被更新的資料頁面</h1>
+				<div class="container-fluid px-4">
+					<div class="row">
+						<div class="col-md-6 offset-md-3">
+							<div class="card"  style="background-color:rgb(231, 240, 240);margin-top: 2%;">
+								<div class="card-body">
+									<h1 class="text-center border-bottom"><i class="fa-solid fa-building fa-2xs"></i>  延長租用合約</h1>
+			
 				<div>
 					<form:form method="PUT"
 						action="${contextRoot}/companycounters/updateCompanyCounter" modelAttribute="companyCounter">
@@ -52,7 +58,7 @@
 						<br>
 
 
-						<input type="submit" value="更新合約時間" />
+						<input type="submit"  class="btn btn-info" style="margin-top: 2%;" value="更新合約時間" />
 					</form:form>
 				</div>
 			</main>
@@ -64,6 +70,10 @@
 			<jsp:include page="../layout/footerForBackend.jsp"></jsp:include>
 			<!-- End Footer -->
 		</div>
+	</div>
+</div>
+</div>
+</div>
 	</div>
 	<!-- 	<script> -->
 	<script
