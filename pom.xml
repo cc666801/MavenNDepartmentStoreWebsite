@@ -128,6 +128,12 @@
 			<version>5.5.1</version>
 		</dependency>
 		<!--		心願清單用-->
+		<dependency>
+			<groupId>com.h2database</groupId>
+			<artifactId>h2</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+
 	</dependencies>
 	<build>
 		<plugins>
