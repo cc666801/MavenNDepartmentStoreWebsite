@@ -407,14 +407,11 @@ fieldset{
 			let now = new Date();
 			let currentMonth = now.getMonth();
 		    let currentYear = now.getFullYear();
-// 			console.log(now);
 			$('#datepicker').datepicker({
 					format : 'yyyy-mm-dd',
 					showOtherMonths : false,
 					language : 'zh-TW',
 					autoclose : true,
-					minDate: new Date(currentYear, currentMonth, 1),
-			        maxDate: new Date(currentYear, currentMonth + 1, 0),
 
 					beforeShowDay : function(date) {
 					// 禁用今天之前和3個月之後的日期
@@ -455,6 +452,8 @@ fieldset{
 					// 尋找值為 的按鈕並禁止選取
 					for (let i = 0; i < buttons.length; i++) {
 					  let button = buttons[i];
+					  button.disabled = false;
+					  button.style.backgroundColor = "";
 					  let buttonValue = button.value; // 獲取按鈕的值
 					  for(let j = 0; j < result.length; j++){				
 						  if (buttonValue === result[j]) {

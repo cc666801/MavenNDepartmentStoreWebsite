@@ -461,6 +461,8 @@ fieldset{
 					// 尋找值為 的按鈕並禁止選取
 					for (let i = 0; i < buttons.length; i++) {
 					  let button = buttons[i];
+					  button.disabled = false;
+					  button.style.backgroundColor = "";
 					  let buttonValue = button.value; // 獲取按鈕的值
 					  for(let j = 0; j < result.length; j++){				
 						  if (buttonValue === result[j]) {
