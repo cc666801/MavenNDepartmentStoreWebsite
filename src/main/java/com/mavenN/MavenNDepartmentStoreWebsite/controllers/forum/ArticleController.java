@@ -4,22 +4,27 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Arrays;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
+import java.util.stream.Collectors;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+import org.apache.commons.lang3.StringUtils;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.io.Resource;
+import org.springframework.core.io.support.PathMatchingResourcePatternResolver;
+import org.springframework.core.io.support.ResourcePatternResolver;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.domain.Sort;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.DeleteMapping;
@@ -60,12 +65,17 @@ public class ArticleController {
 //	public String article() {
 //		return "/forum/article/articleBack";
 //	}
-
+	 
+	
+	
 ////////////////後台///////////////////////////////
 
 	// 後台發文
 	@GetMapping("/articleBack/add")
-	public String addArticle(Model model) {
+	public String addArticle(Model model ,HttpSession session) {
+		// 取得當前會員
+	    Member currentMember = (Member) session.getAttribute("member");
+	    model.addAttribute("currentMember", currentMember);
 		model.addAttribute("article", new Article());
 		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
 		model.addAttribute("categoryList", categoryList);
@@ -75,13 +85,15 @@ public class ArticleController {
 
 	@PostMapping("/articleBack/post")
 	public String postArticle(@ModelAttribute("article") Article art, @RequestParam("content") String content,
-			@RequestParam("imgToByte") MultipartFile file) throws IOException {
-
+			@RequestParam("imgToByte") MultipartFile file,HttpSession session) throws IOException {
+		// 取得當前會員
+	    Member currentMember = (Member) session.getAttribute("member");
+	 // 設定發文者為當前會員
+	    art.setMember(currentMember);
 		// XSS
-		String escapedHtml = HtmlUtils.htmlEscape(content);
-
-		art.setArticleContent(escapedHtml);
-		
+//		String escapedHtml = HtmlUtils.htmlEscape(content);
+//		art.setArticleContent(escapedHtml);
+		art.setArticleContent(content);
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
@@ -121,6 +133,8 @@ public class ArticleController {
 		Article art = articleService.findArticleById(id);
 		List<ArticleCategory> categoryList = articleCategoryService.findAllArticleCategory();
 		model.addAttribute("categoryList", categoryList);
+		
+		
 		model.addAttribute("art", art);
 		
 		// 取得圖片資訊
@@ -131,8 +145,9 @@ public class ArticleController {
 	    }
 		
 		//XSS
-		String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
-		model.addAttribute("articleContent", unescapedHtml);
+//		String unescapedHtml = HtmlUtils.htmlUnescape(art.getArticleContent());
+//		model.addAttribute("articleContent", unescapedHtml);
+		model.addAttribute("articleContent",art.getArticleContent());
 		return "/forum/article/articleBackEdit";
 	}
 
@@ -140,8 +155,9 @@ public class ArticleController {
 	public String putEditArticle(@ModelAttribute("art") Article art, @RequestParam("articleContent") String content,
 			@RequestParam("imgToByte") MultipartFile file)throws IOException {
 		// XSS
-		String escapedHtml = HtmlUtils.htmlEscape(content);
-		art.setArticleContent(escapedHtml);
+//		String escapedHtml = HtmlUtils.htmlEscape(content);
+//		art.setArticleContent(escapedHtml);
+//		art.setArticleContent(content);
 		// 處理圖片上傳
 		if (!file.isEmpty()) {
 			art.setArticleImage(file.getBytes());
@@ -203,7 +219,7 @@ public class ArticleController {
 	public String showPageFront(@RequestParam(required = false) String keyword,
             @RequestParam(required = false) Integer categoryId,
             @RequestParam(required = false) String sortBy,
-            @RequestParam(name = "p",defaultValue = "0") int pageNumber,
+            @RequestParam(name = "p",defaultValue = "1") int pageNumber,
  Model model) {
 		
 
@@ -213,7 +229,7 @@ public class ArticleController {
 	    System.out.println("pageNumber: " + pageNumber);
 	    sortBy = (sortBy != null) ? sortBy : "articleEditTime";
 	    
-	    Pageable pageable = PageRequest.of(pageNumber, 5);
+	    Pageable pageable = PageRequest.of(pageNumber-1, 5);
 	    
 	    Page<Article> page = articleService.searchByKeywordAndCategory(keyword, categoryId, sortBy, pageable);
     
@@ -252,6 +268,8 @@ public class ArticleController {
 				Page<Article> commentsArticles = articleService.findArticleByCommentCountAndPage(1, 5);
 				model.addAttribute("commentsArticles", commentsArticles);
 		
+				
+				
 		return "/forum/article/articleList";
 	}
 	

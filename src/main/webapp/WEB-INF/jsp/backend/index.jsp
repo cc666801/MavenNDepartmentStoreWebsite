@@ -21,18 +21,17 @@
 		<div id="layoutSidenav_content">
 			<main>
 				<div class="container-fluid px-4">
-					<h1 class="mt-4">Dashboard</h1>
+					<h1 class="mt-4">後台數據</h1>
 					<ol class="breadcrumb mb-4">
-						<li class="breadcrumb-item active">Dashboard</li>
+						<li class="breadcrumb-item active">後台數據</li>
 					</ol>
 					<div class="row">
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-primary text-white mb-4">
-								<div class="card-body">Primary Card</div>
+								<div class="card-body">會員清單</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View
-										Details</a>
+									<a class="small text-white stretched-link" href="${contextRoot}/memberList">查看詳細資料</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -41,11 +40,10 @@
 						</div>
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-warning text-white mb-4">
-								<div class="card-body">Warning Card</div>
+								<div class="card-body">廠商清單</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View
-										Details</a>
+									<a class="small text-white stretched-link" href="#">查看詳細資料</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -54,11 +52,10 @@
 						</div>
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-success text-white mb-4">
-								<div class="card-body">Success Card</div>
+								<div class="card-body">商品清單</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View
-										Details</a>
+									<a class="small text-white stretched-link" href="#">查看詳細資料</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -67,11 +64,10 @@
 						</div>
 						<div class="col-xl-3 col-md-6">
 							<div class="card bg-danger text-white mb-4">
-								<div class="card-body">Danger Card</div>
+								<div class="card-body">廣告清單</div>
 								<div
 									class="card-footer d-flex align-items-center justify-content-between">
-									<a class="small text-white stretched-link" href="#">View
-										Details</a>
+									<a class="small text-white stretched-link" href="#">查看詳細資料</a>
 									<div class="small text-white">
 										<i class="fas fa-angle-right"></i>
 									</div>
@@ -83,7 +79,7 @@
 						<div class="col-xl-6">
 							<div class="card mb-4">
 								<div class="card-header">
-									<i class="fas fa-chart-area me-1"></i> Area Chart Example
+									<i class="fas fa-chart-area me-1"></i> 會員申請數
 								</div>
 								<div class="card-body">
 									<canvas id="myAreaChart" width="100%" height="40"></canvas>
@@ -93,7 +89,7 @@
 						<div class="col-xl-6">
 							<div class="card mb-4">
 								<div class="card-header">
-									<i class="fas fa-chart-bar me-1"></i> Bar Chart Example
+									<i class="fas fa-chart-bar me-1"></i> 公司前半年收入
 								</div>
 								<div class="card-body">
 									<canvas id="myBarChart" width="100%" height="40"></canvas>
@@ -103,18 +99,18 @@
 					</div>
 					<div class="card mb-4">
 						<div class="card-header">
-							<i class="fas fa-table me-1"></i> DataTable Example
+							<i class="fas fa-table me-1"></i>公司簽約紀錄 
 						</div>
 						<div class="card-body">
 							<table id="datatablesSimple">
 								<thead>
 									<tr>
-										<th>Name</th>
-										<th>Position</th>
-										<th>Office</th>
-										<th>Age</th>
-										<th>Start date</th>
-										<th>Salary</th>
+										<th>姓名</th>
+										<th>位置</th>
+										<th>公司</th>
+										<th>約期</th>
+										<th>簽約日</th>
+										<th>簽約金</th>
 									</tr>
 								</thead>
 								<tfoot>

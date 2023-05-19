@@ -9,6 +9,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <link href="${contextRoot}/assetsForFrontend/vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
 <link href="${contextRoot}/assetsForFrontend/vendor/bootstrap-icons/bootstrap-icons.css" rel="stylesheet">
 
@@ -90,17 +91,15 @@ fieldset{
 		</div>
 		<div class="carousel-inner">
 			<div class="carousel-item active">
-				<img src="https://picsum.photos/1000/200?random=10"
-					class="d-block w-100" alt="...">
+				<img src="${contextRoot}/assetsForFrontend/img/${findRestaurant.company.companyName}1.jpg"
+					class="d-block w-100" style="height:300px" alt="${findRestaurant.company.companyName}餐廳的圖片">
 			</div>
+			<jstl:forEach var="i" begin="2" end="3">
 			<div class="carousel-item">
-				<img src="https://picsum.photos/1000/200?random=9"
-					class="d-block w-100" alt="...">
+				<img src="${contextRoot}/assetsForFrontend/img/${findRestaurant.company.companyName}${i}.jpg"
+					class="d-block w-100" style="height:300px" alt="${findRestaurant.company.companyName}餐廳的圖片">
 			</div>
-			<div class="carousel-item">
-				<img src="https://picsum.photos/1000/200?random=8"
-					class="d-block w-100" alt="...">
-			</div>
+			</jstl:forEach>
 		</div>
 		<button class="carousel-control-prev" type="button"
 			data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
@@ -116,7 +115,7 @@ fieldset{
 
 	<div class="container">
 		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
-			<div class="col-sm-3 col-12 me-2">
+			<div class="col-md-3 col-12 me-2">
 				<div class="row mt-2 justify-content-left">
 					<div class="col-11">
 						<img src="data:image/png;base64,${findRestaurant.company.base64StringCompanyLogo}"
@@ -139,7 +138,7 @@ fieldset{
 				</div>
 			</div>
 
-			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
+			<div class="col-md-7 col-12 pt-3 border border-2 border-secondary rounded-2">
 
 				<form:form class="row justify-content-center" id="myForm" 
 						method="put" modelAttribute="memberReservation"
@@ -191,7 +190,8 @@ fieldset{
 						</div>
 	
 						<div class="col-12">
-						<h5>用餐時段</h5>						
+						<h5>用餐時段</h5>
+							<p class="mb-3" style="color:#706363; margin:0px">*灰色表示該時間已客滿，請選則其他日期</p>						
 								<fieldset>
 									<legend class="title">中午</legend>
 									<div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-2">
@@ -430,11 +430,67 @@ fieldset{
 
 					beforeShowDay : function(date) {
 					// 禁用今天之前和3個月之後的日期
-					return date < now || date.getMonth() > (now.getMonth() + 2) ? false: true;
+						let minDate = new Date(now.getFullYear(), now.getMonth() , now.getDate());
+	    				let maxDate = new Date(now.getFullYear(), now.getMonth() + 2, now.getDate());
+						return (date < minDate) || (date > maxDate) ? false: true;
 					}
 
 				});
+			
+			//以下為訂單人數>6回傳
+            sendDateToBackend();
 		});
+		
+		//以下為訂單人數>6回傳
+		function sendDateToBackend() {
+			let date = $("#DId").val();			
+			let restaurantId = $("#restId").val();
+				
+		    $.ajax({
+		        url: "${contextRoot}/peopleoverten",
+		        contentType:"application/json;charset=UTF-8",
+                dataType: 'json',
+                method:'get',
+                data:{"date":date,
+                	  "restaurantId":restaurantId},
+		        success: function (result) {
+		        	console.log(result.length)
+		        	console.log(result)
+		        	
+		       		let buttons = document.querySelectorAll(".bt");
+
+					// 尋找值為 的按鈕並禁止選取
+					for (let i = 0; i < buttons.length; i++) {
+					  let button = buttons[i];
+					  button.disabled = false;
+					  button.style.backgroundColor = "";
+					  let buttonValue = button.value; // 獲取按鈕的值
+					  for(let j = 0; j < result.length; j++){				
+						  if (buttonValue === result[j]) {
+						    button.disabled = true; // 禁止按鈕選取
+						    button.style.backgroundColor = "#C2C2C2";
+						    break;
+						  }
+					  }
+					}
+		        },
+		        error: function (error) {
+		        	console.log('沒訂單')		    
+		        	let buttons = document.querySelectorAll(".bt");
+		        	for (let i = 0; i < buttons.length; i++) {
+						  let button = buttons[i];
+					       button.disabled = false;
+					       button.style.backgroundColor = "";
+					}
+		        }
+		    });
+		}
+		
+		$("#DId").on("change", function() {
+		    sendDateToBackend();
+		    $('.bt').removeClass('active');
+		});
+		
 
 		//   ---------以下是按鈕事件
 		$('.bt').on('click', function() {

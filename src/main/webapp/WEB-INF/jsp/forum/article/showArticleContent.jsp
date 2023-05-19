@@ -16,31 +16,29 @@
 	href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 <style>
 /* 讚 */
-  #like-btn {
-   font-size: 30px;
-    background-color: transparent;
-    border: none;
-    padding: 0;
-    margin: 0;
-    vertical-align: middle;
-    float: right;
-    
-  }
-  
-  .card {
-   min-height: 200px;
-  display: flex;
-  flex-direction: column;
-/*   justify-content: center; */
-  
-  padding: 20px;
-  border-radius: 10px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+#like-btn {
+	font-size: 30px;
+	background-color: transparent;
+	border: none;
+	padding: 0;
+	margin: 0;
+	vertical-align: middle;
+	float: right;
+}
+
+.card {
+	min-height: 200px;
+	display: flex;
+	flex-direction: column;
+	/*   justify-content: center; */
+	padding: 20px;
+	border-radius: 10px;
+	box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
 .card p {
-  font-size: 16px;
-  line-height: 1.5;
+	font-size: 16px;
+	line-height: 1.5;
 }
 </style>
 
@@ -56,8 +54,10 @@
 				<div class="row">
 					<div class="col-md-9 post-content" data-aos="fade-up">
 						<button id="like-btn" data-articleID="${article.articleID}"
-    data-liked="${isLiked}"><i class="fa${isLiked ? "s" : "r"} fa-heart"></i></button>
-    
+							data-liked="${isLiked}">
+							<i class="fa${isLiked ? "s" : "r"} fa-heart"></i>
+						</button>
+
 						<!-- ======= Single Post Content ======= -->
 						<div class="single-post">
 							<div class="post-meta">
@@ -166,180 +166,7 @@
 						<!-- End Comments Form -->
 					</div>
 					<div class="col-md-3">
-						<!-- ======= Sidebar ======= -->
-						<!--             <div class="aside-block"> -->
-
-						<!--               <ul class="nav nav-pills custom-tab-nav mb-4" id="pills-tab" role="tablist"> -->
-						<!--                 <li class="nav-item" role="presentation"> -->
-						<!--                   <button class="nav-link active" id="pills-popular-tab" data-bs-toggle="pill" data-bs-target="#pills-popular" type="button" role="tab" aria-controls="pills-popular" aria-selected="true">Popular</button> -->
-						<!--                 </li> -->
-						<!--                 <li class="nav-item" role="presentation"> -->
-						<!--                   <button class="nav-link" id="pills-trending-tab" data-bs-toggle="pill" data-bs-target="#pills-trending" type="button" role="tab" aria-controls="pills-trending" aria-selected="false">Trending</button> -->
-						<!--                 </li> -->
-						<!--                 <li class="nav-item" role="presentation"> -->
-						<!--                   <button class="nav-link" id="pills-latest-tab" data-bs-toggle="pill" data-bs-target="#pills-latest" type="button" role="tab" aria-controls="pills-latest" aria-selected="false">Latest</button> -->
-						<!--                 </li> -->
-						<!--               </ul> -->
-
-						<!--               <div class="tab-content" id="pills-tabContent"> -->
-
-						<!--                 Popular -->
-						<!--                 <div class="tab-pane fade show active" id="pills-popular" role="tabpanel" aria-labelledby="pills-popular-tab"> -->
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-						<!--                 </div> End Popular -->
-
-						<!--                 Trending -->
-						<!--                 <div class="tab-pane fade" id="pills-trending" role="tabpanel" aria-labelledby="pills-trending-tab"> -->
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-						<!--                 </div> End Trending -->
-
-						<!--                 Latest -->
-						<!--                 <div class="tab-pane fade" id="pills-latest" role="tabpanel" aria-labelledby="pills-latest-tab"> -->
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">Life Insurance And Pregnancy: A Working Mom’s Guide</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Business</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">The Best Homemade Masks for Face (keep the Pimples Away)</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">10 Life-Changing Hacks Every Working Mom Should Know</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Sport</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">How to Avoid Distraction and Stay Focused During Video Calls?</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Lifestyle</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">17 Pictures of Medium Length Hair in Layers That Will Inspire Your New Haircut</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                   <div class="post-entry-1 border-bottom"> -->
-						<!--                     <div class="post-meta"><span class="date">Culture</span> <span class="mx-1">&bullet;</span> <span>Jul 5th '22</span></div> -->
-						<!--                     <h2 class="mb-2"><a href="#">9 Half-up/half-down Hairstyles for Long and Medium Hair</a></h2> -->
-						<!--                     <span class="author mb-3 d-block">Jenny Wilson</span> -->
-						<!--                   </div> -->
-
-						<!--                 </div> End Latest -->
-
-						<!--               </div> -->
-						<!--             </div> -->
-
-						<!--             <div class="aside-block"> -->
-						<!--               <h3 class="aside-title">Video</h3> -->
-						<!--               <div class="video-post"> -->
-						<!--                 <a href="https://www.youtube.com/watch?v=AiFfDjmd0jU" class="glightbox link-video"> -->
-						<!--                   <span class="bi-play-fill"></span> -->
-						<!--                   <img src="assets/img/post-landscape-5.jpg" alt="" class="img-fluid"> -->
-						<!--                 </a> -->
-						<!--               </div> -->
-						<!--             </div>End Video -->
-
-						<!--             <div class="aside-block"> -->
-						<!--               <h3 class="aside-title">Categories</h3> -->
-						<!--               <ul class="aside-links list-unstyled"> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Business</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Culture</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Sport</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Food</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Politics</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Celebrity</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Startups</a></li> -->
-						<!--                 <li><a href="category.html"><i class="bi bi-chevron-right"></i> Travel</a></li> -->
-						<!--               </ul> -->
-						<!--             </div>End Categories -->
-
-						<!--             <div class="aside-block"> -->
-						<!--               <h3 class="aside-title">Tags</h3> -->
-						<!--               <ul class="aside-tags list-unstyled"> -->
-						<!--                 <li><a href="category.html">Business</a></li> -->
-						<!--                 <li><a href="category.html">Culture</a></li> -->
-						<!--                 <li><a href="category.html">Sport</a></li> -->
-						<!--                 <li><a href="category.html">Food</a></li> -->
-						<!--                 <li><a href="category.html">Politics</a></li> -->
-						<!--                 <li><a href="category.html">Celebrity</a></li> -->
-						<!--                 <li><a href="category.html">Startups</a></li> -->
-						<!--                 <li><a href="category.html">Travel</a></li> -->
-						<!--               </ul> -->
-						<!--             </div>End Tags -->
+						
 					</div>
 				</div>
 			</div>
@@ -352,80 +179,120 @@
 
 	<!-- 	點讚 -->
 	<script>
-		$(document).ready(function() {				
-			$('#like-btn').click(function() {
-				
-				var articleId = $(this).data('articleID');
-				var liked = $(this).data('liked');
-				  // 先檢查會員登入狀態
-		        $.ajax({
-		            type: "GET",
-		            url: `${contextRoot}/checkLogin`,
-		            success: function(response) {
-		                if (response === "true") {
-		                    // 已登入，執行點讚動作
-		                    if (liked) {
-		                        // 取消點讚
-		                        $.ajax({
-		                            method: 'POST',
-		                            type: 'POST',
-		                            url: `${contextRoot}/showArticleContent/${article.articleID}/unlike`,
-		                            success: function() {
-		                                $('#like-btn').data('liked', false);
-		                                $('#like-btn i').removeClass('fas').addClass('far');
-		                                console.log($('#like-btn').data('liked'));
-		                            },
-		                            error: function() {
-		                                alert('取消點讚失敗');
-		                            }
-		                        });
-		                    } else {
-		                        // 點讚
-		                        $.ajax({
-		                            method: 'POST',
-		                            type: 'POST',
-		                            url: `${contextRoot}/showArticleContent/${article.articleID}/like`,
-		                            success: function() {
-		                                $('#like-btn').data('liked', true);
-		                                $('#like-btn i').removeClass('far').addClass('fas');
-		                                console.log($('#like-btn').data('liked'));
-		                            },
-		                            error: function() {
-		                                alert('點讚失敗');
-		                            }
-		                        });
-		                    }
-		                } else {
-		                    // 未登入，提示用戶登入會員
-		                    alert('請先登入會員');
-		                }
-		            },
-		            error: function() {
-		                alert('檢查登入狀態失敗');
-		            }
-		        });
-		    });
-		});	
+		$(document)
+				.ready(
+						function() {
+							$('#like-btn')
+									.click(
+											function() {
+
+												var articleId = $(this).data(
+														'articleID');
+												var liked = $(this).data(
+														'liked');
+												// 先檢查會員登入狀態
+												$
+														.ajax({
+															type : "GET",
+															url : `${contextRoot}/checkLogin`,
+															success : function(
+																	response) {
+																if (response === "true") {
+																	// 已登入，執行點讚動作
+																	if (liked) {
+																		// 取消點讚
+																		$
+																				.ajax({
+																					method : 'POST',
+																					type : 'POST',
+																					url : `${contextRoot}/showArticleContent/${article.articleID}/unlike`,
+																					success : function() {
+																						$(
+																								'#like-btn')
+																								.data(
+																										'liked',
+																										false);
+																						$(
+																								'#like-btn i')
+																								.removeClass(
+																										'fas')
+																								.addClass(
+																										'far');
+																						console
+																								.log($(
+																										'#like-btn')
+																										.data(
+																												'liked'));
+																					},
+																					error : function() {
+																						alert('取消點讚失敗');
+																					}
+																				});
+																	} else {
+																		// 點讚
+																		$
+																				.ajax({
+																					method : 'POST',
+																					type : 'POST',
+																					url : `${contextRoot}/showArticleContent/${article.articleID}/like`,
+																					success : function() {
+																						$(
+																								'#like-btn')
+																								.data(
+																										'liked',
+																										true);
+																						$(
+																								'#like-btn i')
+																								.removeClass(
+																										'far')
+																								.addClass(
+																										'fas');
+																						console
+																								.log($(
+																										'#like-btn')
+																										.data(
+																												'liked'));
+																					},
+																					error : function() {
+																						alert('點讚失敗');
+																					}
+																				});
+																	}
+																} else {
+																	// 未登入，提示用戶登入會員
+																	alert('請先登入會員');
+																}
+															},
+															error : function() {
+																alert('檢查登入狀態失敗');
+															}
+														});
+											});
+						});
 	</script>
-<!-- 	判斷留言會員登入 -->
-<script>
-	$("#comment-form").submit(function(event) {
-    event.preventDefault(); // 阻止表單提交
-    // 檢查會員登入狀態
-    $.ajax({
-        type: "GET",
-        url: `${contextRoot}/checkLogin`,
-        success: function(response) {
-            if (response === "true") {
-                // 已登入
-                $("#comment-form").unbind('submit').submit(); // 解除阻止表單提交
-            } else {
-                alert("請先登入會員");
-            }
-        }
-    });       
-});
+	<!-- 	判斷留言會員登入 -->
+	<script>
+		$("#comment-form").submit(function(event) {
+			event.preventDefault(); // 阻止表單提交
+			// 檢查會員登入狀態
+			$.ajax({
+				type : "GET",
+				url : `${contextRoot}/checkLogin`,
+				success : function(response) {
+					if (response === "true") {
+						// 已登入
+						$("#comment-form").unbind('submit').submit(); // 解除阻止表單提交
+					} else {
+						alert("請先登入會員");
+					}
+				}
+			});
+		});
 	</script>
+
+	
+	
+	
 	<!-- 	編輯留言 -->
 	<script>
 		$(document)

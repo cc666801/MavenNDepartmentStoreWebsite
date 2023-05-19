@@ -1,11 +1,16 @@
 package com.mavenN.MavenNDepartmentStoreWebsite.controllers;
 
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import java.util.UUID;
+import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+
+import java.util.Arrays;
+import java.util.HashMap;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -17,6 +22,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.mavenN.MavenNDepartmentStoreWebsite.annotation.MemberLogin;
 import com.mavenN.MavenNDepartmentStoreWebsite.models.beans.memberSystem.Member;
@@ -286,5 +292,51 @@ public class MemberController {
 	public String privacy() {
 		return "member/privacy";
 	}
+
+//----------------------------------------------------------------------------------------------
+	
+	//抽點數頁面
+	// 抽点数页面
+    @MemberLogin
+    @GetMapping("/game")
+    public String showGamePage(Model model, HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        model.addAttribute("member", member);
+        return "member/game";
+    }
+  
+    @MemberLogin
+    @PostMapping("/game/play")
+    @ResponseBody
+    public Map<String, Object> playGame(HttpSession session) {
+        Member member = (Member) session.getAttribute("member");
+        int[] probabilities = {1, 36, 25, 10, 7, 6, 5, 5, 5};
+        int[] points = {100, 1, 2, 3, 4, 5, 6, 7, 8};
+        Random random = new Random();
+        int index = getRandomIndex(probabilities, random);
+        int point = points[index];
+        member.setPoints(member.getPoints() + point);
+        mService.updateMember(member);
+        Map<String, Object> response = new HashMap<>();
+        response.put("point", point);
+        response.put("totalPoints", member.getPoints());
+        return response;
+    }
+  
+    private int getRandomIndex(int[] probabilities, Random random) {
+        int sum = Arrays.stream(probabilities).sum();
+        int rand = random.nextInt(sum);
+        int index = 0;
+        int cumulativeSum = probabilities[0];
+        while (rand >= cumulativeSum && index < probabilities.length - 1) {
+            index++;
+            cumulativeSum += probabilities[index];
+        }
+        return index;
+    }
+
+
+
+
 
 }

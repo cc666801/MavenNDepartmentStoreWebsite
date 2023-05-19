@@ -14,17 +14,17 @@
 <script
 	src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 <style>
-    .aside-block button {
-        background-color: #f5f5f5;
-        border: none;
-        padding: 8px 16px;
-        margin-bottom: 10px;
-        cursor: pointer;
-    }
+.aside-block button {
+	background-color: #f5f5f5;
+	border: none;
+	padding: 8px 16px;
+	margin-bottom: 10px;
+	cursor: pointer;
+}
 
-    .aside-block button.active {
-        background-color: #ebebeb;
-    }
+.aside-block button.active {
+	background-color: #ebebeb;
+}
 </style>
 
 </head>
@@ -81,8 +81,9 @@
 										<p>${art.articlePreview}</p>
 										<div class="d-flex align-items-center author">
 											<div class="photo">
-												<img src="${contextRoot}/assetsForFrontend/img/person-2.jpg"
-													alt="" class="img-fluid">
+											 <img id="randomImage-${art.articleID}" src="" alt="隨機圖片" class="img-fluid">
+<%-- 												<img src="${contextRoot}/assetsForFrontend/img/person-2.jpg" --%>
+<!-- 													alt="" class="img-fluid"> -->
 											</div>
 											<div class="name">
 												<h3 class="m-0 p-0">${art.member.name}</h3>
@@ -96,29 +97,29 @@
 
 
 							<!-- Paging -->
-							<div class="text-start py-4">
-								<div class="custom-pagination">
+<div class="text-start py-4">
+    <div class="custom-pagination">
 
-									<c:if test="${not page.first}">
-										<a href="?p=${page.previousPageable().pageNumber}"
-											class="prev">Prevous</a>
-									</c:if>
-									<c:forEach var="i" begin="1" end="${page.totalPages-1}">
-										<c:choose>
-											<c:when test="${i == page.number}">
-												<a href="#" class="active">${i}</a>
-											</c:when>
-											<c:otherwise>
-												<a href="?p=${i}" class="page-link">${i}</a>
-											</c:otherwise>
-										</c:choose>
-									</c:forEach>
-									<c:if test="${not page.last}">
-										<a href="?p=${page.nextPageable().pageNumber}" class="next">Next</a>
-									</c:if>
-								</div>
-							</div>
-							<!-- End Paging -->
+        <c:if test="${not page.first}">
+            <a href="?p=${page.previousPageable().pageNumber+1}" class="prev">Previous</a>
+        </c:if>
+        <c:forEach var="i" begin="1" end="${page.totalPages}">
+            <c:choose>
+                <c:when test="${i == page.number+1}">
+                    <a href="?p=${i}" class="active">${i}</a>
+                </c:when>
+                <c:otherwise>
+                    <a href="?p=${i}" class="page-link">${i}</a>
+                </c:otherwise>
+            </c:choose>
+        </c:forEach>
+        <c:if test="${not page.last}">
+            <a href="?p=${page.nextPageable().pageNumber+1}" class="next">Next</a>
+        </c:if>
+    </div>
+</div>
+<!-- End Paging -->
+
 
 						</div>
 
@@ -288,7 +289,7 @@
 						currentCategoryId = $(this).data('category-id'); // 保存当前的categoryId值
 						localStorage.setItem('categoryId', currentCategoryId); // 将当前的categoryId值存储到localStorage中
 						updateArticleList(currentCategoryId);
-						 
+
 					});
 
 					// 更新文章列表的函数
@@ -326,6 +327,40 @@
 					}
 				});
 	</script>
+<!-- 	亂數頭像 -->
+<script>
+  // JavaScript
+  function getRandomImage(articleID) {
+    // Image paths array
+    var imagePaths = [
+      "${contextRoot}/assetsForFrontend/img/person-1.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-2.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-3.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-4.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-5.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-6.jpg",
+      "${contextRoot}/assetsForFrontend/img/person-7.jpg",
+      // Add more image paths here
+    ];
 
+    // Randomly select an image path
+    var randomIndex = Math.floor(Math.random() * imagePaths.length);
+    var randomImagePath = imagePaths[randomIndex];
+
+    // Set the src attribute of the image element
+    var imgElement = document.getElementById("randomImage-" + articleID);
+    imgElement.src = randomImagePath;
+  }
+
+  // Get the article IDs and call getRandomImage for each ID
+  var articleIDs = [];
+  <c:forEach var="art" items="${page.content}">
+    articleIDs.push(${art.articleID});
+  </c:forEach>
+
+  articleIDs.forEach(function(articleID) {
+    getRandomImage(articleID);
+  });
+</script>
 </body>
 </html>
