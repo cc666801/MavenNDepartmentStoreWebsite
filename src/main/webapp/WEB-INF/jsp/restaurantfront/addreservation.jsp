@@ -113,8 +113,8 @@ fieldset{
 	</div>
 
 	<div class="container">
-		<div class="row g-2 gx-sm-3 mt-2 justify-content-center">
-			<div class="col-sm-3 col-12 me-2">
+		<div class="row g-2 gx-md-3 mt-2 justify-content-center">
+			<div class="col-md-3 col-12 me-2">
 				<div class="row mt-2 justify-content-left">
 					<div class="col-11">
 						<img src="data:image/png;base64,${findRestaurant.company.base64StringCompanyLogo}"
@@ -137,7 +137,7 @@ fieldset{
 				</div>
 			</div>
 
-			<div class="col-sm-7 col-12 pt-3 border border-2 border-secondary rounded-2">
+			<div class="col-md-7 col-12 pt-3 border border-2 border-secondary rounded-2">
 
 				<form:form class="row justify-content-center" id="myForm" 
 						method="post" modelAttribute="reservation"
@@ -254,8 +254,8 @@ fieldset{
 									</div>
 								</fieldset>
 								<div>
-								<form:input type="hidden" path="timeInterval" id="timeintervalcode" readonly="readonly" />
-								<form:input type="hidden" path="time" id="timecode" readonly="readonly" />
+								<form:input type="text" path="timeInterval" id="timeintervalcode" readonly="readonly" />
+								<form:input type="text" path="time" id="timecode" readonly="readonly" />
 								</div>						
 						</div>
 						<br>
@@ -405,18 +405,22 @@ fieldset{
 		
 		$(document).ready(function() {
 			let now = new Date();
+			let currentMonth = now.getMonth();
+		    let currentYear = now.getFullYear();
+// 			console.log(now);
 			$('#datepicker').datepicker({
 					format : 'yyyy-mm-dd',
 					showOtherMonths : false,
 					language : 'zh-TW',
-					// 		startDate: new Date(now.getFullYear(), now.getMonth(), 1),
-					// 		endDate: new Date(now.getFullYear(), now.getMonth() + 1, 0),
-					//      todayHighlight: true,
 					autoclose : true,
+					minDate: new Date(currentYear, currentMonth, 1),
+			        maxDate: new Date(currentYear, currentMonth + 1, 0),
 
 					beforeShowDay : function(date) {
 					// 禁用今天之前和3個月之後的日期
-					return date < now || date.getMonth() > (now.getMonth() + 2) ? false: true;
+					let minDate = new Date(now.getFullYear(), now.getMonth() , now.getDate());
+    				let maxDate = new Date(now.getFullYear(), now.getMonth() + 2, now.getDate());
+					return (date < minDate) || (date > maxDate) ? false: true;
 					}
 
 				});
@@ -455,7 +459,7 @@ fieldset{
 					  for(let j = 0; j < result.length; j++){				
 						  if (buttonValue === result[j]) {
 						    button.disabled = true; // 禁止按鈕選取
-						    button.style.backgroundColor = "#C2C2C2"
+						    button.style.backgroundColor = "#C2C2C2";
 						    break;
 						  }
 					  }
@@ -466,7 +470,8 @@ fieldset{
 		        	let buttons = document.querySelectorAll(".bt");
 		        	for (let i = 0; i < buttons.length; i++) {
 						  let button = buttons[i];
-					       button.disabled = false;
+					      button.disabled = false;
+					      button.style.backgroundColor = "";
 					}
 		        }
 		    });
@@ -474,6 +479,7 @@ fieldset{
 		
 		$("#DId").on("change", function() {
 		    sendDateToBackend();
+		    $('.bt').removeClass('active');
 		});
 		
 		
@@ -482,6 +488,7 @@ fieldset{
 		//   ---------以下是按鈕事件
 		$('.bt').on('click', function() {
 			$('.bt').removeClass('active');
+			
 			$(this).addClass('active');
 			$('#timecode').val($(this).val());
 			let timetime = $(this).closest('fieldset').find('legend').text();
